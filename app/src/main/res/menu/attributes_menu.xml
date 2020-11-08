@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/darkMode"
+        android:checkable="true"
+        android:checked="true"
+        android:title="@string/attributes_menu_toggle_theme" />
+    <item
+        android:id="@+id/flatMode"
+        android:checkable="true"
+        android:title="@string/attributes_menu_toggle_dimension" />
+</menu>

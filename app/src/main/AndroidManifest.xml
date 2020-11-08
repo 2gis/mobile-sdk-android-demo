@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="ru.dgis.sdk.app">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/icon_round"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/icon_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".SplashActivity"
+            android:theme="@style/SplashTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".MainActivity" />
+        <activity android:name=".TouchEventsActivity" />
+        <activity android:name=".TrafficRouterActivity" />
+        <activity android:name=".OnlineSourceActivity" />
+        <activity android:name=".MyLocationActivity" />
+        <activity android:name=".NightThemeActivity" />
+        <activity android:name=".GeometryObjectsActivity" />
+        <activity android:name=".CameraActivity" />
+        <activity android:name=".GeoJsonActivity" />
+        <activity android:name=".MarkersActivity" />
+    </application>
+
+</manifest>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/addPolygon"
+        android:title="@string/geometry_menu_add_polygon" />
+    <item
+        android:id="@+id/addPolyline"
+        android:title="@string/geometry_menu_add_polyline" />
+    <item
+        android:id="@+id/addPoint"
+        android:title="@string/geometry_menu_add_point" />
+    <item
+        android:id="@+id/addPoi"
+        android:title="@string/geometry_menu_add_poi" />
+    <item
+        android:id="@+id/addPoint3d"
+        android:title="@string/geometry_menu_add_point3d" />
+    <item
+        android:id="@+id/addPoi3d"
+        android:title="@string/geometry_menu_add_poi3d" />
+    <item
+        android:id="@+id/addComplexObject"
+        android:title="@string/geometry_menu_add_complex_object" />
+    <item
+        android:id="@+id/shiftObjects"
+        android:title="@string/geometry_menu_shift_objects" />
+    <item
+        android:id="@+id/removeLast"
+        android:title="@string/geometry_menu_remove_last" />
+    <item
+        android:id="@+id/removeAll"
+        android:title="@string/geometry_menu_remove_all" />
+    <item
+        android:id="@+id/toggleVisibility"
+        android:title="@string/geometry_menu_toggle_visibility" />
+    <item
+        android:id="@+id/toggleColor"
+        android:title="@string/geometry_menu_toggle_color" />
+</menu>

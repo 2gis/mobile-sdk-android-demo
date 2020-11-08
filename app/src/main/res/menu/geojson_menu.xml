@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/drawSberLogo"
+        android:title="sberLogo.json" />
+    <item
+        android:id="@+id/drawSomeGeoJsonObjects"
+        android:title="someObjects.json" />
+    <item
+        android:id="@+id/removeAll"
+        android:title="Remove all objects" />
+    <item
+        android:id="@+id/toggleVisibility"
+        android:title="Toggle visibility" />
+</menu>

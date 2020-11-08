@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">NativeSDK Demo</string>
+    <string name="title">2GIS NativeSDK features\nand examples</string>
+    <string name="geometry_menu_add_polygon">Add polygon</string>
+    <string name="geometry_menu_add_polyline">Add polyline</string>
+    <string name="geometry_menu_add_point">Add point</string>
+    <string name="geometry_menu_add_poi">Add point with label</string>
+    <string name="geometry_menu_add_point3d">Add point with elevation</string>
+    <string name="geometry_menu_add_poi3d">Add point with label and elevation</string>
+    <string name="geometry_menu_add_complex_object">Add complex object</string>
+    <string name="geometry_menu_shift_objects">Shift objects</string>
+    <string name="geometry_menu_remove_last">Remove last object</string>
+    <string name="geometry_menu_remove_all">Remove all objects</string>
+    <string name="geometry_menu_toggle_visibility">Toggle visibility</string>
+    <string name="geometry_menu_toggle_color">Toggle color</string>
+    <string name="attributes_menu_toggle_theme">Dark Theme</string>
+    <string name="attributes_menu_toggle_dimension">2D</string>
+    <string name="my_location_accuracy_text">Accuracy</string>
+    <string name="my_location_pedestrian_mode_text">Pedestrian Mode</string>
+    <string name="my_location_direction_text">Direction</string>
+    <string name="my_location_available">Location Available</string>
+</resources>
