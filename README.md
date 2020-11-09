@@ -9,7 +9,7 @@ Full documentation, including more usage examples and detailed descriptions of a
 
 Usage of this SDK requires an API key to connect to 2GIS servers and retrieve the geographical data. This API key is unique to the SDK and cannot be used with other 2GIS SDKs.
 
-To obtain the key, contact us at [https://dev.2gis.ru/order/](https://dev.2gis.ru/order/).
+To obtain the key, [contact us](https://dev.2gis.ru/order/).
 
 
 ## Installation
