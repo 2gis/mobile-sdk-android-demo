@@ -1,29 +1,25 @@
 package ru.dgis.sdk.app
 
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.LinearLayout
-import androidx.annotation.RequiresApi
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import ru.dgis.sdk.context.Context
 import ru.dgis.sdk.coordinates.Arcdegree
 import ru.dgis.sdk.coordinates.GeoPoint
+import ru.dgis.core.Duration
+import ru.dgis.core.seconds
 import ru.dgis.sdk.map.*
 import ru.dgis.sdk.map.Map
-import java.time.Duration
 
 
-// TODO: сделать что-то с Duration, чтобы работать на API 21
-@RequiresApi(Build.VERSION_CODES.O)
 private data class MovePoint(
     val position: CameraPosition,
-    val duration: Duration = Duration.ofMillis(4000),
+    val duration: Duration = 4.seconds,
     val animationType: CameraAnimationType = CameraAnimationType.DEFAULT
 )
 
 
-@RequiresApi(Build.VERSION_CODES.O)
 class CameraActivity: AppCompatActivity() {
     private lateinit var sdkContext : Context
     private var map: Map? = null

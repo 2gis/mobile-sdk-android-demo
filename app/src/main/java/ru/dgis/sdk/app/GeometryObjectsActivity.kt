@@ -22,7 +22,6 @@ class GeometryObjectsActivity : AppCompatActivity(), TouchEventsObserver {
     private val geometryDemo: GeometryDemo? by lazy {
         map?.let { GeometryDemo(DGis.context(), mapView.width, mapView.height, it) }
     }
-    private lateinit var viewport: Viewport
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,9 +49,6 @@ class GeometryObjectsActivity : AppCompatActivity(), TouchEventsObserver {
         mapContainer.addView(mapView)
         lifecycle.addObserver(mapView)
         mapView.setTouchEventsObserver(this)
-        mapView.getViewPortAsync {
-            viewport = it
-        }
         mapView.getMapAsync {
             map = it
             geometryButton.isEnabled = true
@@ -84,7 +80,7 @@ class GeometryObjectsActivity : AppCompatActivity(), TouchEventsObserver {
     }
 
     override fun onTap(point: ViewportPoint) {
-        viewport.getRenderedObjects(point, ScreenDistance(5f)).onResult {
+        mapView.getRenderedObjects(point, ScreenDistance(5f)).onResult {
             var message = "Ничего не нашли"
             if(it.isEmpty().not()) {
                 message = "Нашли"

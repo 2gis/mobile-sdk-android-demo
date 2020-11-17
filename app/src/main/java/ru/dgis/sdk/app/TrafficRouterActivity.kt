@@ -19,7 +19,6 @@ class TrafficRouterActivity : AppCompatActivity(), TouchEventsObserver {
     private lateinit var routeEditorSource: RouteEditorSource
     private lateinit var routeIndexSpinner: Spinner
     private var map: Map? = null
-    private var viewport: Viewport? = null
     private var geometryMapObjectSource: GeometryMapObjectSource? = null
 
     private var connections = mutableListOf<Connection>()
@@ -44,11 +43,11 @@ class TrafficRouterActivity : AppCompatActivity(), TouchEventsObserver {
             item ?: return
             val index = item.toIntOrNull()
             index ?: return
-            routeEditor.setActiveRouteIndex(index)
+            routeEditor.setActiveRouteIndex(RouteIndex(index.toLong()))
         }
 
         override fun onNothingSelected(p0: AdapterView<*>?) {
-            routeEditor.setActiveRouteIndex(0)
+            routeEditor.setActiveRouteIndex(RouteIndex(0))
         }
     }
 
@@ -91,10 +90,6 @@ class TrafficRouterActivity : AppCompatActivity(), TouchEventsObserver {
 
             createRouteMapPoint(startPoint, true)
             createRouteMapPoint(finishPoint, false)
-        }
-
-        mapView.getViewPortAsync {
-            viewport = it
         }
 
         findRouteButton.setOnClickListener {
