@@ -30,4 +30,4 @@ dependencies {
 }
 ```
 
-After that, you should be good to go. Check the [Examples section](/ru/android/native/maps/examples/unstable) to see how to display the map in your application. Alternatively, check the [API Reference](/ru/android/native/maps/reference/DGis) to learn more about specific classes and methods.
+After that, you should be good to go. Check the [Examples section](/ru/android/native/maps/examples) to see how to display the map in your application. Alternatively, check the [API Reference](/ru/android/native/maps/reference/DGis) to learn more about specific classes and methods.

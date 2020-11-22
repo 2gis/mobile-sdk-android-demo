@@ -21,9 +21,9 @@
 
 ## v0.3.0
 **Release Date:** 02.11.2020
-- [добавлены методы отображения маркеров на карте](/ru/android/native/maps/examples/unstable#nav-lvl1--Добавление_маркера_на_карту)
-- [оповещение о маневрах, камерах, улице, времени до конца маршрута и т. д.](/ru/android/native/maps/examples/unstable#nav-lvl1--События_по_маршруту_во_время_ведения)
-- [получение информации об объектах по клику в карту](/ru/android/native/maps/examples/unstable#nav-lvl1--Получение_информации_по_клику_в_карту)
+- [добавлены методы отображения маркеров на карте](/ru/android/native/maps/examples#nav-lvl1--Добавление_маркера_на_карту)
+- [оповещение о маневрах, камерах, улице, времени до конца маршрута и т. д.](/ru/android/native/maps/examples#nav-lvl1--События_по_маршруту_во_время_ведения)
+- [получение информации об объектах по клику в карту](/ru/android/native/maps/examples#nav-lvl1--Получение_информации_по_клику_в_карту)
 
 
 ## v0.2.2
@@ -36,7 +36,7 @@
 
 ## v0.2.1
 **Release Date:** 20.10.2020
-- [отображение маркера текущего местоположения](/ru/android/native/maps/examples/unstable#nav-lvl1--Отображение_маркера_текущего_местоположения)
+- [отображение маркера текущего местоположения](/ru/android/native/maps/examples#nav-lvl1--Отображение_маркера_текущего_местоположения)
 - добавили использование API key
 - починили работу https
 - изменен интерфейс NavigationManager
@@ -44,9 +44,9 @@
 
 ## v0.2.0
 **Release Date:** 08.10.2020
-- [поддержали добавление кастомного источника геопозиции](/ru/android/native/maps/examples/unstable#nav-lvl1--Создание_и_использование_собственного_источника_позиции)
-- [работа с объектами из GeoJSON](/ru/android/native/maps/examples/unstable#nav-lvl1--%D0%94%D0%BE%D0%B1%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5_%D0%BE%D0%B1%D1%8A%D0%B5%D0%BA%D1%82%D0%BE%D0%B2_%D0%B8%D0%B7_GeoJson)
-- [поиск о отображение маршрута на карте](/ru/android/native/maps/examples/unstable#nav-lvl1--Построение_маршрута_и_его_отображение_на_карте)
+- [поддержали добавление кастомного источника геопозиции](/ru/android/native/maps/examples#nav-lvl1--Создание_и_использование_собственного_источника_позиции)
+- [работа с объектами из GeoJSON](/ru/android/native/maps/examples#nav-lvl1--%D0%94%D0%BE%D0%B1%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5_%D0%BE%D0%B1%D1%8A%D0%B5%D0%BA%D1%82%D0%BE%D0%B2_%D0%B8%D0%B7_GeoJson)
+- [поиск о отображение маршрута на карте](/ru/android/native/maps/examples#nav-lvl1--Построение_маршрута_и_его_отображение_на_карте)
 
 
 ## v0.1.2
