@@ -509,7 +509,7 @@ class GeoJsonDemo(
     fun toggleVisibility() {
         source.objects()
             .filterNotNull()
-            .forEach {it.setVisible(!(it.isVisible().value ?: true))
+            .forEach {it.setVisible(!it.isVisible().value)
         }
     }
 

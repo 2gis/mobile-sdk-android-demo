@@ -84,9 +84,9 @@ class GeometryObjectsActivity : AppCompatActivity(), TouchEventsObserver {
             var message = "Ничего не нашли"
             if(it.isEmpty().not()) {
                 message = "Нашли"
-                val geometryMapObjectsCount = it.count { item -> tryCastToGeometryMapObject(item.item.item) != null }
+                val geometryMapObjectsCount = it.count { item -> item.item.item is GeometryMapObject }
                 if(geometryMapObjectsCount > 0) message +=  "\nGeometryMapObjects: $geometryMapObjectsCount"
-                val dgisMapObjectsCount = it.count { item -> tryCastToDgisMapObject(item.item.item) != null }
+                val dgisMapObjectsCount = it.count { item -> item.item.item is DgisMapObject }
                 if(dgisMapObjectsCount > 0) message +=  "\nDgisMapObjects: $dgisMapObjectsCount"
                 val anotherObjectsCount = it.size - geometryMapObjectsCount - dgisMapObjectsCount
                 if(anotherObjectsCount > 0) message +=  "\nUnknownObjects: $anotherObjectsCount"

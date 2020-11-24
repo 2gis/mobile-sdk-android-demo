@@ -7,6 +7,7 @@ import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
+import android.os.Looper
 import androidx.core.app.ActivityCompat
 import ru.dgis.sdk.positioning.DesiredAccuracy
 import ru.dgis.sdk.positioning.LocationChangeListener
@@ -50,7 +51,8 @@ class ManagerLocationSource(private val appContext: Context) : LocationSource {
             LocationManager.GPS_PROVIDER,
             0,
             0f,
-            locationListener!!
+            locationListener!!,
+            Looper.getMainLooper()
         )
     }
 
