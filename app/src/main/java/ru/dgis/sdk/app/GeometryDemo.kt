@@ -173,7 +173,7 @@ class GeometryDemo(
 
     fun toggleVisibility() {
         source?.objects()?.forEach {
-            it?.setVisible(!(it.isVisible().value ?: true))
+            it?.setVisible(!it.isVisible().value)
         }
     }
 
@@ -233,7 +233,7 @@ class GeometryDemo(
         fun getShift(): GeoPoint {
             val viewportX = parent.random.nextFloat(size.width.toFloat())
             val viewportY = parent.random.nextFloat(size.height.toFloat())
-            return parent.map.camera.position().value?.point?.let { center ->
+            return parent.map.camera.position().value.point.let { center ->
                 projection.screenToMap(ViewportPoint(viewportX, viewportY))?.let {
                     GeoPoint(
                         Arcdegree(it.latitude.value - center.latitude.value),

@@ -54,7 +54,7 @@ class TouchEventsActivity : AppCompatActivity(), TouchEventsObserver {
         seekBarTilt.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener {
 			override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
 				val camera = map?.camera ?: return
-				val position = camera.position().value ?: return
+				val position = camera.position().value
 				val newTilt = maxTilt * progress / 100f
 
 				camera.setPosition(position.copy(tilt = Tilt(newTilt)))
@@ -79,13 +79,11 @@ class TouchEventsActivity : AppCompatActivity(), TouchEventsObserver {
 			source.addObject(marker)
 		}
 
-        // FIXME: will be available next release
-		/*
         mapView
 			.getRenderedObjects(point, ScreenDistance(5f))
 			.onResult {  renderedObjects ->
 				val dgisObject = renderedObjects.mapNotNull { objectInfo ->
-					tryCastToDgisMapObject(objectInfo.item.item)
+					objectInfo.item.item as? DgisMapObject
 				}.firstOrNull() ?: return@onResult
 
 				dgisObject.directoryObject().onResult {
@@ -107,7 +105,6 @@ class TouchEventsActivity : AppCompatActivity(), TouchEventsObserver {
 						.show()
 				}
 			}
-		 */
 	}
 
 	override fun onLongTouch(point: ViewportPoint) {

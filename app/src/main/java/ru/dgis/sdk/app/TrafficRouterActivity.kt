@@ -6,10 +6,11 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import ru.dgis.core.Connection
+import ru.dgis.sdk.Connection
 import ru.dgis.sdk.coordinates.Arcdegree
 import ru.dgis.sdk.coordinates.GeoPoint
 import ru.dgis.sdk.directory.DirectoryObjectId
+import ru.dgis.sdk.geometry.GeometryCreator
 import ru.dgis.sdk.map.*
 import ru.dgis.sdk.map.Map
 import ru.dgis.sdk.routing.*
@@ -18,6 +19,7 @@ class TrafficRouterActivity : AppCompatActivity(), TouchEventsObserver {
     private lateinit var routeEditor: RouteEditor
     private lateinit var routeEditorSource: RouteEditorSource
     private lateinit var routeIndexSpinner: Spinner
+    private lateinit var mapView: MapView
     private var map: Map? = null
     private var geometryMapObjectSource: GeometryMapObjectSource? = null
 
@@ -29,12 +31,18 @@ class TrafficRouterActivity : AppCompatActivity(), TouchEventsObserver {
     // Конечная точка маршрута. По умолчанию: Кремль
     private var finishPoint: GeoPoint = GeoPoint(Arcdegree(55.752425), Arcdegree(37.613983))
 
-    // Объекты карты, соответствующие начальной и конечной точкам маршрута
+    // Объекты карты, соответствующие начальной и конечной точкам маршрута. Показываются на карте,
+    // когда маршрут ещё не построен. Когда маршрут уже построен, точки начала и конца маршрута
+    // отрисовываются вместе с ним, и эти переменные проставляются в null.
     private var startPointMapObject: GeometryMapObject? = null
     private var finishPointMapObject: GeometryMapObject? = null
 
     private var inProgressToast: Toast? = null
     private var routeDisplayed: Boolean = false
+
+    private var dragRoutePoint: RoutePointMapObject? = null
+    private var dragGeometryPoint: GeometryMapObject? = null
+    private var dragPoint: GeoPoint? = null
 
     inner class SpinnerListener : AdapterView.OnItemSelectedListener {
         override fun onItemSelected(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
@@ -43,11 +51,11 @@ class TrafficRouterActivity : AppCompatActivity(), TouchEventsObserver {
             item ?: return
             val index = item.toIntOrNull()
             index ?: return
-            routeEditor.setActiveRouteIndex(RouteIndex(index.toLong()))
+            routeEditor.setActiveRouteIndex(RouteIndex(value = index.toLong()))
         }
 
         override fun onNothingSelected(p0: AdapterView<*>?) {
-            routeEditor.setActiveRouteIndex(RouteIndex(0))
+            routeEditor.setActiveRouteIndex(RouteIndex(value = 0))
         }
     }
 
@@ -72,7 +80,7 @@ class TrafficRouterActivity : AppCompatActivity(), TouchEventsObserver {
             isEnabled = false
         }
 
-        val mapView = findViewById<MapView>(R.id.mapView)
+        mapView = findViewById<MapView>(R.id.mapView)
         lifecycle.addObserver(mapView)
 
         mapView.getMapAsync { m ->
@@ -113,18 +121,17 @@ class TrafficRouterActivity : AppCompatActivity(), TouchEventsObserver {
     }
 
     override fun onTap(point: ViewportPoint) {
-        // FIXME: will be available next release
-        /*
-        viewport?.getRenderedObjects(point, ScreenDistance(5f))?.onResult { renderedObjectInfos ->
+        // TODO: вся эта логика должна быть внутри RouteEditor'a, иначе зачем он вообще?
+        mapView.getRenderedObjects(point, ScreenDistance(5f)).onResult { renderedObjectInfos ->
             if (renderedObjectInfos.isEmpty()) {
                 return@onResult
             }
 
             var routeMapObject: RouteMapObject? = null
             for (renderObjectInfo in renderedObjectInfos) {
-                routeMapObject = tryCastToRouteMapObject(renderObjectInfo.item.item)
+                routeMapObject = renderObjectInfo.item.item as? RouteMapObject
                 if (routeMapObject != null) {
-                    val isActive = routeMapObject.isActive().value!!
+                    val isActive = routeMapObject.isActive().value
                     if (isActive) {
                         continue
                     }
@@ -137,23 +144,18 @@ class TrafficRouterActivity : AppCompatActivity(), TouchEventsObserver {
                 return@onResult
             }
 
-            val routesInfo = routeEditor.routesInfo().value
-            val index = routesInfo.routes.indexOfFirst {
-                it!!.equals(routeMapObject.route()!!)
-            }
-
-            if (index < 0) {
-                return@onResult
-            }
-
-            routeEditor.setActiveRouteIndex(index)
-            routeIndexSpinner.setSelection(index)
+            val routeIndex = routeMapObject.routeIndex()
+            routeEditor.setActiveRouteIndex(routeIndex)
+            routeIndexSpinner.setSelection(routeIndex.value.toInt())
         }
-         */
     }
 
     override fun onLongTouch(point: ViewportPoint) {
         map?.camera?.projection()?.screenToMap(point)?.let {
+            if (routeDisplayed) {
+                return
+            }
+
             if (startPointMapObject == null) {
                 startPoint = it
                 createRouteMapPoint(startPoint, true)
@@ -172,15 +174,56 @@ class TrafficRouterActivity : AppCompatActivity(), TouchEventsObserver {
         }
     }
 
-    private fun findRoute() {
-        if (startPointMapObject == null) {
-            notify("Задайте начальную точку маршрута")
-            return
-        }
+    override fun onDragBegin(data: DragBeginData) {
+        dragRoutePoint = data.item.item as? RoutePointMapObject
+        dragGeometryPoint = data.item.item as? GeometryMapObject
+        dragPoint = map!!.camera.projection().screenToMap(data.point)
+    }
 
-        if (finishPointMapObject == null) {
-            notify("Задайте конечную точку маршрута")
-            return
+    override fun onDragMove(point: ViewportPoint) {
+        val newPoint = map!!.camera.projection().screenToMap(point)!!
+        val shift = GeoPoint(Arcdegree(newPoint.latitude.value - dragPoint!!.latitude.value), Arcdegree(newPoint.longitude.value - dragPoint!!.longitude.value))
+        dragRoutePoint?.setShift(shift)
+        dragGeometryPoint?.setShift(shift)
+        dragPoint = newPoint
+
+        if (dragRoutePoint != null) {
+            if (dragRoutePoint!!.kind() == RoutePointKind.START) {
+                startPoint = newPoint
+            } else if (dragRoutePoint!!.kind() == RoutePointKind.FINISH) {
+                finishPoint = newPoint
+            }
+        }
+        else if (dragGeometryPoint != null) {
+            if (dragGeometryPoint == startPointMapObject) {
+                startPoint = newPoint
+            } else if (dragGeometryPoint == finishPointMapObject) {
+                finishPoint = newPoint
+            }
+        }
+    }
+
+    override fun onDragEnd() {
+        dragRoutePoint = null
+        dragGeometryPoint = null
+        dragPoint = null
+
+        if (routeDisplayed) {
+            findRoute()
+        }
+    }
+
+    private fun findRoute() {
+        if (!routeDisplayed) {
+            if (startPointMapObject == null) {
+                notify("Задайте начальную точку маршрута")
+                return
+            }
+
+            if (finishPointMapObject == null) {
+                notify("Задайте конечную точку маршрута")
+                return
+            }
         }
 
         inProgressToast = notify("Ищем маршрут...")
@@ -222,6 +265,10 @@ class TrafficRouterActivity : AppCompatActivity(), TouchEventsObserver {
         val message = if (routes.isNotEmpty()) "Маршрут найден" else "Не удалось найти маршрут"
         notify(message)
 
+        // Удаляем точки начала и конца маршрута, оформленные как геометрические объекты. Вместо
+        // них будут точки, отрисованные вместе с маршрутом
+        clearRouteMapPoints()
+
         routeEditorSource.setRoutesVisible(true)
         routeDisplayed = true
 
@@ -240,7 +287,7 @@ class TrafficRouterActivity : AppCompatActivity(), TouchEventsObserver {
                 source.removeObject(startPointMapObject)
             }
 
-            startPointMapObject = createMapPoint(point)
+            startPointMapObject = createMapPoint(point, true)
             source.addObject(startPointMapObject)
         }
         else {
@@ -248,16 +295,16 @@ class TrafficRouterActivity : AppCompatActivity(), TouchEventsObserver {
                 source.removeObject(finishPointMapObject)
             }
 
-            finishPointMapObject = createMapPoint(point)
+            finishPointMapObject = createMapPoint(point, false)
             source.addObject(finishPointMapObject)
         }
     }
 
-    private fun createMapPoint(point: GeoPoint): GeometryMapObject = MarkerBuilder()
-        .setIconFromResource(R.drawable.ic_red_nav_pin)
-        .setPosition(point)
-        .setAnchor(0.5f, 0.95f)
-        .build()
+    private fun createMapPoint(point: GeoPoint, isStart: Boolean): GeometryMapObject = GeometryMapObjectBuilder()
+        .setGeometry(GeometryCreator.createPointGeometry(point))
+        .setDraggable(true)
+        .setObjectAttribute("db_sublayer", if (isStart) "s_dvg_transport_point_a" else "s_dvg_transport_point_b")
+        .createObject()!!
 
     private fun clearRouteMapObjects() {
         clearRouteMapPoints()

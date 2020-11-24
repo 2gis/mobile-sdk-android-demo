@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this@MainActivity, CameraActivity::class.java)
             startActivity(intent)
         },
-        Page("Map Attributes (Offline Data Source only)") {
+        Page("Map Attributes") {
             val intent = Intent(this@MainActivity, NightThemeActivity::class.java)
             startActivity(intent)
         },

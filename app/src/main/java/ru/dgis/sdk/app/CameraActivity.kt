@@ -4,11 +4,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.LinearLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import ru.dgis.sdk.Duration
+import ru.dgis.sdk.seconds
 import ru.dgis.sdk.context.Context
 import ru.dgis.sdk.coordinates.Arcdegree
 import ru.dgis.sdk.coordinates.GeoPoint
-import ru.dgis.core.Duration
-import ru.dgis.core.seconds
 import ru.dgis.sdk.map.*
 import ru.dgis.sdk.map.Map
 
@@ -18,7 +18,6 @@ private data class MovePoint(
     val duration: Duration = 4.seconds,
     val animationType: CameraAnimationType = CameraAnimationType.DEFAULT
 )
-
 
 class CameraActivity: AppCompatActivity() {
     private lateinit var sdkContext : Context
@@ -51,7 +50,7 @@ class CameraActivity: AppCompatActivity() {
                 bearing = Arcdegree(0.0)
             ),
             animationType = CameraAnimationType.SHOW_BOTH_POSITIONS,
-            duration = Duration.ofSeconds(9)
+            duration = 9.seconds
         ),
         MovePoint(
             position = CameraPosition(
