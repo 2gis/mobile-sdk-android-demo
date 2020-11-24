@@ -25,7 +25,6 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".TouchEventsActivity" />
         <activity android:name=".TrafficRouterActivity" />
-        <activity android:name=".OnlineSourceActivity" />
         <activity android:name=".MyLocationActivity" />
         <activity android:name=".NightThemeActivity" />
         <activity android:name=".GeometryObjectsActivity" />

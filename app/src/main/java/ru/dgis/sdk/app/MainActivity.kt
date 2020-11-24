@@ -27,10 +27,6 @@ class MainActivity : AppCompatActivity() {
     private val RECORD_REQUEST_CODE = 101
 
     private val pages = listOf(
-        Page("Online Data Source") {
-            val intent = Intent(this@MainActivity, OnlineSourceActivity::class.java)
-            startActivity(intent)
-        },
         Page("Geometry Objects Example") {
             val intent = Intent(this@MainActivity, GeometryObjectsActivity::class.java)
             startActivity(intent)
