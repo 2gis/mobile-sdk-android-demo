@@ -1,6 +1,7 @@
 buildscript {
     ext {
         kotlin_version = "1.4.10"
+        dgis_version = "0.4.0-SNAPSHOT"
     }
     repositories {
         google()
@@ -16,7 +17,13 @@ allprojects {
     repositories {
         google()
         jcenter()
-        maven { url "http://maven.2gis.dev/libs-release" }
+
+        maven {
+            def postfix = dgis_version.contains("SNAPSHOT")
+                    ? "snapshot"
+                    : "release"
+            url "http://maven.2gis.dev/libs-$postfix"
+        }
     }
 }
 

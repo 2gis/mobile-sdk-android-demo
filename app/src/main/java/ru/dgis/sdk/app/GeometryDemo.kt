@@ -245,23 +245,27 @@ class GeometryDemo(
     }
 
     class ColorGenerator(private val parent: GeometryDemo) {
-        fun getLineColor(): Int {
+        fun getLineColor(): Long {
             val hsv = floatArrayOf(parent.random.nextFloat(360.0f), 1.0f, 1.0f)
-            return Color.HSVToColor(255, hsv)
+            return colorToAttributeValue(Color.HSVToColor(255, hsv))
         }
 
-        fun getAreaColors(): Pair<Int, Int> {
+        fun getAreaColors(): Pair<Long, Long> {
             val hue = parent.random.nextFloat(360.0f)
             val hsvFill = floatArrayOf(hue, 0.5f, 1.0f)
             val hsvStroke = floatArrayOf(hue, 1.0f, 0.7f)
-            return Pair(Color.HSVToColor(160, hsvFill), Color.HSVToColor(255, hsvStroke))
+            return Pair(colorToAttributeValue(Color.HSVToColor(160, hsvFill)),
+                colorToAttributeValue(Color.HSVToColor(255, hsvStroke))
+            )
         }
 
-        fun getFontColors(): Pair<Int, Int> {
+        fun getFontColors(): Pair<Long, Long> {
             val hue = parent.random.nextFloat(360.0f)
             val hsvFill = floatArrayOf(hue, 1.0f, 0.6f)
             val hsvStroke = floatArrayOf(hue, 0.1f, 1.0f)
-            return Pair(Color.HSVToColor(255, hsvFill), Color.HSVToColor(224, hsvStroke))
+            return Pair(colorToAttributeValue(Color.HSVToColor(255, hsvFill)),
+                colorToAttributeValue(Color.HSVToColor(224, hsvStroke))
+            )
         }
     }
 
