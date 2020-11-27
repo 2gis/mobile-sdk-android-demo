@@ -78,3 +78,5 @@ lint/tmp/
 *.hprof
 
 .DS_Store
+
+google-services.json
