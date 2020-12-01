@@ -15,7 +15,9 @@ pipeline {
             steps {
                 withCredentials([
                     string(credentialsId: 'DGIS_DIRECTORY_APP_KEY', variable: 'DIRECTORY_KEY'),
-                    string(credentialsId: 'DGIS_MAP_API_KEY', variable: 'MAP_KEY')
+                    string(credentialsId: 'DGIS_MAP_API_KEY', variable: 'MAP_KEY'),
+                    string(credentialsId: 'NSDK_UNSTRIPPED_LIBS_BASE_URL', variable: 'UNSTRIPPED_LIBS_URL'),
+                    file(credentialsId: 'NSDK_DEMOAPP_GOOGLE_SERVICES', variable: 'GOOGLE_SERVICES')
                 ]) {
                     script {
                         def localProperties = """\
@@ -26,6 +28,12 @@ pipeline {
                         """.stripIndent()
 
                         writeFile file: "local.properties", text: localProperties
+
+                        if ("${env.GIT_BRANCH}" == 'origin/master') {
+                            sh 'echo "\ndgisUnstrippedLibsDir=$(pwd)/build/app/nativeLibs" >> local.properties'
+                            sh "echo '\ndgisUnstrippedLibsUrl=${env.UNSTRIPPED_LIBS_URL}' >> local.properties"
+                            sh "ln -s ${env.GOOGLE_SERVICES} app/google-services.json"
+                        }
                     }
                 }
             }
@@ -33,11 +41,26 @@ pipeline {
 
         stage('Build & Test') {
             steps {
-                sh './gradlew clean build bundle --info'
+                script {
+                    def variant = "${env.GIT_BRANCH == 'origin/master' ? 'Release': 'Debug'}"
+                    withCredentials([
+                        usernamePassword(
+                            'credentialsId': 'buildserver-v4core',
+                            'usernameVariable': 'ARTIFACTORY_USERNAME',
+                            'passwordVariable': 'ARTIFACTORY_PASSWORD'
+                        )
+                    ]) {
+                        sh(
+                            label: 'Building project',
+                            script: "./gradlew clean app:assemble$variant test${variant}UnitTest lint$variant bundle$variant --info"
+                        )
+                    }
+                }
             }
         }
 
         stage('Signing artifacts') {
+            when { branch 'master'}
             steps {
                 withCredentials([
                         file(credentialsId: 'RELEASE_KEYSTORE', variable: 'RELEASE_KEYSTORE'),
@@ -73,11 +96,11 @@ pipeline {
 
         stage('Develop deploy') {
             when {
-                branch 'develop'
+                not {
+                    branch 'master'
+                }
             }
             steps {
-                archiveArtifacts(artifacts: 'build/app/outputs/apk/release/app-release.apk')
-                archiveArtifacts(artifacts: 'build/app/outputs/bundle/release/app-release.aab')
                 archiveArtifacts(artifacts: 'build/app/outputs/apk/debug/app-debug.apk')
                 archiveArtifacts(artifacts: 'build/app/outputs/bundle/debug/app-debug.aab')
             }
@@ -88,12 +111,18 @@ pipeline {
                 branch 'master'
             }
             steps {
+                sh './gradlew app:uploadCrashlyticsSymbolFileRelease'
                 archiveArtifacts(artifacts: 'build/app/outputs/apk/release/app-release.apk')
                 archiveArtifacts(artifacts: 'build/app/outputs/bundle/release/app-release.aab')
             }
         }
 
         stage('Documentation') {
+            when {
+                anyOf {
+                    branch 'master'; branch 'develop'
+                }
+            }
             steps {
                 withCredentials([
                     string(credentialsId: 'NSDK_GITLAB_PROJECT_TOKEN', variable: 'GITLAB_PROJECT_TOKEN'),
@@ -113,11 +142,6 @@ pipeline {
                     )
                 }
             }
-        }
-    }
-    post {
-        always {
-            sh './gradlew --stop'
         }
     }
 }
