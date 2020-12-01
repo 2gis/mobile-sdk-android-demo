@@ -3,6 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.firebase.crashlytics'
+apply plugin: 'de.undercouch.download'
 
 def localProperties = new Properties()
 localProperties.load(new FileInputStream(rootProject.file("local.properties")))
@@ -47,9 +48,25 @@ android {
     }
 }
 
+tasks.register('getUnstrippedLibraries', Copy) {
+    def unstrippedLibsUrl = localProperties.getProperty("dgisUnstrippedLibsUrl")
+    download {
+        src "${unstrippedLibsUrl}/libs-release-local/ru/dgis/sdk/libs/$dgis_sdk_version/libs-${dgis_sdk_version}.zip"
+        dest "$buildDir"
+        username System.getenv('ARTIFACTORY_USERNAME')
+        password System.getenv('ARTIFACTORY_PASSWORD')
+        overwrite false
+    }
+    from zipTree("$buildDir/libs-${dgis_sdk_version}.zip")
+    into "$buildDir/nativeLibs/$dgis_sdk_version"
+}
+
 afterEvaluate { project ->
     project.tasks.processDebugGoogleServices {
        onlyIf { false }
+    }
+    project.tasks.assembleRelease {
+        finalizedBy tasks.named('getUnstrippedLibraries')
     }
 }
 
