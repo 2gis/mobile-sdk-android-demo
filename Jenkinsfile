@@ -29,10 +29,10 @@ pipeline {
 
                         writeFile file: "local.properties", text: localProperties
 
-                        if ("${env.GIT_BRANCH}" == 'origin/master') {
+                        if ("${env.GIT_BRANCH}" == 'master') {
                             sh 'echo "\ndgisUnstrippedLibsDir=$(pwd)/build/app/nativeLibs" >> local.properties'
                             sh "echo '\ndgisUnstrippedLibsUrl=${env.UNSTRIPPED_LIBS_URL}' >> local.properties"
-                            sh "ln -s ${env.GOOGLE_SERVICES} app/google-services.json"
+                            sh "cat ${env.GOOGLE_SERVICES} > app/google-services.json"
                         }
                     }
                 }
@@ -42,7 +42,7 @@ pipeline {
         stage('Build & Test') {
             steps {
                 script {
-                    def variant = "${env.GIT_BRANCH == 'origin/master' ? 'Release': 'Debug'}"
+                    def variant = "${env.GIT_BRANCH == 'master' ? 'Release': 'Debug'}"
                     withCredentials([
                         usernamePassword(
                             'credentialsId': 'buildserver-v4core',
@@ -52,7 +52,7 @@ pipeline {
                     ]) {
                         sh(
                             label: 'Building project',
-                            script: "./gradlew clean app:assemble$variant test${variant}UnitTest lint$variant bundle$variant --info"
+                            script: "./gradlew clean app:assemble$variant test${variant}UnitTest lint$variant bundle$variant"
                         )
                     }
                 }
