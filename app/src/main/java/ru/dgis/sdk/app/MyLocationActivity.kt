@@ -87,7 +87,9 @@ class MyLocationActivity : AppCompatActivity() {
 
         mapView.getMapAsync {
             map = it
-            myLocationSource = createMyLocationMapObjectSource(sdkContext)!!
+            myLocationSource = createMyLocationMapObjectSource(sdkContext,
+                    MyLocationDirectionBehaviour.FOLLOW_SATELLITE_HEADING
+            )!!
             map!!.addSource(myLocationSource)
         }
 
