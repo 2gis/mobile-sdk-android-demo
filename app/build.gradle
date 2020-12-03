@@ -50,19 +50,22 @@ android {
 
 def unstrippedLibsUrl = localProperties.getProperty("dgisUnstrippedLibsUrl", "")
 if (!unstrippedLibsUrl.isEmpty()) {
+    def downloadTask = tasks.register('downloadLibsZip', Download) {
+        src "${unstrippedLibsUrl}/libs-release-local/ru/dgis/sdk/libs/$dgis_sdk_version/libs-${dgis_sdk_version}.zip"
+        dest "$buildDir"
+        username System.getenv('ARTIFACTORY_USERNAME')
+        password System.getenv('ARTIFACTORY_PASSWORD')
+        overwrite false
+    }
     def uploadLibTask = tasks.register('getUnstrippedLibraries', Copy) {
-        download {
-            src "${unstrippedLibsUrl}/libs-release-local/ru/dgis/sdk/libs/$dgis_sdk_version/libs-${dgis_sdk_version}.zip"
-            dest "$buildDir"
-            username System.getenv('ARTIFACTORY_USERNAME')
-            password System.getenv('ARTIFACTORY_PASSWORD')
-            overwrite false
-        }
+        dependsOn downloadTask
         from zipTree("$buildDir/libs-${dgis_sdk_version}.zip")
         into "$buildDir/nativeLibs/$dgis_sdk_version"
     }
-    project.tasks.named("assembleRelease").configure {
-        finalizedBy uploadLibTask
+    afterEvaluate { project ->
+        project.tasks.assembleRelease {
+            finalizedBy uploadLibTask
+        }
     }
 }
 
