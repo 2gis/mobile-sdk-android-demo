@@ -1,0 +1,167 @@
+pipeline {
+    agent {
+        label 'ubuntu-18.04 && x64 && hw'
+    }
+
+    options {
+        // Сколько последних сборок храним?
+        buildDiscarder(logRotator(numToKeepStr: '10'))
+        // Отключаем параллельный запуск
+        disableConcurrentBuilds()
+    }
+
+    triggers {
+        cron('@midnight')
+    }
+
+    stages {
+        stage('Prepare') {
+            steps {
+                withCredentials([
+                    string(credentialsId: 'DGIS_DIRECTORY_APP_KEY', variable: 'DIRECTORY_KEY'),
+                    string(credentialsId: 'DGIS_MAP_API_KEY', variable: 'MAP_KEY'),
+                    string(credentialsId: 'NSDK_UNSTRIPPED_LIBS_BASE_URL', variable: 'UNSTRIPPED_LIBS_URL'),
+                    file(credentialsId: 'NSDK_DEMOAPP_GOOGLE_SERVICES', variable: 'GOOGLE_SERVICES')
+                ]) {
+                    script {
+                        def localProperties = """\
+                            sdk.dir=/opt/android-sdk/
+
+                            dgisMapApiKey=${env.MAP_KEY}
+                            dgisDirectoryApiKey=${env.DIRECTORY_KEY}
+                        """.stripIndent()
+
+                        writeFile file: "local.properties", text: localProperties
+
+                        sh "cat ${env.GOOGLE_SERVICES} > app/google-services.json"
+                    }
+                }
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh(
+                    label: 'Building project',
+                    script: "./gradlew clean build test lint bundle"
+                )
+            }
+        }
+
+        stage('Test') {
+            steps {
+                sh(
+                    label: "Подготовка образа эмулятора",
+                    script: """
+                        echo no | \
+                            /opt/android-sdk/tools/bin/avdmanager \
+                            create avd \
+                            -n webgl-tests \
+                            -k "system-images;android-29;google_apis;x86_64" \
+                            -f
+                    """
+                )
+
+                timeout(2) {
+                    sh(
+                        label: "Поднятие эмулятора",
+                        script: """
+                            /opt/android-sdk/emulator/emulator \
+                                -memory 2048 \
+                                -partition-size 2048 \
+                                -no-boot-anim \
+                                -noaudio \
+                                -no-snapshot \
+                                -no-window \
+                                -avd webgl-tests > /dev/null 2>&1 &
+                        """
+                    )
+
+                    // Скрипт для проверки инициализации эмулятора, т.к. запускаем его не в
+                    // интерактивном режиме.
+                    sh(
+                        label: "Ожидание загрузки эмулятора",
+                        script: """
+                            while [ -z "\$(/opt/android-sdk/platform-tools/adb devices | awk '{print \$2}' | grep device)" ];
+                            do
+                                echo "Waiting for emulator to boot"
+                                sleep 5
+                            done
+                            echo "Emulator booted"
+                        """
+                    )
+                }
+                script {
+                    try {
+                        timeout(10) {
+                            sh(
+                                label: "Тесты",
+                                script: "./gradlew connectedAndroidTest --info"
+                            )
+                        }
+                    }
+                    catch (e) {
+                        throw e
+                    }
+                    finally {
+                        publishHTML(target: [
+                            reportName: 'App tests results',
+                            alwaysLinkToLastBuild: true,
+                            reportDir: 'build/app/reports/androidTests/connected',
+                            reportFiles: 'index.html',
+                            keepAll: true,
+                            allowMissing: false,
+                        ])
+
+                        timeout(1) {
+                            sh(
+                                label: 'Saving logcat',
+                                script: """
+                                    /opt/android-sdk/platform-tools/adb logcat -d > logcat.txt
+                                """
+                            )
+                        }
+
+                        archiveArtifacts(artifacts: 'logcat.txt', allowEmptyArchive: true)
+                    }
+                }
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                archiveArtifacts(artifacts: 'build/app/outputs/apk/debug/app-debug.apk')
+                archiveArtifacts(artifacts: 'build/app/outputs/bundle/debug/app-debug.aab')
+                archiveArtifacts(artifacts: 'build/app/outputs/apk/release/app-release-unsigned.apk')
+                archiveArtifacts(artifacts: 'build/app/outputs/bundle/release/app-release.aab')
+            }
+        }
+
+        stage('Documentation') {
+            when {
+                anyOf {
+                    branch 'develop'; branch 'master'
+                }
+            }
+            steps {
+                withCredentials([
+                    string(credentialsId: 'NSDK_GITLAB_PROJECT_TOKEN', variable: 'GITLAB_PROJECT_TOKEN'),
+                    string(credentialsId: 'NSDK_GITLAB_PROJECT_ID', variable: 'GITLAB_PROJECT_ID'),
+                    string(credentialsId: 'GITLAB_URL', variable: 'GITLAB_URL')
+                ]) {
+                    sh(
+                        label: 'Запуск регенерации документации',
+                        script:"""
+                            curl --location \
+                            -X POST \
+                            -F token=$GITLAB_PROJECT_TOKEN \
+                            -F ref=master \
+                            -F "variables[Android_SDK_CI]=true" \
+                            https://${env.GITLAB_URL}/api/v4/projects/${env.GITLAB_PROJECT_ID}/trigger/pipeline
+                        """
+                    )
+                }
+            }
+        }
+    }
+}
