@@ -1,6 +1,12 @@
 # Release notes
 
 
+## v0.4.1
+**Release Date:** 
+- в [RouteParams](/ru/android/native/maps/reference/RouteParams) добавлена поддержка промежуточных точек
+- *Ломающее изменение:* DgisSourceCreator был переименован в [DgisSource](/ru/android/native/maps/reference/DgisSource)
+
+
 ## v0.4.0
 **Release Date:** 03.12.2020
 - уменьшили размер библиотеки
