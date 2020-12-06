@@ -12,7 +12,6 @@ import ru.dgis.sdk.coordinates.GeoPoint
 import ru.dgis.sdk.directory.DirectoryObjectId
 import ru.dgis.sdk.geometry.GeometryCreator
 import ru.dgis.sdk.map.*
-import ru.dgis.sdk.map.Map
 import ru.dgis.sdk.routing.*
 
 class TrafficRouterActivity : AppCompatActivity(), TouchEventsObserver {
@@ -20,7 +19,8 @@ class TrafficRouterActivity : AppCompatActivity(), TouchEventsObserver {
     private lateinit var routeEditorSource: RouteEditorSource
     private lateinit var routeIndexSpinner: Spinner
     private lateinit var mapView: MapView
-    private var map: Map? = null
+    private var map: ru.dgis.sdk.map.Map? = null
+
     private var geometryMapObjectSource: GeometryMapObjectSource? = null
 
     private var connections = mutableListOf<Connection>()
@@ -251,9 +251,10 @@ class TrafficRouterActivity : AppCompatActivity(), TouchEventsObserver {
         }
 
         routeEditor.setRouteParams(RouteParams(
-            startPoint = startSearchPoint,
-            finishPoint = finishSearchPoint,
-            routeOptions = routeOptions
+                startPoint = startSearchPoint,
+                finishPoint = finishSearchPoint,
+                routeOptions = routeOptions,
+                listOf<RouteSearchPoint>()
         ))
     }
 
