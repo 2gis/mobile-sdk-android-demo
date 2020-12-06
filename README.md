@@ -44,4 +44,4 @@ dgisMapApiKey=MAP_API_KEY
 dgisDirectoryApiKey=DIRECTORY_API_KEY
 ```
 
-You can find more usage examples at [https://docs.2gis.com/ru/android/native/maps/examples/unstable](https://docs.2gis.com/ru/android/native/maps/examples/unstable).
+You can find more usage examples at [https://docs.2gis.com/ru/android/native/maps/examples](https://docs.2gis.com/ru/android/native/maps/examples).
