@@ -95,6 +95,13 @@ pipeline {
                     try {
                         timeout(10) {
                             sh(
+                                label: "Подготовка logcat",
+                                script: """
+                                    /opt/android-sdk/platform-tools/adb logcat -c
+                                """
+                            )
+
+                            sh(
                                 label: "Тесты",
                                 script: "./gradlew connectedAndroidTest --info"
                             )
