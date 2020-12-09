@@ -107,9 +107,6 @@ pipeline {
                             )
                         }
                     }
-                    catch (e) {
-                        throw e
-                    }
                     finally {
                         publishHTML(target: [
                             reportName: 'App tests results',
