@@ -2,9 +2,10 @@
 
 
 ## v0.4.1
-**Release Date:** 
+**Release Date:** 09.12.2020
+- добавлен новый [DgisSource](/ru/android/native/maps/reference/DgisSource). Для работы c объектами 2GIS
+- *Ломающее изменение:* DgisSourceCreator был удален. Вместо него стоит использовать статические методы [DgisSource](/ru/android/native/maps/reference/DgisSource)
 - в [RouteParams](/ru/android/native/maps/reference/RouteParams) добавлена поддержка промежуточных точек
-- *Ломающее изменение:* DgisSourceCreator был переименован в [DgisSource](/ru/android/native/maps/reference/DgisSource)
 
 
 ## v0.4.0
