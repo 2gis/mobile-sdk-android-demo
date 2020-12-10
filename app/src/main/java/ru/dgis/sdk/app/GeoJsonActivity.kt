@@ -42,7 +42,7 @@ class GeoJsonActivity : AppCompatActivity() {
                 Tilt(0.0f),
                 Arcdegree(0.0)
             )
-            source = DgisSourceCreator.createOnlineDgisSource(sdkContext)
+            source = DgisSource.createOnlineDgisSource(sdkContext)
         }
 
         mapView = MapView(this, mapOptions)
