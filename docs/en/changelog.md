@@ -7,6 +7,7 @@
 - поддержка offline данных в downloads директории
 - воспроизведение голосовых инструкций с учетом скорости на маршруте
 - [searchById](/ru/android/native/maps/reference/SearchManager#nav-lvl1--searchById) в модуле справочника
+- добавили свойство [renderView](/ru/android/native/maps/reference/MapView#nav-lvl1--renderView) у объекта MapView
 
 
 ## v0.4.2
