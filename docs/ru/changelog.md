@@ -1,6 +1,21 @@
 # Release notes
 
 
+## v0.4.3
+**Release Date:** 22.12.2020
+- режим слежения за маркером местоположения
+- поддержка offline данных в downloads директории
+- воспроизведение голосовых инструкций с учетом скорости на маршруте
+- [searchById](/ru/android/native/maps/reference/SearchManager#nav-lvl1--searchById) в модуле справочника
+- добавили свойство [renderView](/ru/android/native/maps/reference/MapView#nav-lvl1--renderView) у объекта MapView
+
+
+## v0.4.2
+**Release Date:** 15.12.2020
+- голосовые инструкции в навигаторе во время ведения по маршруту
+- поддержали жест наклона карты
+
+
 ## v0.4.1
 **Release Date:** 09.12.2020
 - добавлен новый [DgisSource](/ru/android/native/maps/reference/DgisSource). Для работы c объектами 2GIS
