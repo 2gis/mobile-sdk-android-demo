@@ -10,6 +10,10 @@ pipeline {
         disableConcurrentBuilds()
     }
 
+    environment {
+        JAVA_HOME = '/usr/lib/jvm/java-8-openjdk-amd64/'
+    }
+
     stages {
         stage('Prepare') {
             steps {
@@ -26,11 +30,12 @@ pipeline {
                             dgisMapApiKey=${env.MAP_KEY}
                             dgisDirectoryApiKey=${env.DIRECTORY_KEY}
 
-                            dgisUnstrippedLibsDir=$(pwd)/build/app/nativeLibs
                             dgisUnstrippedLibsUrl=${env.UNSTRIPPED_LIBS_URL}
                         """.stripIndent()
 
                         writeFile file: "local.properties", text: localProperties
+
+                        sh 'echo "\ndgisUnstrippedLibsDir=\$(pwd)/build/app/nativeLibs" >> local.properties'
 
                         sh "cat ${env.GOOGLE_SERVICES} > app/google-services.json"
                     }
