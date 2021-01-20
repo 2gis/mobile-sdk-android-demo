@@ -79,7 +79,7 @@ class GeometryObjectsActivity : AppCompatActivity(), TouchEventsObserver {
         }
     }
 
-    override fun onTap(point: ViewportPoint) {
+    override fun onTap(point: ScreenPoint) {
         mapView.getRenderedObjects(point, ScreenDistance(5f)).onResult {
             var message = "Ничего не нашли"
             if(it.isEmpty().not()) {
@@ -95,7 +95,7 @@ class GeometryObjectsActivity : AppCompatActivity(), TouchEventsObserver {
         }
     }
 
-    override fun onLongTouch(point: ViewportPoint) {
+    override fun onLongTouch(point: ScreenPoint) {
 
     }
 }

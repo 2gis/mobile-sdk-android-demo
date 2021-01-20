@@ -64,7 +64,7 @@ class TouchEventsActivity : AppCompatActivity(), TouchEventsObserver {
 		})
 	}
 
-	override fun onTap(point: ViewportPoint) {
+	override fun onTap(point: ScreenPoint) {
 		val source = checkNotNull(this.source) { "source has been initialized here" }
         val map = checkNotNull(this.map) { "map has been initialized here" }
 
@@ -107,7 +107,7 @@ class TouchEventsActivity : AppCompatActivity(), TouchEventsObserver {
 			}
 	}
 
-	override fun onLongTouch(point: ViewportPoint) {
+	override fun onLongTouch(point: ScreenPoint) {
         // TODO: подсветить выбранный объект
 	}
 }
