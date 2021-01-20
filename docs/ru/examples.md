@@ -230,7 +230,7 @@ routeFuture.onResult {  routes ->
 По клику в карту можно определить попали ли мы в динамический объект или в объект 2ГИС. 
 Ниже пример получения информации из справочника
 ```kotlin
-override fun onTap(point: ViewportPoint) {
+override fun onTap(point: ScreenPoint) {
     viewport.getRenderedObjects(point, ScreenDistance(5f))
         .onResult { renderedObjects ->
             renderedObjects.mapNotNull { objectInfo ->

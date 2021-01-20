@@ -7,10 +7,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import ru.dgis.sdk.context.Context
+import ru.dgis.sdk.map.*
 import ru.dgis.sdk.map.Map
-import ru.dgis.sdk.map.MapOptions
-import ru.dgis.sdk.map.MapView
-import ru.dgis.sdk.map.StyleBuilder
 import java.lang.ref.WeakReference
 
 

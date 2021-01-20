@@ -1,5 +1,9 @@
 # Release notes
 
+## v0.4.4
+**Release Date:** 19.01.2021
+- *ViewportPoint* переименован в *ScreenPoint*, *ViewportSize* -> *ScreenSize*
+-
 
 ## v0.4.3
 **Release Date:** 22.12.2020

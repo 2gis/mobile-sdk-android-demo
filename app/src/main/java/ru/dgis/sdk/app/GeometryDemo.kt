@@ -186,16 +186,16 @@ class GeometryDemo(
     }
 
     class PointGenerator(private val parent: GeometryDemo) {
-        private val size = ViewportSize(parent.width, parent.height)
+        private val size = ScreenSize(parent.width, parent.height)
         private val unit: Float = minOf(size.width, size.height).toFloat() / 4
         private val projection = parent.map.camera.projection()
-        private val origin: ViewportPoint
+        private val origin: ScreenPoint
 
         init {
             while (true) {
                 val x = parent.random.nextFloat(unit / 2, size.width - unit / 2)
                 val y = parent.random.nextFloat(unit / 2, size.height - unit / 2)
-                val pt = ViewportPoint(x, y)
+                val pt = ScreenPoint(x, y)
                 if (checkOriginBounds(pt)) {
                     origin = pt
                     break
@@ -207,12 +207,12 @@ class GeometryDemo(
             return minLongitude >= -180.0 && maxLongitude <= 180.0 && maxLongitude - minLongitude < 180.0
         }
 
-        private fun checkOriginBounds(pt: ViewportPoint): Boolean {
+        private fun checkOriginBounds(pt: ScreenPoint): Boolean {
             val points = arrayOf(
-                ViewportPoint(pt.x - unit / 2, pt.y - unit / 2),
-                ViewportPoint(pt.x + unit / 2, pt.y - unit / 2),
-                ViewportPoint(pt.x + unit / 2, pt.y + unit / 2),
-                ViewportPoint(pt.x - unit / 2, pt.y + unit / 2)
+                ScreenPoint(pt.x - unit / 2, pt.y - unit / 2),
+                ScreenPoint(pt.x + unit / 2, pt.y - unit / 2),
+                ScreenPoint(pt.x + unit / 2, pt.y + unit / 2),
+                ScreenPoint(pt.x - unit / 2, pt.y + unit / 2)
             ).map { projection.screenToMap(it) }
             if (points.all { it != null }) {
                 val maxLon = points.maxBy { it!!.longitude.value }
@@ -226,7 +226,7 @@ class GeometryDemo(
 
         fun getPoint(x: Float, y: Float): GeoPoint {
             return projection.screenToMap(
-                ViewportPoint(origin.x + unit * (x - 0.5f), origin.y + unit * (y - 0.5f))
+                ScreenPoint(origin.x + unit * (x - 0.5f), origin.y + unit * (y - 0.5f))
             ) ?: GeoPoint(Arcdegree(0.0), Arcdegree(0.0))
         }
 
@@ -234,7 +234,7 @@ class GeometryDemo(
             val viewportX = parent.random.nextFloat(size.width.toFloat())
             val viewportY = parent.random.nextFloat(size.height.toFloat())
             return parent.map.camera.position().value.point.let { center ->
-                projection.screenToMap(ViewportPoint(viewportX, viewportY))?.let {
+                projection.screenToMap(ScreenPoint(viewportX, viewportY))?.let {
                     GeoPoint(
                         Arcdegree(it.latitude.value - center.latitude.value),
                         Arcdegree(it.longitude.value - center.longitude.value)
