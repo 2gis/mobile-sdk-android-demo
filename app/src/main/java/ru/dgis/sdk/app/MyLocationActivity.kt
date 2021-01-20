@@ -45,7 +45,7 @@ class MyLocationActivity : AppCompatActivity() {
                     continue
                 val x = event.getX(i)
                 val y = event.getY(i)
-                map?.camera?.projection()?.screenToMap(ViewportPoint(x, y))?.let { toPoint ->
+                map?.camera?.projection()?.screenToMap(ScreenPoint(x, y))?.let { toPoint ->
                     distanceAnimator?.cancel()
                     val fromPoint = currentPoint
                     val dLat = toPoint.latitude.value - fromPoint.latitude.value

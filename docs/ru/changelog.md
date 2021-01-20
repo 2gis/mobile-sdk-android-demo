@@ -1,5 +1,18 @@
 # Release notes
 
+## v0.4.5
+**Release Date:** 20.01.2021
+- вернули *map.camera* 
+
+
+## v0.4.4
+**Release Date:** 19.01.2021
+- *ViewportPoint* переименован в *ScreenPoint*, *ViewportSize* -> *ScreenSize*
+- фикс слоя для маркеров
+- добавлен [GestureManager](/ru/android/native/maps/reference/GestureManager)
+- добавили возможность отменять [Future](/ru/android/native/maps/reference/Future#nav-lvl1--cancel)
+- изменили работу с **Any** типами (см. [пример](/ru/android/native/maps/reference/SuggestHandler#nav-lvl1--match))
+
 
 ## v0.4.3
 **Release Date:** 22.12.2020

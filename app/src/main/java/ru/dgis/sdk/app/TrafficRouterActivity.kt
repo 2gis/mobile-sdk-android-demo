@@ -120,7 +120,7 @@ class TrafficRouterActivity : AppCompatActivity(), TouchEventsObserver {
         super.onDestroy()
     }
 
-    override fun onTap(point: ViewportPoint) {
+    override fun onTap(point: ScreenPoint) {
         // TODO: вся эта логика должна быть внутри RouteEditor'a, иначе зачем он вообще?
         mapView.getRenderedObjects(point, ScreenDistance(5f)).onResult { renderedObjectInfos ->
             if (renderedObjectInfos.isEmpty()) {
@@ -150,7 +150,7 @@ class TrafficRouterActivity : AppCompatActivity(), TouchEventsObserver {
         }
     }
 
-    override fun onLongTouch(point: ViewportPoint) {
+    override fun onLongTouch(point: ScreenPoint) {
         map?.camera?.projection()?.screenToMap(point)?.let {
             if (routeDisplayed) {
                 return
@@ -180,7 +180,7 @@ class TrafficRouterActivity : AppCompatActivity(), TouchEventsObserver {
         dragPoint = map!!.camera.projection().screenToMap(data.point)
     }
 
-    override fun onDragMove(point: ViewportPoint) {
+    override fun onDragMove(point: ScreenPoint) {
         val newPoint = map!!.camera.projection().screenToMap(point)!!
         val shift = GeoPoint(Arcdegree(newPoint.latitude.value - dragPoint!!.latitude.value), Arcdegree(newPoint.longitude.value - dragPoint!!.longitude.value))
         dragRoutePoint?.setShift(shift)
