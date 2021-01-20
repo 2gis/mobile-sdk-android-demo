@@ -1,5 +1,10 @@
 # Release notes
 
+## v0.4.5
+**Release Date:** 20.01.2021
+- вернули *map.camera* 
+
+
 ## v0.4.4
 **Release Date:** 19.01.2021
 - *ViewportPoint* переименован в *ScreenPoint*, *ViewportSize* -> *ScreenSize*
