@@ -17,16 +17,16 @@ buildscript {
     }
 }
 
+def localProperties = new Properties()
+localProperties.load(new FileInputStream(rootProject.file("local.properties")))
+
 allprojects {
     repositories {
         google()
         jcenter()
 
         maven {
-            def postfix = dgis_sdk_version.contains("SNAPSHOT")
-                    ? "snapshot"
-                    : "release"
-            url "http://maven.2gis.dev/libs-$postfix"
+            url localProperties.getProperty('sdkRepository', 'http://maven.2gis.dev/libs-release')
         }
     }
 }
