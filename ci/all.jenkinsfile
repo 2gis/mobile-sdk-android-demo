@@ -25,6 +25,7 @@ pipeline {
                     string(credentialsId: 'DGIS_DIRECTORY_APP_KEY', variable: 'DIRECTORY_KEY'),
                     string(credentialsId: 'DGIS_MAP_API_KEY', variable: 'MAP_KEY'),
                     string(credentialsId: 'NSDK_UNSTRIPPED_LIBS_BASE_URL', variable: 'UNSTRIPPED_LIBS_URL'),
+                    string(credentialsId: 'ARTIFACTORY_HOST', variable: 'ARTIFACTORY_HOST'),
                     file(credentialsId: 'NSDK_DEMOAPP_GOOGLE_SERVICES', variable: 'GOOGLE_SERVICES')
                 ]) {
                     script {
@@ -36,6 +37,10 @@ pipeline {
                         """.stripIndent()
 
                         writeFile file: "local.properties", text: localProperties
+
+                        if (env.BRANCH_NAME != 'master') {
+                            sh "echo sdkRepository=${ARTIFACTORY_HOST}/sdk-maven-all >> local.properties"
+                        }
 
                         sh "cat ${env.GOOGLE_SERVICES} > app/google-services.json"
                     }
