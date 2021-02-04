@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="SwitchItem" parent="Widget.AppCompat.CompoundButton.Switch">
+        <item name="android:textSize">14sp</item>
+        <item name="android:lineHeight">18sp</item>
+        <item name="android:fontFamily">@font/suisse_intl_semi_bold</item>
+    </style>
+
+</resources>

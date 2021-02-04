@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".GenericMapActivity">
+
+    <com.sothree.slidinguppanel.SlidingUpPanelLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom"
+        app:umanoPanelHeight="48dp"
+        app:umanoShadowHeight="4dp"
+        >
+
+        <ru.dgis.sdk.map.MapView
+            android:id="@+id/mapView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            >
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent">
+                    <ru.dgis.sdk.map.ZoomControl
+                        android:id="@+id/zoomControl"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        />
+                    <ru.dgis.sdk.map.MyLocationControl
+                        android:id="@+id/locationControl"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        />
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </ru.dgis.sdk.map.MapView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="?android:attr/colorBackground"
+            android:gravity="center_horizontal"
+            >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_pimp"
+                android:layout_marginBottom="12dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintLeft_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                >
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="24dp"
+                    android:background="?attr/colorOnSurface"
+                    />
+                <TextView
+                    style="@style/SubheadMediumLeftBlack"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:paddingStart="24dp"
+                    android:paddingEnd="24dp"
+                    android:background="?attr/colorOnSurface"
+                    android:textAllCaps="true"
+                    android:gravity="center_vertical"
+                    android:text="Gestures Setup"
+                    />
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/rotationSwitch"
+                    style="@style/SwitchItem.Settings"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:text="Rotation"
+                    />
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/shiftSwitch"
+                    style="@style/SwitchItem.Settings"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:paddingHorizontal="24dp"
+                    android:text="Shift"
+                    />
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/scaleSwitch"
+                    style="@style/SwitchItem.Settings"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:text="Scale"
+                    />
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/tiltSwitch"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:text="Tilt"
+                    />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="24dp"
+                    android:background="?attr/colorOnSurface"
+                    />
+                <TextView
+                    style="@style/SubheadMediumLeftBlack"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="?attr/colorOnSurface"
+                    android:paddingStart="24dp"
+                    android:paddingEnd="24dp"
+                    android:textAllCaps="true"
+                    android:gravity="center_vertical"
+                    android:text="Map Attributes"
+                    />
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/darkModeSwitch"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:text="Dark Theme"
+                    />
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/flatModeSwitch"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:text="2D Mode"
+                    />
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </com.sothree.slidinguppanel.SlidingUpPanelLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
