@@ -1,5 +1,14 @@
 # Release notes
 
+
+## v0.5.0
+**Release Date:** 04.02.2021
+- исправлен баг с ключами API(проявлялось как 403 от сервера тайлов)
+- звуковое оповещение о превышении скорости в навигаторе
+- получение пробочного балла в [TrafficManager](/ru/android/native/maps/reference/ru.dgis.sdk.traffic.TrafficManager)
+- landscape Ui в навигаторе
+
+
 ## v0.4.6
 **Release Date:** 26.01.2021
 - приглушение других звуков при проигрывании инструкций навигатора

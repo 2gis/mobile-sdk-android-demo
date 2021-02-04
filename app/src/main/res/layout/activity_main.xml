@@ -17,7 +17,7 @@
         android:includeFontPadding="false"
         android:lineSpacingMultiplier="1"
         android:text="@string/title"
-        android:textColor="@android:color/black"
+        android:textColor="?android:attr/textColorPrimary"
         android:textSize="28sp"
         android:textStyle="normal"
         app:layout_constraintLeft_toLeftOf="parent"

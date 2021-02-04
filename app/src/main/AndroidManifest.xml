@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
+        android:name=".Application"
         android:allowBackup="true"
         android:icon="@mipmap/icon_round"
         android:label="@string/app_name"
@@ -19,18 +20,18 @@
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
-        <activity android:name=".TouchEventsActivity" />
-        <activity android:name=".TrafficRouterActivity" />
-        <activity android:name=".MyLocationActivity" />
-        <activity android:name=".NightThemeActivity" />
-        <activity android:name=".GeometryObjectsActivity" />
-        <activity android:name=".CameraActivity" />
-        <activity android:name=".GeoJsonActivity" />
-        <activity android:name=".MarkersActivity" />
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/MainActivityTheme" />
+        <activity
+            android:name=".GenericMapActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/GenericActivityTheme" />
     </application>
 
 </manifest>
