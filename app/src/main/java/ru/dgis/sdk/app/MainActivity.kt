@@ -9,8 +9,12 @@ import android.util.Log
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ListView
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import ru.dgis.sdk.context.Context
+import ru.dgis.sdk.positioning.registerPlatformLocationSource
+import ru.dgis.sdk.positioning.registerPlatformMagneticSource
 
 
 typealias ScreenSelectedCallback = () -> Unit
@@ -25,45 +29,20 @@ data class Page(
 
 class MainActivity : AppCompatActivity() {
     private val RECORD_REQUEST_CODE = 101
+    private lateinit var sdkContext: Context
 
     private val pages = listOf(
-        Page("Geometry Objects Example") {
-            val intent = Intent(this@MainActivity, GeometryObjectsActivity::class.java)
+        Page("Generic Map") {
+            val intent = Intent(this@MainActivity, GenericMapActivity::class.java)
             startActivity(intent)
         },
-        Page("Camera Moves") {
-            val intent = Intent(this@MainActivity, CameraActivity::class.java)
-            startActivity(intent)
-        },
-        Page("Map Attributes") {
-            val intent = Intent(this@MainActivity, NightThemeActivity::class.java)
-            startActivity(intent)
-        },
-        Page("Route Editor Example") {
-            val intent = Intent(this@MainActivity, TrafficRouterActivity::class.java)
-            startActivity(intent)
-        },
-        Page("GeoJson Example") {
-            val intent = Intent(this@MainActivity, GeoJsonActivity::class.java)
-            startActivity(intent)
-        },
-        Page("Location Indicator Example") {
-            val intent = Intent(this@MainActivity, MyLocationActivity::class.java)
-            startActivity(intent)
-        },
-        Page("Touch Identify Example") {
-            val intent = Intent(this@MainActivity, TouchEventsActivity::class.java)
-            startActivity(intent)
-        },
-        Page("Markers Example") {
-            val intent = Intent(this@MainActivity, MarkersActivity::class.java)
-            startActivity(intent)
-        }
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-	setupPermissions()
+
+        setupPermissions()
+        (applicationContext as Application).registerServices()
     }
 
     private fun createImpl() {
@@ -71,7 +50,7 @@ class MainActivity : AppCompatActivity() {
 
         findViewById<ListView>(R.id.pages).apply {
             adapter = ArrayAdapter(this@MainActivity,
-                R.layout.list_item,
+                R.layout.main_list_item,
                 R.id.page_name,
                 pages)
             onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->

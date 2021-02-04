@@ -1,21 +1,63 @@
 <resources>
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+
+        <item name="colorPrimary">@color/seashell</item>
+        <item name="colorPrimaryDark">@android:color/transparent</item>
+        <item name="colorAccent">@color/laurel</item>
+
         <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="switchStyle">@style/SwitchItem</item>
+
+        <item name="android:colorBackground">@color/white</item>
+        <item name="android:color">@color/white</item>
+
+        <item name="colorSurface">@color/white</item>
+        <item name="colorOnSurface">@color/seashell</item>
     </style>
 
     <style name="SplashTheme" parent="@style/AppTheme">
         <item name="android:windowBackground">@drawable/splash</item>
     </style>
 
+    <style name="MainActivityTheme" parent="@style/AppTheme">
+        <item name="android:statusBarColor">@android:color/holo_green_dark</item>
+    </style>
+
+    <style name="GenericActivityTheme" parent="@style/AppTheme">
+        <item name="switchStyle">@style/SwitchItem.Settings</item>
+    </style>
+
+
     <style name="GeometryPopupTheme" parent="@style/Widget.AppCompat.Light.PopupMenu">
         <item name="android:dropDownHorizontalOffset">0dp</item>
         <item name="android:dropDownVerticalOffset">-4dp</item>
+    </style>
+
+    <style name="BodyRegularLeftBlack">
+        <item name="android:fontFamily">@font/suisse_intl_regular</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:lineSpacingExtra">4sp</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
+
+    <style name="SubheadMediumLeftBlack">
+        <item name="android:fontFamily">@font/suisse_intl_medium</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">11.5sp</item>
+        <item name="android:lineSpacingExtra">4.5sp</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
+
+    <style name="SwitchItem">
+        <item name="android:enabled">false</item>
+        <item name="android:textAppearance">@style/BodyRegularLeftBlack</item>
+    </style>
+
+    <style name="SwitchItem.Settings" parent="SwitchItem">
+        <item name="android:paddingLeft">24dp</item>
+        <item name="android:paddingRight">24dp</item>
+        <item name="android:enabled">false</item>
     </style>
 
 </resources>
