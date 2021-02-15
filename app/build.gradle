@@ -106,5 +106,5 @@ dependencies {
     releaseImplementation 'com.google.firebase:firebase-analytics'
     releaseImplementation 'com.google.firebase:firebase-crashlytics-ndk'
 
-    implementation "ru.dgis.sdk:sdk:$dgis_sdk_version"
+    implementation "ru.dgis.sdk:sdk-map:$dgis_sdk_version"
 }
