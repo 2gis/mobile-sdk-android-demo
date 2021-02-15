@@ -2,7 +2,15 @@
 
 ## v0.6.0
 **Release Date:** 15.02.2021
-- Мы разделили SDK на 2 артефакта. **sdk-map** - версия для тех кому нужна только карта и справочник. **sdk-full** - более полная, содержит в себе навигатор. В *build.gradle* необходимо указать нужную версию(напр. `implementation 'ru.dgis.sdk:sdk-map:0.6.0'`)
+- разделили SDK на 2 артефакта. **sdk-map** - версия для тех кому нужна только карта и справочник. **sdk-full** - более полная, содержит в себе навигатор. В *build.gradle* необходимо указать нужную версию(напр. `implementation 'ru.dgis.sdk:sdk-map:0.6.0'`)
+- карта и контролы теперь доступны и в темной теме
+- [добавили уровень логирования](/ru/android/native/maps/reference/ru.dgis.sdk.DGis#nav-lvl1--initialize). По умолчанию SDK пишет только Warning и более критичные сообщения
+- методы для вычисления [позиции камеры](/ru/android/native/maps/reference/ru.dgis.sdk.map.calcPosition) и [Zoom Level](/ru/android/native/maps/reference/ru.dgis.sdk.map.zoomOutToFit) по заданной геометрии
+- [источник для данных с кластеризацией](/ru/android/native/maps/reference/ru.dgis.sdk.map.GeometryMapObjectSourceBuilder#nav-lvl1--createSourceWithClustering)
+- добавили возможность задать [координату с высотой для маркера](/ru/android/native/maps/reference/ru.dgis.sdk.map.MarkerBuilder#nav-lvl1--setPosition)
+- для динамических объектов на карте, добавили возможность [определить пользовательские данные](/ru/android/native/maps/reference/ru.dgis.sdk.map.MarkerBuilder#nav-lvl1--setUserData)
+- поддержали создание маркера с текстом, без иконки
+- *Ломающее изменение:* иконку маркера необходимо указывать через [объект стилей](/ru/android/native/maps/reference/ru.dgis.sdk.map.MarkerBuilder#nav-lvl1--setStyle). Формирование стиля маркера с иконкой может занимать значительное время т.к. для этого может понадобится растеризаться/сжатие изображения. Мы настоятельно рекомендуем делать это в фоновом потоке и переиспользовать MarkerStyle для однотипных маркеров.
 
 
 ## v0.5.0
