@@ -26,7 +26,7 @@ repositories {
 2. Add a build dependency:
 ```gradle
 dependencies {
-    implementation 'ru.dgis.sdk:sdk:latest.release'
+    implementation 'ru.dgis.sdk:sdk-full:latest.release'
 }
 ```
 
