@@ -9,7 +9,6 @@ import ru.dgis.sdk.map.Map
 import ru.dgis.sdk.positioning.*
 
 
-private const val NIGHT_MODE_ATTR = "night_on"
 private const val DIMENSION_ATTR = "is_2d"
 
 
@@ -75,14 +74,6 @@ class GenericMapActivity : AppCompatActivity() {
     }
 
     private fun setupMapAttributes(map: Map) {
-        findViewById<SwitchCompat>(R.id.darkModeSwitch).apply {
-            isEnabled = true
-
-            setOnCheckedChangeListener { _, isChecked ->
-                map.setStyleAttribute(NIGHT_MODE_ATTR, isChecked)
-            }
-        }
-
         findViewById<SwitchCompat>(R.id.flatModeSwitch).apply {
             isEnabled = true
 
