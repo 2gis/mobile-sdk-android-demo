@@ -138,13 +138,6 @@
                     />
 
                 <com.google.android.material.switchmaterial.SwitchMaterial
-                    android:id="@+id/darkModeSwitch"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:text="Dark Theme"
-                    />
-
-                <com.google.android.material.switchmaterial.SwitchMaterial
                     android:id="@+id/flatModeSwitch"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
