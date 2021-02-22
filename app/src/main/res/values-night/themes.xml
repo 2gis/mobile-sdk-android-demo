@@ -6,7 +6,7 @@
         <item name="android:textColorPrimary">@color/white</item>
         <item name="android:windowTranslucentStatus">true</item>
 
-        <item name="colorAccent">@color/laurel</item>
+        <item name="colorAccent">@color/sylvan</item>
         <item name="colorOnBackground">@color/gray</item>
         <item name="colorPrimaryDark">@color/black_20</item>
         <item name="colorSecondary">@color/gray</item>
