@@ -36,6 +36,10 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this@MainActivity, GenericMapActivity::class.java)
             startActivity(intent)
         },
+        Page("Custom Style") {
+            val intent = Intent(this@MainActivity, MapStyleActivity::class.java)
+            startActivity(intent)
+        },
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {

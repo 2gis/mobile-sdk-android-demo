@@ -8,6 +8,7 @@
 
         <item name="colorAccent">@color/sylvan</item>
         <item name="colorOnBackground">@color/gray</item>
+        <item name="colorPrimary">@color/sylvan</item>
         <item name="colorPrimaryDark">@color/black_20</item>
         <item name="colorSecondary">@color/gray</item>
         <item name="colorSurface">@color/nightlight</item>
