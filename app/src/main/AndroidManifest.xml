@@ -24,19 +24,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/MainActivityTheme"
-            />
-
+            android:theme="@style/MainActivityTheme" />
         <activity
             android:name=".GenericMapActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/GenericActivityTheme"
+            android:theme="@style/GenericActivityTheme" />
+        <activity
+            android:name=".MapStyleActivity"
+            android:theme="@style/MapStyleActivityTheme"
             />
-
     </application>
 
 </manifest>
