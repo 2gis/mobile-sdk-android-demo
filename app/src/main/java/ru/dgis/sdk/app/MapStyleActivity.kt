@@ -7,14 +7,9 @@ import android.view.Gravity
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.activity.viewModels
-import com.google.android.gms.common.util.IOUtils
 import com.google.android.material.progressindicator.CircularProgressIndicator
-import java9.util.concurrent.CompletableFuture
 import ru.dgis.sdk.app.vm.MapStyleViewModel
 import ru.dgis.sdk.map.*
-import java.io.File
-import java.io.FileOutputStream
-import java.io.InputStream
 
 internal const val MAP_STYLE_FILE = 4433
 
@@ -58,7 +53,7 @@ class MapStyleActivity : AppCompatActivity() {
 
         val stream = contentResolver.openInputStream(fileUrl)
         if (stream != null) {
-            viewModel.loadStyle(pullFile(stream))
+            viewModel.loadStyle(stream)
             return
         }
 
@@ -71,16 +66,6 @@ class MapStyleActivity : AppCompatActivity() {
             action = Intent.ACTION_GET_CONTENT
         }
         startActivityForResult(Intent.createChooser(intent, "Select Map Style"), MAP_STYLE_FILE);
-    }
-
-    private fun pullFile(inStream: InputStream) : CompletableFuture<String> {
-        return CompletableFuture.supplyAsync {
-            val destinationFile = File.createTempFile("style-", ".2gis")
-            FileOutputStream(destinationFile).use { outStream ->
-                IOUtils.copyStream(inStream, outStream)
-            }
-            destinationFile.absolutePath
-        }
     }
 
     private fun onStyleChanged(style: Style) {
