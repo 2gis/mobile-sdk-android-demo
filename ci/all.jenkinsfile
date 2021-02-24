@@ -141,11 +141,45 @@ pipeline {
             }
         }
 
+        stage('Signing artifacts') {
+            steps {
+                withCredentials([
+                        file(credentialsId: 'RELEASE_KEYSTORE', variable: 'RELEASE_KEYSTORE'),
+                        string(credentialsId: 'RELEASE_KEYSTORE_PASSWORD', variable: 'RELEASE_KEYSTORE_PASSWORD'),
+                        string(credentialsId: 'NSDK_RELEASE_KEY_ALIAS', variable: 'RELEASE_KEY_ALIAS'),
+                        string(credentialsId: 'NSDK_RELEASE_KEY_PASSWORD', variable: 'RELEASE_KEY_PASSWORD'),
+                ]) {
+                    // Signing output bundle
+                    sh """
+                        jarsigner \
+                            -keystore \$RELEASE_KEYSTORE \
+                            -storepass \$RELEASE_KEYSTORE_PASSWORD \
+                            -keypass \$RELEASE_KEY_PASSWORD \
+                            build/app/outputs/bundle/release/app-release.aab \
+                            \$RELEASE_KEY_ALIAS
+                    """
+                    sh 'jarsigner -verify build/app/outputs/bundle/release/app-release.aab -keystore \$RELEASE_KEYSTORE'
+
+                    // Signing output apk
+                    sh """
+                        jarsigner \
+                            -keystore \$RELEASE_KEYSTORE \
+                            -storepass \$RELEASE_KEYSTORE_PASSWORD \
+                            -keypass \$RELEASE_KEY_PASSWORD \
+                            -signedjar build/app/outputs/apk/release/app-release.apk \
+                            build/app/outputs/apk/release/app-release-unsigned.apk \
+                            \$RELEASE_KEY_ALIAS
+                    """
+                    sh 'jarsigner -verify build/app/outputs/apk/release/app-release.apk -keystore \$RELEASE_KEYSTORE'
+                }
+            }
+        }
+
         stage('Deploy') {
             steps {
                 archiveArtifacts(artifacts: 'build/app/outputs/apk/debug/app-debug.apk')
                 archiveArtifacts(artifacts: 'build/app/outputs/bundle/debug/app-debug.aab')
-                archiveArtifacts(artifacts: 'build/app/outputs/apk/release/app-release-unsigned.apk')
+                archiveArtifacts(artifacts: 'build/app/outputs/apk/release/app-release.apk')
                 archiveArtifacts(artifacts: 'build/app/outputs/bundle/release/app-release.aab')
             }
         }

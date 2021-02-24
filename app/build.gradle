@@ -66,7 +66,7 @@ android {
 def unstrippedLibsUrl = localProperties.getProperty("dgisUnstrippedLibsUrl", "")
 if (!unstrippedLibsUrl.isEmpty()) {
     def downloadTask = tasks.register('downloadLibsZip', Download) {
-        src "${unstrippedLibsUrl}/libs-release-local/ru/dgis/sdk/libs/$dgis_sdk_version/libs-${dgis_sdk_version}.zip"
+        src "${unstrippedLibsUrl}/sdk-libs-release-local/android/ru/dgis/sdk/libs/$dgis_sdk_version/libs-${dgis_sdk_version}.zip"
         dest "$buildDir"
         username System.getenv('ARTIFACTORY_USERNAME')
         password System.getenv('ARTIFACTORY_PASSWORD')
