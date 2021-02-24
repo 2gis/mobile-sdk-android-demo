@@ -3,12 +3,15 @@ package ru.dgis.sdk.app.vm
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.android.gms.common.util.IOUtils
 import java9.util.concurrent.CompletableFuture
 import ru.dgis.sdk.DGis
 import ru.dgis.sdk.map.Map
 import ru.dgis.sdk.map.Style
 import ru.dgis.sdk.map.StyleBuilder
 import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
 import java.lang.RuntimeException
 
 
@@ -25,10 +28,20 @@ class MapStyleViewModel: ViewModel() {
     val style: LiveData<Style>
         get() = styleData
 
-    fun loadStyle(styleFuture: CompletableFuture<String>) {
+    fun loadStyle(styleStream: InputStream) {
         isStyleSelected = true
-        loadingFuture = styleFuture
-            .thenComposeAsync { stylePath ->
+
+        loadingFuture = CompletableFuture
+            .supplyAsync {
+                val destinationFile = File.createTempFile("style-", ".2gis")
+                styleStream.use { inStream ->
+                    FileOutputStream(destinationFile).use { outStream ->
+                        IOUtils.copyStream(inStream, outStream)
+                    }
+                }
+                destinationFile.absolutePath
+            }
+            .thenCompose { stylePath ->
                 this.stylePath = stylePath
 
                 val future = CompletableFuture<Style>()
