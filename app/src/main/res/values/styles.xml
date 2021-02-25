@@ -1,37 +1,5 @@
 <resources>
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
-
-        <item name="colorPrimary">@color/seashell</item>
-        <item name="colorPrimaryDark">@android:color/transparent</item>
-        <item name="colorAccent">@color/laurel</item>
-
-        <item name="android:windowTranslucentStatus">true</item>
-        <item name="switchStyle">@style/SwitchItem</item>
-
-        <item name="android:colorBackground">@color/white</item>
-        <item name="android:color">@color/white</item>
-
-        <item name="colorSurface">@color/white</item>
-        <item name="colorOnSurface">@color/seashell</item>
-    </style>
-
-    <style name="SplashTheme" parent="@style/AppTheme">
-        <item name="android:windowBackground">@drawable/splash</item>
-    </style>
-
-    <style name="MainActivityTheme" parent="@style/AppTheme">
-        <item name="android:statusBarColor">@android:color/holo_green_dark</item>
-    </style>
-
-    <style name="GenericActivityTheme" parent="@style/AppTheme">
-        <item name="switchStyle">@style/SwitchItem.Settings</item>
-    </style>
-
-
-    <style name="GeometryPopupTheme" parent="@style/Widget.AppCompat.Light.PopupMenu">
-        <item name="android:dropDownHorizontalOffset">0dp</item>
-        <item name="android:dropDownVerticalOffset">-4dp</item>
-    </style>
+    <!--  control styles  -->
 
     <style name="BodyRegularLeftBlack">
         <item name="android:fontFamily">@font/suisse_intl_regular</item>
@@ -49,9 +17,14 @@
         <item name="android:textColor">?android:attr/textColorPrimary</item>
     </style>
 
-    <style name="SwitchItem">
+    <style name="SwitchItem" parent="Widget.MaterialComponents.CompoundButton.Switch">
         <item name="android:enabled">false</item>
         <item name="android:textAppearance">@style/BodyRegularLeftBlack</item>
+        <item name="android:background">?android:attr/colorBackground</item>
+        <item name="android:backgroundTint">?attr/colorSurface</item>
+        <item name="showText">false</item>
+        <item name="lineHeight">18dp</item>
+        <item name="useMaterialThemeColors">false</item>
     </style>
 
     <style name="SwitchItem.Settings" parent="SwitchItem">

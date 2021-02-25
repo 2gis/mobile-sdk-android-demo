@@ -36,6 +36,10 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this@MainActivity, GenericMapActivity::class.java)
             startActivity(intent)
         },
+        Page("Custom Style") {
+            val intent = Intent(this@MainActivity, MapStyleActivity::class.java)
+            startActivity(intent)
+        },
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -79,6 +83,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onRequestPermissionsResult(requestCode: Int,
                                              permissions: Array<String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
         when (requestCode) {
             RECORD_REQUEST_CODE -> {
                 if (grantResults.isEmpty() || grantResults[0] != PackageManager.PERMISSION_GRANTED) {

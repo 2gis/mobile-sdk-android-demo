@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+
+        <item name="android:colorBackground">@color/seashell</item>
+        <item name="android:textColorPrimary">@color/black</item>
+        <item name="android:windowTranslucentStatus">true</item>
+
+        <item name="colorAccent">@color/laurel</item>
+        <item name="colorOnBackground">@color/black</item>
+        <item name="colorPrimary">@color/laurel</item>
+        <item name="colorPrimaryDark">@color/black_20</item>
+        <item name="colorSecondary">@color/silver</item>
+        <item name="colorSurface">@color/white</item>
+
+<!--         controls -->
+        <item name="switchStyle">@style/SwitchItem</item>
+    </style>
+
+    <style name="SplashTheme" parent="@style/AppTheme">
+        <item name="android:windowBackground">?android:colorBackground</item>
+    </style>
+
+    <style name="MainActivityTheme" parent="@style/AppTheme">
+        <item name="android:statusBarColor">@android:color/holo_green_dark</item>
+    </style>
+
+    <style name="GenericActivityTheme" parent="@style/AppTheme">
+        <item name="switchStyle">@style/SwitchItem.Settings</item>
+    </style>
+
+    <style name="MapStyleActivityTheme" parent="AppTheme">
+    </style>
+
+</resources>

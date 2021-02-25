@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".GenericMapActivity">
+    tools:context=".GenericMapActivity"
+    >
 
     <com.sothree.slidinguppanel.SlidingUpPanelLayout
         android:layout_width="match_parent"
@@ -50,7 +51,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:background="?android:attr/colorBackground"
             android:gravity="center_horizontal"
             >
 
@@ -76,7 +76,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="24dp"
-                    android:background="?attr/colorOnSurface"
+                    android:background="?android:attr/colorBackground"
                     />
                 <TextView
                     style="@style/SubheadMediumLeftBlack"
@@ -84,38 +84,36 @@
                     android:layout_height="40dp"
                     android:paddingStart="24dp"
                     android:paddingEnd="24dp"
-                    android:background="?attr/colorOnSurface"
+                    android:background="?android:attr/colorBackground"
                     android:textAllCaps="true"
                     android:gravity="center_vertical"
                     android:text="Gestures Setup"
+                    android:textColor="?attr/colorOnBackground"
                     />
 
-                <androidx.appcompat.widget.SwitchCompat
+                <com.google.android.material.switchmaterial.SwitchMaterial
                     android:id="@+id/rotationSwitch"
-                    style="@style/SwitchItem.Settings"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:text="Rotation"
                     />
 
-                <androidx.appcompat.widget.SwitchCompat
+                <com.google.android.material.switchmaterial.SwitchMaterial
                     android:id="@+id/shiftSwitch"
-                    style="@style/SwitchItem.Settings"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:paddingHorizontal="24dp"
                     android:text="Shift"
                     />
 
-                <androidx.appcompat.widget.SwitchCompat
+                <com.google.android.material.switchmaterial.SwitchMaterial
                     android:id="@+id/scaleSwitch"
-                    style="@style/SwitchItem.Settings"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:text="Scale"
                     />
 
-                <androidx.appcompat.widget.SwitchCompat
+                <com.google.android.material.switchmaterial.SwitchMaterial
                     android:id="@+id/tiltSwitch"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
@@ -125,28 +123,21 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="24dp"
-                    android:background="?attr/colorOnSurface"
                     />
                 <TextView
                     style="@style/SubheadMediumLeftBlack"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:background="?attr/colorOnSurface"
+                    android:background="?android:attr/colorBackground"
                     android:paddingStart="24dp"
                     android:paddingEnd="24dp"
                     android:textAllCaps="true"
                     android:gravity="center_vertical"
                     android:text="Map Attributes"
+                    android:textColor="?attr/colorOnBackground"
                     />
 
-                <androidx.appcompat.widget.SwitchCompat
-                    android:id="@+id/darkModeSwitch"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:text="Dark Theme"
-                    />
-
-                <androidx.appcompat.widget.SwitchCompat
+                <com.google.android.material.switchmaterial.SwitchMaterial
                     android:id="@+id/flatModeSwitch"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"

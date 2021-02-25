@@ -32,6 +32,10 @@
             android:name=".GenericMapActivity"
             android:screenOrientation="portrait"
             android:theme="@style/GenericActivityTheme" />
+        <activity
+            android:name=".MapStyleActivity"
+            android:theme="@style/MapStyleActivityTheme"
+            />
     </application>
 
 </manifest>
