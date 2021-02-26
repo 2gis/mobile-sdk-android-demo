@@ -165,15 +165,15 @@ pipeline {
 
                     // Signing output apk
                     sh """
-                        jarsigner \
-                            -keystore \$RELEASE_KEYSTORE \
-                            -storepass \$RELEASE_KEYSTORE_PASSWORD \
-                            -keypass \$RELEASE_KEY_PASSWORD \
-                            -signedjar build/app/outputs/apk/release/app-release.apk \
-                            build/app/outputs/apk/release/app-release-unsigned.apk \
-                            \$RELEASE_KEY_ALIAS
+                        /opt/android-sdk/build-tools/29.0.3/apksigner sign \
+                            --ks \$RELEASE_KEYSTORE \
+                            --key-pass env:RELEASE_KEY_PASSWORD \
+                            --ks-pass env:RELEASE_KEYSTORE_PASSWORD \
+                            --ks-key-alias \$RELEASE_KEY_ALIAS \
+                            --out build/app/outputs/apk/release/app-release.apk \
+                            build/app/outputs/apk/release/app-release-unsigned.apk
                     """
-                    sh 'jarsigner -verify build/app/outputs/apk/release/app-release.apk -keystore \$RELEASE_KEYSTORE'
+                    sh '/opt/android-sdk/build-tools/29.0.3/apksigner verify build/app/outputs/apk/release/app-release.apk'
                 }
             }
         }
