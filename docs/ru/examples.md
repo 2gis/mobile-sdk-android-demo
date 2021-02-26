@@ -1,36 +1,43 @@
-## Quick Start
+# Примеры
 
-Добавим [`MapView`](/ru/android/native/maps/reference/MapView#nav-lvl1--MapView) в представление нашей activity
-```xml
-<ru.dgis.sdk.map.MapView
-    android:id="@+id/mapView"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:dgis_cameraTargetLat="55.740444"
-    app:dgis_cameraTargetLng="37.619524"
-    app:dgis_cameraZoom="16.0"
-    />
-```
+## Создание виджета карты
 
-Объект карты можно получить с помощью [`getMapAsync`](/ru/android/native/maps/reference/MapView#nav-lvl2--getMapAsync)
-```kotlin
-override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
+Чтобы отобразить карту:
+1. Добавьте следующий [`MapView`](/en/android/native/maps/reference/MapView#nav-lvl1--MapView) в layout-файл для нужного Activity:
 
-    val sdkContext = DGis.initialize(applicationContext)
-    setContentView(R.layout.activity_main)
+   ```xml
+   <ru.dgis.sdk.map.MapView
+       android:id="@+id/mapView"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       app:dgis_cameraTargetLat="55.740444"
+       app:dgis_cameraTargetLng="37.619524"
+       app:dgis_cameraZoom="16.0"
+       />
+   ```
 
-    val mapView = findViewById<MapView>(R.id.mapView)
-    lifecycle.addObserver(mapView)
+2. Инициализируйте виджет, вызвав метод [`getMapAsync`](/en/android/native/maps/reference/MapView#nav-lvl2--getMapAsync):
 
-    mapView.getMapAsync { map ->
-        // do smth
-    }
-}
-```
+   ```kotlin
+   override fun onCreate(savedInstanceState: Bundle?) {
+       super.onCreate(savedInstanceState)
 
-## Online источник для тайлов карты
-Текущая версия SDK, по умолчанию, использует предустановленные данные. Однако в экспериментальном режиме для тайлов можно установить online источник
+       val sdkContext = DGis.initialize(applicationContext)
+       setContentView(R.layout.activity_main)
+
+       val mapView = findViewById<MapView>(R.id.mapView)
+       lifecycle.addObserver(mapView)
+
+       mapView.getMapAsync { map ->
+           // do smth
+       }
+   }
+   ```
+
+## Использование тайлов карты из онлайн-источника
+
+Текущая версия SDK по умолчанию использует предустановленные данные для отображения тайлов карты (map tiles). Также доступна экспериментальная функция, позволяющая загружать тайлы из онлайн-источника:
+
 ```kotlin
 val mapOptions = MapOptions().apply {
     source = DgisSourceCreator.createOnlineDgisSource(sdkContext)
@@ -41,8 +48,10 @@ val mapView = MapView(this, mapOptions).also {
 mapContainer.addView(mapView)
 ```
 
-## Перелеты
-Управляйте позицией карты и осуществляйте перелеты с помощью [`Camera`](/ru/android/native/maps/reference/Camera)
+## Перемещение по карте
+
+Вы можете изменять позицию карты и перемещаться по карте  с помощью [`Camera`](/en/android/native/maps/reference/Camera):
+
 ```kotlin
 val sdkContext = DGis.initialize(applicationContext)
 val mapView = findViewById<MapView>(R.id.mapView)
@@ -64,7 +73,8 @@ mapView.getMapAsync { map ->
 ```
 
 ## Добавление динамических объектов
-Чтобы добавить свой [`Object`](/ru/android/native/maps/reference/GeometryMapObject) на карту, используйте [`Source`](/ru/android/native/maps/reference/GeometryMapObjectSource)
+
+Чтобы добавить свой объект на карту, передайте объект класса [GeometryMapObject](/en/android/native/maps/reference/GeometryMapObject) в метод `addObject()` объекта класса [GeometryMapObjectSource](/en/android/native/maps/reference/GeometryMapObjectSource)
 ```kotlin
 val source = GeometryMapObjectSourceBuilder(sdkContext)
     .createSource()!!
@@ -79,7 +89,9 @@ source.addObject(polylineObject)
 ```
 
 ## Добавление объектов из GeoJson
-Чтобы добавить объекты из GeoJson на карту, используйте [`GeometryMapObjectCreator`](/ru/android/native/maps/reference/GeometryMapObjectCreator)
+
+Чтобы добавить объекты из GeoJson на карту, используйте [GeometryMapObjectCreator](/en/android/native/maps/reference/GeometryMapObjectCreator):
+
 ```kotlin
 val source = GeometryMapObjectSourceBuilder(sdkContext)
     .createSource()!!
@@ -95,6 +107,8 @@ GeometryMapObjectCreator.parseGeojsonFile("your/path/to/GeoJson.json")
 ```
 
 ## Работа со справочником
+
+Чтобы выполнить поисковый запрос к справочнику, используйте [SearchManager](ru/android/native/maps/reference/SearchManager):
 
 ```kotlin
 val sdkContext = DGis.initialize(applicationContext)
@@ -156,42 +170,46 @@ mapView.getMapAsync { map ->
 }
 ```
 
-## Создание и использование собственного источника позиции
+## Создание и использование собственного источника геопозиции
 
-Для создания собственного источника геопозиции и передачи позиции в SDK необходимо имплементировать интерфейс [`LocationSource`](/ru/android/native/maps/reference/LocationChangeListener).
-```kotlin
-public class CustomLocationSource: LocationSource {
-    override fun activate(listener: LocationChangeListener?) {
-    }
+Вы можете создать собственный источник геопозиции и передавать геопозицию в SDK. Для этого:
+1. Реализуйте интерфейс [`LocationSource`](/en/android/native/maps/reference/LocationSource), чтобы создать источник.
 
-    override fun deactivate() {
-    }
+   ```kotlin
+   public class CustomLocationSource: LocationSource {
+       override fun activate(listener: LocationChangeListener?) {
+       }
 
-    override fun setDesiredAccuracy(accuracy: DesiredAccuracy?) {
-    }
-}
-```
-И зарегистрировать данный источник в SDK посредством вызова функции `registerPlatformLocationSource(DGis.context(), customSource)`
+       override fun deactivate() {
+       }
 
-Когда SDK потребуется позиция, будет вызван метод `activate`, с объектом [`LocationChangeListener`](/ru/android/native/maps/reference/LocationChangeListener), в который необходимо передавать изменения позиции посредством вызова метода `onLocationChanged`. Также интерфейс предоставляет возможность передавать доступность данного источника позиции через метод `onAvailabilityChanged`.
+       override fun setDesiredAccuracy(accuracy: DesiredAccuracy?) {
+       }
+   }
+   ```
+2. Зарегистрируйте этот источник в SDK, вызвав метод `registerPlatformLocationSource(DGis.context(), customSource)`
 
-Вызов метода `LocationSource.deactivate` означает, что SDK позиция более не нужна.
+Когда SDK потребуется позиция, будет вызван метод `activate`, с объектом [`LocationChangeListener`](/en/android/native/maps/reference/LocationChangeListener), в который необходимо передавать изменения позиции посредством вызова метода `onLocationChanged`. Также интерфейс предоставляет возможность передавать доступность данного источника позиции через метод `onAvailabilityChanged`.
 
-`LocationSource.setDesiredAccuracy` - устанавливает необходимую точность геопозиции для текущей сессии.
+Вызов метода `LocationSource.deactivate` означает, что позиция более не нужна SDK.
+
+Метод `LocationSource.setDesiredAccuracy` устанавливает необходимую точность геопозиции для текущей сессии.
 
 
 ## Отображение маркера текущего местоположения
-Необходимо добавить в карту источник объекта текущего местоположения.
+
+Вы можете отобразить на карте маркер текущего местоположения. Для этого нужно добавить объект-источник текущего местоположения для карты:
+
 ```kotlin
 mapView.getMapAsync { map ->
-	createMyLocationMapObjectSource(sdkContext)?.let { locationSource ->
+    createMyLocationMapObjectSource(sdkContext)?.let { locationSource ->
 		map.addSource(locationSource)
 	}
 }
 ```
 
-
 ## Добавление маркера на карту
+
 ```kotlin
 GeometryMapObjectSourceBuilder(sdkContext).createSource()?.let { source ->
     map.addSource(source)
@@ -205,9 +223,10 @@ GeometryMapObjectSourceBuilder(sdkContext).createSource()?.let { source ->
 }
 ```
 
+## Подписка на события во время ведения по маршруту 
 
-## События по маршруту во время ведения
-В примере мы подписываемся на обновления имени текущей улицы. Аналогичным образом можно получить информацию о дистанции, оставшемся времени, камере, полосности и т.д. Важно: для избежания утечек следует сохранить все подписки и при выходе их отключить `connections.forEach(Connection::disconnect)`.
+Вы можете подписаться на события, которые возникают при ведении по маршруту. В примере ниже происходит подписка на событие обновления имени текущей улицы:
+
 ```kotlin
 val connections = mutableListOf<Connection>()
 
@@ -225,10 +244,14 @@ routeFuture.onResult {  routes ->
 }
 ```
 
+Аналогичным образом можно получить информацию о дистанции, оставшемся времени, камере, полосности и т.д.
 
-## Получение информации по клику в карту
-По клику в карту можно определить попали ли мы в динамический объект или в объект 2ГИС. 
-Ниже пример получения информации из справочника
+Важно: для избежания утечек следует сохранить все подписки и при выходе их отключить: `connections.forEach(Connection::disconnect)`.
+
+## Обработка событий нажатия
+
+При нажатии на карту можно определить, какой объект был выбран — динамический объект или объект 2ГИС. Ниже приведен пример получения информации из справочника:
+
 ```kotlin
 override fun onTap(point: ScreenPoint) {
     viewport.getRenderedObjects(point, ScreenDistance(5f))

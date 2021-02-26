@@ -1,21 +1,21 @@
-# Overview
+# Обзор
 
-## Introduction
-2GIS Android NativeSDK is an SDK that allows you to add a 2GIS map to your Android application. It can be used to display the map in your layout, add custom markers to it, and highlight various objects on the map, such as buildings, roads, and others.
+## Введение
 
+Android Native SDK от 2GIS позволяет добавить [карту 2GIS](https://2gis.ru/) в ваше приложение под Android. С его помощью вы можете отображать карту на экране, добавлять на карту пользовательские маркеры, а также выделять на карте различные объекты, такие как здания, дороги и т. д.
 
-## Getting an access key
+## Получение ключа доступа
 
-Usage of this SDK requires an API key to connect to 2GIS servers and retrieve the geographical data. This API key is unique to the SDK and cannot be used with other 2GIS SDKs. 
+Чтобы использовать этот SDK, необходим ключ API для подключения к серверам 2GIS и получения географических данных. Этот ключ доступа API уникален для конкретного SDK и не может быть использован с другими SDK от 2GIS.
 
-To obtain the key, [contact us](https://dev.2gis.ru/order/).
+Чтобы получить этот ключ API, заполните форму на [dev.2gis.ru](https://dev.2gis.ru/order).
 
+## Установка
 
-## Installation
+Для установки SDK:
 
-To install the SDK:
+1. Укажите пользовательский репозиторий в вашем файле `build.gradle`:
 
-1. Declare a custom repository in your build.gradle file:
 ```gradle
 repositories {
     maven {
@@ -23,11 +23,15 @@ repositories {
     }
 }
 ```
-2. Add a build dependency:
+
+2. Добавьте зависимость:
+
 ```gradle
 dependencies {
     implementation 'ru.dgis.sdk:sdk-full:latest.release'
 }
 ```
 
-After that, you should be good to go. Check the [Examples section](/ru/android/native/maps/examples) to see how to display the map in your application. Alternatively, check the [API Reference](/ru/android/native/maps/reference/DGis) to learn more about specific classes and methods.
+После этого всё должно быть готово к работе. В разделе [Примеры](/ru/android/native/maps/examples) вы можете посмотреть, как добавить карту к вашему приложению. Или загляните в [описание API](/en/android/native/maps/reference/DGis), чтобы узнать больше о конкретных классах и методах.
+
+Также доступен [GitHub-репозиторий](https://github.com/2gis/native-sdk-android-demo/), в котором можно познакомиться с SDK и демонстрационным проектом.
