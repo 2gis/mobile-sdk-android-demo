@@ -1,5 +1,14 @@
 # Примеры
 
+## Начало работы
+
+Для запуска примера склонируйте [GitHub-репозиторий 2GIS](https://github.com/2gis/native-sdk-android-demo) и задайте ваши ключи API в файле `local.properties` проекта:
+
+```
+dgisMapApiKey=YOUR_MAP_KEY
+dgisDirectoryApiKey=YOUR_DIRECTIONS_KEY
+```
+
 ## Создание виджета карты
 
 Чтобы отобразить карту:
@@ -124,6 +133,8 @@ searchManager.search(query).onResult { searchResult ->
 
 ## Построение маршрута и его отображение на карте
 
+Вы можете построить маршрут и отобразить его на карте с помощью Directions API:
+
 ```kotlin
 val sdkContext = DGis.initialize(applicationContext)
 val mapView = findViewById<MapView>(R.id.mapView)
@@ -209,6 +220,8 @@ mapView.getMapAsync { map ->
 ```
 
 ## Добавление маркера на карту
+
+Вы можете добавить на карту маркер с заданными координатами:
 
 ```kotlin
 GeometryMapObjectSourceBuilder(sdkContext).createSource()?.let { source ->
