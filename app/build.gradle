@@ -40,7 +40,7 @@ android {
     }
 
     splits {
-        if (dgis_sdk_version.contains("SNAPSHOT")) {
+        if (dgis_sdk_version.endsWith("SNAPSHOT") && !dgis_sdk_version.endsWith("RC-SNAPSHOT")) {
             /*
             SNAPSHOT собирается только x86, armeabi-v7a для эконимии ресурса на билд сервере
             RELEASE есть под все возможные ABI
