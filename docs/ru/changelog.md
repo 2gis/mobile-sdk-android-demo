@@ -1,5 +1,14 @@
 # Release notes
 
+## v0.7.0
+**Release Date:** 04.03.2021
+- высокоуровневый API для динамических объектов карты(см. [MapObjectManager](/ru/android/native/maps/reference/ru.dgis.sdk.map.MapObjectManager))
+- методы [visibleArea](/ru/android/native/maps/reference/ru.dgis.sdk.map.Camera#nav-lvl1--visibleArea), [visibleRect](/ru/android/native/maps/reference/ru.dgis.sdk.map.Camera#nav-lvl1--visibleRect) для получения видимой области карты
+- источник [TrafficSource](/ru/android/native/maps/reference/ru.dgis.sdk.map.TrafficSource) для отображения пробочных тайлов на карте
+- [получение геометрии](/ru/android/native/maps/reference/ru.dgis.sdk.map.toMapGeometry) из TrafficRoute
+- исправления в сигнатурах функций. Большинство методов теперь возвращает non-nullable значения
+
+
 ## v0.6.0
 **Release Date:** 15.02.2021
 - разделили SDK на 2 артефакта. **sdk-map** - версия для тех кому нужна только карта и справочник. **sdk-full** - более полная, содержит в себе навигатор. В *build.gradle* необходимо указать нужную версию(напр. `implementation 'ru.dgis.sdk:sdk-map:0.6.0'`)
@@ -155,4 +164,3 @@
 - online справочник
 
 подробнее: https://telegra.ph/NativeSDK-001-08-20
-
