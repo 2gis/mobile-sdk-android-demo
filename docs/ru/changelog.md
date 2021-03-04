@@ -6,7 +6,7 @@
 - методы [visibleArea](/ru/android/native/maps/reference/ru.dgis.sdk.map.Camera#nav-lvl1--visibleArea), [visibleRect](/ru/android/native/maps/reference/ru.dgis.sdk.map.Camera#nav-lvl1--visibleRect) для получения видимой области карты
 - источник [TrafficSource](/ru/android/native/maps/reference/ru.dgis.sdk.map.TrafficSource) для отображения пробочных тайлов на карте
 - [получение геометрии](/ru/android/native/maps/reference/ru.dgis.sdk.map.toMapGeometry) из TrafficRoute
-- исправления в сигнатурах функций. Большенство методов теперь возвращает не nullable значения
+- исправления в сигнатурах функций. Большинство методов теперь возвращает non-nullable значения
 
 
 ## v0.6.0
@@ -164,4 +164,3 @@
 - online справочник
 
 подробнее: https://telegra.ph/NativeSDK-001-08-20
-
