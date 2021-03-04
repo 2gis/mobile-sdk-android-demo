@@ -63,20 +63,6 @@ mapView.getMapAsync { map ->
 }
 ```
 
-## Добавление динамических объектов
-Чтобы добавить свой [`Object`](/ru/android/native/maps/reference/GeometryMapObject) на карту, используйте [`Source`](/ru/android/native/maps/reference/GeometryMapObjectSource)
-```kotlin
-val source = GeometryMapObjectSourceBuilder(sdkContext)
-    .createSource()!!
-map.addSource(source)
-
-val polylineObject = GeometryMapObjectBuilder()
-    .setGeometry(createPolygonSampleGeometry())
-    .setObjectAttribute("color", fillColor)
-    .createObject()
-
-source.addObject(polylineObject)
-```
 
 ## Добавление объектов из GeoJson
 Чтобы добавить объекты из GeoJson на карту, используйте [`GeometryMapObjectCreator`](/ru/android/native/maps/reference/GeometryMapObjectCreator)
@@ -191,21 +177,6 @@ mapView.getMapAsync { map ->
 ```
 
 
-## Добавление маркера на карту
-```kotlin
-GeometryMapObjectSourceBuilder(sdkContext).createSource()?.let { source ->
-    map.addSource(source)
-    
-    val marker = MarkerBuilder()
-        .setIconFromResource(resourceId)
-        .setPosition(latitude, longitude)
-        .build()
-    
-    source.addObject(marker)
-}
-```
-
-
 ## События по маршруту во время ведения
 В примере мы подписываемся на обновления имени текущей улицы. Аналогичным образом можно получить информацию о дистанции, оставшемся времени, камере, полосности и т.д. Важно: для избежания утечек следует сохранить все подписки и при выходе их отключить `connections.forEach(Connection::disconnect)`.
 ```kotlin
@@ -245,3 +216,70 @@ override fun onTap(point: ScreenPoint) {
         }
 }
 ```
+
+## Добавление динамических объектов на карту
+Чтобы добавить объекты на карту используйте [MapObjectManager](/ru/android/native/maps/reference/ru.dgis.sdk.map.MapObjectManager)
+### Polyline
+```kotlin
+val objectManager = createMapObjectManager(map)
+
+val options = PolylineOptions(
+    points = listOf(
+        geoPoint(55.7513, 37.6236),
+        geoPoint(55.7405, 37.6235),
+        geoPoint(55.7439, 37.6506)
+    ),
+)
+
+val line = objectManager.addPolyline(options)
+```
+Свойства объекта можно менять после создания
+```kotlin
+line.color = Color(android.graphics.Color.MAGENTA)
+line.width = LogicalPixel(2F)
+```
+### Polygon
+```kotlin
+val objectManager = createMapObjectManager(map)
+
+val latLon = { lat: Double, lon: Double ->
+    GeoPoint(Arcdegree(lat), Arcdegree(lon))
+}
+
+val polygon = objectManager.addPolygon(
+    PolygonOptions(
+        contours = listOf(
+            listOf(
+                latLon(55.72014932919687, 37.562599182128906),
+                latLon(55.72014932919687, 37.67555236816406),
+                latLon(55.78004852149085, 37.67555236816406),
+                latLon(55.78004852149085, 37.562599182128906),
+                latLon(55.72014932919687, 37.562599182128906)
+            ),
+            listOf(
+                latLon(55.754167897761, 37.62422561645508),
+                latLon(55.74450654680055, 37.61238098144531),
+                latLon(55.74460317215391, 37.63435363769531),
+                latLon(55.754167897761, 37.62422561645508)
+            )
+        ),
+        color = Color(android.graphics.Color.argb(150, 200, 200, 200)),
+        strokeWidth = LogicalPixel(1F),
+    )
+)
+```
+### Marker
+```kotlin
+val objectsManager = createMapObjectManager(map)
+
+val image = imageFromResource(sdkContext, R.drawable.ic_marker)
+
+val options = MarkerOptions(
+    position = GeoPointWithElevation(Arcdegree(55.978047), Arcdegree(37.6789613)),
+    icon = image,
+    anchor = Anchor(0.5f, 0.95f),
+    userData = "Any user object"
+)
+val marker = objectsManager.addMarker(options)
+```
+
