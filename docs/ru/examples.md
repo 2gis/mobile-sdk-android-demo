@@ -242,9 +242,7 @@ line.width = LogicalPixel(2F)
 ```kotlin
 val objectManager = createMapObjectManager(map)
 
-val latLon = { lat: Double, lon: Double ->
-    GeoPoint(Arcdegree(lat), Arcdegree(lon))
-}
+fun latLon(lat: Double, lon: Double) = GeoPoint(Arcdegree(lat), Arcdegree(lon))
 
 val polygon = objectManager.addPolygon(
     PolygonOptions(
