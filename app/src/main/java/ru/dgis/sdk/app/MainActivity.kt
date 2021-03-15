@@ -9,12 +9,9 @@ import android.util.Log
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ListView
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import ru.dgis.sdk.context.Context
-import ru.dgis.sdk.positioning.registerPlatformLocationSource
-import ru.dgis.sdk.positioning.registerPlatformMagneticSource
 
 
 typealias ScreenSelectedCallback = () -> Unit
@@ -38,6 +35,10 @@ class MainActivity : AppCompatActivity() {
         },
         Page("Custom Style") {
             val intent = Intent(this@MainActivity, MapStyleActivity::class.java)
+            startActivity(intent)
+        },
+        Page("Custom Zoom Control") {
+            val intent = Intent(this@MainActivity, CustomZoomControlActivity::class.java)
             startActivity(intent)
         },
         Page("Markers") {
