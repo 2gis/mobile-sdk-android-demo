@@ -36,6 +36,9 @@
             android:name=".MapStyleActivity"
             android:theme="@style/MapStyleActivityTheme"
             />
+        <activity
+            android:name=".MarkersActivity"
+            android:theme="@style/AppTheme" />
     </application>
 
 </manifest>
