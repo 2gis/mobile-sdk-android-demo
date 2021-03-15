@@ -39,6 +39,9 @@
         <activity
             android:name=".MarkersActivity"
             android:theme="@style/AppTheme" />
+        <activity
+            android:name=".CustomZoomControlActivity"
+            android:theme="@style/AppTheme" />
     </application>
 
 </manifest>
