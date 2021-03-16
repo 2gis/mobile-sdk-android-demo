@@ -45,6 +45,10 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this@MainActivity, MarkersActivity::class.java)
             startActivity(intent)
         },
+        Page("Camera") {
+            val intent = Intent(this@MainActivity, CameraActivity::class.java)
+            startActivity(intent)
+        },
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {

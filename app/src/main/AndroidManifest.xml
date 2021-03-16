@@ -42,6 +42,9 @@
         <activity
             android:name=".CustomZoomControlActivity"
             android:theme="@style/AppTheme" />
+        <activity
+            android:name=".CameraActivity"
+            android:theme="@style/AppTheme" />
     </application>
 
 </manifest>
