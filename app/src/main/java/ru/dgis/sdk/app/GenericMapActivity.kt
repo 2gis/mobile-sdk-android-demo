@@ -50,7 +50,7 @@ class GenericMapActivity : AppCompatActivity() {
     }
 
     private fun subscribeGestureSwitches(gm: GestureManager) {
-        val enabledGestures = gm.enabledGestures()
+        val enabledGestures = gm.enabledGestures
         val options = listOf(
             Pair(R.id.rotationSwitch, Gesture.ROTATION),
             Pair(R.id.shiftSwitch, Gesture.SHIFT),
