@@ -1,7 +1,18 @@
 # Release notes
 
+## v0.8
+**Release Date:** 17.03.2021
+- *Ломающее изменение:* мы изменили формат работы с подписками на изменения свойств. Раньше такие поля как `camera.position` имели тип `StatefulChannel`. Для того чтобы получать уведомления об изменениях данных в `Channel` нужно вызвать `camera.position.connect()`, а получить текущее значение можно через `camera.position.value`. Такой API вызывал вопросы, поэтому в новой версии `camera.position`(и другие свойства `StatefulChannel`) это просто getter/setter. А для подписки на изменение нужно использовать `camera.positionChannel`
+- добавили кэш для тайлов на карте. По умолчанию кэш *включен*, и максимальный размер хранилища 300Мб. Его можно отключить или изменить его размер в настройках [HttpOptions](/ru/android/native/maps/reference/ru.dgis.sdk.context.HttpOptions)
+- [Padding](/ru/android/native/maps/reference/ru.dgis.sdk.map.Map#nav-lvl1--var%20padding) на карте
+- для объектов Polygon/Polyline добавилась возможность изменить текущую геометрию
+- добавили источник для растровых тайлов(см. [createRasterTileDataSource](/ru/android/native/maps/reference/ru.dgis.sdk.map.createRasterTileDataSource))
+- поддержали атрибут theme для стилей карты выгруженных из редактора
+- методы для создания иконки маркера *imageFromAsset/imageFromCanvas/imageFromResource* переместили в пакет `ru.dgis.sdk.map`
+- сконвертировали методы в property в случаях когда такая форма более логична(напр. [enabledGestures](/ru/android/native/maps/reference/ru.dgis.sdk.map.GestureManager#nav-lvl1--var%20enabledGestures))
 
-## v0.7.0
+
+## v0.7
 **Release Date:** 04.03.2021
 - высокоуровневый API для динамических объектов карты(см. [MapObjectManager](/ru/android/native/maps/reference/ru.dgis.sdk.map.MapObjectManager))
 - методы [visibleArea](/ru/android/native/maps/reference/ru.dgis.sdk.map.Camera#nav-lvl1--visibleArea), [visibleRect](/ru/android/native/maps/reference/ru.dgis.sdk.map.Camera#nav-lvl1--visibleRect) для получения видимой области карты
@@ -165,4 +176,3 @@
 - online справочник
 
 подробнее: https://telegra.ph/NativeSDK-001-08-20
-
