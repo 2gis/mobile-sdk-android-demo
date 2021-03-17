@@ -9,6 +9,7 @@
 - добавили источник для растровых тайлов(см. [createRasterTileDataSource](/ru/android/native/maps/reference/ru.dgis.sdk.map.createRasterTileDataSource))
 - поддержали атрибут theme для стилей карты выгруженных из редактора
 - методы для создания иконки маркера *imageFromAsset/imageFromCanvas/imageFromResource* переместили в пакет `ru.dgis.sdk.map`
+- сконвертировали методы в property в случаях когда такая форма более логична(напр. [enabledGestures](/ru/android/native/maps/reference/ru.dgis.sdk.map.GestureManager#nav-lvl1--var%20enabledGestures))
 
 
 ## v0.7
@@ -30,7 +31,7 @@
 - добавили возможность задать [координату с высотой для маркера](/ru/android/native/maps/reference/ru.dgis.sdk.map.MarkerBuilder#nav-lvl1--setPosition)
 - для динамических объектов на карте, добавили возможность [определить пользовательские данные](/ru/android/native/maps/reference/ru.dgis.sdk.map.MarkerBuilder#nav-lvl1--setUserData)
 - поддержали создание маркера с текстом, без иконки
-- *Ломающее изменение:* иконку маркера необходимо указывать через [объект стилей](/ru/android/native/maps/reference/ru.dgis.sdk.map.MarkerBuilder#nav-lvl1--setStyle). Формирование стиля маркера с иконкой может занимать значительное время т.к. для этого может понадобится растеризаться/сжатие изображения. Мы настоятельно рекомендуем делать это в фоновом потоке и переиспользовать MarkerStyle для однотипных маркеров.
+- *Ломающее изменение:* иконку маркера необходимо указывать через [объект стилей](/ru/android/native/maps/reference/ru.dgis.sdk.map.MarkerBuilder#nav-lvl1--setStyle). Формирование стиля маркера с иконкой может занимать значительное время т.к. для этого может понадобится растеризация/сжатие изображения. Мы настоятельно рекомендуем делать это в фоновом потоке и переиспользовать MarkerStyle для однотипных маркеров.
 
 
 ## v0.5.0
