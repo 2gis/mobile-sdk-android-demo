@@ -40,6 +40,10 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this@MainActivity, MapStyleActivity::class.java)
             startActivity(intent)
         },
+        Page("Markers") {
+            val intent = Intent(this@MainActivity, MarkersActivity::class.java)
+            startActivity(intent)
+        },
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
