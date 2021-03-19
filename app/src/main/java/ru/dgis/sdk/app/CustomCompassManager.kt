@@ -5,10 +5,8 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
-import android.util.Log
 import ru.dgis.sdk.positioning.MagneticChangeListener
 import ru.dgis.sdk.positioning.MagneticHeadingSource
-import java.lang.Math.*
 
 class CustomCompassManager(private val applicationContext: Context): MagneticHeadingSource {
     private var sdkListener: MagneticChangeListener? = null

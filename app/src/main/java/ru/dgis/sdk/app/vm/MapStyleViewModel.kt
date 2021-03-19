@@ -12,7 +12,6 @@ import ru.dgis.sdk.map.StyleBuilder
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
-import java.lang.RuntimeException
 
 
 class MapStyleViewModel: ViewModel() {
@@ -50,12 +49,7 @@ class MapStyleViewModel: ViewModel() {
                 StyleBuilder(sdkContext)
                     .loadStyleFromFile(stylePath)
                     .onComplete({ style ->
-                        if (style == null) {
-                            val msg = "Creation style from $stylePath is failed"
-                            future.completeExceptionally(RuntimeException(msg))
-                        } else {
-                            future.complete(style)
-                        }
+                        future.complete(style)
                     }, future::completeExceptionally)
 
                 future

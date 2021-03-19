@@ -6,15 +6,14 @@ import androidx.appcompat.widget.SwitchCompat
 import ru.dgis.sdk.context.Context
 import ru.dgis.sdk.map.*
 import ru.dgis.sdk.map.Map
-import ru.dgis.sdk.positioning.*
 
 
 private const val DIMENSION_ATTR = "is_2d"
 
 
 class GenericMapActivity : AppCompatActivity() {
-    lateinit var sdkContext: Context
-    lateinit var mapSource: MyLocationMapObjectSource
+    private lateinit var sdkContext: Context
+    private lateinit var mapSource: MyLocationMapObjectSource
 
     private var map: Map? = null
 
@@ -45,7 +44,7 @@ class GenericMapActivity : AppCompatActivity() {
         subscribeGestureSwitches(gestureManager)
         setupMapAttributes(map)
 
-        mapSource = createMyLocationMapObjectSource(sdkContext, MyLocationDirectionBehaviour.FOLLOW_MAGNETIC_HEADING)!!
+        mapSource = createMyLocationMapObjectSource(sdkContext, MyLocationDirectionBehaviour.FOLLOW_MAGNETIC_HEADING)
         map.addSource(mapSource)
     }
 

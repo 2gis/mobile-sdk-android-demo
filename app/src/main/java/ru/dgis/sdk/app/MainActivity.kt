@@ -26,7 +26,6 @@ data class Page(
 
 class MainActivity : AppCompatActivity() {
     private val RECORD_REQUEST_CODE = 101
-    private lateinit var sdkContext: Context
 
     private val pages = listOf(
         Page("Generic Map") {

@@ -65,7 +65,7 @@ class MapStyleActivity : AppCompatActivity() {
             type = "*/*"
             action = Intent.ACTION_GET_CONTENT
         }
-        startActivityForResult(Intent.createChooser(intent, "Select Map Style"), MAP_STYLE_FILE);
+        startActivityForResult(Intent.createChooser(intent, "Select Map Style"), MAP_STYLE_FILE)
     }
 
     private fun onStyleChanged(style: Style) {

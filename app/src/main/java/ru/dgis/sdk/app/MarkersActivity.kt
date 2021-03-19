@@ -3,7 +3,6 @@ package ru.dgis.sdk.app
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import imageFromResource
 import ru.dgis.sdk.context.Context
 import ru.dgis.sdk.coordinates.Arcdegree
 import ru.dgis.sdk.geometry.GeoPointWithElevation
@@ -21,7 +20,7 @@ private class MarkerData(val onClick: () -> Unit)
 получаем объект в точке нажатия и, если он содержит обработчик нажатия, вызываем его.
  */
 class MarkersActivity : AppCompatActivity(), TouchEventsObserver {
-    lateinit var sdkContext: Context
+    private lateinit var sdkContext: Context
     private var map: Map? = null
     private val objectsManager by lazy { createMapObjectManager(map!!) }
 
@@ -42,7 +41,7 @@ class MarkersActivity : AppCompatActivity(), TouchEventsObserver {
     override fun onTap(point: ScreenPoint) {
         map!!.getRenderedObjects(point, ScreenDistance(5f)).onResult { objects ->
             val mapObject = objects.firstOrNull()?.item?.item ?: return@onResult
-            val markerData = mapObject.userData() as? MarkerData ?: return@onResult
+            val markerData = mapObject.userData as? MarkerData ?: return@onResult
             markerData.onClick()
         }
     }

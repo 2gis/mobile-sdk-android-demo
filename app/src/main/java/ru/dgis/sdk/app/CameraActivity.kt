@@ -70,13 +70,13 @@ class CameraActivity : AppCompatActivity() {
         val camera = map!!.camera
 
         val positionTextView = findViewById<TextView>(R.id.positionTextView)
-        closeables.add(camera.position().connect {
+        closeables.add(camera.positionChannel.connect {
             positionTextView.text = "position: %.3f, %.3f x %.1f".format(
                     it.point.latitude.value, it.point.longitude.value, it.zoom.value)
         })
 
         val stateTextView = findViewById<TextView>(R.id.stateTextView)
-        closeables.add(camera.state().connect {
+        closeables.add(camera.stateChannel.connect {
             stateTextView.text = "state: $it"
         })
     }
