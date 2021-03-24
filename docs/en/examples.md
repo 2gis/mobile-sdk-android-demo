@@ -197,27 +197,6 @@ routeFuture.onResult {  routes ->
 ```
 
 
-## Получение информации по клику в карту
-По клику в карту можно определить попали ли мы в динамический объект или в объект 2ГИС. 
-Ниже пример получения информации из справочника
-```kotlin
-override fun onTap(point: ScreenPoint) {
-    viewport.getRenderedObjects(point, ScreenDistance(5f))
-        .onResult { renderedObjects ->
-            renderedObjects.mapNotNull { objectInfo ->
-                tryCastToDgisMapObject(objectInfo.item.item)
-            }.forEach { dgisObject ->
-                dgisObject.directoryObject().onResult { directoryObject ->
-                    Toast
-                        .makeText(this, "${directoryObject?.title()}", Toast.LENGTH_SHORT)
-                        .show()
-                }
-            }
-        }
-}
-```
-
-
 ## Добавление динамических объектов на карту
 Чтобы добавить объекты на карту используйте [MapObjectManager](/ru/android/native/maps/reference/ru.dgis.sdk.map.MapObjectManager)
 ### Polyline
