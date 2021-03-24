@@ -1,5 +1,16 @@
 # Release notes
 
+## v0.9
+**Release Date:** 24.03.2021
+- добавили возможность рисовать [пунктирную линию](/ru/android/native/maps/reference/ru.dgis.sdk.map.PolylineOptions#nav-lvl1--val%20dashed)
+- [opacity](/ru/android/native/maps/reference/ru.dgis.sdk.map.Marker#nav-lvl1--var%20iconOpacity) для Marker
+- функции конверторы для работы со Style Zoom([projectionZToStyleZ](/ru/android/native/maps/reference/ru.dgis.sdk.map.projectionZToStyleZ), [styleZToProjectionZ](/ru/android/native/maps/reference/ru.dgis.sdk.map.styleZToProjectionZ))
+- для работы с атрибутами карты добавлен новый тип [AttributeValue](/ru/android/native/maps/reference/ru.dgis.sdk.map.AttributeValue)
+- [showApiVersionInCopyrightView](/ru/android/native/maps/reference/ru.dgis.sdk.map.MapView#nav-lvl1--var%20showApiVersionInCopyrightView) для отображения версии SDK в copyright
+- исправлено падение при вызове *getMapAsync* из не приатаченного View
+- из [DgisMapObject](/ru/android/native/maps/reference/ru.dgis.sdk.map.DgisMapObject) больше нельзя получить Future на объект справочника. Для этого нужно использовать [SearchManager](/ru/android/native/maps/reference/ru.dgis.sdk.directory.SearchManager)
+
+
 ## v0.8
 **Release Date:** 17.03.2021
 - *Ломающее изменение:* мы изменили формат работы с подписками на изменения свойств. Раньше такие поля как `camera.position` имели тип `StatefulChannel`. Для того чтобы получать уведомления об изменениях данных в `Channel` нужно вызвать `camera.position.connect()`, а получить текущее значение можно через `camera.position.value`. Такой API вызывал вопросы, поэтому в новой версии `camera.position`(и другие свойства `StatefulChannel`) это просто getter/setter. А для подписки на изменение нужно использовать `camera.positionChannel`
