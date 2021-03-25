@@ -9,13 +9,21 @@ import ru.dgis.sdk.geometry.GeoPointWithElevation
 import ru.dgis.sdk.map.*
 import ru.dgis.sdk.map.Map
 
-private class MarkerData(val onClick: () -> Unit)
+private class MarkerData(
+        val index: Int,
+        val pin: Image,
+        val selectedPin: Image,
+        var selected: Boolean = false
+)
+
+private class OnClickListener(
+        val customMarker: MarkerData,
+        val onClick: (Marker, MarkerData) -> Unit
+)
 
 /*
 Пример демонстрирует добавление маркеров на карту и обработку нажатий на них.
 Добавляем маркера с помощью MapObjectManager.addMarker, задав позицию и иконку.
-К маркерам в качестве пользовательских данных(MapObject.userData) прикрепляем объект,
-содержащий обработчик нажатия - MarkerData.onClick.
 По событию нажатия на карту(TouchEventsObserver.onTap) с помощью Map.getRenderedObjects
 получаем объект в точке нажатия и, если он содержит обработчик нажатия, вызываем его.
  */
@@ -41,8 +49,11 @@ class MarkersActivity : AppCompatActivity(), TouchEventsObserver {
     override fun onTap(point: ScreenPoint) {
         map!!.getRenderedObjects(point, ScreenDistance(5f)).onResult { objects ->
             val mapObject = objects.firstOrNull()?.item?.item ?: return@onResult
-            val markerData = mapObject.userData as? MarkerData ?: return@onResult
-            markerData.onClick()
+            val dgisMarker = mapObject as? Marker ?: return@onResult
+            // val markerData = dgisMarker.userData as? MarkerData ?: return@onResult
+            val listener = dgisMarker.userData as? OnClickListener ?: return@onResult
+
+            listener.onClick(dgisMarker, listener.customMarker)
         }
     }
 
@@ -56,9 +67,6 @@ class MarkersActivity : AppCompatActivity(), TouchEventsObserver {
     }
 
     private fun createMarkers() {
-        val image1 = imageFromResource(sdkContext, R.drawable.ic_nav_point)
-        val image2 = imageFromResource(sdkContext, R.drawable.ic_blue_nav_pin)
-
         val points = listOf(
             geoPoint(55.920520053981384, 37.46420854702592),
             geoPoint(55.920227539812964, 37.68484982661903),
@@ -71,16 +79,36 @@ class MarkersActivity : AppCompatActivity(), TouchEventsObserver {
             geoPoint(55.81958715998664, 37.52110465429723)
         )
 
+        val pin = imageFromResource(sdkContext, R.drawable.ic_nav_point)
+        val selectedPin = imageFromResource(sdkContext, R.drawable.ic_blue_nav_pin)
+
         points.forEachIndexed { i, point ->
-            objectsManager.addMarker(
-                MarkerOptions(
-                    position = point,
-                    icon = if (i < 5) image1 else image2,
-                    userData = MarkerData(onClick = {
-                        Toast.makeText(this, "Marker #${i + 1} clicked", Toast.LENGTH_SHORT).show()
-                    })
-                )
+
+            val onClickCallback = { dgisMarker: Marker, customMarker: MarkerData ->
+                Toast
+                    .makeText(this, "Marker #${customMarker.index} clicked", Toast.LENGTH_SHORT)
+                    .show()
+
+                customMarker.selected = !customMarker.selected
+
+                dgisMarker.icon = if (customMarker.selected)
+                    customMarker.selectedPin
+                else
+                    customMarker.pin
+            }
+
+            val listener = OnClickListener(
+                    customMarker = MarkerData(i + 1, pin, selectedPin),
+                    onClick = onClickCallback
             )
+
+            val options = MarkerOptions(
+                    position = point,
+                    icon = pin,
+                    userData = listener
+            )
+
+            objectsManager.addMarker(options)
         }
     }
 }
