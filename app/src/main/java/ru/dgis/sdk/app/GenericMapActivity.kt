@@ -78,7 +78,7 @@ class GenericMapActivity : AppCompatActivity() {
             isEnabled = true
 
             setOnCheckedChangeListener { _, isChecked ->
-                map.setStyleAttribute(DIMENSION_ATTR, isChecked)
+                map.setStyleAttribute(DIMENSION_ATTR, AttributeValue(isChecked))
             }
         }
     }
