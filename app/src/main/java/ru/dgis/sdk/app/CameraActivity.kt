@@ -26,6 +26,7 @@ class CameraActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_camera)
         findViewById<MapView>(R.id.mapView).let { mapView ->
+            lifecycle.addObserver(mapView)
             mapView.getMapAsync {
                 this.map = it
                 closeables.add(it)
