@@ -38,6 +38,7 @@ class MarkersActivity : AppCompatActivity(), TouchEventsObserver {
         sdkContext = (applicationContext as Application).sdkContext
         setContentView(R.layout.activity_markers)
         findViewById<MapView>(R.id.mapView).let { mapView ->
+            lifecycle.addObserver(mapView)
             mapView.getMapAsync {
                 this.map = it
                 mapView.setTouchEventsObserver(this)

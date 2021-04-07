@@ -28,6 +28,7 @@ class GenericMapActivity : AppCompatActivity() {
         setContentView(R.layout.activity_map_generic)
 
         mapView = findViewById<MapView>(R.id.mapView).also {
+            lifecycle.addObserver(it)
             it.getMapAsync(this::onMapReady)
         }
     }

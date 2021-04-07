@@ -48,6 +48,10 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this@MainActivity, CameraActivity::class.java)
             startActivity(intent)
         },
+        Page("Lifecycle") {
+            val intent = Intent(this@MainActivity, LifecycleActivity::class.java)
+            startActivity(intent)
+        }
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {

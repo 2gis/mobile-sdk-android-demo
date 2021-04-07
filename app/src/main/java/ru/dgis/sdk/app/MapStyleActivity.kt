@@ -73,6 +73,7 @@ class MapStyleActivity : AppCompatActivity() {
             it.style = style
         }
         val mapView = MapView(this, options).apply {
+            lifecycle.addObserver(this)
             getMapAsync(viewModel::onMapReady)
         }
         rootContainer.apply {
