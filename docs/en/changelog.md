@@ -3,11 +3,11 @@
 ## v0.10
 **Release Date:** 07.04.2021
 - добавили метод [takeSnapshot](/ru/android/native/maps/reference/ru.dgis.sdk.map.MapView#nav-lvl1--takeSnapshot) для получения последнего отрисованного кадра в картинку
-- исключение при удалении источника
 - параметр [interactive](/ru/android/native/maps/reference/ru.dgis.sdk.map.Map#nav-lvl1--var%20interactive) для отключения Ui событий в карте
 - добавили [renderMode](/ru/android/native/maps/reference/ru.dgis.sdk.map.MapOptions#nav-lvl1--var%20renderMode). Теперь можно отрисовывать карту в TextureView
 - добавили [полилинию с градиентом](/ru/android/native/maps/reference/ru.dgis.sdk.map.PolylineOptions#nav-lvl1--val%20gradientPolylineOptions)
 - *Ломающее изменение:* обновили класс [GeoRect](/ru/android/native/maps/reference/ru.dgis.sdk.coordinates.GeoRect)
+- `removeSource` больше не бросает исключение. Даже если источник не был добавлен на карту
 
 
 ## v0.9
