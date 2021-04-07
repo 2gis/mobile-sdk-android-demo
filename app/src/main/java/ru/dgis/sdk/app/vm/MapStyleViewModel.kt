@@ -60,7 +60,7 @@ class MapStyleViewModel: ViewModel() {
 
                 future
             }
-            .thenAccept(styleData::setValue)
+            .thenAccept(styleData::postValue)
     }
 
     fun onMapReady(map: Map) {
