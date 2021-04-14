@@ -7,8 +7,10 @@
 - дополнительные конструкторы data-типов - `GeoPoint(lat: Double, lon: Double)`, `Color(r, g, b, a)` и др.
 - информация о полосах движения маршрута - `RouteInfo.laneSigns`
 - возможность вращать/масштабировать карту относительно ее центра(а не центра жеста) - `RotationSettings.rotateAboutMapPositionPoint`, `ScalingSettings.scalingAboutMapPositionPoint`
+- возможность задать скорость движения в симуляции навигации - `SimulationSettings.speed`
 - убрана тонкая черная граница у объектов карты, когда она не задана
 - исправлено падение при удалении карты на эмуляторах
+- исправлено падение при задании `LocationSource`
 - *Ломающиее изменение:* `TextStyle.fontSize`, `TextStyle.strokeWidth` имеют тип `LogicalPixel`, а не `Float`
 - *Ломающиее изменение:* вместо `navigation.Model.laneSign` теперь `navigation.Model.laneSignIndex`, 
   а `LaneSign` можно получить по этому индексу из `RouteInfo.laneSigns`
