@@ -1,5 +1,21 @@
 # Release notes
 
+## v0.11
+**Release Date:** 14.04.2021
+- возможность задать произвольную тему карты - `MapOptions.lightTheme`, `MapOptions.darkTheme`, `Map.setTheme(light, dark)`, `Map.setTheme(name)`
+- управление и получение информации о http-кэше - `HttpCacheManager`
+- дополнительные конструкторы data-типов - `GeoPoint(lat: Double, lon: Double)`, `Color(r, g, b, a)` и др.
+- информация о полосах движения маршрута - `RouteInfo.laneSigns`
+- возможность вращать/масштабировать карту относительно ее центра(а не центра жеста) - `RotationSettings.rotateAboutMapPositionPoint`, `ScalingSettings.scalingAboutMapPositionPoint`
+- возможность задать скорость движения в симуляции навигации - `SimulationSettings.speed`
+- убрана тонкая черная граница у объектов карты, когда она не задана
+- исправлено падение при удалении карты на эмуляторах
+- исправлено падение при задании `LocationSource`
+- *Ломающиее изменение:* `TextStyle.fontSize`, `TextStyle.strokeWidth` имеют тип `LogicalPixel`, а не `Float`
+- *Ломающиее изменение:* вместо `navigation.Model.laneSign` теперь `navigation.Model.laneSignIndex`, 
+  а `LaneSign` можно получить по этому индексу из `RouteInfo.laneSigns`
+
+
 ## v0.10
 **Release Date:** 07.04.2021
 - добавили метод [takeSnapshot](/ru/android/native/maps/reference/ru.dgis.sdk.map.MapView#nav-lvl1--takeSnapshot) для получения последнего отрисованного кадра в картинку
