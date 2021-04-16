@@ -8,6 +8,16 @@ apply plugin: 'de.undercouch.download'
 def localProperties = new Properties()
 localProperties.load(new FileInputStream(rootProject.file("local.properties")))
 
+def resolvedVersion = null
+
+afterEvaluate { project ->
+    project.configurations.releaseRuntimeClasspath.resolvedConfiguration.getFirstLevelModuleDependencies().each({ dep ->
+        if (dep.getModuleName() == 'sdk-map' || dep.getModuleName() == 'sdk-full') {
+            resolvedVersion = dep.getModuleVersion()
+        }
+    })
+}
+
 android {
     compileSdkVersion 30
     buildToolsVersion "29.0.3"
@@ -33,7 +43,7 @@ android {
                 if (unstrippedLibsDir) {
                     nativeSymbolUploadEnabled true
                     strippedNativeLibsDir "${project.buildDir}/intermediates/stripped_native_libs/release/out/lib"
-                    unstrippedNativeLibsDir "$unstrippedLibsDir/$dgis_sdk_version"
+                    unstrippedNativeLibsDir "$unstrippedLibsDir/$resolvedVersion"
                 }
             }
         }
@@ -66,7 +76,7 @@ android {
 def unstrippedLibsUrl = localProperties.getProperty("dgisUnstrippedLibsUrl", "")
 if (!unstrippedLibsUrl.isEmpty()) {
     def downloadTask = tasks.register('downloadLibsZip', Download) {
-        src "${unstrippedLibsUrl}/sdk-libs-release-local/android/ru/dgis/sdk/libs/$dgis_sdk_version/libs-${dgis_sdk_version}.zip"
+        src "${unstrippedLibsUrl}/sdk-libs-release-local/android/ru/dgis/sdk/libs/$resolvedVersion/libs-${resolvedVersion}.zip"
         dest "$buildDir"
         username System.getenv('ARTIFACTORY_USERNAME')
         password System.getenv('ARTIFACTORY_PASSWORD')
@@ -74,8 +84,8 @@ if (!unstrippedLibsUrl.isEmpty()) {
     }
     def uploadLibTask = tasks.register('getUnstrippedLibraries', Copy) {
         dependsOn downloadTask
-        from zipTree("$buildDir/libs-${dgis_sdk_version}.zip")
-        into "$buildDir/nativeLibs/$dgis_sdk_version"
+        from zipTree("$buildDir/libs-${resolvedVersion}.zip")
+        into "$buildDir/nativeLibs/$resolvedVersion"
     }
     afterEvaluate { project ->
         project.tasks.assembleRelease {
