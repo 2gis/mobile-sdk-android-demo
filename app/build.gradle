@@ -43,7 +43,7 @@ android {
                 if (unstrippedLibsDir) {
                     nativeSymbolUploadEnabled true
                     strippedNativeLibsDir "${project.buildDir}/intermediates/stripped_native_libs/release/out/lib"
-                    unstrippedNativeLibsDir "$unstrippedLibsDir/$resolvedVersion"
+                    unstrippedNativeLibsDir "$unstrippedLibsDir/map"
                 }
             }
         }
@@ -85,7 +85,7 @@ if (!unstrippedLibsUrl.isEmpty()) {
     def uploadLibTask = tasks.register('getUnstrippedLibraries', Copy) {
         dependsOn downloadTask
         from zipTree("$buildDir/libs-${resolvedVersion}.zip")
-        into "$buildDir/nativeLibs/$resolvedVersion"
+        into "$buildDir/nativeLibs"
     }
     afterEvaluate { project ->
         project.tasks.assembleRelease {
