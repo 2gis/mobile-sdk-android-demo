@@ -1,5 +1,23 @@
 # Release notes
 
+## v0.12
+**Release Date:** 22.04.2021
+- возможность использования SVG изображений для маркеров - `imageFromAsset(context, "some.svg"), imageFromSvg(context, svgData)`
+- исправлены падения при оптимизации кода с помощью ProGuard
+- исправлен учет видимости полилинии `PolylineOptions.visible, Polyline.isVisible`
+- добавили сбор анонимной статистики использования, по умолчанию включено (параметр `dataCollectStatus` в `DGis.initialize`), отключать рекомендуется только в случае явного выбора пользователем(например, отказ GDPR)
+- на изображении карты(`MapView.takeSnapshot`) отображается копирайт
+- возможность задать собственную траекторию перемещения камеры - `Camera.move(moveController)`
+- свойство `padding` перемещено из `Map` в `Camera`
+- возможность задать поведение камеры при изменении `padding` - `Camera.setPadding(padding, positionPointChangeBehaviour)`
+- при поиске(`SearchManager`) учитывается местоположение пользователя
+- свойство `GeometryMapObject.originalGeometry` переименовано в `geometry`
+- удалено свойство `GeometryMapObject.shift` вместо него нужно использовать установку `geometry`
+- Исправлены типы параметров `registerPlatformLocationSource`, `registerPlatformMagneticSource` - `LocationSource`, `MagneticHeadingSource` вместо `Any`
+- ускорено получение результата срабатывания `Future` и `Channel`
+- удалены устаревшие методы `Future` и `Channel`
+
+
 ## v0.11
 **Release Date:** 14.04.2021
 - возможность задать произвольную тему карты - `MapOptions.lightTheme`, `MapOptions.darkTheme`, `Map.setTheme(light, dark)`, `Map.setTheme(name)`
