@@ -1,5 +1,13 @@
 # Release notes
 
+## v0.12.1
+**Release Date:** 23.04.2021
+- исправлен учет масштаба карты
+- минимальный масштаб (`CameraZoomRestrictions.minZoom`) теперь по умолчанию - 2
+- убрано вытеснение маркеров друг другом
+- исправление в обработке статистики
+
+
 ## v0.12
 **Release Date:** 22.04.2021
 - возможность использования SVG изображений для маркеров - `imageFromAsset(context, "some.svg"), imageFromSvg(context, svgData)`
