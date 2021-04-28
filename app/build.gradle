@@ -43,7 +43,7 @@ android {
                 if (unstrippedLibsDir) {
                     nativeSymbolUploadEnabled true
                     strippedNativeLibsDir "${project.buildDir}/intermediates/stripped_native_libs/release/out/lib"
-                    unstrippedNativeLibsDir "$unstrippedLibsDir/map"
+                    unstrippedNativeLibsDir "$unstrippedLibsDir"
                 }
             }
         }
@@ -73,23 +73,39 @@ android {
     }
 }
 
-def unstrippedLibsUrl = localProperties.getProperty("dgisUnstrippedLibsUrl", "")
-if (!unstrippedLibsUrl.isEmpty()) {
-    def downloadTask = tasks.register('downloadLibsZip', Download) {
-        src "${unstrippedLibsUrl}/sdk-bundle-release/android/ru/dgis/sdk/libs/$resolvedVersion/libs-${resolvedVersion}.zip"
-        dest "$buildDir"
-        username System.getenv('ARTIFACTORY_USERNAME')
-        password System.getenv('ARTIFACTORY_PASSWORD')
-        overwrite false
-    }
-    def uploadLibTask = tasks.register('getUnstrippedLibraries', Copy) {
-        dependsOn downloadTask
-        from zipTree("$buildDir/libs-${resolvedVersion}.zip")
-        into "$buildDir/nativeLibs"
-    }
-    afterEvaluate { project ->
-        project.tasks.assembleRelease {
-            finalizedBy uploadLibTask
+afterEvaluate {
+    def unstrippedLibsUrl = localProperties.getProperty("dgisUnstrippedLibsUrl", "")
+    if (!unstrippedLibsUrl.isEmpty()) {
+        tasks.named('assembleRelease') {
+            finalizedBy tasks.named('getUnstrippedLibraries')
+        }
+        task createDownloadTasks {
+            def architectures = ['x86', 'x86_64', 'armeabi-v7a', 'arm64-v8a']
+            architectures.each { arch ->
+                project.tasks.register("downloadLib-$arch", Download) {
+                    src "${unstrippedLibsUrl}/sdk-libs-release-local/android/ru/dgis/sdk/libs-map/$resolvedVersion/${arch}.zip"
+                    dest "$buildDir"
+                    username System.getenv('ARTIFACTORY_USERNAME')
+                    password System.getenv('ARTIFACTORY_PASSWORD')
+                    overwrite false
+                }
+            }
+        }
+
+        task getUnstrippedLibraries {
+            dependsOn tasks.named('createDownloadTasks')
+            dependsOn tasks.withType(Download)
+
+            def architectures = ['x86', 'x86_64', 'armeabi-v7a', 'arm64-v8a']
+            architectures.each { arch ->
+                project.tasks.register("unpackLib-$arch", Copy) {
+                    from zipTree("$buildDir/${arch}.zip")
+                    into "$buildDir/nativeLibs/${arch}"
+                }
+            }
+            finalizedBy tasks.matching { task ->
+                task.name.contains("unpackLib")
+            }
         }
     }
 }
