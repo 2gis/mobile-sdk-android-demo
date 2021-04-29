@@ -21,7 +21,7 @@ To install the SDK:
 ```gradle
 repositories {
     maven {
-        url "http://maven.2gis.dev/libs-release"
+        url "http://maven.2gis.dev/sdk-maven-release"
     }
 }
 ```

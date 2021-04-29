@@ -27,7 +27,7 @@ allprojects {
         jcenter()
 
         maven {
-            url localProperties.getProperty('sdkRepository', 'http://maven.2gis.dev/libs-release')
+            url localProperties.getProperty('sdkRepository', 'http://maven.2gis.dev/sdk-maven-release')
         }
     }
 }
