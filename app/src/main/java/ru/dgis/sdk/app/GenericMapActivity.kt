@@ -45,7 +45,7 @@ class GenericMapActivity : AppCompatActivity() {
         subscribeGestureSwitches(gestureManager)
         setupMapAttributes(map)
 
-        mapSource = createMyLocationMapObjectSource(sdkContext, MyLocationDirectionBehaviour.FOLLOW_MAGNETIC_HEADING)!!
+        mapSource = MyLocationMapObjectSource(sdkContext, MyLocationDirectionBehaviour.FOLLOW_MAGNETIC_HEADING)
         map.addSource(mapSource)
     }
 
