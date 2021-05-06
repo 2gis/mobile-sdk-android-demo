@@ -1,4 +1,4 @@
-package ru.dgis.sdk.app.vm
+package ru.dgis.sdk.demo.vm
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -12,7 +12,6 @@ import ru.dgis.sdk.map.StyleBuilder
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
-import java.lang.RuntimeException
 
 
 class MapStyleViewModel: ViewModel() {

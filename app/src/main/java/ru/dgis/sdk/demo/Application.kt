@@ -1,4 +1,4 @@
-package ru.dgis.sdk.app
+package ru.dgis.sdk.demo
 
 import android.app.Application
 import ru.dgis.sdk.context.Context
