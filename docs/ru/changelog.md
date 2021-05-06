@@ -1,5 +1,20 @@
 # Release notes
 
+## v0.14.0
+**Release Date:** 05.05.2021
+- Исправлена ошибка при добавлении маркера - по умолчанию, он направлен вверх экрана независимо от поворота карты.
+- *Ломающее изменение*. Изначальный поворот маркера (`MarkerOptions.iconMapDirection`) и поворот существующего маркера (`Marker.iconMapDirection`) теперь optional.
+
+## v0.13.0
+**Release Date:** 30.04.2021
+- Исправлено промаргивание карты черным цветом при ее создании
+- Возможность задать поворот маркера `MarkerOptions.iconMapDirection`, `Marker.iconMapDirection` 
+- В копирайте на карте по умолчанию не отображается версия SDK, чтобы включить нужно задать `MapView.showApiVersionInCopyrightView = true`
+- Информация о положении камер в навигаторе - `Camera.geoPoint, Camera.bearing`
+- Возможность задать `positionPoint` в функциях `calcPosition` и `zoomOutToFit`
+- Функции для создания объектов заменены на конструкторы `createMapObjectManager` -> `MapObjectManager`, `Geometry.createPoint` -> `PointGeometry` и т.д.
+
+
 ## v0.12.1
 **Release Date:** 23.04.2021
 - исправлен учет масштаба карты

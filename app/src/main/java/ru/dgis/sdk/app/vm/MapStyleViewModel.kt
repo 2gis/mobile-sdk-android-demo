@@ -50,12 +50,7 @@ class MapStyleViewModel: ViewModel() {
                 StyleBuilder(sdkContext)
                     .loadStyleFromFile(stylePath)
                     .onComplete({ style ->
-                        if (style == null) {
-                            val msg = "Creation style from $stylePath is failed"
-                            future.completeExceptionally(RuntimeException(msg))
-                        } else {
-                            future.complete(style)
-                        }
+                        future.complete(style)
                     }, future::completeExceptionally)
 
                 future
