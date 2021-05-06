@@ -1,4 +1,4 @@
-package ru.dgis.sdk.app
+package ru.dgis.sdk.demo
 
 import ru.dgis.sdk.DGis
 import ru.dgis.sdk.context.ApiKeys

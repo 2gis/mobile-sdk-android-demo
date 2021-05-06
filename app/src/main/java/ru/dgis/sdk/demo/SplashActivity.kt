@@ -1,4 +1,4 @@
-package ru.dgis.sdk.app
+package ru.dgis.sdk.demo
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity

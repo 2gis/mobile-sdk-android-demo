@@ -1,4 +1,4 @@
-package ru.dgis.sdk.app
+package ru.dgis.sdk.demo
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -6,7 +6,6 @@ import androidx.appcompat.widget.SwitchCompat
 import ru.dgis.sdk.context.Context
 import ru.dgis.sdk.map.*
 import ru.dgis.sdk.map.Map
-import ru.dgis.sdk.positioning.*
 
 
 private const val DIMENSION_ATTR = "is_2d"
