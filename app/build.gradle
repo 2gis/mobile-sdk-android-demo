@@ -114,8 +114,13 @@ def getUnstrippedTask = tasks.register("getUnstrippedLibraries") {
 }
 
 afterEvaluate { project ->
-    project.tasks.assembleRelease {
-        finalizedBy getUnstrippedTask
+    def uploadTasks = project.tasks.matching {
+        it.name.contains('CrashlyticsSymbolFile')
+    }
+    uploadTasks.forEach {
+        it.configure {
+            dependsOn getUnstrippedTask
+        }
     }
     project.tasks.processDebugGoogleServices {
        onlyIf { false }
