@@ -106,14 +106,17 @@ def fetchingTasks = ['x86', 'x86_64', 'armeabi-v7a', 'arm64-v8a'].collect { arch
     }
 }
 
-tasks.register("getUnstrippedLibraries") {
-    dependsOn fetchingTasks
-
+def getUnstrippedTask = tasks.register("getUnstrippedLibraries") {
     group "Release Build"
     description "Downloads unstripped native libraries for all architectures"
+
+    dependsOn fetchingTasks
 }
 
 afterEvaluate { project ->
+    project.tasks.assembleRelease {
+        finalizedBy getUnstrippedTask
+    }
     project.tasks.processDebugGoogleServices {
        onlyIf { false }
     }
