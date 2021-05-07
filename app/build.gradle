@@ -8,15 +8,7 @@ apply plugin: 'de.undercouch.download'
 def localProperties = new Properties()
 localProperties.load(new FileInputStream(rootProject.file("local.properties")))
 
-def resolvedVersion = null
-
-afterEvaluate { project ->
-    project.configurations.releaseRuntimeClasspath.resolvedConfiguration.getFirstLevelModuleDependencies().each({ dep ->
-        if (dep.getModuleName() == 'sdk-map' || dep.getModuleName() == 'sdk-full') {
-            resolvedVersion = dep.getModuleVersion()
-        }
-    })
-}
+def unstrippedLibsDir = "${project.buildDir}/unstripped/"
 
 android {
     compileSdkVersion 30
@@ -39,12 +31,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 
             firebaseCrashlytics {
-                def unstrippedLibsDir = localProperties.getProperty("dgisUnstrippedLibsDir")
-                if (unstrippedLibsDir) {
-                    nativeSymbolUploadEnabled true
-                    strippedNativeLibsDir "${project.buildDir}/intermediates/stripped_native_libs/release/out/lib"
-                    unstrippedNativeLibsDir "$unstrippedLibsDir"
-                }
+                nativeSymbolUploadEnabled true
+                strippedNativeLibsDir "${project.buildDir}/intermediates/stripped_native_libs/release/out/lib"
+                unstrippedNativeLibsDir unstrippedLibsDir
             }
         }
     }
@@ -73,41 +62,55 @@ android {
     }
 }
 
-afterEvaluate {
-    def unstrippedLibsUrl = localProperties.getProperty("dgisUnstrippedLibsUrl", "")
-    if (!unstrippedLibsUrl.isEmpty()) {
-        tasks.named('assembleRelease') {
-            finalizedBy tasks.named('getUnstrippedLibraries')
-        }
-        task createDownloadTasks {
-            def architectures = ['x86', 'x86_64', 'armeabi-v7a', 'arm64-v8a']
-            architectures.each { arch ->
-                project.tasks.register("downloadLib-$arch", Download) {
-                    src "${unstrippedLibsUrl}/sdk-libs-release-local/android/ru/dgis/sdk/libs-map/$resolvedVersion/${arch}.zip"
-                    dest "$buildDir"
-                    username System.getenv('ARTIFACTORY_USERNAME')
-                    password System.getenv('ARTIFACTORY_PASSWORD')
-                    overwrite false
-                }
-            }
-        }
+def resolvedSdkVersion = project.getObjects().property(ResolvedDependency)
 
-        task getUnstrippedLibraries {
-            dependsOn tasks.named('createDownloadTasks')
-            dependsOn tasks.withType(Download)
-
-            def architectures = ['x86', 'x86_64', 'armeabi-v7a', 'arm64-v8a']
-            architectures.each { arch ->
-                project.tasks.register("unpackLib-$arch", Copy) {
-                    from zipTree("$buildDir/${arch}.zip")
-                    into "$buildDir/nativeLibs/${arch}"
-                }
-            }
-            finalizedBy tasks.matching { task ->
-                task.name.contains("unpackLib")
-            }
+def resolveVersionTask = tasks.register("resolveSDKVersion") {
+    doLast {
+        def sdkModule = configurations.releaseRuntimeClasspath.resolvedConfiguration.getFirstLevelModuleDependencies().find {
+            it.getModuleGroup() == 'ru.dgis.sdk'
         }
+        if (sdkModule == null) {
+            throw GradleException("ru.dgis.sdk is not found in dependencies")
+        }
+        resolvedSdkVersion.set(sdkModule)
+        logger.quiet("Resolved 2GIS SDK is ${sdkModule.getModuleName()}:${sdkModule.getModuleVersion()}")
     }
+}
+
+def fetchingTasks = ['x86', 'x86_64', 'armeabi-v7a', 'arm64-v8a'].collect { arch ->
+    def libsArchive = "${project.buildDir}/downloads/${arch}.zip"
+
+    def downloadTask = project.tasks.register("downloadLibs-$arch", Download) {
+        dependsOn resolveVersionTask
+
+        src resolvedSdkVersion.map { sdkModule ->
+            def libsUrl = localProperties.getProperty("dgisUnstrippedLibsUrl", "")
+            if (libsUrl.isEmpty()) {
+                throw GradleException("You have to define dgisUnstrippedLibsUrl in local.properties to use unspripped libraries")
+            }
+            def version = sdkModule.getModuleVersion()
+            def flavour = sdkModule.getModuleName().split('-').last()
+
+            "${libsUrl}/sdk-bundle-release/android/ru/dgis/sdk/libs-${flavour}/${version}/${arch}.zip"
+        }
+        dest libsArchive
+        username System.getenv('ARTIFACTORY_USERNAME')
+        password System.getenv('ARTIFACTORY_PASSWORD')
+        overwrite false
+    }
+    project.tasks.register("unzipLibs-$arch", Copy) {
+        dependsOn downloadTask
+
+        from zipTree(libsArchive)
+        into "$unstrippedLibsDir/${arch}"
+    }
+}
+
+tasks.register("getUnstrippedLibraries") {
+    dependsOn fetchingTasks
+
+    group "Release Build"
+    description "Downloads unstripped native libraries for all architectures"
 }
 
 afterEvaluate { project ->
