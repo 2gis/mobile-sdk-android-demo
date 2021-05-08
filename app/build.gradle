@@ -86,7 +86,7 @@ def fetchingTasks = ['x86', 'x86_64', 'armeabi-v7a', 'arm64-v8a'].collect { arch
         src resolvedSdkVersion.map { sdkModule ->
             def libsUrl = localProperties.getProperty("dgisUnstrippedLibsUrl", "")
             if (libsUrl.isEmpty()) {
-                throw GradleException("You have to define dgisUnstrippedLibsUrl in local.properties to use unspripped libraries")
+                throw GradleException("You have to define dgisUnstrippedLibsUrl in local.properties to use unstripped libraries")
             }
             def version = sdkModule.getModuleVersion()
             def flavour = sdkModule.getModuleName().split('-').last()
