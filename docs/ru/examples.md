@@ -464,16 +464,14 @@ mapView.getMapAsync { map ->
 ```kotlin
 val connections = mutableListOf<AutoCloseable>()
 
-navigator.uiModel.let { model ->
-    connections.add(model.roadNameChannel.connect(this::onRoadNameChanged))
-}
+connections.add(navigator.uiModel.roadNameChannel.connect(this::onRoadNameChanged))
 
 val trafficRouter = TrafficRouter(sdkContext)
 val routeFuture = trafficRouter.findRoute(fromPoint, toPoint, routeOptions)
 
 routeFuture.onResult { routes ->
     routes.getOrNull(0)?.let { route ->
-        navigator.start(pt, options, route)
+        navigator.start(toPoint, options, route)
     }
 }
 ```
