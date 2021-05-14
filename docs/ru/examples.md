@@ -378,9 +378,8 @@ val searchManager = SearchManager.createSmartManager(sdkContext)
 val query = SearchQueryBuilder.fromQueryText("пицца").setPageSize(1).build()
 
 searchManager.search(query).onResult { searchResult ->
-    searchResult.firstPage?.items?.getOrNull(0)?.let { directoryItem ->
-        // использовать объект поиска
-    }
+    val directoryItem = searchResult.firstPage?.items?.getOrNull(0) ?: return
+    // do smth with directoryItem
 }
 ```
 
@@ -410,22 +409,20 @@ mapView.getMapAsync { map ->
     )
 
     val finishSearchPoint = RouteSearchPoint(
-        coordinates = GeoPoint(latitude = 55.752425, longitude = 37.613983),
+        coordinates = GeoPoint(latitude = 55.752425, longitude = 37.613983)
     )
 
     val trafficRouter = TrafficRouter(sdkContext)
     val routesFuture = trafficRouter.findRoute(startSearchPoint, finishSearchPoint)
     routesFuture.onResult { routes: List<TrafficRoute> ->
-        runOnUiThread {
-            var isActive = true
-            var routeIndex = 0
-            for (route in routes) {
-                routeMapObjectSource.addObject(
-                    RouteMapObject(route, isActive, routeIndex)
-                )
-                isActive = false
-                routeIndex++
-            }
+        var isActive = true
+        var routeIndex = 0
+        for (route in routes) {
+            routeMapObjectSource.addObject(
+                RouteMapObject(route, isActive, routeIndex)
+            )
+            isActive = false
+            routeIndex++
         }
     }
 }
