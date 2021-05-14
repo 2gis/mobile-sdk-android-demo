@@ -470,9 +470,8 @@ val trafficRouter = TrafficRouter(sdkContext)
 val routeFuture = trafficRouter.findRoute(fromPoint, toPoint, routeOptions)
 
 routeFuture.onResult { routes ->
-    routes.getOrNull(0)?.let { route ->
-        navigator.start(toPoint, options, route)
-    }
+    val route = routes.getOrNull(0) ?: return
+    navigator.start(toPoint, options, route)
 }
 ```
 
