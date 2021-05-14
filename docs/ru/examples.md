@@ -1,11 +1,11 @@
 ## Начало работы
 
-Для работы с SDK нужно создать специальный объект [Context](/ru/android/native/maps/reference/ru.dgis.sdk.context.Context), хранящий сущности, связанные с SDK. Контекст создаётся вызовом метода `initialize` у специального объекта [DGis](/ru/android/native/maps/reference/ru.dgis.sdk.DGis).
+Для работы с SDK нужно создать специальный объект [Context](/ru/android/native/maps/reference/ru.dgis.sdk.context.Context), хранящий сущности, связанные с SDK. Контекст создаётся вызовом метода `[DGis](/ru/android/native/maps/reference/ru.dgis.sdk.DGis).initialize`.
 
 При вызове `initialize` нужно передать несколько параметров:
  * контекст Android приложения
  * набор ключей доступа к SDK ([APIKeys](/ru/android/native/maps/reference/ru.dgis.sdk.context.ApiKeys))
- * согласие на сбор и обработку данных
+ * согласие на сбор и обработку данных (опционально, по умолчанию `DataCollectStatus.AGREE`)
 
 ```kotlin
 val sdkContext = DGis.initialize(
@@ -105,6 +105,8 @@ future.onError { error ->
 }
 ```
 
+По умолчанию обработчики срабатывают на UI потоке, но это можно изменить, если указать executor при вызове `onResult` и `onError`.
+
 ### Работа с потоками значений
 
 Некоторые объекты SDK предоставляют потоки значений, которые можно обработать, используя механизм каналов: на поток можно подписаться, указав функцию-обработчик данных, и отписаться, когда обработка данных больше не требуется. Для работы с потоками значений используется интерфейс [Channel](/ru/android/native/maps/reference/ru.dgis.sdk.Channel).
@@ -154,7 +156,7 @@ mapObjectManager = MapObjectManager(map)
  * imageFromSvg
 
 ```kotlin
-val icon = imageFromResource(sdkContext, R.drawable.ic_blue_nav_pin)
+val icon = imageFromResource(sdkContext, R.drawable.ic_marker)
 
 val marker = Marker(
     MarkerOptions(
@@ -202,8 +204,6 @@ mapObjectManager.addObject(polyline)
 
 Координаты для многоугольника указываются в виде двумерного массива. Первый вложенный массив должен содержать координаты основных вершин многоугольника. Остальные вложенные массивы не обязательны и могут быть заданы для того, чтобы создать вырез внутри многоугольника (один дополнительный массив - один вырез в виде многоугольника).
 
-Важно указать координаты таким образом, чтобы первое и последнее значение в каждом массиве совпадало. Иными словами, ломаная должна быть замкнутой.
-
 Дополнительно можно указать цвет полигона и параметры обводки.
 
 ```kotlin
@@ -248,14 +248,14 @@ val mapView = findViewById<MapView>(R.id.mapView)
 
 mapView.getMapAsync { map ->
     val cameraPosition = CameraPosition(
-        point = GeoPoint(Arcdegree(55.752425), Arcdegree(37.613983)),
+        point = GeoPoint(latitude = 55.752425, longitude = 37.613983),
         zoom = Zoom(16.0),
         tilt = Tilt(25.0),
         bearing = Arcdegree(85.0)
     )
 
-    map?.camera.move(cameraPosition, Duration.ofSeconds(2), CameraAnimationType.LINEAR).onResult {
-        // перелет закончен
+    map.camera.move(cameraPosition, 2.seconds, CameraAnimationType.LINEAR).onResult {
+        // перелёт закончен
     }
 }
 ```
@@ -342,22 +342,6 @@ override fun onTap(point: ScreenPoint) {
 }
 ```
 
-### Online источник для тайлов карты
-
-SDK по умолчанию использует предустановленные данные. Однако для тайлов можно установить и online источник
-
-```kotlin
-val mapOptions = MapOptions().apply {
-    source = DgisSourceCreator.createOnlineDgisSource(sdkContext)
-}
-
-val mapView = MapView(this, mapOptions).also { 
-    lifecycle.addObserver(it)
-}
-
-mapContainer.addView(mapView)
-```
-
 ### Добавление объектов из GeoJson
 
 Чтобы добавить объекты из GeoJson на карту, используйте вспомогательные функции:
@@ -394,7 +378,7 @@ val searchManager = SearchManager.createSmartManager(sdkContext)
 val query = SearchQueryBuilder.fromQueryText("пицца").setPageSize(1).build()
 
 searchManager.search(query).onResult { searchResult ->
-    searchResult?.firstPage?.items?.getOrNull(0)?.let { directoryItem ->
+    searchResult.firstPage?.items?.getOrNull(0)?.let { directoryItem ->
         // использовать объект поиска
     }
 }
