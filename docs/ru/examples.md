@@ -1,6 +1,6 @@
 ## Начало работы
 
-Для работы с SDK нужно создать специальный объект [Context](/ru/android/native/maps/reference/ru.dgis.sdk.context.Context), хранящий сущности, связанные с SDK. Контекст создаётся вызовом метода `[DGis](/ru/android/native/maps/reference/ru.dgis.sdk.DGis).initialize`.
+Для работы с SDK нужно создать специальный объект [Context](/ru/android/native/maps/reference/ru.dgis.sdk.context.Context), хранящий сущности, связанные с SDK. Контекст создаётся вызовом метода [DGis.initialize](/ru/android/native/maps/reference/ru.dgis.sdk.DGis#nav-lvl1--initialize).
 
 При вызове `initialize` нужно передать несколько параметров:
  * контекст Android приложения
