@@ -48,4 +48,4 @@ dgisDirectoryApiKey=YOUR_DIRECTIONS_KEY
 
 ## Documentation
 
-Full documentation, including [usage examples](https://docs.2gis.com/en/android/native/maps/examples) and [API reference](https://docs.2gis.com/en/android/native/maps/reference/DGis) with detailed descriptions of all classes and methods, can be found at [docs.2gis.com](https://docs.2gis.com/en/android/native/maps/overview).
+Full documentation, including [usage examples](https://docs.2gis.com/en/android/native/maps/examples) and [API reference](https://docs.2gis.com/en/android/native/maps/reference/ru.dgis.sdk.DGis) with detailed descriptions of all classes and methods, can be found at [docs.2gis.com](https://docs.2gis.com/en/android/native/maps/overview).
