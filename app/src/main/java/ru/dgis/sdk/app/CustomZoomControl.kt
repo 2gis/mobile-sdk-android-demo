@@ -21,7 +21,7 @@ class CustomZoomControl @JvmOverloads constructor(
     }
 
     override fun attachToMap(map: Map) {
-        model = createZoomControlModel(map)
+        model = ZoomControlModel(map)
         attachButton(R.id.zoom_in, ZoomControlButton.ZOOM_IN)
         attachButton(R.id.zoom_out, ZoomControlButton.ZOOM_OUT)
     }

@@ -30,7 +30,7 @@ private class OnClickListener(
 class MarkersActivity : AppCompatActivity(), TouchEventsObserver {
     private lateinit var sdkContext: Context
     private var map: Map? = null
-    private val objectsManager by lazy { createMapObjectManager(map!!) }
+    private val objectsManager by lazy { MapObjectManager(map!!) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
