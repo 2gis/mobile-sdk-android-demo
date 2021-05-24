@@ -1,6 +1,7 @@
 package ru.dgis.sdk.app
 
 import android.os.Bundle
+import android.os.Handler
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import ru.dgis.sdk.context.Context
@@ -8,17 +9,18 @@ import ru.dgis.sdk.coordinates.Arcdegree
 import ru.dgis.sdk.geometry.GeoPointWithElevation
 import ru.dgis.sdk.map.*
 import ru.dgis.sdk.map.Map
+import kotlin.random.Random
 
 private class MarkerData(
-        val index: Int,
-        val pin: Image,
-        val selectedPin: Image,
-        var selected: Boolean = false
+    val index: Int,
+    val pin: Image,
+    val selectedPin: Image,
+    var selected: Boolean = false
 )
 
 private class OnClickListener(
-        val customMarker: MarkerData,
-        val onClick: (Marker, MarkerData) -> Unit
+    val customMarker: MarkerData,
+    val onClick: (Marker, MarkerData) -> Unit
 )
 
 /*
@@ -42,7 +44,13 @@ class MarkersActivity : AppCompatActivity(), TouchEventsObserver {
             mapView.getMapAsync {
                 this.map = it
                 mapView.setTouchEventsObserver(this)
-                createMarkers()
+                val task = object : Runnable {
+                    override fun run() {
+                        createMarkers()
+                        Handler().postDelayed(this, 1000)
+                    }
+                }
+                Handler().postDelayed(task, 0)
             }
         }
     }
@@ -63,11 +71,17 @@ class MarkersActivity : AppCompatActivity(), TouchEventsObserver {
         map?.close()
     }
 
+    private val rand = Random(1)
+
     private fun geoPoint(lat: Double, lon: Double): GeoPointWithElevation {
-        return GeoPointWithElevation(Arcdegree(lat), Arcdegree(lon))
+        return GeoPointWithElevation(
+            Arcdegree(lat + rand.nextDouble(-0.1, 0.1)),
+            Arcdegree(lon + rand.nextDouble(-0.1, 0.1))
+        )
     }
 
     private fun createMarkers() {
+        objectsManager.removeAll()
         val points = listOf(
             geoPoint(55.920520053981384, 37.46420854702592),
             geoPoint(55.920227539812964, 37.68484982661903),
@@ -99,14 +113,14 @@ class MarkersActivity : AppCompatActivity(), TouchEventsObserver {
             }
 
             val listener = OnClickListener(
-                    customMarker = MarkerData(i + 1, pin, selectedPin),
-                    onClick = onClickCallback
+                customMarker = MarkerData(i + 1, pin, selectedPin),
+                onClick = onClickCallback
             )
 
             val options = MarkerOptions(
-                    position = point,
-                    icon = pin,
-                    userData = listener
+                position = point,
+                icon = pin,
+                userData = listener
             )
 
             objectsManager.addMarker(options)
