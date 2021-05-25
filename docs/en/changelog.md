@@ -1,9 +1,25 @@
 # Release notes
 
+## v0.15.0
+**Release Date:** 25.05.2021
+- Возможность задания угла наклона камеры в зависимости от масштаба - `ZoomToTiltRelation`, `Camera.zoomToTiltRelation`
+- Проверка пересечения геометрий - `Geometry.hasIntersection`
+- Возможность задать пользовательский обработчик логирования - `LogOptions.customSink`
+- Возможность задать пользовательский обработчик жестов - `MapGestureRecognitionEngine`, `MapView.useCustomGestureRecognitionEngine`
+- Режим масштабирования карты теперь задается через `GestureManager.setSettingsAboutMapPositionPoint` и влияет на все жесты 
+- Признак, что первый элемент поисковой выдачи пригоден для непосредственного использования - `SearchResult.autoUseFirstResult`
+- Изменение интерфейса `MapObjectManager` - конструкторы `Marker`, `Polygon` и тд. вместо `MapObjectManager.createMarker/createPolygon`, методы `MapObjectManager.addObject/addObjects/removeObject` и др.
+- Изменён порядок параметров в `calcPosition` и `zoomOutToFit`
+- `DataCollectStatus` переименован в `PersonalDataCollectionConsent`
+- Упрощена инициализация SDK из Java - некоторые параметры `DGis.initialize` стали опциональными
+- Исправление в кешировании тайлов карты
+
+
 ## v0.14.0
 **Release Date:** 05.05.2021
 - Исправлена ошибка при добавлении маркера - по умолчанию, он направлен вверх экрана независимо от поворота карты.
 - *Ломающее изменение*. Изначальный поворот маркера (`MarkerOptions.iconMapDirection`) и поворот существующего маркера (`Marker.iconMapDirection`) теперь optional.
+
 
 ## v0.13.0
 **Release Date:** 30.04.2021
