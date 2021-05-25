@@ -1,4 +1,4 @@
-package ru.dgis.sdk.app
+package ru.dgis.sdk.demo
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.activity.viewModels
 import com.google.android.material.progressindicator.CircularProgressIndicator
-import ru.dgis.sdk.app.vm.MapStyleViewModel
+import ru.dgis.sdk.demo.vm.MapStyleViewModel
 import ru.dgis.sdk.map.*
 
 internal const val MAP_STYLE_FILE = 4433

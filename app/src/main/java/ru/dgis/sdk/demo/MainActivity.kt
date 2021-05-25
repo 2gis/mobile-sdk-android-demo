@@ -1,4 +1,4 @@
-package ru.dgis.sdk.app
+package ru.dgis.sdk.demo
 
 import android.Manifest
 import android.content.Intent
@@ -9,12 +9,9 @@ import android.util.Log
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ListView
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import ru.dgis.sdk.context.Context
-import ru.dgis.sdk.positioning.registerPlatformLocationSource
-import ru.dgis.sdk.positioning.registerPlatformMagneticSource
 
 
 typealias ScreenSelectedCallback = () -> Unit
