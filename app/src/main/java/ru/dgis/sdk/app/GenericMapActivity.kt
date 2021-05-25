@@ -53,7 +53,6 @@ class GenericMapActivity : AppCompatActivity() {
         val enabledGestures = gm.enabledGestures
         val options = listOf(
             Pair(R.id.rotationSwitch, Gesture.ROTATION),
-            Pair(R.id.shiftSwitch, Gesture.SHIFT),
             Pair(R.id.scaleSwitch, Gesture.SCALING),
             Pair(R.id.tiltSwitch, Gesture.TILT),
         )
@@ -68,6 +67,26 @@ class GenericMapActivity : AppCompatActivity() {
                         gm.enableGesture(gesture)
                     else
                         gm.disableGesture(gesture)
+                }
+            }
+        }
+        findViewById<SwitchCompat>(R.id.shiftSwitch).apply {
+            isEnabled = true
+            isChecked = enabledGestures.contains(Gesture.SHIFT)
+
+            if (isChecked)
+                gm.enableGesture(Gesture.MULTI_TOUCH_SHIFT)
+            else
+                gm.disableGesture(Gesture.MULTI_TOUCH_SHIFT)
+
+            setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked) {
+                    gm.enableGesture(Gesture.SHIFT)
+                    gm.enableGesture(Gesture.MULTI_TOUCH_SHIFT)
+                }
+                else {
+                    gm.disableGesture(Gesture.SHIFT)
+                    gm.disableGesture(Gesture.MULTI_TOUCH_SHIFT)
                 }
             }
         }
