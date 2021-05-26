@@ -137,13 +137,6 @@
                     android:textColor="?attr/colorOnBackground"
                     />
 
-                <com.google.android.material.switchmaterial.SwitchMaterial
-                    android:id="@+id/flatModeSwitch"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:text="2D Mode"
-                    />
-
 
             </LinearLayout>
 
