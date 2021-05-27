@@ -1,8 +1,8 @@
-# 2GIS Android Native SDK
+# 2GIS Android Mobile SDK
 
-2GIS Android Native SDK is an SDK that allows you to add a 2GIS map to your Android application. It can be used to display the map in your layout, add custom markers to it, and highlight various objects on the map, such as buildings, roads, and others.
+2GIS Android Mobile SDK is an SDK that allows you to add a 2GIS map to your Android application. It can be used to display the map in your layout, add custom markers to it, and highlight various objects on the map, such as buildings, roads, and others.
 
-> :warning: **2GIS Android Native SDK is under development.** It is not ready for production usage.
+> :warning: **2GIS Android Mobile SDK is under development.** It is not ready for production usage.
 
 
 ## Getting API Keys
