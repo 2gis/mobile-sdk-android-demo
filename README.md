@@ -1,17 +1,17 @@
 # 2GIS Android Native SDK
 
-2GIS Android Native SDK is an SDK that allows you to add a 2GIS map to your Android application. It can be used to display the map in your layout, add custom markers to it, and highlight various objects on the map, such as buildings, roads, and others.
+> :warning: &nbsp;**2GIS Android Native SDK is under development.** It is not ready for production usage.
 
-> :warning: **2GIS Android Native SDK is under development.** It is not ready for production usage.
+2GIS Android Native SDK is an SDK that allows you to add a [2GIS map](https://2gis.ae/) to your Android application. It can be used to display the map in your layout, add custom markers to it, draw geometric shapes, calculate and display routes, get information about map objects, control the camera movement, and so on.
 
 
 ## Getting API Keys
 
 Usage of this SDK requires an API key to connect to 2GIS servers and retrieve the geographical data. This API key is unique to the SDK and cannot be used with other 2GIS SDKs.
 
-Additionally, if you plan to draw routes on the map, you will need a separate key—a [Directions API](https://docs.2gis.com/en/api/navigation/directions/overview) key—to calculate and display an optimal route.
+Additionally, if you plan to draw routes on the map or get extra information about map objects, you will need a separate key - a *Directory API* key.
 
-To obtain either of these API keys, fill in the form at [dev.2gis.ae](https://dev.2gis.ae/order).
+To obtain either of these API keys, fill in the form at [dev.2gis.com](https://dev.2gis.com/order).
 
 
 ## Installation
@@ -32,7 +32,7 @@ repositories {
 
 ```gradle
 dependencies {
-    implementation 'ru.dgis.sdk:sdk:latest.release'
+    implementation 'ru.dgis.sdk:sdk-full:latest.release'
 }
 ```
 
