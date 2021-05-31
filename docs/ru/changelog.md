@@ -1,5 +1,10 @@
 # Release notes
 
+## v0.15.1
+**Release Date:** 27.05.2021
+- Исправлена обработка долгого нажатия на карту - `TouchEventsObserver.onLongTouch`
+
+
 ## v0.15.0
 **Release Date:** 25.05.2021
 - Возможность задания угла наклона камеры в зависимости от масштаба - `ZoomToTiltRelation`, `Camera.zoomToTiltRelation`
