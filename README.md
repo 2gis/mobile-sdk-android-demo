@@ -18,7 +18,7 @@ To obtain either of these API keys, fill in the form at [dev.2gis.com](https://d
 
 To install the SDK:
 
-1. Declare a custom repository in your `build.gradle` file:
+1. Declare a custom repository in your `build.gradle` file.
 
 ```gradle
 repositories {
@@ -28,14 +28,23 @@ repositories {
 }
 ```
 
-2. Add a build dependency:
+2. Add a build dependency.
+
+To get the regular version of SDK (without routes and navigation functionality):
+
+```gradle
+dependencies {
+    implementation 'ru.dgis.sdk:sdk-map:latest.release'
+}
+```
+
+To get the full version of SDK:
 
 ```gradle
 dependencies {
     implementation 'ru.dgis.sdk:sdk-full:latest.release'
 }
 ```
-
 
 ## Running Example App
 

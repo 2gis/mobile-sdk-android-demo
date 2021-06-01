@@ -16,7 +16,8 @@ Android Native SDK позволяет добавить [карту 2GIS](https:/
 
 Для установки SDK:
 
-1. Укажите пользовательский репозиторий в вашем файле build.gradle:
+1. Укажите пользовательский репозиторий в вашем файле `build.gradle`.
+
 ```gradle
 repositories {
     maven {
@@ -24,7 +25,19 @@ repositories {
     }
 }
 ```
-2. Добавьте зависимость:
+
+2. Добавьте зависимость.
+
+Чтобы получить облегчённую версию SDK (без маршрутов и навигации):
+
+```gradle
+dependencies {
+    implementation 'ru.dgis.sdk:sdk-map:latest.release'
+}
+```
+
+Чтобы получить полную версию SDK:
+
 ```gradle
 dependencies {
     implementation 'ru.dgis.sdk:sdk-full:latest.release'

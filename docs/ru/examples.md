@@ -69,6 +69,8 @@ sdkContext = DGis.initialize(
 
 Для карты можно указать начальные координаты (`cameraTargetLat` - широта; `cameraTargetLng` - долгота) и масштаб (`cameraZoom`).
 
+[MapView](/ru/android/native/maps/reference/ru.dgis.sdk.map.MapView) также можно создать программно. В таком случае настройки можно указать в виде объекта [MapOptions](/ru/android/native/maps/reference/ru.dgis.sdk.map.MapOptions).
+
 Объект карты ([Map](/ru/android/native/maps/reference/ru.dgis.sdk.map.Map)) можно получить, вызвав метод `getMapAsync()`:
 
 ```kotlin
@@ -83,7 +85,7 @@ override fun onCreate(savedInstanceState: Bundle?) {
 
     mapView.getMapAsync { map ->
         // Действия с картой
-        val mapId = map.id.value
+        val camera = map.camera
     }
 }
 ```
@@ -135,7 +137,7 @@ val connection = visibleRectChannel.connect { geoRect ->
 }
 ```
 
-Чтобы отменить подписку, нужно вызвать метод close():
+После окончания работы с каналом важно отменить подписку, чтобы избежать утечки памяти. Для этого нужно вызвать метод `close()`:
 
 ```kotlin
 connection.close()
@@ -263,8 +265,6 @@ mapObjectManager.addObject(polyline)
 
 Координаты для многоугольника указываются в виде двумерного списка. Первый вложенный список должен содержать координаты основных вершин многоугольника. Остальные вложенные списки не обязательны и могут быть заданы для того, чтобы создать вырез внутри многоугольника (один дополнительный список - один вырез в виде многоугольника).
 
-Важно указать координаты таким образом, чтобы первое и последнее значение в каждом списке совпадало. Иными словами, ломаная должна быть замкнутой.
-
 Дополнительно можно указать цвет полигона и параметры обводки (см. [PolygonOptions](/ru/android/native/maps/reference/ru.dgis.sdk.map.PolygonOptions)).
 
 ```kotlin
@@ -330,6 +330,8 @@ mapView.getMapAsync { map ->
 ```kotlin
 map.camera.move(cameraPosition, 2.seconds, CameraAnimationType.LINEAR)
 ```
+
+Для более точного контроля над анимацией перелёта можно использовать контроллер перелёта, который будет определять позицию камеры в каждый конкретный момент времени. Для этого нужно реализовать интерфейс [CameraMoveController](/ru/android/native/maps/reference/ru.dgis.sdk.map.CameraMoveController) и передать созданный объект в метод `move()` вместо параметров перелёта.
 
 ### Получение состояния камеры
 
@@ -407,8 +409,6 @@ override fun onTap(point: ScreenPoint) {
     }
 }
 ```
-
-Метод `getRenderedObjects()` также можно вызвать у [MapView](/ru/android/native/maps/reference/ru.dgis.sdk.map.MapView#nav-lvl1--getRenderedObjects), чтобы не получать объект карты только для этого вызова.
 
 ## Справочник объектов
 
