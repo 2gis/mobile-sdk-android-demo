@@ -5,10 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.android.gms.common.util.IOUtils
 import java9.util.concurrent.CompletableFuture
-import ru.dgis.sdk.DGis
+import ru.dgis.sdk.context.File as DGisFile
 import ru.dgis.sdk.map.Map
-import ru.dgis.sdk.map.Style
-import ru.dgis.sdk.map.StyleBuilder
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
@@ -18,14 +16,14 @@ class MapStyleViewModel: ViewModel() {
     private val closeables = mutableListOf<AutoCloseable>()
     private var loadingFuture = CompletableFuture<Void>()
     private var stylePath = ""
-    private val styleData = MutableLiveData<Style>()
+    private val _styleFile = MutableLiveData<DGisFile>()
     private var map: Map? = null
 
     var isStyleSelected: Boolean = false
         private set
 
-    val style: LiveData<Style>
-        get() = styleData
+    val styleFile: LiveData<DGisFile>
+        get() = _styleFile
 
     fun loadStyle(styleStream: InputStream) {
         isStyleSelected = true
@@ -40,21 +38,10 @@ class MapStyleViewModel: ViewModel() {
                 }
                 destinationFile.absolutePath
             }
-            .thenCompose { stylePath ->
-                this.stylePath = stylePath
-
-                val future = CompletableFuture<Style>()
-                val sdkContext = checkNotNull(DGis.context())
-
-                StyleBuilder(sdkContext)
-                    .loadStyleFromFile(stylePath)
-                    .onComplete({ style ->
-                        future.complete(style)
-                    }, future::completeExceptionally)
-
-                future
+            .thenAccept {
+                this.stylePath = it
+                _styleFile.postValue(DGisFile(it))
             }
-            .thenAccept(styleData::postValue)
     }
 
     fun onMapReady(map: Map) {

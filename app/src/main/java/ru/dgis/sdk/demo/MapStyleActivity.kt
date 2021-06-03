@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.activity.viewModels
 import com.google.android.material.progressindicator.CircularProgressIndicator
+import ru.dgis.sdk.context.File
 import ru.dgis.sdk.demo.vm.MapStyleViewModel
 import ru.dgis.sdk.map.*
 
@@ -23,7 +24,7 @@ class MapStyleActivity : AppCompatActivity() {
 
         rootContainer = findViewById<FrameLayout>(R.id.rootContainer)
 
-        viewModel.style.observe(this, this::onStyleChanged)
+        viewModel.styleFile.observe(this, this::onStyleChanged)
 
         if (!viewModel.isStyleSelected) {
             val params = FrameLayout.LayoutParams(
@@ -68,9 +69,9 @@ class MapStyleActivity : AppCompatActivity() {
         startActivityForResult(Intent.createChooser(intent, "Select Map Style"), MAP_STYLE_FILE);
     }
 
-    private fun onStyleChanged(style: Style) {
+    private fun onStyleChanged(styleFile: File) {
         val options = MapOptions().also {
-            it.style = style
+            it.styleFile = styleFile
         }
         val mapView = MapView(this, options).apply {
             getMapAsync(viewModel::onMapReady)
