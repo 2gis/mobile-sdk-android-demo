@@ -73,12 +73,6 @@ class GenericMapActivity : AppCompatActivity() {
     }
 
     private fun setupMapAttributes(map: Map) {
-        findViewById<SwitchCompat>(R.id.flatModeSwitch).apply {
-            isEnabled = true
 
-            setOnCheckedChangeListener { _, isChecked ->
-                map.setStyleAttribute(DIMENSION_ATTR, AttributeValue(isChecked))
-            }
-        }
     }
 }
