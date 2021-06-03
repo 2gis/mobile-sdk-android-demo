@@ -1,21 +1,23 @@
-# Overview
+# 2GIS Android Native SDK
 
-## Introduction
-2GIS Android MobileSDK is an SDK that allows you to add a 2GIS map to your Android application. It can be used to display the map in your layout, add custom markers to it, and highlight various objects on the map, such as buildings, roads, and others.
+Android Mobile SDK позволяет добавить [карту 2GIS](https://2gis.ru/) в ваше Android-приложение. С помощью этого SDK можно отобразить карту на экране, добавить на неё маркеры, рисовать геометрические фигуры, строить маршруты, получать информацию об объектах, управлять камерой и так далее.
 
+Примеры использования SDK можно найти в разделе [Примеры](/ru/android/native/maps/examples). Описание всех классов и методов можно найти в разделе [Справочник API](/ru/android/native/maps/reference).
 
-## Getting an access key
+## Получение ключей доступа
 
-Usage of this SDK requires an API key to connect to 2GIS servers and retrieve the geographical data. This API key is unique to the SDK and cannot be used with other 2GIS SDKs. 
+Для работы с SDK нужно получить ключ API, который будет использоваться для подключения к серверам 2GIS и получения географических данных. Этот ключ уникален для этого типа SDK и не может быть использован с другими SDK от 2GIS.
 
-To obtain the key, [contact us](https://dev.2gis.ru/order/).
+Кроме этого, если вы планируете прокладывать маршруты на карте или использовать справочник для получения информации об объектах, то вам нужно получить дополнительный ключ.
 
+Чтобы получить любой из этих ключей, заполните форму на [dev.2gis.ru](https://dev.2gis.ru/order/).
 
-## Installation
+## Установка
 
-To install the SDK:
+Для установки SDK:
 
-1. Declare a custom repository in your build.gradle file:
+1. Укажите пользовательский репозиторий в вашем файле `build.gradle`.
+
 ```gradle
 repositories {
     maven {
@@ -23,11 +25,25 @@ repositories {
     }
 }
 ```
-2. Add a build dependency:
+
+2. Добавьте зависимость.
+
+Чтобы получить облегчённую версию SDK (без маршрутов и навигации):
+
 ```gradle
 dependencies {
-    implementation 'ru.dgis.sdk:sdk:latest.release'
+    implementation 'ru.dgis.sdk:sdk-map:latest.release'
 }
 ```
 
-After that, you should be good to go. Check the [Examples section](/ru/android/native/maps/examples) to see how to display the map in your application. Alternatively, check the [API Reference](/ru/android/native/maps/reference/DGis) to learn more about specific classes and methods.
+Чтобы получить полную версию SDK:
+
+```gradle
+dependencies {
+    implementation 'ru.dgis.sdk:sdk-full:latest.release'
+}
+```
+
+## Демонстрационный проект
+
+Демонстрационное приложение с исходным кодом можно найти в нашем [GitHub-репозитории](https://github.com/2gis/native-sdk-android-demo/).
