@@ -1,6 +1,6 @@
 ## Начало работы
 
-Для работы с SDK нужно вызвать метод `initialize()` объекта [DGis](/ru/android/native/maps/reference/ru.dgis.sdk.DGis), указав контекст приложения и набор ключей доступа (объект [ApiKeys](/ru/android/native/maps/reference/ru.dgis.sdk.context.ApiKeys)).
+Для работы с SDK нужно вызвать метод `initialize()` объекта [DGis](/ru/android/native/maps/reference/ru.dgis.sdk.DGis), указав контекст приложения и набор ключей доступа (объект [ApiKeys](/ru/android/native/maps/reference/ru.dgis.sdk.ApiKeys)).
 
 В SDK используется два ключа: `map` (основной ключ SDK) и `directory` (ключ доступа к дополнительным API: справочнику объектов и маршрутизатору).
 
@@ -21,7 +21,7 @@ class Application : Application() {
 }
 ```
 
-Дополнительно можно указать настройки журналирования ([LogOptions](/ru/android/native/maps/reference/ru.dgis.sdk.context.LogOptions)) и настройки HTTP-клиента ([HttpOptions](/ru/android/native/maps/reference/ru.dgis.sdk.context.HttpOptions)), такие как кеширование.
+Дополнительно можно указать настройки журналирования ([LogOptions](/ru/android/native/maps/reference/ru.dgis.sdk.LogOptions)) и настройки HTTP-клиента ([HttpOptions](/ru/android/native/maps/reference/ru.dgis.sdk.HttpOptions)), такие как кеширование.
 
 ```kotlin
 // Ключи доступа
