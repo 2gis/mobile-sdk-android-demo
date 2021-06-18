@@ -1,18 +1,16 @@
-# 2GIS Android Mobile SDK
+# 2GIS Android SDK
 
-> :warning: &nbsp;**2GIS Android Native SDK is under development.** It is not ready for production usage.
+> :warning: &nbsp;**2GIS Android SDK is under development.** It is not ready for production usage.
 
-2GIS Android Mobile SDK is an SDK that allows you to add a [2GIS map](https://2gis.ae/) to your Android application. It can be used to display the map in your layout, add custom markers to it, draw geometric shapes, calculate and display routes, get information about map objects, control the camera movement, and so on.
+2GIS Android SDK is an SDK that allows you to add a [2GIS map](https://2gis.ae/) to your Android application. It can be used to display the map in your layout, add custom markers to it, draw geometric shapes, calculate and display routes, get information about map objects, control the camera movement, and so on.
 
-
-## Getting API Keys
+## Getting API keys
 
 Usage of this SDK requires an API key to connect to 2GIS servers and retrieve the geographical data. This API key is unique to the SDK and cannot be used with other 2GIS SDKs.
 
 Additionally, if you plan to draw routes on the map or get extra information about map objects, you will need a separate key - a *Directory API* key.
 
 To obtain either of these API keys, fill in the form at [dev.2gis.com](https://dev.2gis.com/order).
-
 
 ## Installation
 
@@ -46,7 +44,7 @@ dependencies {
 }
 ```
 
-## Running Example App
+## Running example app
 
 To run the example app, clone this Git repository and add your API keys to the [local.properties](https://developer.android.com/studio/build#properties-files) file in your project:
 
@@ -57,4 +55,4 @@ dgisDirectoryApiKey=YOUR_DIRECTIONS_KEY
 
 ## Documentation
 
-Full documentation, including [usage examples](https://docs.2gis.com/en/android/native/maps/examples) and [API reference](https://docs.2gis.com/en/android/native/maps/reference/ru.dgis.sdk.DGis) with detailed descriptions of all classes and methods, can be found at [docs.2gis.com](https://docs.2gis.com/en/android/native/maps/overview).
+Full documentation, including [usage examples](https://docs.2gis.com/en/android/sdk/examples) and [API reference](https://docs.2gis.com/en/android/sdk/reference/ru.dgis.sdk.DGis) with detailed descriptions of all classes and methods, can be found at [docs.2gis.com](https://docs.2gis.com/en/android/sdk/overview).

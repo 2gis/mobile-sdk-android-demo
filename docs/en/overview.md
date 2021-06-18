@@ -1,22 +1,22 @@
-# 2GIS Android Native SDK
+# 2GIS Android SDK
 
-Android Mobile SDK позволяет добавить [карту 2GIS](https://2gis.ru/) в ваше Android-приложение. С помощью этого SDK можно отобразить карту на экране, добавить на неё маркеры, рисовать геометрические фигуры, строить маршруты, получать информацию об объектах, управлять камерой и так далее.
+2GIS Android SDK is an SDK that allows you to add a [2GIS map](https://2gis.ae/) to your Android application. It can be used to display the map in your layout, add custom markers to it, draw geometric shapes, calculate and display routes, get information about map objects, control the camera movement, and so on.
 
-Примеры использования SDK можно найти в разделе [Примеры](/ru/android/native/maps/examples). Описание всех классов и методов можно найти в разделе [Справочник API](/ru/android/native/maps/reference).
+You can find usage examples in the [Examples](/en/android/sdk/examples) section. For a detailed description of all classes and methods, see [API Reference](/en/android/sdk/reference).
 
-## Получение ключей доступа
+## Getting API keys
 
-Для работы с SDK нужно получить ключ API, который будет использоваться для подключения к серверам 2GIS и получения географических данных. Этот ключ уникален для этого типа SDK и не может быть использован с другими SDK от 2GIS.
+Usage of this SDK requires an API key to connect to 2GIS servers and retrieve the geographical data. This API key is unique to the SDK and cannot be used with other 2GIS SDKs.
 
-Кроме этого, если вы планируете прокладывать маршруты на карте или использовать справочник для получения информации об объектах, то вам нужно получить дополнительный ключ.
+Additionally, if you plan to draw routes on the map or get extra information about map objects, you will need a separate key - a *Directory API* key.
 
-Чтобы получить любой из этих ключей, заполните форму на [dev.2gis.ru](https://dev.2gis.ru/order/).
+To obtain either of these API keys, fill in the form at [dev.2gis.com](https://dev.2gis.com/order).
 
-## Установка
+## Installation
 
-Для установки SDK:
+To install the SDK:
 
-1. Укажите пользовательский репозиторий в вашем файле `build.gradle`.
+1. Declare a custom repository in your `build.gradle` file.
 
 ```gradle
 repositories {
@@ -26,9 +26,9 @@ repositories {
 }
 ```
 
-2. Добавьте зависимость.
+2. Add a build dependency.
 
-Чтобы получить облегчённую версию SDK (без маршрутов и навигации):
+To get the regular version of SDK (without routes and navigation functionality):
 
 ```gradle
 dependencies {
@@ -36,7 +36,7 @@ dependencies {
 }
 ```
 
-Чтобы получить полную версию SDK:
+To get the full version of SDK:
 
 ```gradle
 dependencies {
@@ -44,6 +44,6 @@ dependencies {
 }
 ```
 
-## Демонстрационный проект
+## Demo project
 
-Демонстрационное приложение с исходным кодом можно найти в нашем [GitHub-репозитории](https://github.com/2gis/native-sdk-android-demo/).
+You can find a demo app with the source code in our [GitHub repository](https://github.com/2gis/native-sdk-android-demo/).

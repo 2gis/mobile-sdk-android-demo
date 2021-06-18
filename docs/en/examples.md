@@ -1,8 +1,8 @@
-## Начало работы
+## Getting started
 
-Для работы с SDK нужно вызвать метод `initialize()` объекта [DGis](/ru/android/native/maps/reference/ru.dgis.sdk.DGis), указав контекст приложения и набор ключей доступа (объект [ApiKeys](/ru/android/native/maps/reference/ru.dgis.sdk.context.ApiKeys)).
+To begin working with the SDK, call the `initialize()` method of [DGis](/en/android/sdk/reference/ru.dgis.sdk.DGis) and specify the application context and a set of access keys ([ApiKeys](/en/android/sdk/reference/ru.dgis.sdk.ApiKeys)).
 
-В SDK используется два ключа: `map` (основной ключ SDK) и `directory` (ключ доступа к дополнительным API: справочнику объектов и маршрутизатору).
+This SDK uses two types of access keys: main SDK key (`map`) and key to access additional APIs like routing and object directory (`directory`).
 
 ```kotlin
 class Application : Application() {
@@ -21,26 +21,26 @@ class Application : Application() {
 }
 ```
 
-Дополнительно можно указать настройки журналирования ([LogOptions](/ru/android/native/maps/reference/ru.dgis.sdk.context.LogOptions)) и настройки HTTP-клиента ([HttpOptions](/ru/android/native/maps/reference/ru.dgis.sdk.context.HttpOptions)), такие как кеширование.
+Additionally, you can specify logging settings ([LogOptions](/en/android/sdk/reference/ru.dgis.sdk.LogOptions)) and HTTP client settings ([HttpOptions](/en/android/sdk/reference/ru.dgis.sdk.HttpOptions)) such as caching.
 
 ```kotlin
-// Ключи доступа
+// Access keys
 val apiKeys = ApiKeys(
     directory = "Directory API key",
     map = "SDK key"
 )
 
-// Настройки журналирования
+// Logging settings
 val logOptions = LogOptions(
     LogLevel.VERBOSE
 )
 
-// Настройки HTTP-клиента
+// HTTP client settings
 val httpOptions = HttpOptions(
     useCache = false
 )
 
-// Согласие на сбор и отправку персональных данных
+// Consent to personal data processing
 val dataCollectConsent = PersonalDataCollectionConsent.GRANTED
 
 sdkContext = DGis.initialize(
@@ -52,9 +52,9 @@ sdkContext = DGis.initialize(
 )
 ```
 
-## Создание карты
+## Creating a map
 
-Чтобы создать карту, добавьте [MapView](/ru/android/native/maps/reference/ru.dgis.sdk.map.MapView) в ваш activity:
+To display a map, add a [MapView](/en/android/sdk/reference/ru.dgis.sdk.map.MapView) to your activity:
 
 ```xml
 <ru.dgis.sdk.map.MapView
@@ -67,11 +67,11 @@ sdkContext = DGis.initialize(
 />
 ```
 
-Для карты можно указать начальные координаты (`cameraTargetLat` - широта; `cameraTargetLng` - долгота) и масштаб (`cameraZoom`).
+You can specify starting coordinates (`cameraTargetLat` for latitude and `cameraTargetLng` for longitude) and zoom level (`cameraZoom`).
 
-[MapView](/ru/android/native/maps/reference/ru.dgis.sdk.map.MapView) также можно создать программно. В таком случае настройки можно указать в виде объекта [MapOptions](/ru/android/native/maps/reference/ru.dgis.sdk.map.MapOptions).
+[MapView](/en/android/sdk/reference/ru.dgis.sdk.map.MapView) can also be created programmatically. In that case, you can specify starting coordinates and other settings as a [MapOptions](/en/android/sdk/reference/ru.dgis.sdk.map.MapOptions) object.
 
-Объект карты ([Map](/ru/android/native/maps/reference/ru.dgis.sdk.map.Map)) можно получить, вызвав метод `getMapAsync()`:
+To get the [Map](/en/android/sdk/reference/ru.dgis.sdk.map.Map) object, you can call the `getMapAsync()` method of [MapView](/en/android/sdk/reference/ru.dgis.sdk.map.MapView):
 
 ```kotlin
 override fun onCreate(savedInstanceState: Bundle?) {
@@ -84,113 +84,113 @@ override fun onCreate(savedInstanceState: Bundle?) {
     lifecycle.addObserver(mapView)
 
     mapView.getMapAsync { map ->
-        // Действия с картой
+        // Access map properties
         val camera = map.camera
     }
 }
 ```
 
-## Общие принципы работы
+## General principles
 
-### Отложенные результаты
+### Deferred results
 
-Некоторые методы SDK (например те, которые обращаются к удалённому серверу) возвращают отложенные результаты ([Future](/ru/android/native/maps/reference/ru.dgis.sdk.Future)). Для работы с ними нужно создать обработчик получения данных и обработчик ошибок.
+Some SDK methods (e.g., those that access a remote server) return deferred results ([Future](/en/android/sdk/reference/ru.dgis.sdk.Future)). To process a deferred result, you can register two callback functions: completion and error.
 
-Пример получения объекта из справочника:
+For example, to get information from object directory, you can process [Future](/en/android/sdk/reference/ru.dgis.sdk.Future) like so:
 
 ```kotlin
-// Создание объекта для поиска по справочнику
+// Create an object for directory search
 val searchManager = SearchManager.createOnlineManager(sdkContext)
 
-// Получение объекта из справочника по идентификатору
+// Get object by identifier
 val future = searchManager.searchByDirectoryObjectId(objectId)
 
-// Обработка результата
+// Completion callback
 future.onResult { directoryObject ->
-    Log.d("APP", "Название объекта: ${directoryObject.title}")
+    Log.d("APP", "Object title: ${directoryObject.title}")
 }
 
-// Обработка ошибки
+// Error callback
 future.onError { error ->
-    Log.d("APP", "Ошибка получения информации об объекте.")
+    Log.d("APP", "An error occurred retrieving information from the directory.")
 }
 ```
 
-По умолчанию обработка результатов происходит в UI-потоке. Чтобы это изменить, для `onResult` и `onError` можно указать [Executor](https://developer.android.com/reference/java/util/concurrent/Executor.html).
+By default, results are processed in the UI thread. To change this, you can specify [Executor](https://developer.android.com/reference/java/util/concurrent/Executor.html) for both functions.
 
-Подробнее про работу со справочником можно посмотреть в разделе [Справочник объектов](#nav-lvl1--Справочник_объектов).
+For more information on working with object directory, see [Object directory](#nav-lvl1--Object_directory).
 
-### Потоки значений
+### Data channels
 
-Некоторые объекты SDK предоставляют потоки значений, которые можно обработать, используя механизм каналов: на поток можно подписаться, указав функцию-обработчик данных, и отписаться, когда обработка данных больше не требуется. Для работы с потоками значений используется интерфейс [Channel](/ru/android/native/maps/reference/ru.dgis.sdk.Channel).
+Some SDK objects provide data channels (see the [Channel](/en/android/sdk/reference/ru.dgis.sdk.Channel) interface). To subscribe to a data channel, you need to create and specify a handler function.
 
-Пример подписки на изменение видимой области карты (поток новых прямоугольных областей):
+For example, you can subscribe to a visible rectangle channel, which is updated when the visible area of the map is changed:
 
 ```kotlin
-// Выбираем канал (прямоугольники видимой области карты)
+// Choose a data channel
 val visibleRectChannel = map.camera.visibleRectChannel
 
-// Подписываемся и обрабатываем результаты в главной очереди. Значения будут присылаться при любом изменении видимой области до момента отписки.
-// Важно сохранить соединение с каналом, иначе подписка будет уничтожена.
+// Subscribe to the channel and process the results in the main thread.
+// It is important to prevent the connection object from getting garbage collected to keep the subscription active.
 val connection = visibleRectChannel.connect { geoRect ->
     Log.d("APP", "${geoRect.southWestPoint.latitude.value}")
 }
 ```
 
-После окончания работы с каналом важно отменить подписку, чтобы избежать утечки памяти. Для этого нужно вызвать метод `close()`:
+When the data processing is no longer required, it is important to close the connection to avoid memory leaks. To do this, call the `close()` method:
 
 ```kotlin
 connection.close()
 ```
 
-### Источники данных для карты
+### Map data sources
 
-В некоторых случаях для добавления объектов на карту нужно создать специальный объект - источник данных. Источники данных выступают в роли менеджеров объектов: вместо добавления объектов на карту напрямую, на карту добавляется источник данных и вся последующая работа с объектами происходит через него.
+In some cases, to add objects to the map, you need to create a special object - a data source. Data sources act as object managers: instead of adding objects to the map directly, you add a data source to the map and add/remove objects from the data source.
 
-Источники данных бывают разных типов: движущиеся маркеры, маршруты с отображением текущей загруженности дорог, произвольные геометрические фигуры и т.д. Для каждого типа данных существует свой класс.
+There are different types of data sources: moving markers, routes that display current traffic condition, custom geometric shapes, etc. Each data source type has a corresponding class.
 
-В общем случае работа с источниками данных выглядит следующим образом:
+The general workflow of working with data sources looks like this:
 
 ```kotlin
-// Создание источника данных
+// Create a data source
 val source = MyMapObjectSource(
     sdkContext,
     ...
 )
 
-// Добавление источника данных на карту
+// Add the data source to the map
 map.addSource(source)
 
-// Добавление и удаление объектов в источнике данных
+// Add and remove objects from the data source
 source.addObject(...)
 source.removeObject(...)
 ```
 
-Чтобы удалить созданный источник данных и все связанные с ним объекты, нужно вызвать метод карты `removeSource()`:
+To remove a data source and all objects associated with it from the map, call the `removeSource()` method:
 
 ```kotlin
 map.removeSource(source)
 ```
 
-Список активных источников данных можно получить, используя свойство `map.sources`.
+You can get the list of all active data sources using the `map.sources` property.
 
-## Добавление объектов
+## Adding objects
 
-Для добавления динамических объектов на карту (маркеров, линий, кругов, многоугольников) нужно создать менеджер объектов ([MapObjectManager](/ru/android/native/maps/reference/ru.dgis.sdk.map.MapObjectManager)), указав объект карты. При удалении менеджера объектов удаляются все связанные с ним объекты на карте, поэтому его нужно сохранить в activity.
+To add dynamic objects to the map (such as markers, lines, circles, and polygons), you must first create a [MapObjectManager](/en/android/sdk/reference/ru.dgis.sdk.map.MapObjectManager) object, specifying the map instance. Deleting an object manager removes all associated objects from the map, so do not forget to save it in activity.
 
 ```kotlin
 mapObjectManager = MapObjectManager(map)
 ```
 
-Для добавления объектов используются методы [addObject()](/ru/android/native/maps/reference/ru.dgis.sdk.map.MapObjectManager#nav-lvl1--addObject) и [addObjects()](/ru/android/native/maps/reference/ru.dgis.sdk.map.MapObjectManager#nav-lvl1--addObjects). Для каждого динамического объекта можно указать поле `userData`, которое будет хранить произвольные данные, связанные с объектом. Настройки объектов можно менять после их создания.
+After you have created an object manager, you can add objects to the map using the [addObject()](/en/android/sdk/reference/ru.dgis.sdk.map.MapObjectManager#nav-lvl1--addObject) and [addObjects()](/en/android/sdk/reference/ru.dgis.sdk.map.MapObjectManager#nav-lvl1--addObjects) methods. For each dynamic object, you can specify a `userData` field to store arbitrary data. Object settings can be changed after their creation.
 
-Для удаления объектов используются методы [removeObject()](/ru/android/native/maps/reference/ru.dgis.sdk.map.MapObjectManager#nav-lvl1--removeObject) и [removeObjects()](/ru/android/native/maps/reference/ru.dgis.sdk.map.MapObjectManager#nav-lvl1--removeObjects). Чтобы удалить все объекты, можно использовать метод [removeAll()](/ru/android/native/maps/reference/ru.dgis.sdk.map.MapObjectManager#nav-lvl1--removeAll).
+To remove objects from the map, use [removeObject()](/en/android/sdk/reference/ru.dgis.sdk.map.MapObjectManager#nav-lvl1--removeObject) and [removeObjects()](/en/android/sdk/reference/ru.dgis.sdk.map.MapObjectManager#nav-lvl1--removeObjects). To remove all objects, call the [removeAll()](/en/android/sdk/reference/ru.dgis.sdk.map.MapObjectManager#nav-lvl1--removeAll) method.
 
-### Маркер
+### Marker
 
-Чтобы добавить маркер на карту, нужно создать объект [Marker](/ru/android/native/maps/reference/ru.dgis.sdk.map.Marker), указав нужные настройки, и передать его в вызов `addObject()` менеджера объектов.
+To add a marker to the map, create a [Marker](/en/android/sdk/reference/ru.dgis.sdk.map.Marker) object, specifying the required options, and pass it to the `addObject()` method of the object manager.
 
-В настройках нужно указать координаты маркера (параметр `position`).
+The only required parameter is the coordinates of the marker (`position`).
 
 ```kotlin
 val marker = Marker(
@@ -205,13 +205,13 @@ val marker = Marker(
 mapObjectManager.addObject(marker)
 ```
 
-Чтобы изменить иконку маркера, нужно указать объект [Image](/ru/android/native/maps/reference/ru.dgis.sdk.map.Image) в качестве параметра `icon`. Создать [Image](/ru/android/native/maps/reference/ru.dgis.sdk.map.Image) можно с помощью следующих функций:
+To change the marker icon, specify an [Image](/en/android/sdk/reference/ru.dgis.sdk.map.Image) object as the `icon` parameter. You can create [Image](/en/android/sdk/reference/ru.dgis.sdk.map.Image) using the following functions:
 
-- [imageFromAsset()](/ru/android/native/maps/reference/ru.dgis.sdk.map.imageFromAsset)
-- [imageFromCanvas()](/ru/android/native/maps/reference/ru.dgis.sdk.map.imageFromCanvas)
-- [imageFromResource()](/ru/android/native/maps/reference/ru.dgis.sdk.map.imageFromResource)
-- [imageFromBitmap()](/ru/android/native/maps/reference/ru.dgis.sdk.map.imageFromBitmap)
-- [imageFromSvg()](/ru/android/native/maps/reference/ru.dgis.sdk.map.imageFromSvg)
+- [imageFromAsset()](/en/android/sdk/reference/ru.dgis.sdk.map.imageFromAsset(context%2CassetName%2Csize))
+- [imageFromBitmap()](/en/android/sdk/reference/ru.dgis.sdk.map.imageFromBitmap(context%2Cbitmap))
+- [imageFromCanvas()](/en/android/sdk/reference/ru.dgis.sdk.map.imageFromCanvas(context%2Csize%2Cblock))
+- [imageFromResource()](/en/android/sdk/reference/ru.dgis.sdk.map.imageFromResource(context%2CresourceId%2Csize))
+- [imageFromSvg()](/en/android/sdk/reference/ru.dgis.sdk.map.imageFromSvg(context%2Cdata))
 
 ```kotlin
 val icon = imageFromResource(sdkContext, R.drawable.ic_marker)
@@ -227,25 +227,25 @@ val marker = Marker(
 )
 ```
 
-Чтобы изменить точку привязки иконки (выравнивание иконки относительно координат на карте), нужно указать параметр [anchor](/ru/android/native/maps/reference/ru.dgis.sdk.map.Anchor).
+To change the hotspot of the icon, use the [anchor](/en/android/sdk/reference/ru.dgis.sdk.map.Anchor) parameter.
 
-Дополнительно можно указать текст для маркера и другие настройки (см. [MarkerOptions](/ru/android/native/maps/reference/ru.dgis.sdk.map.MarkerOptions)).
+You can also set the text for the marker and other options (see [MarkerOptions](/en/android/sdk/reference/ru.dgis.sdk.map.MarkerOptions)).
 
-### Линия
+### Line
 
-Чтобы нарисовать на карте линию, нужно создать объект [Polyline](/ru/android/native/maps/reference/ru.dgis.sdk.map.Polyline), указав нужные настройки, и передать его в вызов `addObject()` менеджера объектов.
+To draw a line on the map, create a [Polyline](/en/android/sdk/reference/ru.dgis.sdk.map.Polyline) object, specifying the required options, and pass it to the `addObject()` method of the object manager.
 
-Кроме списка координат для точек линии, в настройках можно указать ширину линии, цвет, пунктир, обводку и другие параметры (см. [PolylineOptions](/ru/android/native/maps/reference/ru.dgis.sdk.map.PolylineOptions)).
+In addition to the coordinates of the line points, you can set the line width, color, stroke type, and other options (see [PolylineOptions](/en/android/sdk/reference/ru.dgis.sdk.map.PolylineOptions)).
 
 ```kotlin
-// Координаты вершин ломаной линии
+// Coordinates of the vertices of the polyline
 val points = listOf(
     GeoPoint(latitude = 55.7513, longitude = 37.6236),
     GeoPoint(latitude = 55.7405, longitude = 37.6235),
     GeoPoint(latitude = 55.7439, longitude = 37.6506)
 )
 
-// Создание линии
+// Creating a Polyline object
 val polyline = Polyline(
     PolylineOptions(
         points = points,
@@ -253,25 +253,25 @@ val polyline = Polyline(
     )
 )
 
-// Добавление линии на карту
+// Adding the polyline to the map
 mapObjectManager.addObject(polyline)
 ```
 
-Свойство-расширение `.lpx` преобразует целое число в объект [LogicalPixel](/ru/android/native/maps/reference/ru.dgis.sdk.map.LogicalPixel).
+Extension property `.lpx` in the example above converts an integer to a [LogicalPixel](/en/android/sdk/reference/ru.dgis.sdk.map.LogicalPixel) object.
 
-### Многоугольник
+### Polygon
 
-Чтобы нарисовать на карте многоугольник, нужно создать объект [Polygon](/ru/android/native/maps/reference/ru.dgis.sdk.map.Polygon), указав нужные настройки, и передать его в вызов `addObject()` менеджера объектов.
+To draw a polygon on the map, create a [Polygon](/en/android/sdk/reference/ru.dgis.sdk.map.Polygon) object, specifying the required options, and pass it to the `addObject()` method of the object manager.
 
-Координаты для многоугольника указываются в виде двумерного списка. Первый вложенный список должен содержать координаты основных вершин многоугольника. Остальные вложенные списки не обязательны и могут быть заданы для того, чтобы создать вырез внутри многоугольника (один дополнительный список - один вырез в виде многоугольника).
+Coordinates for the polygon are specified as a two-dimensional list. The first sublist must contain the coordinates of the vertices of the polygon itself. The other sublists are optional and can be specified to create a cutout (a hole) inside the polygon (one sublist - one polygonal cutout).
 
-Дополнительно можно указать цвет полигона и параметры обводки (см. [PolygonOptions](/ru/android/native/maps/reference/ru.dgis.sdk.map.PolygonOptions)).
+Additionally, you can specify the polygon color and stroke options (see [PolygonOptions](/en/android/sdk/reference/ru.dgis.sdk.map.PolygonOptions)).
 
 ```kotlin
 val polygon = Polygon(
     PolygonOptions(
         contours = listOf(
-            // Вершины многоугольника
+            // Vertices of the polygon
             listOf(
                 GeoPoint(latitude = 55.72014932919687, longitude = 37.562599182128906),
                 GeoPoint(latitude = 55.72014932919687, longitude = 37.67555236816406),
@@ -279,7 +279,7 @@ val polygon = Polygon(
                 GeoPoint(latitude = 55.78004852149085, longitude = 37.562599182128906),
                 GeoPoint(latitude = 55.72014932919687, longitude = 37.562599182128906)
             ),
-            // Координаты для выреза внутри многоугольника
+            // Cutout inside the polygon
             listOf(
                 GeoPoint(latitude = 55.754167897761, longitude = 37.62422561645508),
                 GeoPoint(latitude = 55.74450654680055, longitude = 37.61238098144531),
@@ -294,19 +294,19 @@ val polygon = Polygon(
 mapObjectManager.addObject(polygon)
 ```
 
-## Управление камерой
+## Controlling the camera
 
-Для работы с камерой используется объект [Camera](/ru/android/native/maps/reference/ru.dgis.sdk.map.Camera), доступный через свойство `map.camera`.
+You can control the camera by accessing the `map.camera` property. See the [Camera](/en/android/sdk/reference/ru.dgis.sdk.map.Camera) object for a full list of available methods and properties.
 
-### Перелёт
+### Changing camera position
 
-Чтобы запустить анимацию перелёта камеры, нужно вызвать метод [move()](/ru/android/native/maps/reference/ru.dgis.sdk.map.Camera#nav-lvl1--move) и указать параметры перелёта:
+You can change the position of the camera by calling the [move()](/en/android/sdk/reference/ru.dgis.sdk.map.Camera#nav-lvl1--move) method, which initiates a flight animation. This method has three parameters:
 
-- `position` - конечная позиция камеры (координаты и уровень приближения). Дополнительно можно указать наклон и поворот камеры (см. [CameraPosition](/ru/android/native/maps/reference/ru.dgis.sdk.map.CameraPosition)).
-- `time` - продолжительность перелёта в секундах ([Duration](/ru/android/native/maps/reference/ru.dgis.sdk.Duration)).
-- `animationType` - тип анимации ([CameraAnimationType](/ru/android/native/maps/reference/ru.dgis.sdk.map.CameraAnimationType)).
+- `position` - new camera position (coordinates and zoom level). Additionally, you can specify the camera tilt and rotation (see [CameraPosition](/en/android/sdk/reference/ru.dgis.sdk.map.CameraPosition)).
+- `time` - flight duration in seconds as a [Duration](/en/android/sdk/reference/ru.dgis.sdk.Duration) object.
+- `animationType` - type of animation to use ([CameraAnimationType](/en/android/sdk/reference/ru.dgis.sdk.map.CameraAnimationType)).
 
-Функция `move()` возвращает объект [Future](/ru/android/native/maps/reference/ru.dgis.sdk.Future), который можно использовать, чтобы обработать событие завершения перелёта.
+The call will return a [Future](/en/android/sdk/reference/ru.dgis.sdk.Future) object, which can be used to handle the animation finish event.
 
 ```kotlin
 val mapView = findViewById<MapView>(R.id.mapView)
@@ -320,129 +320,129 @@ mapView.getMapAsync { map ->
     )
 
     map.camera.move(cameraPosition, Duration.ofSeconds(2), CameraAnimationType.LINEAR).onResult {
-        Log.d("APP", "Перелёт камеры завершён.")
+        Log.d("APP", "Camera flight finished.")
     }
 }
 ```
 
-Для указания продолжительности перелёта можно использовать расширение `.seconds`:
+You can use the `.seconds` extension to specify the duration of the flight:
 
 ```kotlin
 map.camera.move(cameraPosition, 2.seconds, CameraAnimationType.LINEAR)
 ```
 
-Для более точного контроля над анимацией перелёта можно использовать контроллер перелёта, который будет определять позицию камеры в каждый конкретный момент времени. Для этого нужно реализовать интерфейс [CameraMoveController](/ru/android/native/maps/reference/ru.dgis.sdk.map.CameraMoveController) и передать созданный объект в метод `move()` вместо параметров перелёта.
+For more precise control over the flight, you can create a flight controller that will determine the camera position at any given moment. To do this, implement the [CameraMoveController](/en/android/sdk/reference/ru.dgis.sdk.map.CameraMoveController) interface and pass the created object to the `move()` method instead of the three parameters described previously.
 
-### Получение состояния камеры
+### Getting camera state
 
-Текущее состояние камеры (находится ли камера в полёте) можно получить, используя свойство `state`. См. [CameraState](/ru/android/native/maps/reference/ru.dgis.sdk.map.CameraState) для списка возможных состояний камеры.
+The current state of the camera (i.e., whether the camera is currently in flight) can be obtained using the `state` property. See [CameraState](/en/android/sdk/reference/ru.dgis.sdk.map.CameraState) for a list of possible camera states.
 
 ```kotlin
 val currentState = map.camera.state
 ```
 
-Подписаться на изменения состояния камеры можно с помощью свойства `stateChannel`.
+You can subscribe to changes of camera state using the `stateChannel` property.
 
 ```kotlin
-// Подписка
+// Subscribe to camera state changes
 val connection = map.camera.stateChannel.connect { state ->
-    Log.d("APP", "Состояние камеры изменилось на ${state}")
+    Log.d("APP", "Camera state has changed to ${state}")
 }
 
-// Отписка
+// Unsubscribe when it's no longer needed
 connection.close()
 ```
 
-### Получение позиции камеры
+### Getting camera position
 
-Текущую позицию камеры можно получить, используя свойство `position` (см. объект [CameraPosition](/ru/android/native/maps/reference/ru.dgis.sdk.map.CameraPosition)).
+The current position of the camera can be obtained using the `position` property (see [CameraPosition](/en/android/sdk/reference/ru.dgis.sdk.map.CameraPosition)).
 
 ```kotlin
 val currentPosition = map.camera.position
 
-Log.d("APP", "Координаты: ${currentPosition.point}")
-Log.d("APP", "Приближение: ${currentPosition.zoom}")
-Log.d("APP", "Наклон: ${currentPosition.tilt}")
-Log.d("APP", "Поворот: ${currentPosition.bearing}")
+Log.d("APP", "Coordinates: ${currentPosition.point}")
+Log.d("APP", "Zoom level: ${currentPosition.zoom}")
+Log.d("APP", "Tilt: ${currentPosition.tilt}")
+Log.d("APP", "Rotation: ${currentPosition.bearing}")
 ```
 
-Подписаться на изменения позиции камеры (и угла наклона/поворота) можно с помощью свойства `positionChannel`.
+You can subscribe to changes of camera position using the `positionChannel` property.
 
 ```kotlin
-// Подписка
+// Subscribe to camera position changes
 val connection = map.camera.positionChannel.connect { position ->
-    Log.d("APP", "Изменилась позиция камеры или угол наклона/поворота.")
+    Log.d("APP", "Camera position has changed (coordinates, zoom level, tilt, or rotation).")
 }
 
-// Отписка
+// Unsubscribe when it's no longer needed
 connection.close()
 ```
 
-## Моё местоположение
+## My location
 
-На карту можно добавить специальный маркер, который будет отражать текущее местоположение устройства. Для этого нужно добавить на карту источник данных [MyLocationMapObjectSource](/ru/android/native/maps/reference/ru.dgis.sdk.map.MyLocationMapObjectSource).
+You can add a special marker to the map that will be automatically updated to reflect the current location of the device. To do this, create a [MyLocationMapObjectSource](/en/android/sdk/reference/ru.dgis.sdk.map.MyLocationMapObjectSource) data source and add it to the map.
 
 ```kotlin
-// Создание источника данных
+// Create the data source
 val source = MyLocationMapObjectSource(
     sdkContext,
     MyLocationDirectionBehaviour.FOLLOW_SATELLITE_HEADING
 )
 
-// Добавление источника данных на карту
+// Add the data source to the map
 map.addSource(source)
 ```
 
-## Получение объектов по экранным координатам
+## Getting objects using screen coordinates
 
-Информацию об объектах на карте можно получить, используя пиксельные координаты. Для этого нужно вызвать метод карты [getRenderedObjects()](/ru/android/native/maps/reference/ru.dgis.sdk.map.Map#nav-lvl1--getRenderedObjects), указав координаты в пикселях и радиус в экранных миллиметрах. Метод вернет отложенный результат, содержащий информацию обо всех найденных объектах в указанном радиусе на видимой области карты (список [RenderedObjectInfo](/ru/android/native/maps/reference/ru.dgis.sdk.map.RenderedObjectInfo)).
+You can get information about map objects using pixel coordinates. For this, call the [getRenderedObjects()](/en/android/sdk/reference/ru.dgis.sdk.map.Map#nav-lvl1--getRenderedObjects) method of the map and specify the pixel coordinates and the radius in screen millimeters. The method will return a deferred result ([Future](/en/android/sdk/reference/ru.dgis.sdk.Future)) containing information about all found objects within the specified radius on the visible area of the map (a list of [RenderedObjectInfo](/en/android/sdk/reference/ru.dgis.sdk.map.RenderedObjectInfo)).
 
-Пример функции, которая принимает координаты нажатия на экран и передаёт их в метод `getRenderedObjects()`:
+An example of a function that takes tap coordinates and passes them to `getRenderedObjects()`:
 
 ```kotlin
 override fun onTap(point: ScreenPoint) {
     map.getRenderedObjects(point, ScreenDistance(5f)).onResult { renderedObjectInfos ->
-        // Первый объект в списке - самый близкий к координатам
+        // First list object is the closest to the coordinates
         for (renderedObjectInfo in renderedObjectInfos) {
-            Log.d("APP", "Произвольные данные объекта: ${renderedObjectInfo.item.item.userData}")
+            Log.d("APP", "Arbitrary object data: ${renderedObjectInfo.item.item.userData}")
         }
     }
 }
 ```
 
-## Справочник объектов
+## Object directory
 
-Для поиска объектов в справочнике нужно создать объект [SearchManager](/ru/android/native/maps/reference/ru.dgis.sdk.directory.SearchManager), вызвав один из следующих методов:
+To search for objects in the directory, first create a [SearchManager](/en/android/sdk/reference/ru.dgis.sdk.directory.SearchManager) object by calling one of the following methods:
 
-- [SearchManager.createOnlineManager()](/ru/android/native/maps/reference/ru.dgis.sdk.directory.SearchManager#nav-lvl1--createOnlineManager) - создаёт онлайн-справочник.
-- [SearchManager.createOfflineManager()](/ru/android/native/maps/reference/ru.dgis.sdk.directory.SearchManager#nav-lvl1--createOfflineManager) - создаёт офлайн-справочник, работающий только с предзагруженными данными.
-- [SearchManager.createSmartManager()](/ru/android/native/maps/reference/ru.dgis.sdk.directory.SearchManager#nav-lvl1--createSmartManager) - создаёт комбинированный справочник, работающий с онлайн-данными при наличии сети и с предзагруженными данными при отсутствии сети.
+- [SearchManager.createOnlineManager()](/en/android/sdk/reference/ru.dgis.sdk.directory.SearchManager#nav-lvl1--createOnlineManager) - creates an object to work with an online directory.
+- [SearchManager.createOfflineManager()](/en/android/sdk/reference/ru.dgis.sdk.directory.SearchManager#nav-lvl1--createOfflineManager) - creates an object to work with an offline directory (preloaded data only).
+- [SearchManager.createSmartManager()](/en/android/sdk/reference/ru.dgis.sdk.directory.SearchManager#nav-lvl1--createSmartManager) - creates an object that works primarily with online data and switches to offline mode when the network goes down.
 
 ```kotlin
 val searchManager = SearchManager.createSmartManager(sdkContext)
 ```
 
-Если идентификатор (ID) объекта известен, то для получения информации о нём нужно вызвать метод [searchById()](/ru/android/native/maps/reference/ru.dgis.sdk.directory.SearchManager#nav-lvl1--searchById). Метод вернёт отложенный результат [DirectoryObject](/ru/android/native/maps/reference/ru.dgis.sdk.directory.DirectoryObject).
+Then, to get object information by its ID, call the [searchById()](/en/android/sdk/reference/ru.dgis.sdk.directory.SearchManager#nav-lvl1--searchById) method. The method will return a deferred result with [DirectoryObject](/en/android/sdk/reference/ru.dgis.sdk.directory.DirectoryObject).
 
 ```kotlin
 searchManager.searchById(id).onResult { directoryObject ->
-    Log.d("APP", "Название объекта: ${directoryObject.title}")
+    Log.d("APP", "Object title: ${directoryObject.title}")
 }
 ```
 
-Если ID объекта не известен, то можно создать поисковый запрос (объект [SearchQuery](/ru/android/native/maps/reference/ru.dgis.sdk.directory.SearchQuery)) с помощью [SearchQueryBuilder](/ru/android/native/maps/reference/ru.dgis.sdk.directory.SearchQueryBuilder) и передать его в метод [search()](/ru/android/native/maps/reference/ru.dgis.sdk.directory.SearchManager#nav-lvl1--search). Вызов вернёт отложенный результат [SearchResult](/ru/android/native/maps/reference/ru.dgis.sdk.directory.SearchResult), содержащий список найденных объектов ([DirectoryObject](/ru/android/native/maps/reference/ru.dgis.sdk.directory.DirectoryObject)), разделенный на страницы.
+If the object ID is not known, you can create a [SearchQuery](/en/android/sdk/reference/ru.dgis.sdk.directory.SearchQuery) object using [SearchQueryBuilder](/en/android/sdk/reference/ru.dgis.sdk.directory.SearchQueryBuilder) and pass it to the [search()](/en/android/sdk/reference/ru.dgis.sdk.directory.SearchManager#nav-lvl1--search) method. The method will return a deferred result with a [SearchResult](/en/android/sdk/reference/ru.dgis.sdk.directory.SearchResult) object, which will contain a paginated list of [DirectoryObject](/en/android/sdk/reference/ru.dgis.sdk.directory.DirectoryObject).
 
 ```kotlin
-val query = SearchQueryBuilder.fromQueryText("пицца").setPageSize(10).build()
+val query = SearchQueryBuilder.fromQueryText("pizza").setPageSize(10).build()
 
 searchManager.search(query).onResult { searchResult ->
-    // Получаем первый объект с первой страницы
+    // Get the first object of the first page
     val directoryObject = searchResult.firstPage?.items?.getOrNull(0) ?: return
-    Log.d("APP", "Название объекта: ${directoryObject.title}")
+    Log.d("APP", "Object title: ${directoryObject.title}")
 }
 ```
 
-Чтобы получить следующую страницу результатов поиска, нужно вызвать метод страницы [fetchNextPage()](/ru/android/native/maps/reference/ru.dgis.sdk.directory.Page#nav-lvl1--fetchNextPage), который вернёт отложенный результат [Page](/ru/android/native/maps/reference/ru.dgis.sdk.directory.Page).
+To get the next page of search results, use the [fetchNextPage()](/en/android/sdk/reference/ru.dgis.sdk.directory.Page#nav-lvl1--fetchNextPage) method of the page, which will return a deferred result with a [Page](/en/android/sdk/reference/ru.dgis.sdk.directory.Page) object.
 
 ```kotlin
 firstPage.fetchNextPage().onResult { nextPage
@@ -450,23 +450,23 @@ firstPage.fetchNextPage().onResult { nextPage
 }
 ```
 
-Также с помощью справочника можно получать подсказки при текстовом поиске объектов (см. [Suggest API](/ru/api/search/suggest/overview) для демонстрации). Для этого нужно создать объект [SuggestQuery](/ru/android/native/maps/reference/ru.dgis.sdk.directory.SuggestQuery) с помощью [SuggestQueryBuilder](/ru/android/native/maps/reference/ru.dgis.sdk.directory.SuggestQueryBuilder) и передать его в метод [suggest()](/ru/android/native/maps/reference/ru.dgis.sdk.directory.SearchManager#nav-lvl1--suggest). Вызов вернёт отложенный результат [SuggestResult](/ru/android/native/maps/reference/ru.dgis.sdk.directory.SuggestResult), содержащий список подсказок ([Suggest](/ru/android/native/maps/reference/ru.dgis.sdk.directory.Suggest)).
+You can also use object directory to get suggestions when text searching (see [Suggest API](/en/api/search/suggest/overview) for demonstration). To do this, create a [SuggestQuery](/en/android/sdk/reference/ru.dgis.sdk.directory.SuggestQuery) object using [SuggestQueryBuilder](/en/android/sdk/reference/ru.dgis.sdk.directory.SuggestQueryBuilder) and pass it to the [suggest()](/en/android/sdk/reference/ru.dgis.sdk.directory.SearchManager#nav-lvl1--suggest) method. The method will return a deferred result with a [SuggestResult](/en/android/sdk/reference/ru.dgis.sdk.directory.SuggestResult) object, which will contain a list of [Suggest](/en/android/sdk/reference/ru.dgis.sdk.directory.Suggest) objects.
 
 ```kotlin
-val query = SuggestQueryBuilder.fromQueryText("пицц").setLimit(10).build()
+val query = SuggestQueryBuilder.fromQueryText("pizz").setLimit(10).build()
 
 searchManager.suggest(query).onResult { suggestResult ->
-    // Получаем первую подсказку из списка
+    // Get the first suggestion from the list
     val firstSuggest = suggestResult.suggests?.getOrNull(0) ?: return
-    Log.d("APP", "Заголовок подсказки: ${firstSuggest.title}")
+    Log.d("APP", "Suggestion title: ${firstSuggest.title}")
 }
 ```
 
-## Построение маршрута
+## Building a route
 
-Для того, чтобы проложить маршрут на карте, нужно создать два объекта: [TrafficRouter](/ru/android/native/maps/reference/ru.dgis.sdk.routing.TrafficRouter) для поиска оптимального маршрута и источник данных [RouteMapObjectSource](/ru/android/native/maps/reference/ru.dgis.sdk.map.RouteMapObjectSource) для отображения маршрута на карте.
+In order to create a route on the map, you need to create two objects: [TrafficRouter](/en/android/sdk/reference/ru.dgis.sdk.routing.TrafficRouter) to find an optimal route and [RouteMapObjectSource](/en/android/sdk/reference/ru.dgis.sdk.map.RouteMapObjectSource) to display it on the map.
 
-Чтобы найти маршрут между двумя точками, нужно вызвать метод [findRoute()](/ru/android/native/maps/reference/ru.dgis.sdk.routing.TrafficRouter#nav-lvl1--findRoute), передав координаты точек в виде объектов [RouteSearchPoint](/ru/android/native/maps/reference/ru.dgis.sdk.routing.RouteSearchPoint). Дополнительно можно указать параметры маршрута ([RouteOptions](/ru/android/native/maps/reference/ru.dgis.sdk.routing.RouteOptions)), а также список промежуточных точек маршрута (список [RouteSearchPoint](/ru/android/native/maps/reference/ru.dgis.sdk.routing.RouteSearchPoint)).
+To find a route between two points, call the [findRoute()](/en/android/sdk/reference/ru.dgis.sdk.routing.TrafficRouter#nav-lvl1--findRoute) method and specify the coordinates of the start and end points as [RouteSearchPoint](/en/android/sdk/reference/ru.dgis.sdk.routing.RouteSearchPoint) objects. You can additionally specify a list of intermediate points of the route and [RouteOptions](/en/android/sdk/reference/ru.dgis.sdk.routing.RouteOptions).
 
 ```kotlin
 val startSearchPoint = RouteSearchPoint(
@@ -480,18 +480,18 @@ val trafficRouter = TrafficRouter(sdkContext)
 val routesFuture = trafficRouter.findRoute(startSearchPoint, finishSearchPoint)
 ```
 
-Вызов вернёт отложенный результат со списком объектов [TrafficRoute](/ru/android/native/maps/reference/ru.dgis.sdk.routing.TrafficRoute). Чтобы отобразить найденный маршрут на карте, нужно на основе этих объектов создать объекты [RouteMapObject](/ru/android/native/maps/reference/ru.dgis.sdk.map.RouteMapObject) и добавить их в источник данных [RouteMapObjectSource](/ru/android/native/maps/reference/ru.dgis.sdk.map.RouteMapObjectSource).
+The `findRoute()` call will return a delayed result with a list of [TrafficRoute](/en/android/sdk/reference/ru.dgis.sdk.routing.TrafficRoute) objects. To display the found route on the map, you need to use these objects to create [RouteMapObject](/en/android/sdk/reference/ru.dgis.sdk.map.RouteMapObject) objects and add them to a [RouteMapObjectSource](/en/android/sdk/reference/ru.dgis.sdk.map.RouteMapObjectSource) data source.
 
 ```kotlin
-// Создаём источник данных
+// Create a data source
 val routeMapObjectSource = RouteMapObjectSource(sdkContext, RouteVisualizationType.NORMAL)
 map.addSource(routeMapObjectSource)
 
-// Ищем маршрут
+// Find a route
 val routesFuture = trafficRouter.findRoute(startSearchPoint, finishSearchPoint)
 val trafficRouter = TrafficRouter(sdkContext)
 
-// После получения маршрута добавляем его на карту
+// After receiving the route, add it to the map
 routesFuture.onResult { routes: List<TrafficRoute> ->
     var isActive = true
     var routeIndex = 0
@@ -505,7 +505,7 @@ routesFuture.onResult { routes: List<TrafficRoute> ->
 }
 ```
 
-Вместо пары [TrafficRouter](/ru/android/native/maps/reference/ru.dgis.sdk.routing.TrafficRouter) и [RouteMapObjectSource](/ru/android/native/maps/reference/ru.dgis.sdk.map.RouteMapObjectSource) для построения маршрута можно использовать [RouteEditor](/ru/android/native/maps/reference/ru.dgis.sdk.routing.RouteEditor) и [RouteEditorSource](/ru/android/native/maps/reference/ru.dgis.sdk.map.RouteEditorSource). В таком случае не нужно обрабатывать список [TrafficRoute](/ru/android/native/maps/reference/ru.dgis.sdk.routing.TrafficRoute), достаточно передать координаты маршрута в виде объекта [RouteParams](/ru/android/native/maps/reference/ru.dgis.sdk.routing.RouteParams) в метод [setRouteParams()](/ru/android/native/maps/reference/ru.dgis.sdk.routing.RouteEditor#nav-lvl1--setRouteParams) и маршрут отобразится автоматически.
+Instead of using [TrafficRouter](/en/android/sdk/reference/ru.dgis.sdk.routing.TrafficRouter) and [RouteMapObjectSource](/en/android/sdk/reference/ru.dgis.sdk.map.RouteMapObjectSource) objects and manually processing a list of [TrafficRoute](/en/android/sdk/reference/ru.dgis.sdk.routing.TrafficRoute) objects, you can use [RouteEditor](/en/android/sdk/reference/ru.dgis.sdk.routing.RouteEditor) and [RouteEditorSource](/en/android/sdk/reference/ru.dgis.sdk.map.RouteEditorSource). In that case, you can simply pass the coordinates for the route as a [RouteParams](/en/android/sdk/reference/ru.dgis.sdk.routing.RouteParams) object to the [setRouteParams()](/en/android/sdk/reference/ru.dgis.sdk.routing.RouteEditor#nav-lvl1--setRouteParams) method and the route will be displayed automatically.
 
 ```kotlin
 val routeEditor = RouteEditor(sdkContext)
@@ -524,34 +524,34 @@ routeEditor.setRouteParams(
 )
 ```
 
-## Собственный источник геопозиции
+## Custom geolocation source
 
-В рамках SDK можно использовать произвольный источник геопозиции. Для этого нужно реализовать интерфейс [LocationSource](/ru/android/native/maps/reference/ru.dgis.sdk.positioning.LocationSource).
+You can use your own geolocation source within the SDK. To do this, first implement the [LocationSource](/en/android/sdk/reference/ru.dgis.sdk.positioning.LocationSource) interface.
 
 ```kotlin
 public class CustomLocationSource: LocationSource {
     override fun activate(listener: LocationChangeListener?) {
-        // Включение источника геопозиции
+        // Geolocation source has been activated
     }
 
     override fun deactivate() {
-        // Выключение источника геопозиции
+        // Geolocation source has been deactivated
     }
 
     override fun setDesiredAccuracy(accuracy: DesiredAccuracy?) {
-        // Изменение требуемого уровня точности
+        // Change of required accuracy level has been requested
     }
 }
 ```
 
-Чтобы зарегистрировать созданный источник в SDK, нужно вызвать функцию [registerPlatformLocationSource()](/ru/android/native/maps/reference/ru.dgis.sdk.positioning.registerPlatformLocationSource).
+Then, register the created source in the SDK using the [registerPlatformLocationSource()](/en/android/sdk/reference/ru.dgis.sdk.positioning.registerPlatformLocationSource) function.
 
 ```kotlin
 val customSource = CustomLocationSource()
 registerPlatformLocationSource(sdkContext, customSource)
 ```
 
-Основная точка входа в интерфейс - функция `activate()`. Когда SDK потребуется геопозиция, в эту функцию будет передан объект [LocationChangeListener](/ru/android/native/maps/reference/ru.dgis.sdk.positioning.LocationChangeListener). После этого, чтобы сообщить текущую геопозицию, нужно передать в него массив объектов [Location](https://developer.android.com/reference/kotlin/android/location/Location) (от более старой позиции к более новой), используя метод [onLocationChanged()](/ru/android/native/maps/reference/ru.dgis.sdk.positioning.LocationChangeListener#nav-lvl1--onLocationChanged).
+The entry point of the interface is the `activate()` function. When the SDK requires a geolocation, it will call this function passing a [LocationChangeListener](/en/android/sdk/reference/ru.dgis.sdk.positioning.LocationChangeListener) object. After that, to report the current geolocation, you need to pass an array of [Location](https://developer.android.com/reference/kotlin/android/location/Location) objects (ordered from oldest to newest) to the [onLocationChanged()](/en/android/sdk/reference/ru.dgis.sdk.positioning.LocationChangeListener#nav-lvl1--onLocationChanged) method.
 
 ```kotlin
 val location = Location(...)
@@ -559,8 +559,8 @@ val newLocations = arrayOf(location)
 listener.onLocationChanged(newLocations)
 ```
 
-Чтобы сообщить изменение доступности источника, можно вызвать метод [onAvailabilityChanged()](/ru/android/native/maps/reference/ru.dgis.sdk.positioning.LocationChangeListener#nav-lvl1--onAvailabilityChanged).
+To notify of a change in source availability, use the [onAvailabilityChanged()](/en/android/sdk/reference/ru.dgis.sdk.positioning.LocationChangeListener#nav-lvl1--onAvailabilityChanged) method.
 
-Дополнительно можно менять логику определения геопозиции в зависимости от требуемой точности. Требуемая точность передаётся в функцию `setDesiredAccuracy()` в виде объекта [DesiredAccuracy](/ru/android/native/maps/reference/ru.dgis.sdk.positioning.DesiredAccuracy).
+Optionally, you can add additional logic to handle different levels of geolocation accuracy. The required accuracy is passed to the `setDesiredAccuracy()` function as a [DesiredAccuracy](/en/android/sdk/reference/ru.dgis.sdk.positioning.DesiredAccuracy) object.
 
-Когда источник геопозиции больше не требуется, будет вызвана функция `deactivate()`.
+When the geolocation source is no longer needed, the SDK will call the `deactivate()` function.
