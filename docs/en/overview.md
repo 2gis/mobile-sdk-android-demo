@@ -1,6 +1,6 @@
-# 2GIS Android SDK
+# Android SDK
 
-2GIS Android SDK is an SDK that allows you to add a [2GIS map](https://2gis.ae/) to your Android application. It can be used to display the map in your layout, add custom markers to it, draw geometric shapes, calculate and display routes, get information about map objects, control the camera movement, and so on.
+Android SDK is an SDK that allows you to add a [2GIS map](https://2gis.ae/) to your Android application. It can be used to display the map in your layout, add custom markers to it, draw geometric shapes, calculate and display routes, get information about map objects, control the camera movement, and so on.
 
 You can find usage examples in the [Examples](/en/android/sdk/examples) section. For a detailed description of all classes and methods, see [API Reference](/en/android/sdk/reference).
 
