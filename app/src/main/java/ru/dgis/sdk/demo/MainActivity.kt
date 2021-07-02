@@ -11,7 +11,7 @@ import android.widget.ArrayAdapter
 import android.widget.ListView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import ru.dgis.sdk.context.Context
+import ru.dgis.sdk.Context
 
 
 typealias ScreenSelectedCallback = () -> Unit

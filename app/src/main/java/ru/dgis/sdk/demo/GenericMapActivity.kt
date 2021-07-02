@@ -3,7 +3,7 @@ package ru.dgis.sdk.demo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.widget.SwitchCompat
-import ru.dgis.sdk.context.Context
+import ru.dgis.sdk.Context
 import ru.dgis.sdk.map.*
 import ru.dgis.sdk.map.Map
 
@@ -42,7 +42,6 @@ class GenericMapActivity : AppCompatActivity() {
 
         val gestureManager = checkNotNull(mapView.gestureManager)
         subscribeGestureSwitches(gestureManager)
-        setupMapAttributes(map)
 
         mapSource = MyLocationMapObjectSource(sdkContext, MyLocationDirectionBehaviour.FOLLOW_MAGNETIC_HEADING)
         map.addSource(mapSource)
@@ -70,9 +69,5 @@ class GenericMapActivity : AppCompatActivity() {
                 }
             }
         }
-    }
-
-    private fun setupMapAttributes(map: Map) {
-
     }
 }
