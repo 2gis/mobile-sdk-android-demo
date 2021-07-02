@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.activity.viewModels
 import com.google.android.material.progressindicator.CircularProgressIndicator
-import ru.dgis.sdk.context.File
+import ru.dgis.sdk.File
 import ru.dgis.sdk.demo.vm.MapStyleViewModel
 import ru.dgis.sdk.map.*
 

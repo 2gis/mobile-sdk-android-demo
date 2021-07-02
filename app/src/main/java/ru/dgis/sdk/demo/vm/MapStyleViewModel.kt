@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.android.gms.common.util.IOUtils
 import java9.util.concurrent.CompletableFuture
-import ru.dgis.sdk.context.File as DGisFile
+import ru.dgis.sdk.File as DGisFile
 import ru.dgis.sdk.map.Map
 import java.io.File
 import java.io.FileOutputStream
