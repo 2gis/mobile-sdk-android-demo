@@ -91,7 +91,7 @@ def fetchingTasks = ['x86', 'x86_64', 'armeabi-v7a', 'arm64-v8a'].collect { arch
             def version = sdkModule.getModuleVersion()
             def flavour = sdkModule.getModuleName().split('-').last()
 
-            "${libsUrl}/sdk-bundle-release/android/ru/dgis/sdk/libs-${flavour}/${version}/${arch}.zip"
+            "${libsUrl}/sdk-bundle-release/android/ru/dgis/sdk/libs-${flavour}/${version}/${version}-${flavour}-${arch}.zip"
         }
         dest libsArchive
         username System.getenv('ARTIFACTORY_USERNAME')
