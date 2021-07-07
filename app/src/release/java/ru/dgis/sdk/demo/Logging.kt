@@ -1,8 +1,8 @@
 package ru.dgis.sdk.demo
 
 import com.google.firebase.crashlytics.FirebaseCrashlytics
-import ru.dgis.sdk.context.LogMessage
-import ru.dgis.sdk.context.LogSink
+import ru.dgis.sdk.LogMessage
+import ru.dgis.sdk.LogSink
 
 private class LogException(val msg: LogMessage) : RuntimeException(msg.text) {
     override fun getStackTrace(): Array<StackTraceElement> {

@@ -1,7 +1,7 @@
 package ru.dgis.sdk.demo
 
 import android.app.Application
-import ru.dgis.sdk.context.Context
+import ru.dgis.sdk.Context
 import ru.dgis.sdk.positioning.registerPlatformLocationSource
 import ru.dgis.sdk.positioning.registerPlatformMagneticSource
 
