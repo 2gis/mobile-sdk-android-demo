@@ -36,14 +36,6 @@ dependencies {
 }
 ```
 
-To get the full version of SDK:
-
-```gradle
-dependencies {
-    implementation 'ru.dgis.sdk:sdk-full:latest.release'
-}
-```
-
 ## Demo project
 
 You can find a demo app with the source code in our [GitHub repository](https://github.com/2gis/native-sdk-android-demo/).

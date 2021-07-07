@@ -36,14 +36,6 @@ dependencies {
 }
 ```
 
-Чтобы получить полную версию SDK:
-
-```gradle
-dependencies {
-    implementation 'ru.dgis.sdk:sdk-full:latest.release'
-}
-```
-
 ## Демонстрационный проект
 
 Демонстрационное приложение с исходным кодом можно найти в нашем [GitHub-репозитории](https://github.com/2gis/native-sdk-android-demo/).
