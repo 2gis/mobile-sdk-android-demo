@@ -42,9 +42,9 @@ dependencies {
 }
 ```
 
-## Running example app
+## Running the demo app
 
-To run the example app, clone this Git repository and add your API keys to the [local.properties](https://developer.android.com/studio/build#properties-files) file in your project:
+To run the demo app, clone this Git repository and add your API keys to the [local.properties](https://developer.android.com/studio/build#properties-files) file in your project:
 
 ```
 dgisMapApiKey=YOUR_MAP_KEY
@@ -54,3 +54,7 @@ dgisDirectoryApiKey=YOUR_DIRECTIONS_KEY
 ## Documentation
 
 Full documentation, including [usage examples](https://docs.2gis.com/en/android/sdk/examples) and [API reference](https://docs.2gis.com/en/android/sdk/reference/ru.dgis.sdk.DGis) with detailed descriptions of all classes and methods, can be found at [docs.2gis.com](https://docs.2gis.com/en/android/sdk/overview).
+
+## License
+
+The demo application is licensed under the BSD 2-Clause "Simplified" License. See the [LICENSE](https://github.com/2gis/native-sdk-android-demo/blob/master/LICENSE) file for more information.
