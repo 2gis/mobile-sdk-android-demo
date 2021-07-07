@@ -34,14 +34,6 @@ dependencies {
 }
 ```
 
-To get the full version of SDK:
-
-```gradle
-dependencies {
-    implementation 'ru.dgis.sdk:sdk-full:latest.release'
-}
-```
-
 ## Running the demo app
 
 To run the demo app, clone this Git repository and add your API keys to the [local.properties](https://developer.android.com/studio/build#properties-files) file in your project:
