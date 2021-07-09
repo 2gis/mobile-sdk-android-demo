@@ -29,6 +29,7 @@ class GenericMapActivity : AppCompatActivity() {
 
         mapView = findViewById<MapView>(R.id.mapView).also {
             it.getMapAsync(this::onMapReady)
+            it.showApiVersionInCopyrightView = true
         }
     }
 
