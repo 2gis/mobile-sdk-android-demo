@@ -1,5 +1,20 @@
 # Release notes
 
+## v2.0.0-alpha.2
+**Release Date:** 13.07.2021
+- Поиск пешеходных маршрутов - `RoutingType.PEDESTRIAN`, `RouteInfo.pedestrianObstacles`
+- Поиск маршрутов на общественном транспорте - `RoutingType.PUBLIC`, `TrafficRoute.publicTransport`
+- Возможность выбора голоса навигатора - `NavigationManager.voiceSelector`, `VoiceManager`
+- Скачивание offline-территорий - `TerritoryManager`
+- Управление этажными планами - `Map.indoorManager`
+- Получение и установка уровня отрисовки объектов карты - `SimpleMapObject.zIndex`
+- Возможность указать, какие части маршрута отображаются на карте - `RouteMapObject.displayFlags`
+- Получение изображений полосности - `getLanesControlImages`
+- Обновление маркера местоположения в навигаторе при сходе с маршрута
+- Обновленный copyright на карте
+- *Ломающее изменение:* В `RouteInfo` вместо длины маршрута теперь маршрут(`TrafficRoute`) целиком
+
+
 ## v1.0.1
 **Release Date:** 09.07.2021
 
