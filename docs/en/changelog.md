@@ -1,5 +1,11 @@
 # Release notes
 
+## v1.2.0
+**Release Date:** 05.08.2021
+- В `MapObjectManager` появился метод `clusteringObjects(сameraPosition)` для получения объектов кластеризации для заданной позиции камеры. Метод возвращает как кластеры `SimpleClusterObject`, так и маркеры `Marker`.
+- С помощью объекта `SimpleClusterObject` теперь можно изменять атрибуты кластера также, как и атрибуты маркеров `Marker`, за исключением позиции кластера.
+- Исправлена утечка памяти при удалении карты.
+
 ## v2.0.0-alpha.4
 **Release Date:** 28.07.2021
 - В классе `IRouteMapObject` добавлен канал `calloutPositionChannel` с позицией баблика над маршрутом.
