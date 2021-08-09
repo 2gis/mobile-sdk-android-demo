@@ -28,8 +28,6 @@ repositories {
 
 2. Добавьте зависимость.
 
-Чтобы получить облегчённую версию SDK (без маршрутов и навигации):
-
 ```gradle
 dependencies {
     implementation 'ru.dgis.sdk:sdk-map:latest.release'

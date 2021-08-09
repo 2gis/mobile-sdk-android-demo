@@ -28,8 +28,6 @@ repositories {
 
 2. Add a build dependency.
 
-To get the regular version of SDK (without routes and navigation functionality):
-
 ```gradle
 dependencies {
     implementation 'ru.dgis.sdk:sdk-map:latest.release'
