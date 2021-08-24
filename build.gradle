@@ -1,7 +1,7 @@
 buildscript {
     ext {
         kotlin_version = "1.4.21"
-        dgis_sdk_version = "1.3.+"
+        dgis_sdk_version = "1.4.+"
         gradle_download_module= "4.1.1"
     }
     repositories {
