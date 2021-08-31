@@ -2,6 +2,8 @@
 
 2GIS Android SDK is an SDK that allows you to add a [2GIS map](https://2gis.ae/) to your Android application. It can be used to display the map in your layout, add custom markers to it, draw geometric shapes, calculate and display routes, get information about map objects, control the camera movement, and so on.
 
+Geodata complies with [OGC standards](https://en.wikipedia.org/wiki/Open_Geospatial_Consortium).
+
 ## Getting API keys
 
 Usage of this SDK requires an API key to connect to 2GIS servers and retrieve the geographical data. This API key is unique to the SDK and cannot be used with other 2GIS SDKs.
