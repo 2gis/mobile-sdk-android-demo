@@ -182,6 +182,18 @@ To add dynamic objects to the map (such as markers, lines, circles, and polygons
 mapObjectManager = MapObjectManager(map)
 ```
 
+To add markers to the map in clustering mode, you must create a [MapObjectManager](/en/android/sdk/reference/ru.dgis.sdk.map.MapObjectManager) object using MapObjectManager.withClustering, specifying the map instance, distance between clusters in logical pixels, maximum value of zoom-level, when MapObjectManager in clustering mode, and user implementation of the protocol SimpleClusterRenderer for cluster customization.
+
+```kotlin
+val clusterRenderer = object : SimpleClusterRenderer {
+    override fun renderCluster(cluster: SimpleClusterObject): SimpleClusterOptions {
+
+    }
+}
+
+mapObjectManager = MapObjectManager.withClustering(map, LogicalPixel(80.0f), Zoom(18.0f), clusterRenderer)
+```
+
 After you have created an object manager, you can add objects to the map using the [addObject()](/en/android/sdk/reference/ru.dgis.sdk.map.MapObjectManager#nav-lvl1--addObject) and [addObjects()](/en/android/sdk/reference/ru.dgis.sdk.map.MapObjectManager#nav-lvl1--addObjects) methods. For each dynamic object, you can specify a `userData` field to store arbitrary data. Object settings can be changed after their creation.
 
 To remove objects from the map, use [removeObject()](/en/android/sdk/reference/ru.dgis.sdk.map.MapObjectManager#nav-lvl1--removeObject) and [removeObjects()](/en/android/sdk/reference/ru.dgis.sdk.map.MapObjectManager#nav-lvl1--removeObjects). To remove all objects, call the [removeAll()](/en/android/sdk/reference/ru.dgis.sdk.map.MapObjectManager#nav-lvl1--removeAll) method.
