@@ -182,12 +182,26 @@ To add dynamic objects to the map (such as markers, lines, circles, and polygons
 mapObjectManager = MapObjectManager(map)
 ```
 
-To add markers to the map in clustering mode, you must create a [MapObjectManager](/en/android/sdk/reference/ru.dgis.sdk.map.MapObjectManager) object using MapObjectManager.withClustering, specifying the map instance, distance between clusters in logical pixels, maximum value of zoom-level, when MapObjectManager in clustering mode, and user implementation of the protocol SimpleClusterRenderer for cluster customization.
+To add markers to the map in clustering mode, you must create a [MapObjectManager](/en/android/sdk/reference/ru.dgis.sdk.map.MapObjectManager) object using [MapObjectManager.withClustering()](/en/android/sdk/reference/ru.dgis.sdk.map.MapObjectManager#nav-lvl1--withClustering), specifying the map instance, distance between clusters in logical pixels, maximum value of zoom-level, when MapObjectManager in clustering mode, and user implementation of the protocol SimpleClusterRenderer.
+[SimpleClusterRenderer](/en/android/sdk/reference/ru.dgis.sdk.map.SimpleClusterRenderer) is used to customize clusters in [MapObjectManager](/en/android/sdk/reference/ru.dgis.sdk.map.MapObjectManager).
 
 ```kotlin
 val clusterRenderer = object : SimpleClusterRenderer {
     override fun renderCluster(cluster: SimpleClusterObject): SimpleClusterOptions {
-
+        val textStyle = TextStyle(
+            fontSize = LogicalPixel(15.0f),
+            textPlacement = TextPlacement.RIGHT_TOP
+        )
+        val objectCount = cluster.objectCount
+        val iconMapDirection = if (objectCount < 5) MapDirection(45.0) else null
+        return SimpleClusterOptions(
+            icon,
+            iconWidth = LogicalPixel(30.0f),
+            text = objectCount.toString(),
+            textStyle = textStyle,
+            iconMapDirection = iconMapDirection,
+            userData = objectCount.toString()
+        )
     }
 }
 
