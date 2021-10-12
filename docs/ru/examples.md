@@ -182,32 +182,6 @@ map.removeSource(source)
 mapObjectManager = MapObjectManager(map)
 ```
 
-Для добавления маркеров на карту в режиме кластеризации нужно создать менеджер объектов ([MapObjectManager](/ru/android/sdk/reference/ru.dgis.sdk.map.MapObjectManager)) через MapObjectManager.withClustering, указав инстанс карты, расстояние между кластерами в логических пикселях, максимальный zoom-уровень формирования кластеров и пользовательскую имплементацию протокола SimpleClusterRenderer.
-[SimpleClusterRenderer](/ru/android/sdk/reference/ru.dgis.sdk.map.SimpleClusterRenderer) используется для кастомизации кластеров в [MapObjectManager](/ru/android/sdk/reference/ru.dgis.sdk.map.MapObjectManager).
-
-```kotlin
-val clusterRenderer = object : SimpleClusterRenderer {
-    override fun renderCluster(cluster: SimpleClusterObject): SimpleClusterOptions {
-        val textStyle = TextStyle(
-            fontSize = LogicalPixel(15.0f),
-            textPlacement = TextPlacement.RIGHT_TOP
-        )
-        val objectCount = cluster.objectCount
-        val iconMapDirection = if (objectCount < 5) MapDirection(45.0) else null
-        return SimpleClusterOptions(
-            icon,
-            iconWidth = LogicalPixel(30.0f),
-            text = objectCount.toString(),
-            textStyle = textStyle,
-            iconMapDirection = iconMapDirection,
-            userData = objectCount.toString()
-        )
-    }
-}
-
-mapObjectManager = MapObjectManager.withClustering(map, LogicalPixel(80.0f), Zoom(18.0f), clusterRenderer)
-```
-
 Для добавления объектов используются методы [addObject()](/ru/android/sdk/reference/ru.dgis.sdk.map.MapObjectManager#nav-lvl1--addObject) и [addObjects()](/ru/android/sdk/reference/ru.dgis.sdk.map.MapObjectManager#nav-lvl1--addObjects). Для каждого динамического объекта можно указать поле `userData`, которое будет хранить произвольные данные, связанные с объектом. Настройки объектов можно менять после их создания.
 
 Для удаления объектов используются методы [removeObject()](/ru/android/sdk/reference/ru.dgis.sdk.map.MapObjectManager#nav-lvl1--removeObject) и [removeObjects()](/ru/android/sdk/reference/ru.dgis.sdk.map.MapObjectManager#nav-lvl1--removeObjects). Чтобы удалить все объекты, можно использовать метод [removeAll()](/ru/android/sdk/reference/ru.dgis.sdk.map.MapObjectManager#nav-lvl1--removeAll).
@@ -318,6 +292,34 @@ val polygon = Polygon(
 )
 
 mapObjectManager.addObject(polygon)
+```
+
+### Кластеризация
+
+Для добавления маркеров на карту в режиме кластеризации нужно создать менеджер объектов ([MapObjectManager](/ru/android/sdk/reference/ru.dgis.sdk.map.MapObjectManager)) через [MapObjectManager.withClustering()](/ru/android/sdk/reference/ru.dgis.sdk.map.MapObjectManager#nav-lvl1--withClustering), указав инстанс карты, расстояние между кластерами в логических пикселях, максимальный zoom-уровень формирования кластеров и пользовательскую имплементацию протокола SimpleClusterRenderer.
+[SimpleClusterRenderer](/ru/android/sdk/reference/ru.dgis.sdk.map.SimpleClusterRenderer) используется для кастомизации кластеров в [MapObjectManager](/ru/android/sdk/reference/ru.dgis.sdk.map.MapObjectManager).
+
+```kotlin
+val clusterRenderer = object : SimpleClusterRenderer {
+    override fun renderCluster(cluster: SimpleClusterObject): SimpleClusterOptions {
+        val textStyle = TextStyle(
+            fontSize = LogicalPixel(15.0f),
+            textPlacement = TextPlacement.RIGHT_TOP
+        )
+        val objectCount = cluster.objectCount
+        val iconMapDirection = if (objectCount < 5) MapDirection(45.0) else null
+        return SimpleClusterOptions(
+            icon,
+            iconWidth = LogicalPixel(30.0f),
+            text = objectCount.toString(),
+            textStyle = textStyle,
+            iconMapDirection = iconMapDirection,
+            userData = objectCount.toString()
+        )
+    }
+}
+
+mapObjectManager = MapObjectManager.withClustering(map, LogicalPixel(80.0f), Zoom(18.0f), clusterRenderer)
 ```
 
 ## Управление камерой
