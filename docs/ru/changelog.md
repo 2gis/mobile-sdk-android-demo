@@ -1,5 +1,10 @@
 # Release notes
 
+## v1.6.3
+**Release Date:** 26.10.2021
+- Исправлена ошибка при отправке статистики, при которой было мало событий `MapSource` с типом `2gis.online`.
+- Исправлено падение при работе `MyLocationController`.
+
 ## v2.0.0-beta.5
 **Release Date:** 21.10.2021
 
