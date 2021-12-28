@@ -14,6 +14,8 @@ To obtain either of these API keys, fill in the form at [dev.2gis.com](https://d
 
 ## Installation
 
+2GIS Android SDK is distributed in two versions: full and lite. The lite version does not include the routes and navigation functionality.
+
 To install the SDK:
 
 1. Declare a custom repository in your `build.gradle` file.
@@ -26,13 +28,21 @@ repositories {
 }
 ```
 
-2. Add a build dependency.
+2. Add one of the following build dependencies.
 
-To get the regular version of SDK (without routes and navigation functionality):
+To get the lite version of the SDK:
 
 ```gradle
 dependencies {
     implementation 'ru.dgis.sdk:sdk-map:latest.release'
+}
+```
+
+To get the full version of the SDK:
+
+```gradle
+dependencies {
+    implementation 'ru.dgis.sdk:sdk-full:latest.release'
 }
 ```
 

@@ -508,7 +508,7 @@ val trafficRouter = TrafficRouter(sdkContext)
 val routesFuture = trafficRouter.findRoute(startSearchPoint, finishSearchPoint)
 ```
 
-The `findRoute()` call will return a delayed result with a list of [TrafficRoute](/en/android/sdk/reference/2.0/ru.dgis.sdk.routing.TrafficRoute) objects. To display the found route on the map, you need to use these objects to create [RouteMapObject](/en/android/sdk/reference/2.0/ru.dgis.sdk.map.RouteMapObject) objects and add them to a [RouteMapObjectSource](/en/android/sdk/reference/2.0/ru.dgis.sdk.map.RouteMapObjectSource) data source.
+The `findRoute()` call will return a deferred result with a list of [TrafficRoute](/en/android/sdk/reference/2.0/ru.dgis.sdk.routing.TrafficRoute) objects. To display the found route on the map, you need to use these objects to create [RouteMapObject](/en/android/sdk/reference/2.0/ru.dgis.sdk.map.RouteMapObject) objects and add them to a [RouteMapObjectSource](/en/android/sdk/reference/2.0/ru.dgis.sdk.map.RouteMapObjectSource) data source.
 
 ```kotlin
 // Create a data source
