@@ -16,6 +16,8 @@ Android SDK позволяет добавить [карту 2GIS](https://2gis.r
 
 ## Установка
 
+Android SDK доступен в двух версиях: полной и облегченной. Облегченная версия не включает навигатор и не позволяет строить маршруты.
+
 Для установки SDK:
 
 1. Укажите пользовательский репозиторий в вашем файле `build.gradle`.
@@ -28,11 +30,21 @@ repositories {
 }
 ```
 
-2. Добавьте зависимость.
+2. Добавьте одну из следующих зависимостей.
+
+Для получения облегченной версии SDK:
 
 ```gradle
 dependencies {
     implementation 'ru.dgis.sdk:sdk-map:latest.release'
+}
+```
+
+Для получения полной версии SDK:
+
+```gradle
+dependencies {
+    implementation 'ru.dgis.sdk:sdk-full:latest.release'
 }
 ```
 
