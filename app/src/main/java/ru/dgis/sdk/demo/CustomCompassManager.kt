@@ -22,7 +22,6 @@ class CustomCompassManager(private val applicationContext: Context): MagneticHea
             sensorManager = it
         }
         val callback = (object: SensorEventListener {
-            private var accuracy: Int = 0
             private val accelerometerReading = FloatArray(3)
             private val magnetometerReading = FloatArray(3)
             private val rotationMatrix = FloatArray(9)
@@ -56,12 +55,7 @@ class CustomCompassManager(private val applicationContext: Context): MagneticHea
 
                 lastDegrees = degrees
 
-                listener.onValueChanged(degrees.toFloat(), accuracy, timestamp)
-            }
-            override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
-                if (sensor?.type == Sensor.TYPE_MAGNETIC_FIELD) {
-                    this.accuracy = accuracy
-                }
+                listener.onValueChanged(degrees.toFloat(), 1.0f, timestamp)
             }
         }).also { sensorListener = it }
 
