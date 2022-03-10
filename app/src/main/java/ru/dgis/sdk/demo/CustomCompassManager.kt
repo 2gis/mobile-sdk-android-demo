@@ -57,6 +57,9 @@ class CustomCompassManager(private val applicationContext: Context): MagneticHea
 
                 listener.onValueChanged(degrees.toFloat(), 1.0f, timestamp)
             }
+
+            override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
+            }
         }).also { sensorListener = it }
 
         val samplingPeriod = 100
