@@ -20,6 +20,7 @@ class Application : Application() {
     }
 }
 ```
+Note that you cannot create more than one Context instance. 
 
 Additionally, you can specify logging settings ([LogOptions](/en/android/sdk/reference/2.0/ru.dgis.sdk.LogOptions)) and HTTP client settings ([HttpOptions](/en/android/sdk/reference/2.0/ru.dgis.sdk.HttpOptions)) such as caching.
 
