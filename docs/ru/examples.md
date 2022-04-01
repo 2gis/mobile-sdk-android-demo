@@ -20,6 +20,8 @@ class Application : Application() {
     }
 }
 ```
+Обратите внимание, что нельзя создавать более одного экземпляра Context.
+
 
 Дополнительно можно указать настройки журналирования ([LogOptions](/ru/android/sdk/reference/2.0/ru.dgis.sdk.LogOptions)) и настройки HTTP-клиента ([HttpOptions](/ru/android/sdk/reference/2.0/ru.dgis.sdk.HttpOptions)), такие как кеширование.
 
