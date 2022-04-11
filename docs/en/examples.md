@@ -552,6 +552,143 @@ routeEditor.setRouteParams(
 )
 ```
 
+## Turn-by-turn navigation
+
+You can add a turn-by-turn navigation to your app using the ready-to-use interface components and the [NavigationManager](/en/android/sdk/reference/2.0/ru.dgis.sdk.navigation.NavigationManager) class.
+
+To do that, first add a [NavigationView](/en/android/sdk/reference/2.0/ru.dgis.sdk.navigation.NavigationView) and a [DefaultNavigationControls](/en/android/sdk/reference/2.0/ru.dgis.sdk.navigation.DefaultNavigationControls) to your [MapView](/en/android/sdk/reference/2.0/ru.dgis.sdk.map.MapView).
+
+```xml
+<ru.dgis.sdk.map.MapView
+    android:id="@+id/mapView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <ru.dgis.sdk.navigation.NavigationView
+        android:id="@+id/navigationView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <ru.dgis.sdk.navigation.DefaultNavigationControls
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </ru.dgis.sdk.navigation.NavigationView>
+</ru.dgis.sdk.map.MapView>
+```
+
+Then, add a [My location marker](#nav-lvl1--My_location) to the map and create a [NavigationManager](/en/android/sdk/reference/2.0/ru.dgis.sdk.navigation.NavigationManager) object.
+
+```kotlin
+override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    sdkContext = DGis.initialize(applicationContext, apiKeys)
+
+    // Register the geolocation source
+    locationProvider = ManagerLocationSource(applicationContext)
+    registerPlatformLocationSource(sdkContext, locationProvider)
+
+    setContentView(R.layout.activity_navigation)
+
+    findViewById<MapView>(R.id.mapView).apply { mapView ->
+        lifecycle.addObserver(mapView)
+
+        mapView.getMapAsync { map ->
+            // Add a marker for the current location
+            map.addSource(
+                MyLocationMapObjectSource(
+                    sdkContext,
+                    MyLocationDirectionBehaviour.FOLLOW_SATELLITE_HEADING,
+                    createSmoothMyLocationController()
+                )
+            )
+        }
+    }
+    
+    // Create a NavigationManager object
+    navigationManager = NavigationManager(sdkContext)
+
+    findViewById<NavigationView>(R.id.navigationView).apply {
+        // Attach the created NavigationManager object to the NavigationView
+        navigationManager = this@NavigationActivity.navigationManager
+    }
+    
+    // Start navigation in a free-drive mode
+    navigationManager.start()
+}
+```
+
+You can start navigation in one of three modes: free-drive, turn-by-turn, and the simulated navigation mode.
+
+Additional navigation settings can be changed using the properties of the [NavigationManager](/en/android/sdk/reference/2.0/ru.dgis.sdk.navigation.NavigationManager#nav-lvl1--val%20uiModel) object.
+
+### Free-drive mode
+
+In free-drive mode, no route will be displayed on the map, but the user will still be informed about speed limits, traffic cameras, incidents, and road closures.
+
+To start navigation in this mode, call the `start()` method without arguments.
+
+```kotlin
+navigationManager.start()
+```
+
+### Turn-by-turn mode
+
+In turn-by-turn mode, a route will be displayed on the map and the user will receive navigation instructions as they move along the route.
+
+To start navigation in this mode, call the `start()` method and specify a [RouteBuildOptions](/en/android/sdk/reference/2.0/ru.dgis.sdk.navigation.RouteBuildOptions) object - arrival coordinates and route settings.
+
+```kotlin
+val routeBuildOptions = RouteBuildOptions(
+    finishPoint = RouteSearchPoint(
+        coordinates = GeoPoint(latitude = 55.752425, longitude = 37.613983)
+    ),
+    routeSearchOptions = CarRouteSearchOptions(
+        avoidTollRoads = true,
+        avoidUnpavedRoads = false,
+        avoidFerry = false,
+        routeSearchType = RouteSearchType.JAM
+    )
+)
+
+navigationManager.start(routeBuildOptions)
+```
+
+Additionally, when calling the `start()` method, you can specify a [TrafficRoute](/en/android/sdk/reference/2.0/ru.dgis.sdk.routing.TrafficRoute) object - a complete route object for navigation (see [Building a route](#nav-lvl1--Building_a_route)). In this case, [NavigationManager](/en/android/sdk/reference/2.0/ru.dgis.sdk.navigation.NavigationManager) will use the specified route instead of building a new one.
+
+```kotlin
+navigationManager.start(routeBuildOptions, trafficRoute)
+```
+
+### Simulated navigation
+
+In this mode, [NavigationManager](/en/android/sdk/reference/2.0/ru.dgis.sdk.navigation.NavigationManager) will not track the current location of the device. Instead, it will simulate a movement along the specified route.
+
+This mode is useful for debugging.
+
+To use this mode, call the `startSimulation()` method and specify a [RouteBuildOptions](/en/android/sdk/reference/2.0/ru.dgis.sdk.navigation.RouteBuildOptions) object (route settings) and a [TrafficRoute](/en/android/sdk/reference/2.0/ru.dgis.sdk.routing.TrafficRoute) object (the route itself).
+
+You can change the speed of the simulated movement using the [SimulationSettings.speed](/en/android/sdk/reference/2.0/ru.dgis.sdk.navigation.SimulationSettings) property (specified in meters per second).
+
+```kotlin
+navigationManager.simulationSettings.speed = 30 / 3.6
+navigationManager.startSimulation(routeBuildOptions, trafficRoute)
+```
+
+To stop the simulation, call the `stop()` method.
+
+```kotlin
+navigationManager.stop()
+```
+
+### Traffic display
+
+To display traffic on the map, add a [TrafficSource](/en/android/sdk/reference/2.0/ru.dgis.sdk.map.TrafficSource) data source.
+
+```kotlin
+val trafficSource = TrafficSource(sdkContext)
+map.addSource(trafficSource)
+```
+
 ## Custom geolocation source
 
 You can use your own geolocation source within the SDK. To do this, first implement the [LocationSource](/en/android/sdk/reference/2.0/ru.dgis.sdk.positioning.LocationSource) interface.
