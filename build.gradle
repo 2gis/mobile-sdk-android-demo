@@ -1,7 +1,7 @@
 buildscript {
     ext {
         kotlin_version = "1.4.21"
-        dgis_sdk_version = "2.5.+"
+        dgis_sdk_version = "2.6.+"
         gradle_download_module= "4.1.1"
     }
     repositories {
@@ -27,7 +27,7 @@ allprojects {
         jcenter()
 
         maven {
-            url localProperties.getProperty('sdkRepository', 'http://artifactory.2gis.dev/sdk-maven-release')
+            url localProperties.getProperty('sdkRepository', 'https://artifactory.2gis.dev/sdk-maven-release')
         }
     }
 }

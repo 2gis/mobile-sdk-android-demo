@@ -25,7 +25,7 @@ Android SDK доступен в двух версиях: полной и обл�
 ```gradle
 repositories {
     maven {
-        url "http://artifactory.2gis.dev/sdk-maven-release"
+        url "https://artifactory.2gis.dev/sdk-maven-release"
     }
 }
 ```
