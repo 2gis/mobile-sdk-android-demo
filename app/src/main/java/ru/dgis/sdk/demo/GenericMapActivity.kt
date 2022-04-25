@@ -4,6 +4,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.widget.SwitchCompat
 import ru.dgis.sdk.Context
+import ru.dgis.sdk.directory.ObjectType
+import ru.dgis.sdk.directory.SearchManager
+import ru.dgis.sdk.directory.SearchQueryBuilder
 import ru.dgis.sdk.map.*
 import ru.dgis.sdk.map.Map
 
@@ -46,6 +49,21 @@ class GenericMapActivity : AppCompatActivity() {
 
         mapSource = MyLocationMapObjectSource(sdkContext, MyLocationDirectionBehaviour.FOLLOW_MAGNETIC_HEADING)
         map.addSource(mapSource)
+
+        val searchManager = SearchManager.createOnlineManager(sdkContext)
+        val request = searchManager.search(SearchQueryBuilder
+            .fromQueryText("банкоматы и банки")
+            .setAllowedResultTypes(listOf(ObjectType.BRANCH))
+            .build())
+
+        request.onResult { searchResult ->
+            map.addSource(SearchResultMarkerSource.createSearchResultMarkerSource(
+                sdkContext,
+                searchResult,
+                ScreenDistance(4.0f),
+                Zoom(18.0f)
+            ))
+        }
     }
 
     private fun subscribeGestureSwitches(gm: GestureManager) {
