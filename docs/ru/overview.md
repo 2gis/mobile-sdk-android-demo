@@ -50,4 +50,4 @@ dependencies {
 
 ## Демонстрационный проект
 
-Демонстрационное приложение с исходным кодом можно найти в нашем [GitHub-репозитории](https://github.com/2gis/native-sdk-android-demo/).
+Демонстрационное приложение с исходным кодом можно найти в нашем [GitHub-репозитории](https://github.com/2gis/mobile-sdk-android-demo/).

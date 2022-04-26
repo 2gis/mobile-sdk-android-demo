@@ -554,6 +554,141 @@ routeEditor.setRouteParams(
 )
 ```
 
+## Навигатор
+
+Чтобы создать навигатор, можно использовать готовые элементы интерфейса и класс [NavigationManager](/ru/android/sdk/reference/2.0/ru.dgis.sdk.navigation.NavigationManager).
+
+Для этого нужно добавить в [MapView](/ru/android/sdk/reference/2.0/ru.dgis.sdk.map.MapView) элементы [NavigationView](/ru/android/sdk/reference/2.0/ru.dgis.sdk.navigation.NavigationView) и [DefaultNavigationControls](/ru/android/sdk/reference/2.0/ru.dgis.sdk.navigation.DefaultNavigationControls).
+
+```xml
+<ru.dgis.sdk.map.MapView
+    android:id="@+id/mapView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <ru.dgis.sdk.navigation.NavigationView
+        android:id="@+id/navigationView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <ru.dgis.sdk.navigation.DefaultNavigationControls
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </ru.dgis.sdk.navigation.NavigationView>
+</ru.dgis.sdk.map.MapView>
+```
+
+После этого нужно добавить на карту маркер с текущим местоположением и создать объект [NavigationManager](/ru/android/sdk/reference/2.0/ru.dgis.sdk.navigation.NavigationManager).
+
+```kotlin
+override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    sdkContext = DGis.initialize(applicationContext, apiKeys)
+
+    // Регистрируем источник геопозиции
+    locationProvider = ManagerLocationSource(applicationContext)
+    registerPlatformLocationSource(sdkContext, locationProvider)
+
+    setContentView(R.layout.activity_navigation)
+
+    findViewById<MapView>(R.id.mapView).apply { mapView ->
+        lifecycle.addObserver(mapView)
+
+        mapView.getMapAsync { map ->
+            // Добавляем маркер с текущим местоположением
+            map.addSource(
+                MyLocationMapObjectSource(
+                    sdkContext,
+                    MyLocationDirectionBehaviour.FOLLOW_SATELLITE_HEADING,
+                    createSmoothMyLocationController()
+                )
+            )
+        }
+    }
+    
+    // Создаём объект NavigationManager
+    navigationManager = NavigationManager(sdkContext)
+
+    findViewById<NavigationView>(R.id.navigationView).apply {
+        // Привязываем созданный объект NavigationManager к элементу интерфейса NavigationView
+        navigationManager = this@NavigationActivity.navigationManager
+    }
+    
+    // Запускаем навигатор в режиме свободной навигации
+    navigationManager.start()
+}
+```
+
+Навигатор может работать в трёх режимах: свободная навигация, ведение по маршруту и симуляция ведения.
+
+Настройки навигатора можно изменить через [свойства NavigationManager](/ru/android/sdk/reference/2.0/ru.dgis.sdk.navigation.NavigationManager#nav-lvl1--val%20uiModel).
+
+### Свободная навигация
+
+В этом режиме маршрут следования отсутствует, но навигатор будет информировать о превышениях скорости, дорожных камерах, авариях и ремонтных работах.
+
+Чтобы запустить навигатор в этом режиме, нужно вызвать метод `start()` без параметров.
+
+```kotlin
+navigationManager.start()
+```
+
+### Ведение по маршруту
+
+В этом режиме на карте будет построен маршрут от текущего местоположения до указанной точки назначения, и пользователь будет получать инструкции по мере движения.
+
+Чтобы запустить навигатор в этом режиме, нужно вызвать метод `start()` и указать объект [RouteBuildOptions](/ru/android/sdk/reference/2.0/ru.dgis.sdk.navigation.RouteBuildOptions) - координаты точки назначения и настройки маршрута.
+
+```kotlin
+val routeBuildOptions = RouteBuildOptions(
+    finishPoint = RouteSearchPoint(
+        coordinates = GeoPoint(latitude = 55.752425, longitude = 37.613983)
+    ),
+    routeSearchOptions = CarRouteSearchOptions(
+        avoidTollRoads = true,
+        avoidUnpavedRoads = false,
+        avoidFerry = false,
+        routeSearchType = RouteSearchType.JAM
+    )
+)
+
+navigationManager.start(routeBuildOptions)
+```
+
+Дополнительно при вызове метода `start()` можно указать объект [TrafficRoute](/ru/android/sdk/reference/2.0/ru.dgis.sdk.routing.TrafficRoute) - готовый маршрут для навигации (см. раздел [Построение маршрута](#nav-lvl1--Построение_маршрута)). В таком случае навигатор не будет пытаться построить маршрут от текущего местоположения, а начнёт ведение по указанному маршруту.
+
+```kotlin
+navigationManager.start(routeBuildOptions, trafficRoute)
+```
+
+### Симуляция ведения по маршруту
+
+В этом режиме навигатор не будет отслеживать реальное местоположение устройства, а запустит симулированное движение по указанному маршруту. Режим удобно использовать для отладки.
+
+Чтобы запустить навигатор в режиме симуляции, нужно вызвать метод `startSimulation()`, указав готовый маршрут ([TrafficRoute](/ru/android/sdk/reference/2.0/ru.dgis.sdk.routing.TrafficRoute)) и его настройки ([RouteBuildOptions](/ru/android/sdk/reference/2.0/ru.dgis.sdk.navigation.RouteBuildOptions)).
+
+Скорость движения можно изменить с помощью свойства [SimulationSettings.speed](/ru/android/sdk/reference/2.0/ru.dgis.sdk.navigation.SimulationSettings) (метры в секунду).
+
+```kotlin
+navigationManager.simulationSettings.speed = 30 / 3.6
+navigationManager.startSimulation(routeBuildOptions, trafficRoute)
+```
+
+Остановить симуляцию можно с помощью метода `stop()`.
+
+```kotlin
+navigationManager.stop()
+```
+
+### Отображение пробок на карте
+
+Чтобы включить показ дорожного трафика, нужно добавить на карту источник данных [TrafficSource](/ru/android/sdk/reference/2.0/ru.dgis.sdk.map.TrafficSource).
+
+```kotlin
+val trafficSource = TrafficSource(sdkContext)
+map.addSource(trafficSource)
+```
+
 ## Собственный источник геопозиции
 
 В рамках SDK можно использовать произвольный источник геопозиции. Для этого нужно реализовать интерфейс [LocationSource](/ru/android/sdk/reference/2.0/ru.dgis.sdk.positioning.LocationSource).
