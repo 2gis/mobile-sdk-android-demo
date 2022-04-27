@@ -18,6 +18,7 @@ class GenericMapActivity : AppCompatActivity() {
     private var map: Map? = null
 
     private lateinit var mapView: MapView
+    private lateinit var indoorManager: IndoorManager
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

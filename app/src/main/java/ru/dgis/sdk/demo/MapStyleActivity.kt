@@ -75,6 +75,7 @@ class MapStyleActivity : AppCompatActivity() {
         }
         val mapView = MapView(this, options).apply {
             getMapAsync(viewModel::onMapReady)
+            showApiVersionInCopyrightView = true
         }
         rootContainer.apply {
             removeAllViews()
