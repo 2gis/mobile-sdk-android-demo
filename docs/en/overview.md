@@ -14,6 +14,14 @@ Additionally, if you plan to draw routes on the map or get extra information abo
 
 To obtain either of these API keys, fill in the form at [dev.2gis.com](https://dev.2gis.com/order).
 
+## Getting API keys since 4.x version
+
+To work with MobileSDK, you need to get the key file `dgissdk.key` with the obligatory indication of the `appId` of the application for which this key is created. This key will be used to connect to 2GIS servers and retrieve the geographical data, as well as to use offline and the navigator. This key is unique to the SDK and cannot be used with other 2GIS SDKs.
+
+To obtain this key file, fill in the form at [dev.2gis.com](https://dev.2gis.com/order).
+
+The resulting key file must be added to the `assets` of the application.
+
 ## Installation
 
 Android SDK is distributed in two versions: full and lite. The lite version does not include the routes and navigation functionality.
