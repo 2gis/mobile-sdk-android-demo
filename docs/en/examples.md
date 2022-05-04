@@ -53,6 +53,51 @@ sdkContext = DGis.initialize(
 )
 ```
 
+## Getting started since 4.x version
+
+First you need to contact 2GIS technical support to get a new key. Be sure to specify the `appId` of the application for which the key will be generated. The resulting key file `dgissdk.key` needs to be added to `assets`.
+
+To begin working with the SDK, call the `initialize()` method of [DGis](/en/android/sdk/reference/2.0/ru.dgis.sdk.DGis) and specify the application context.
+
+```kotlin
+class Application : Application() {
+    lateinit var sdkContext: Context
+
+    override fun onCreate() {
+        super.onCreate()
+
+        sdkContext = DGis.initialize(
+            this
+        )
+    }
+}
+```
+Note that you cannot create more than one Context instance.
+
+Additionally, you can specify logging settings ([LogOptions](/en/android/sdk/reference/2.0/ru.dgis.sdk.LogOptions)) and HTTP client settings ([HttpOptions](/en/android/sdk/reference/2.0/ru.dgis.sdk.HttpOptions)) such as caching.
+
+```kotlin
+// Logging settings
+val logOptions = LogOptions(
+    LogLevel.VERBOSE
+)
+
+// HTTP client settings
+val httpOptions = HttpOptions(
+    useCache = false
+)
+
+// Consent to personal data processing
+val dataCollectConsent = PersonalDataCollectionConsent.GRANTED
+
+sdkContext = DGis.initialize(
+    appContext = this,
+    dataCollectConsent = dataCollectConsent,
+    logOptions = logOptions,
+    httpOptions = httpOptions
+)
+```
+
 ## Creating a map
 
 To display a map, add a [MapView](/en/android/sdk/reference/2.0/ru.dgis.sdk.map.MapView) to your activity:
