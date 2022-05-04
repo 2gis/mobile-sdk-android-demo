@@ -57,7 +57,7 @@ sdkContext = DGis.initialize(
 
 First you need to contact 2GIS technical support to get a new key. Be sure to specify the `appId` of the application for which the key will be generated. The resulting key file `dgissdk.key` needs to be added to `assets`.
 
-To begin working with the SDK, call the `initialize()` method of [DGis](/en/android/sdk/reference/2.0/ru.dgis.sdk.DGis) and specify the application context.
+To begin working with the SDK, call the `initialize()` method of [DGis](/en/android/sdk/reference/4.0/ru.dgis.sdk.DGis) and specify the application context.
 
 ```kotlin
 class Application : Application() {
@@ -74,7 +74,7 @@ class Application : Application() {
 ```
 Note that you cannot create more than one Context instance.
 
-Additionally, you can specify logging settings ([LogOptions](/en/android/sdk/reference/2.0/ru.dgis.sdk.LogOptions)) and HTTP client settings ([HttpOptions](/en/android/sdk/reference/2.0/ru.dgis.sdk.HttpOptions)) such as caching.
+Additionally, you can specify logging settings ([LogOptions](/en/android/sdk/reference/4.0/ru.dgis.sdk.LogOptions)) and HTTP client settings ([HttpOptions](/en/android/sdk/reference/4.0/ru.dgis.sdk.HttpOptions)) such as caching.
 
 ```kotlin
 // Logging settings
