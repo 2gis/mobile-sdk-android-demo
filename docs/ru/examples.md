@@ -54,6 +54,52 @@ sdkContext = DGis.initialize(
 )
 ```
 
+## Начало работы с версии 4.x
+
+Сначала нужно обратиться в техническую поддержку 2ГИС для получения нового ключа. Обязательно нужно указать `appId` приложения, для которого будет создан ключ. Полученный файл ключа `dgissdk.key` нужно добавить `assets`.
+
+Для работы с SDK нужно вызвать метод `initialize()` объекта [DGis](/ru/android/sdk/reference/2.0/ru.dgis.sdk.DGis), указав контекст приложения.
+
+```kotlin
+class Application : Application() {
+    lateinit var sdkContext: Context
+
+    override fun onCreate() {
+        super.onCreate()
+
+        sdkContext = DGis.initialize(
+            this
+        )
+    }
+}
+```
+Обратите внимание, что нельзя создавать более одного экземпляра Context.
+
+
+Дополнительно можно указать настройки журналирования ([LogOptions](/ru/android/sdk/reference/2.0/ru.dgis.sdk.LogOptions)) и настройки HTTP-клиента ([HttpOptions](/ru/android/sdk/reference/2.0/ru.dgis.sdk.HttpOptions)), такие как кеширование.
+
+```kotlin
+// Настройки журналирования
+val logOptions = LogOptions(
+    LogLevel.VERBOSE
+)
+
+// Настройки HTTP-клиента
+val httpOptions = HttpOptions(
+    useCache = false
+)
+
+// Согласие на сбор и отправку персональных данных
+val dataCollectConsent = PersonalDataCollectionConsent.GRANTED
+
+sdkContext = DGis.initialize(
+    appContext = this,
+    dataCollectConsent = dataCollectConsent,
+    logOptions = logOptions,
+    httpOptions = httpOptions
+)
+```
+
 ## Создание карты
 
 Чтобы создать карту, добавьте [MapView](/ru/android/sdk/reference/2.0/ru.dgis.sdk.map.MapView) в ваш activity:
