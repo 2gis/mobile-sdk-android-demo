@@ -460,7 +460,8 @@ You can add a special marker to the map that will be automatically updated to re
 // Create the data source
 val source = MyLocationMapObjectSource(
     sdkContext,
-    MyLocationDirectionBehaviour.FOLLOW_SATELLITE_HEADING
+    MyLocationDirectionBehaviour.FOLLOW_SATELLITE_HEADING,
+    createSmoothMyLocationController()
 )
 
 // Add the data source to the map

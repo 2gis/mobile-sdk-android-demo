@@ -462,7 +462,8 @@ connection.close()
 // Создание источника данных
 val source = MyLocationMapObjectSource(
     sdkContext,
-    MyLocationDirectionBehaviour.FOLLOW_SATELLITE_HEADING
+    MyLocationDirectionBehaviour.FOLLOW_SATELLITE_HEADING,
+    createSmoothMyLocationController()
 )
 
 // Добавление источника данных на карту
