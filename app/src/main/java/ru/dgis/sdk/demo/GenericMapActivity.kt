@@ -8,9 +8,6 @@ import ru.dgis.sdk.map.*
 import ru.dgis.sdk.map.Map
 
 
-private const val DIMENSION_ATTR = "is_2d"
-
-
 class GenericMapActivity : AppCompatActivity() {
     lateinit var sdkContext: Context
     lateinit var mapSource: MyLocationMapObjectSource
@@ -44,7 +41,11 @@ class GenericMapActivity : AppCompatActivity() {
         val gestureManager = checkNotNull(mapView.gestureManager)
         subscribeGestureSwitches(gestureManager)
 
-        mapSource = MyLocationMapObjectSource(sdkContext, MyLocationDirectionBehaviour.FOLLOW_MAGNETIC_HEADING)
+        mapSource = MyLocationMapObjectSource(
+            sdkContext,
+            MyLocationDirectionBehaviour.FOLLOW_MAGNETIC_HEADING,
+            createSmoothMyLocationController()
+        )
         map.addSource(mapSource)
     }
 
