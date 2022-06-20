@@ -57,6 +57,7 @@ class CustomLocationManager(private val applicationContext: Context): LocationSo
         }
         val request = LocationRequest.create().apply {
             priority = newPriority
+            interval = 100L
         }
         val callback = (object: LocationCallback() {
             override fun onLocationResult(result: LocationResult?) {
@@ -71,6 +72,7 @@ class CustomLocationManager(private val applicationContext: Context): LocationSo
         if (checkPermission()) {
             return
         }
+
         client.requestLocationUpdates(request, callback, Looper.getMainLooper())
         listener.onAvailabilityChanged(true)
     }
