@@ -11,6 +11,7 @@
   - Удален метод `PackedSearchQuery.location`.
   - Удалены `SearchResultMarkerObject` и `SearchResultMarkerSource` для генерализации маркеров поисковой выдачи по причине отсутствия возможности динамически добавлять или удалять объекты. В качестве альтернативы пользователю предлагается самому реализовать генерализацию маркеров или воспользоваться кластеризацией.
   - При создании `MyLocationMapObjectSource` по умолчанию используется `SmoothMyLocationController` вместо `RawMyLocationController`.
+  - Метод `Map.setStyle` был удален. Теперь стиль можно установить через `Map.style`.
 
 Дополнительно для full версии:
   - Удалены списки с информацией о маршруте в `RouteInfo` - `cameras`, `instructions`, `laneSigns` и т.д. и индексы текущих элементов - `Model.cameraIndexChannel`, `Model.instructionIndexChannel`.Вместо этого информацию необходимо получать непосредственно из маршрута и текущей позиции, например, получение ближайшей камеры - `Model.route.route.cameras.findNearForward(position)`.

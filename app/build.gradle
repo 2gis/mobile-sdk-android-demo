@@ -20,9 +20,6 @@ android {
         targetSdkVersion 30
         versionCode 1
         versionName "0.0.1"
-
-        resValue("string", "dgis_map_api_key", localProperties.getProperty("dgisMapApiKey"))
-        resValue("string", "dgis_directory_api_key", localProperties.getProperty("dgisDirectoryApiKey"))
     }
 
     buildTypes {
