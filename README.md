@@ -48,12 +48,8 @@ dependencies {
 
 ## Running the demo app
 
-To run the demo app, clone this Git repository and add your API keys to the [local.properties](https://developer.android.com/studio/build#properties-files) file in your project:
-
-```
-dgisMapApiKey=YOUR_MAP_KEY
-dgisDirectoryApiKey=YOUR_DIRECTIONS_KEY
-```
+To run the demo app, clone this Git repository and add your key file `dgissdk.key` in `app/src/main/assets/`.
+Also, it is necessary to set `applicationId` of demo app to `app_id` value of your key file.
 
 ## Documentation
 
