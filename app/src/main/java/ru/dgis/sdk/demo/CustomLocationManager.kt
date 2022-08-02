@@ -52,12 +52,16 @@ class CustomLocationManager(private val applicationContext: Context): LocationSo
 
         val newPriority = when (accuracy) {
             DesiredAccuracy.HIGH -> LocationRequest.PRIORITY_HIGH_ACCURACY
-            DesiredAccuracy.MEDIUM -> LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
-            DesiredAccuracy.LOW -> LocationRequest.PRIORITY_LOW_POWER
+            DesiredAccuracy.MEDIUM -> LocationRequest.PRIORITY_HIGH_ACCURACY
+            DesiredAccuracy.LOW -> LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
         }
         val request = LocationRequest.create().apply {
             priority = newPriority
-            interval = 100L
+            interval = when (accuracy) {
+                DesiredAccuracy.LOW -> 5000L
+                DesiredAccuracy.MEDIUM -> 1000L
+                DesiredAccuracy.HIGH -> 100L
+            }
         }
         val callback = (object: LocationCallback() {
             override fun onLocationResult(result: LocationResult?) {
