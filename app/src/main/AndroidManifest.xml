@@ -36,6 +36,10 @@
             android:name=".MapStyleActivity"
             android:theme="@style/MapStyleActivityTheme"
             />
+        <activity
+            android:name=".NavigationActivity"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
+            android:theme="@style/GenericActivityTheme" />
     </application>
 
 </manifest>
