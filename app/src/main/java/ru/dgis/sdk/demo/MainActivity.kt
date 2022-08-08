@@ -37,6 +37,10 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this@MainActivity, MapStyleActivity::class.java)
             startActivity(intent)
         },
+        Page("Navigation") {
+            val intent = Intent(this@MainActivity, NavigationActivity::class.java)
+            startActivity(intent)
+        }
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
