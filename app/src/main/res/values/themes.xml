@@ -32,4 +32,7 @@
     <style name="MapStyleActivityTheme" parent="AppTheme">
     </style>
 
+    <style name="IndoorActivityControlTheme" parent="AppTheme">
+    </style>
+
 </resources>

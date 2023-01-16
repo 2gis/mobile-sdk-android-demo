@@ -34,12 +34,15 @@
             android:theme="@style/GenericActivityTheme" />
         <activity
             android:name=".MapStyleActivity"
-            android:theme="@style/MapStyleActivityTheme"
-            />
+            android:theme="@style/MapStyleActivityTheme" />
         <activity
             android:name=".NavigationActivity"
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
             android:theme="@style/GenericActivityTheme" />
+        <activity
+            android:name=".IndoorControlActivity"
+            android:theme="@style/IndoorActivityControlTheme"
+            android:exported="false" />
     </application>
 
 </manifest>

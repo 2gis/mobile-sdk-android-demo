@@ -40,6 +40,10 @@ class MainActivity : AppCompatActivity() {
         Page("Navigation") {
             val intent = Intent(this@MainActivity, NavigationActivity::class.java)
             startActivity(intent)
+        },
+        Page("Indoor") {
+            val intent = Intent(this@MainActivity, IndoorControlActivity::class.java)
+            startActivity(intent)
         }
     )
 
