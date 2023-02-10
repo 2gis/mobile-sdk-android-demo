@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        kotlin_version = "1.4.21"
+        kotlin_version = '1.6.21'
         dgis_sdk_version = "4.0.+"
         gradle_download_module= "4.1.1"
     }
@@ -10,11 +10,14 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.1.2'
+        classpath 'com.android.tools.build:gradle:7.3.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath 'com.google.gms:google-services:4.3.4'
-        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.4.1'
+        classpath 'com.google.gms:google-services:4.3.10'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.5.2'
         classpath "de.undercouch:gradle-download-task:$gradle_download_module"
+        classpath "com.android.tools.lint:lint-api:30.3.1"
+        classpath "com.android.tools.lint:lint-checks:30.3.1"
+        classpath "com.android.tools.lint:lint-tests:30.3.1"
     }
 }
 

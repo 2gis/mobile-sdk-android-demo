@@ -11,7 +11,7 @@
         android:strokeColor="#00000000" android:strokeWidth="1"/>
     <path android:fillColor="#FFFFFF" android:fillType="nonZero"
         android:pathData="M44,44m-40,0a40,40 0,1 1,80 0a40,40 0,1 1,-80 0" android:strokeWidth="8">
-        <aapt:attr name="android:strokeColor">
+        <aapt:attr name="strokeColor">
             <gradient android:endX="44" android:endY="4"
                 android:startX="44" android:startY="84" android:type="linear">
                 <item android:color="#FF027AF2" android:offset="0"/>

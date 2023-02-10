@@ -11,13 +11,12 @@ localProperties.load(new FileInputStream(rootProject.file("local.properties")))
 def unstrippedLibsDir = "${project.buildDir}/unstripped/"
 
 android {
-    compileSdkVersion 30
-    buildToolsVersion "29.0.3"
+    compileSdkVersion 31
 
     defaultConfig {
-        applicationId "ru.dgis.sdk.demo"
+        applicationId "ru.dgis.sdk.app"
         minSdkVersion 21
-        targetSdkVersion 30
+        targetSdkVersion 31
         versionCode 1
         versionName "0.0.1"
     }
@@ -57,6 +56,7 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    namespace 'ru.dgis.sdk.demo'
 }
 
 def resolvedSdkVersion = project.getObjects().property(ResolvedDependency)
@@ -136,6 +136,12 @@ dependencies {
     implementation "com.sothree.slidinguppanel:library:3.4.0"
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'net.sourceforge.streamsupport:android-retrofuture:1.7.3'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel:2.4.0'
+    implementation 'androidx.lifecycle:lifecycle-livedata:2.4.0'
+    implementation 'androidx.lifecycle:lifecycle-process:2.4.0'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.0'
 
     releaseImplementation platform('com.google.firebase:firebase-bom:26.1.0')
     releaseImplementation 'com.google.firebase:firebase-analytics'
