@@ -3,7 +3,6 @@ package ru.dgis.sdk.demo.vm
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.google.android.gms.common.util.IOUtils
 import java9.util.concurrent.CompletableFuture
 import ru.dgis.sdk.File as DGisFile
 import ru.dgis.sdk.map.Map
@@ -33,7 +32,7 @@ class MapStyleViewModel: ViewModel() {
                 val destinationFile = File.createTempFile("style-", ".2gis")
                 styleStream.use { inStream ->
                     FileOutputStream(destinationFile).use { outStream ->
-                        IOUtils.copyStream(inStream, outStream)
+                        inStream.copyTo(outStream)
                     }
                 }
                 destinationFile.absolutePath
