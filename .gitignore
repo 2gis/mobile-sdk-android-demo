@@ -83,3 +83,4 @@ lint/tmp/
 .DS_Store
 
 google-services.json
+app/src/main/assets/dgissdk.key
