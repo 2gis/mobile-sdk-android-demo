@@ -1,3 +1,21 @@
-rootProject.name='native-sdk-android-demo'
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+    }
+}
 
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+        maven {
+            url "https://artifactory.2gis.dev/sdk-maven-release"
+        }
+    }
+}
+
+rootProject.name='native-sdk-android-demo'
 include ':app'
