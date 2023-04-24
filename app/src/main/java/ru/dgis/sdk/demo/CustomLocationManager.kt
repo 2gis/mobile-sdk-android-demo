@@ -50,19 +50,13 @@ class CustomLocationManager(private val applicationContext: Context): LocationSo
 
         fuseCallback?.let(client::removeLocationUpdates)
 
-        val newPriority = when (accuracy) {
-            DesiredAccuracy.HIGH -> LocationRequest.PRIORITY_HIGH_ACCURACY
-            DesiredAccuracy.MEDIUM -> LocationRequest.PRIORITY_HIGH_ACCURACY
-            DesiredAccuracy.LOW -> LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
+        val (newPriority, interval) = when (accuracy) {
+            DesiredAccuracy.HIGH -> Pair(Priority.PRIORITY_HIGH_ACCURACY, 100L)
+            DesiredAccuracy.MEDIUM -> Pair(Priority.PRIORITY_HIGH_ACCURACY, 1000L)
+            DesiredAccuracy.LOW -> Pair(Priority.PRIORITY_BALANCED_POWER_ACCURACY, 5000L)
         }
-        val request = LocationRequest.create().apply {
-            priority = newPriority
-            interval = when (accuracy) {
-                DesiredAccuracy.LOW -> 5000L
-                DesiredAccuracy.MEDIUM -> 1000L
-                DesiredAccuracy.HIGH -> 100L
-            }
-        }
+        val request = LocationRequest.Builder(newPriority, interval)
+            .build()
         val callback = (object: LocationCallback() {
             override fun onLocationResult(result: LocationResult) {
                 listener.onLocationChanged(result.locations.toTypedArray())
