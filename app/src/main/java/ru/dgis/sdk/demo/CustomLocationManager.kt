@@ -64,10 +64,8 @@ class CustomLocationManager(private val applicationContext: Context): LocationSo
             }
         }
         val callback = (object: LocationCallback() {
-            override fun onLocationResult(result: LocationResult?) {
-                val location = result ?: return
-                // todo: avoid collection change
-                listener.onLocationChanged(location.locations.toTypedArray())
+            override fun onLocationResult(result: LocationResult) {
+                listener.onLocationChanged(result.locations.toTypedArray())
             }
         }).also {
             fuseCallback = it
