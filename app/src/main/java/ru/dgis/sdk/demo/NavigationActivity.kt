@@ -13,14 +13,13 @@ import androidx.appcompat.widget.PopupMenu
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.switchmaterial.SwitchMaterial
-import kotlinx.android.synthetic.main.activity_navigation.*
 import ru.dgis.sdk.Context
+import ru.dgis.sdk.demo.databinding.ActivityNavigationBinding
 import ru.dgis.sdk.demo.vm.NavigationViewModel
 import ru.dgis.sdk.map.Map
 import ru.dgis.sdk.map.MapView
 import ru.dgis.sdk.map.ScreenPoint
 import ru.dgis.sdk.map.TouchEventsObserver
-import kotlinx.coroutines.flow.collect
 import ru.dgis.sdk.navigation.DefaultNavigationControls
 import ru.dgis.sdk.navigation.NavigationView
 
@@ -30,6 +29,7 @@ class NavigationActivity : AppCompatActivity(), TouchEventsObserver {
 
     private var viewModel: NavigationViewModel? = null
 
+    private lateinit var binding: ActivityNavigationBinding
     private lateinit var routeEditorView: View
     private lateinit var navigationView: NavigationView
     private lateinit var startNavigationButton: FloatingActionButton
@@ -39,13 +39,14 @@ class NavigationActivity : AppCompatActivity(), TouchEventsObserver {
 
         sdkContext = (applicationContext as Application).sdkContext
 
-        setContentView(R.layout.activity_navigation)
+        binding = ActivityNavigationBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         routeEditorView = findViewById(R.id.routeEditorView)
         navigationView = findViewById(R.id.navigationView)
 
         findViewById<MapView>(R.id.mapView).apply {
-            lifecycle.addObserver(mapView)
+            lifecycle.addObserver(binding.mapView)
             setTouchEventsObserver(this@NavigationActivity)
             getMapAsync(::initViewModel)
         }
@@ -130,7 +131,7 @@ class NavigationActivity : AppCompatActivity(), TouchEventsObserver {
             x = point.x
             y = point.y
             layoutParams = ViewGroup.LayoutParams(1, 1)
-            mapView.addView(this)
+            binding.mapView.addView(this)
         }
 
         PopupMenu(this, anchorView, Gravity.CENTER).apply {
@@ -145,11 +146,11 @@ class NavigationActivity : AppCompatActivity(), TouchEventsObserver {
                 if (action != null) {
                     viewModel?.onMenuAction(point, action)
                 }
-                mapView.removeView(anchorView)
+                binding.mapView.removeView(anchorView)
                 true
             }
             setOnDismissListener {
-                mapView.removeView(anchorView)
+                binding.mapView.removeView(anchorView)
             }
         }.show()
     }
