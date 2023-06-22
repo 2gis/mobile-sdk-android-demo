@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -8,50 +8,51 @@
     tools:context=".GenericMapActivity"
     >
 
-    <com.sothree.slidinguppanel.SlidingUpPanelLayout
+    <ru.dgis.sdk.map.MapView
+        android:id="@+id/mapView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="bottom"
-        app:umanoPanelHeight="48dp"
-        app:umanoShadowHeight="4dp"
+        android:gravity="center"
         >
-
-        <ru.dgis.sdk.map.MapView
-            android:id="@+id/mapView"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            >
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <LinearLayout
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent">
+                <ru.dgis.sdk.map.ZoomControl
+                    android:id="@+id/zoomControl"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent">
-                    <ru.dgis.sdk.map.ZoomControl
-                        android:id="@+id/zoomControl"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        />
-                    <ru.dgis.sdk.map.MyLocationControl
-                        android:id="@+id/locationControl"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        />
-                </LinearLayout>
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    />
+                <ru.dgis.sdk.map.MyLocationControl
+                    android:id="@+id/locationControl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </ru.dgis.sdk.map.MapView>
+    </ru.dgis.sdk.map.MapView>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="center_horizontal"
+            android:background="?android:attr/colorBackground"
+            app:behavior_hideable="false"
+            app:behavior_peekHeight="36dp"
+            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
             >
 
             <ImageView
@@ -95,6 +96,7 @@
                     android:id="@+id/rotationSwitch"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
+                    android:backgroundTint="?android:attr/colorBackground"
                     android:text="Rotation"
                     />
 
@@ -103,6 +105,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:paddingHorizontal="24dp"
+                    android:backgroundTint="?android:attr/colorBackground"
                     android:text="Shift"
                     />
 
@@ -110,6 +113,7 @@
                     android:id="@+id/scaleSwitch"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
+                    android:backgroundTint="?android:attr/colorBackground"
                     android:text="Scale"
                     />
 
@@ -117,6 +121,7 @@
                     android:id="@+id/tiltSwitch"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
+                    android:backgroundTint="?android:attr/colorBackground"
                     android:text="Tilt"
                     />
 
@@ -142,6 +147,7 @@
 
         </LinearLayout>
 
-    </com.sothree.slidinguppanel.SlidingUpPanelLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</FrameLayout>

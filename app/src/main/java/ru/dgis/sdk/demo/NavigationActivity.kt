@@ -8,11 +8,15 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.switchmaterial.SwitchMaterial
+import kotlinx.coroutines.launch
 import ru.dgis.sdk.Context
 import ru.dgis.sdk.demo.databinding.ActivityNavigationBinding
 import ru.dgis.sdk.demo.vm.NavigationViewModel
@@ -22,6 +26,7 @@ import ru.dgis.sdk.map.ScreenPoint
 import ru.dgis.sdk.map.TouchEventsObserver
 import ru.dgis.sdk.navigation.DefaultNavigationControls
 import ru.dgis.sdk.navigation.NavigationView
+import ru.dgis.sdk.navigation.State
 
 
 class NavigationActivity : AppCompatActivity(), TouchEventsObserver {
@@ -89,6 +94,17 @@ class NavigationActivity : AppCompatActivity(), TouchEventsObserver {
                 viewModel?.startNavigation()
             }
         }
+
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                viewModel?.let {
+                    when(it.state.value) {
+                        NavigationViewModel.State.NAVIGATION -> it.stopNavigation()
+                        NavigationViewModel.State.ROUTE_EDITING -> this@NavigationActivity.finish()
+                    }
+                }
+            }
+        })
     }
 
     private fun initViewModel(map: Map) {
@@ -97,30 +113,34 @@ class NavigationActivity : AppCompatActivity(), TouchEventsObserver {
             viewModel.messageCallback = {
                 Toast.makeText(activity, it, Toast.LENGTH_LONG).show()
             }
-            lifecycleScope.launchWhenStarted {
-                viewModel.state.collect {
-                    navigationView.removeAllViews()
-                    when (it) {
-                        NavigationViewModel.State.ROUTE_EDITING -> {
-                            routeEditorView.visibility = View.VISIBLE
-                            navigationView.navigationManager = null
-                        }
-                        NavigationViewModel.State.NAVIGATION -> {
-                            routeEditorView.visibility = View.INVISIBLE
-                            navigationView.navigationManager = viewModel.navigationManager
-                            navigationView.addView(DefaultNavigationControls(navigationView.context).apply {
-                                defaultState = viewModel.navigationType
-                                onFinishClicked = {
-                                    viewModel.stopNavigation()
-                                }
-                            })
-                        }
-                    }
-                }
+             lifecycleScope.launch {
+                 repeatOnLifecycle(Lifecycle.State.STARTED) {
+                     viewModel.state.collect {
+                         navigationView.removeAllViews()
+                         when (it) {
+                             NavigationViewModel.State.ROUTE_EDITING -> {
+                                 routeEditorView.visibility = View.VISIBLE
+                                 navigationView.navigationManager = null
+                             }
+                             NavigationViewModel.State.NAVIGATION -> {
+                                 routeEditorView.visibility = View.INVISIBLE
+                                 navigationView.navigationManager = viewModel.navigationManager
+                                 navigationView.addView(DefaultNavigationControls(navigationView.context).apply {
+                                     isFreeRoamDefault = viewModel.navigationType != State.NAVIGATION
+                                     onFinishClicked = {
+                                         viewModel.stopNavigation()
+                                     }
+                                 })
+                             }
+                         }
+                     }
+                 }
             }
-            lifecycleScope.launchWhenStarted {
-                viewModel.canStartNavigation.collect {
-                    startNavigationButton.isEnabled = it
+            lifecycleScope.launch {
+                repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    viewModel.canStartNavigation.collect {
+                        startNavigationButton.isEnabled = it
+                    }
                 }
             }
         }
@@ -165,16 +185,6 @@ class NavigationActivity : AppCompatActivity(), TouchEventsObserver {
 
     override fun onTap(point: ScreenPoint) {
         viewModel?.onTap(point)
-    }
-
-    override fun onBackPressed() {
-        viewModel?.let {
-            if (it.state.value == NavigationViewModel.State.NAVIGATION) {
-                it.stopNavigation()
-                return
-            }
-        }
-        super.onBackPressed()
     }
 
     override fun onDestroy() {

@@ -47,7 +47,7 @@ class NavigationViewModel(
 
     val navigationType: NavigationState
         get() =
-            if (points.any { it != null }) NavigationState.NAVIGATION else NavigationState.FREE_ROAM
+            if (points.any { it != null }) NavigationState.NAVIGATION else NavigationState.DISABLED
 
     var routeType: RouteType = RouteType.CAR
         set(value) {

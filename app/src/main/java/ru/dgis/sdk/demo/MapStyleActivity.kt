@@ -42,7 +42,9 @@ class MapStyleActivity : AppCompatActivity() {
         }
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        @Suppress("DEPRECATION")
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode != MAP_STYLE_FILE) return
         if (resultCode != RESULT_OK) {
@@ -66,7 +68,8 @@ class MapStyleActivity : AppCompatActivity() {
             type = "*/*"
             action = Intent.ACTION_GET_CONTENT
         }
-        startActivityForResult(Intent.createChooser(intent, "Select Map Style"), MAP_STYLE_FILE);
+        @Suppress("DEPRECATION")
+        startActivityForResult(Intent.createChooser(intent, "Select Map Style"), MAP_STYLE_FILE)
     }
 
     private fun onStyleChanged(styleFile: File) {
