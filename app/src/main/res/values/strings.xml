@@ -19,6 +19,12 @@
     <string name="my_location_pedestrian_mode_text">Pedestrian Mode</string>
     <string name="my_location_direction_text">Direction</string>
     <string name="my_location_available">Location Available</string>
+    <string name="content_description_car">car</string>
+    <string name="content_description_bus">public_transport</string>
+    <string name="content_description_pedestrian">pedestrian</string>
+    <string name="content_description_bicycle">bicycle</string>
+    <string name="content_description_taxi">taxi</string>
+    <string name="content_description_scooter">scooter</string>
     <string-array name="route_search_types">
         <item>Car</item>
         <item>Pedestrian</item>

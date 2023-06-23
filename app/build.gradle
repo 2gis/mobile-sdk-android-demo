@@ -16,7 +16,7 @@ android {
     compileSdk 33
 
     defaultConfig {
-        applicationId "ru.dgis.sdk.demo"
+        applicationId "ru.mobile.sdk.app"
         minSdkVersion 21
         targetSdkVersion 33
         versionCode 1

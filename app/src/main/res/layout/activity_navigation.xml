@@ -1,17 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/routeTypeTabsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        app:layout_constraintBottom_toTopOf="@id/mapView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/content_description_car"
+            android:icon="@drawable/ic_car" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/content_description_bus"
+            android:icon="@drawable/ic_bus" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/content_description_pedestrian"
+            android:icon="@drawable/ic_pedestrian" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/content_description_bicycle"
+            android:icon="@drawable/ic_bicycle" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/content_description_taxi"
+            android:icon="@drawable/ic_taxi" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/content_description_scooter"
+            android:icon="@drawable/ic_scooter" />
+
+    </com.google.android.material.tabs.TabLayout>
+
 
     <ru.dgis.sdk.map.MapView
         android:id="@+id/mapView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         app:dgis_cameraTargetLat="55.740444"
         app:dgis_cameraTargetLng="37.619524"
-        app:dgis_cameraZoom="12.0">
+        app:dgis_cameraZoom="12.0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/routeTypeTabsLayout">
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -20,57 +74,16 @@
 
             <FrameLayout
                 android:id="@+id/routeEditorView"
-                android:layout_margin="4dp"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_margin="4dp">
 
-                <LinearLayout
+                <ru.dgis.sdk.map.IndoorControl
+                    android:id="@+id/indoorControl"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fitsSystemWindows="true"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="4dp"
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Route type: "
-                            android:textColor="?colorOnSurface"
-                            android:textSize="14sp"
-                            tools:ignore="HardcodedText" />
-
-                        <Spinner
-                            android:id="@+id/routeTypeSpinner"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            tools:ignore="HardcodedText" />
-                    </LinearLayout>
-
-                    <com.google.android.material.switchmaterial.SwitchMaterial
-                        android:id="@+id/simulationSwitch"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@android:color/transparent"
-                        android:enabled="true"
-                        android:padding="0dp"
-                        android:text="Use simulation: "
-                        tools:ignore="HardcodedText" />
-
-                    <TextView
-                        android:id="@+id/availabilityTextView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Long tap to specify points"
-                        android:textColor="?colorOnSurface"
-                        android:textSize="14sp"
-                        tools:ignore="HardcodedText" />
-                </LinearLayout>
+                    android:layout_gravity="start|center_vertical"
+                    tools:visibility="visible" />
 
                 <ru.dgis.sdk.map.NavigationControl
                     android:layout_width="wrap_content"
@@ -83,7 +96,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="end|bottom"
                     android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="32dp"
+                    android:layout_marginBottom="72dp"
                     android:src="@drawable/ic_play_arrow"
                     app:backgroundTint="?colorSurface"
                     tools:ignore="ContentDescription" />
@@ -97,4 +110,72 @@
 
 
     </ru.dgis.sdk.map.MapView>
-</FrameLayout>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/settingsDrawer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/settingsDrawerInnerLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/colorBackground"
+            android:orientation="vertical"
+            app:behavior_hideable="false"
+            app:behavior_peekHeight="36dp"
+            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+            <ImageView
+                android:id="@+id/settingsDrawerHandler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:contentDescription="settings_drawer_handler"
+                android:src="@drawable/ic_pimp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                style="@style/SubheadMediumLeftBlack"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="24dp"
+                android:background="?android:attr/colorBackground"
+                android:gravity="center_vertical"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp"
+                android:text="Settings"
+                android:textAllCaps="true"
+                android:textColor="?attr/colorOnBackground"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/settingsDrawerHandler"
+                tools:ignore="HardcodedText" />
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/simulationSwitch"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@android:color/transparent"
+                android:enabled="true"
+                android:text="Use simulation"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/availabilityTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tip: Use long tap to specify points"
+                android:textColor="?colorOnSurface"
+                android:textSize="14sp"
+                tools:ignore="HardcodedText" />
+        </LinearLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/route_editing_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="routeTypeTabsLayout,settingsDrawer" />
+</androidx.constraintlayout.widget.ConstraintLayout>

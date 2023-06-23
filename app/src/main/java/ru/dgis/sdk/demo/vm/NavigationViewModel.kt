@@ -6,8 +6,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import ru.dgis.sdk.Context
 import ru.dgis.sdk.await
-import ru.dgis.sdk.coordinates.GeoPoint
-import ru.dgis.sdk.coordinates.withElevation
 import ru.dgis.sdk.demo.R
 import ru.dgis.sdk.geometry.GeoPointWithElevation
 import ru.dgis.sdk.map.*
@@ -36,7 +34,10 @@ class NavigationViewModel(
     enum class RouteType {
         CAR,
         PEDESTRIAN,
-        BICYCLE
+        BICYCLE,
+        PUBLIC_TRANSPORT,
+        SCOOTER,
+        TAXI
     }
 
     private val _state = MutableStateFlow(State.ROUTE_EDITING)
@@ -65,7 +66,7 @@ class NavigationViewModel(
 
     private val closeables = mutableListOf<AutoCloseable>()
 
-    private val points = MutableList<GeoPoint?>(2) { null }
+    private val points = MutableList<RouteSearchPoint?>(2) { null }
 
     private var routes = listOf<TrafficRoute>()
     private val activeRoute
@@ -131,10 +132,9 @@ class NavigationViewModel(
         closeables.clear()
     }
 
-    fun onMenuAction(screenPoint: ScreenPoint, action: MenuAction) {
+    fun onMenuAction(routeSearchPoint: RouteSearchPoint, action: MenuAction) {
         fun setPoint(index: Int) {
-            val point = map.camera.projection.screenToMap(screenPoint) ?: return
-            points[index] = point
+            points[index] = routeSearchPoint
         }
 
         fun clearPoints() {
@@ -170,17 +170,17 @@ class NavigationViewModel(
     }
 
     private fun updateMarkers() {
-        fun hasRouteWithEndPoint(point: GeoPoint): Boolean {
+        fun hasRouteWithEndPoint(point: RouteSearchPoint): Boolean {
             if (routes.isEmpty()) return false
             val routeParams = routeEditor.routesInfo.routeParams
-            return point == routeParams.finishPoint.coordinates
-                || point == routeParams.startPoint.coordinates
+            return point == routeParams.finishPoint
+                || point == routeParams.startPoint
         }
 
         points.forEachIndexed { index, point ->
             val marker = markers[index]
             marker.isVisible = state.value == State.ROUTE_EDITING && point != null && !hasRouteWithEndPoint(point)
-            marker.position = point?.withElevation() ?: GeoPointWithElevation(0.0, 0.0)
+            marker.position = if (point != null) GeoPointWithElevation(point.coordinates.latitude, point.coordinates.longitude) else GeoPointWithElevation(0.0, 0.0)
         }
     }
 
@@ -193,8 +193,8 @@ class NavigationViewModel(
         }
         routeEditor.setRouteParams(
             RouteEditorRouteParams(
-                startPoint = RouteSearchPoint(startPoint),
-                finishPoint = RouteSearchPoint(finishPoint),
+                startPoint = startPoint,
+                finishPoint = finishPoint,
                 routeSearchOptions = routeType.toRouteSearchOptions()
             )
         )
@@ -218,7 +218,7 @@ class NavigationViewModel(
         val finishPoint = points[1]
         if (finishPoint != null && (route != null || !useSimulation)) {
             val options = RouteBuildOptions(
-                finishPoint = RouteSearchPoint(finishPoint),
+                finishPoint = finishPoint,
                 routeSearchOptions = routeType.toRouteSearchOptions()
             )
             if (useSimulation) {
@@ -255,4 +255,13 @@ private fun NavigationViewModel.RouteType.toRouteSearchOptions(): RouteSearchOpt
         NavigationViewModel.RouteType.CAR -> RouteSearchOptions(CarRouteSearchOptions())
         NavigationViewModel.RouteType.PEDESTRIAN -> RouteSearchOptions(PedestrianRouteSearchOptions())
         NavigationViewModel.RouteType.BICYCLE -> RouteSearchOptions(BicycleRouteSearchOptions())
+        NavigationViewModel.RouteType.PUBLIC_TRANSPORT -> RouteSearchOptions(
+            PublicTransportRouteSearchOptions()
+        )
+        NavigationViewModel.RouteType.SCOOTER -> RouteSearchOptions(ScooterRouteSearchOptions())
+        NavigationViewModel.RouteType.TAXI -> RouteSearchOptions(
+            TaxiRouteSearchOptions(
+                CarRouteSearchOptions()
+            )
+        )
     }
