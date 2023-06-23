@@ -150,7 +150,9 @@ dependencies {
     implementation "androidx.core:core-ktx:1.10.1"
     implementation "androidx.fragment:fragment-ktx:1.6.0"
     implementation "androidx.legacy:legacy-support-v4:1.0.0"
-    implementation "com.google.android.gms:play-services-location:21.0.1"
+    // Temporarily can't use version >20 because of breaking changes in v21.
+    //noinspection GradleDependency
+    implementation "com.google.android.gms:play-services-location:20.0.0"
     implementation "com.google.android.material:material:1.9.0"
 
     implementation 'net.sourceforge.streamsupport:android-retrofuture:1.7.3'
