@@ -162,5 +162,5 @@ dependencies {
     releaseImplementation 'com.google.firebase:firebase-crashlytics-ndk'
 
     implementation "ru.dgis.sdk:sdk-full:$dgis_sdk_version"
-    compileOnlyDependenciesMetadata "ru.dgis.sdk:sdk-full:7.0.0:sources"
+    compileOnlyDependenciesMetadata "ru.dgis.sdk:sdk-full:7.1.0:sources"
 }

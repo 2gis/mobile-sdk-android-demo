@@ -8,7 +8,7 @@ plugins {
 
 ext {
     kotlin_version = "1.8.20"
-    dgis_sdk_version = "7.0.+"
+    dgis_sdk_version = "7.1.0"
 }
 
 rootProject.buildDir = 'build'
