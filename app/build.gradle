@@ -1,9 +1,9 @@
 plugins {
-    id "com.android.application"
-    id "org.jetbrains.kotlin.android"
-    id "com.google.gms.google-services"
-    id "com.google.firebase.crashlytics"
-    id "de.undercouch.download" version "5.4.0"
+    alias libs.plugins.android.application
+    alias libs.plugins.kotlin.android
+    alias libs.plugins.google.services
+    alias libs.plugins.firebase.crashlytics
+    alias libs.plugins.undercouch.download
 }
 
 def localProperties = new Properties()
@@ -40,7 +40,7 @@ android {
     }
 
     splits {
-        if (dgis_sdk_version.endsWith("SNAPSHOT") && !dgis_sdk_version.endsWith("RC-SNAPSHOT")) {
+        if (libs.versions.dgis.sdk.get().endsWith("SNAPSHOT") && !libs.versions.dgis.sdk.get().endsWith("RC-SNAPSHOT")) {
             /*
             SNAPSHOT собирается только x86, armeabi-v7a для эконимии ресурса на билд сервере
             RELEASE есть под все возможные ABI
@@ -76,34 +76,18 @@ android {
     }
 }
 
-def resolvedSdkVersion = project.getObjects().property(ResolvedDependency)
-
-def resolveVersionTask = tasks.register("resolveSDKVersion") {
-    doLast {
-        def sdkModule = configurations.releaseRuntimeClasspath.resolvedConfiguration.getFirstLevelModuleDependencies().find {
-            it.getModuleGroup() == 'ru.dgis.sdk'
-        }
-        if (sdkModule == null) {
-            throw GradleException("ru.dgis.sdk is not found in dependencies")
-        }
-        resolvedSdkVersion.set(sdkModule)
-        logger.quiet("Resolved 2GIS SDK is ${sdkModule.getModuleName()}:${sdkModule.getModuleVersion()}")
-    }
-}
-
 def fetchingTasks = ['x86', 'x86_64', 'armeabi-v7a', 'arm64-v8a'].collect { arch ->
     def libsArchive = "${project.buildDir}/downloads/${arch}.zip"
 
     def downloadTask = project.tasks.register("downloadLibs-$arch", Download) {
-        dependsOn resolveVersionTask
 
-        src resolvedSdkVersion.map { sdkModule ->
+        src libs.dgis.sdk.map { sdkModule ->
             def libsUrl = localProperties.getProperty("dgisUnstrippedLibsUrl", "")
             if (libsUrl.isEmpty()) {
                 throw GradleException("You have to define dgisUnstrippedLibsUrl in local.properties to use unstripped libraries")
             }
-            def version = sdkModule.getModuleVersion()
-            def flavour = sdkModule.getModuleName().split('-').last()
+            def version = sdkModule.getVersion()
+            def flavour = sdkModule.getModule().getName().split('-').last()
 
             "${libsUrl}/sdk-bundle-release/android/ru/dgis/sdk/libs-${flavour}/${version}/${version}-${flavour}-${arch}.zip"
         }
@@ -143,24 +127,29 @@ afterEvaluate { project ->
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation libs.kotlin.stdlib
 
-    implementation "androidx.appcompat:appcompat:1.6.1"
-    implementation "androidx.constraintlayout:constraintlayout:2.1.4"
-    implementation "androidx.core:core-ktx:1.10.1"
-    implementation "androidx.fragment:fragment-ktx:1.6.0"
-    implementation "androidx.legacy:legacy-support-v4:1.0.0"
-    // Temporarily can't use version >20 because of breaking changes in v21.
-    //noinspection GradleDependency
-    implementation "com.google.android.gms:play-services-location:20.0.0"
-    implementation "com.google.android.material:material:1.9.0"
+    implementation libs.androidx.appcompat
+    implementation libs.androidx.constraintlayout
+    implementation libs.androidx.core.ktx
+    implementation libs.androidx.fragment
+    implementation libs.androidx.legacySupport
+    implementation libs.gms.locations
+    implementation libs.material
 
-    implementation 'net.sourceforge.streamsupport:android-retrofuture:1.7.3'
+    implementation libs.retrofuture
 
-    releaseImplementation platform('com.google.firebase:firebase-bom:26.1.0')
-    releaseImplementation 'com.google.firebase:firebase-analytics'
+    releaseImplementation platform("com.google.firebase:firebase-bom:${libs.versions.firebase.bom.get()}")
+    releaseImplementation 'com.google.firebase:firebase-analytics-ktx'
     releaseImplementation 'com.google.firebase:firebase-crashlytics-ndk'
 
-    implementation "ru.dgis.sdk:sdk-full:$dgis_sdk_version"
-    compileOnlyDependenciesMetadata "ru.dgis.sdk:sdk-full:7.1.0:sources"
+    implementation libs.dgis.sdk
+
+    // Without version catalogs you can just use:
+    // - compileOnlyDependenciesMetadata "ru.dgis.sdk:sdk-full:<version>:sources"
+    compileOnlyDependenciesMetadata(libs.dgis.sdk) {
+        artifact {
+            classifier = "sources"
+        }
+    }
 }

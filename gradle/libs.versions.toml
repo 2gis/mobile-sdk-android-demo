@@ -1,0 +1,46 @@
+[versions]
+kotlin = "1.8.20"
+agp = "8.0.2"
+google-services = "4.3.15"
+crashlytics = "2.9.2"
+taskTree = "2.1.1"
+undercouch-download = "5.4.0"
+
+dgis-sdk = "7.1.0"
+
+appcompat = "1.6.1"
+constraintlayout = "2.1.4"
+core = "1.10.1"
+fragment = "1.6.0"
+legacySupport = "1.0.0"
+# Temporarily can't use version >20 because of breaking changes in v21.
+# noinspection GradleDependency
+gms-location = "20.0.0"
+material = "1.9.0"
+retrofuture = "1.7.3"
+firebase-bom = "26.1.0"
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+google-services = { id = "com.google.gms.google-services", version.ref = "google-services" }
+firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "crashlytics" }
+taskTree = { id = "com.dorongold.task-tree", version.ref = "taskTree" }
+undercouch-download = { id = "de.undercouch.download", version.ref = "undercouch-download" }
+
+[libraries]
+androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
+androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintlayout" }
+androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "core" }
+androidx-fragment = { module = "androidx.fragment:fragment-ktx", version.ref = "fragment" }
+androidx-legacySupport = { module = "androidx.legacy:legacy-support-v4", version.ref = "legacySupport" }
+
+kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
+
+gms-locations = { module = "com.google.android.gms:play-services-location", version.ref = 'gms-location' }
+material = { module = "com.google.android.material:material", version.ref = "material" }
+
+retrofuture = { module = "net.sourceforge.streamsupport:android-retrofuture", version.ref = "retrofuture" }
+
+dgis-sdk = { module = "ru.dgis.sdk:sdk-full", version.ref = "dgis-sdk" }
+
