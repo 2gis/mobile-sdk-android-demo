@@ -11,7 +11,7 @@ import ru.dgis.sdk.map.Map
 
 
 class GenericMapActivity : AppCompatActivity() {
-    lateinit var sdkContext: Context
+    private val sdkContext: Context by lazy { application.sdkContext }
     lateinit var mapSource: MyLocationMapObjectSource
 
     private val closeables = mutableListOf<AutoCloseable?>()
@@ -25,8 +25,6 @@ class GenericMapActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        sdkContext = (applicationContext as Application).sdkContext
 
         setContentView(R.layout.activity_map_generic)
 

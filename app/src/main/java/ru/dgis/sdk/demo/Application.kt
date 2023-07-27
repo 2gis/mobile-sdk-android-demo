@@ -20,3 +20,6 @@ class Application : Application() {
         registerPlatformLocationSource(sdkContext, locationSource)
     }
 }
+
+val Application.sdkContext: Context
+    get() = (this as ru.dgis.sdk.demo.Application).sdkContext

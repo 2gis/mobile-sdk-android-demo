@@ -36,7 +36,7 @@ import ru.dgis.sdk.routing.RouteSearchPoint
 
 
 class NavigationActivity : AppCompatActivity(), TouchEventsObserver {
-    private lateinit var sdkContext: Context
+    private val sdkContext: Context by lazy { application.sdkContext }
 
     private val closeables = mutableListOf<AutoCloseable?>()
 
@@ -52,8 +52,6 @@ class NavigationActivity : AppCompatActivity(), TouchEventsObserver {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        sdkContext = (applicationContext as Application).sdkContext
 
         binding = ActivityNavigationBinding.inflate(layoutInflater)
         setContentView(binding.root)
