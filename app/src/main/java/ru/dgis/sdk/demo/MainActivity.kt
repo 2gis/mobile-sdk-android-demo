@@ -11,7 +11,6 @@ import android.widget.ArrayAdapter
 import android.widget.ListView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import ru.dgis.sdk.Context
 
 
 typealias ScreenSelectedCallback = () -> Unit
@@ -26,7 +25,6 @@ data class Page(
 
 class MainActivity : AppCompatActivity() {
     private val RECORD_REQUEST_CODE = 101
-    private lateinit var sdkContext: Context
 
     private val pages = listOf(
         Page("Generic Map") {
@@ -39,6 +37,10 @@ class MainActivity : AppCompatActivity() {
         },
         Page("Navigation") {
             val intent = Intent(this@MainActivity, NavigationActivity::class.java)
+            startActivity(intent)
+        },
+        Page("Map FPS Limeter") {
+            val intent = Intent(this@MainActivity, MapFpsActivity::class.java)
             startActivity(intent)
         }
     )

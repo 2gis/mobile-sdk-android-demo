@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -28,11 +29,13 @@
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/MainActivityTheme" />
+            android:theme="@style/MainActivityTheme"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".GenericMapActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/GenericActivityTheme" />
+            android:theme="@style/GenericActivityTheme"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".MapStyleActivity"
             android:theme="@style/MapStyleActivityTheme"
@@ -41,6 +44,7 @@
             android:name=".NavigationActivity"
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
             android:theme="@style/GenericActivityTheme" />
+        <activity android:name=".MapFpsActivity" android:theme="@style/GenericActivityTheme"/>
     </application>
 
 </manifest>

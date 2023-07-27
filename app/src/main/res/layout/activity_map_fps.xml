@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rootContainer">
+    <ru.dgis.sdk.map.MapView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:dgis_cameraTargetLat="25.09608"
+        app:dgis_cameraTargetLng="55.132429"
+        app:dgis_cameraTilt="25.0"
+        app:dgis_cameraZoom="13.5"
+        android:id="@+id/mapView">
+        <TextView
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/fpsControl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|top"
+            tools:text="FPS: 60"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:clickable="true"
+            android:fitsSystemWindows="true"
+            tools:ignore="KeyboardInaccessibleWidget" />
+    </ru.dgis.sdk.map.MapView>
+</FrameLayout>
