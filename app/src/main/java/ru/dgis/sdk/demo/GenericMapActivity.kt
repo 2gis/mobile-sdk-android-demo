@@ -6,6 +6,7 @@ import android.view.View
 import androidx.appcompat.widget.SwitchCompat
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import ru.dgis.sdk.Context
+import ru.dgis.sdk.demo.common.updateMapCopyrightPosition
 import ru.dgis.sdk.map.*
 import ru.dgis.sdk.map.Map
 

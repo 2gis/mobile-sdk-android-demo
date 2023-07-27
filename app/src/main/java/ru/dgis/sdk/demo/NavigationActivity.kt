@@ -20,6 +20,7 @@ import com.google.android.material.tabs.TabLayout
 import kotlinx.coroutines.launch
 import ru.dgis.sdk.Context
 import ru.dgis.sdk.await
+import ru.dgis.sdk.demo.common.updateMapCopyrightPosition
 import ru.dgis.sdk.demo.databinding.ActivityNavigationBinding
 import ru.dgis.sdk.demo.vm.NavigationViewModel
 import ru.dgis.sdk.geometry.point
