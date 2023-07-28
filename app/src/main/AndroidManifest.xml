@@ -45,6 +45,8 @@
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
             android:theme="@style/GenericActivityTheme" />
         <activity android:name=".MapFpsActivity" android:theme="@style/GenericActivityTheme"/>
+        <activity android:name=".ParkingActivity"
+            android:theme="@style/AppTheme"/>
     </application>
 
 </manifest>

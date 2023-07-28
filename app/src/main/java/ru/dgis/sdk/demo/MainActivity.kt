@@ -42,6 +42,10 @@ class MainActivity : AppCompatActivity() {
         Page("Map FPS Limeter") {
             val intent = Intent(this@MainActivity, MapFpsActivity::class.java)
             startActivity(intent)
+        },
+        Page("Parkings on map") {
+            val intent = Intent(this@MainActivity, ParkingActivity::class.java)
+            startActivity(intent)
         }
     )
 
