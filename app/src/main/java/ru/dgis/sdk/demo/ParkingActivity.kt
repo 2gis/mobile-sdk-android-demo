@@ -6,6 +6,8 @@ import ru.dgis.sdk.demo.databinding.ActivityParkingBinding
 import ru.dgis.sdk.map.AttributeValue
 import ru.dgis.sdk.map.Map
 
+private const val PARKING_ATTRIBUTE = "parkingOn"
+
 /**
  * Showcase for visualize parkings on the map.
  * Core principle here is to use "parkingOn" map attribute. To learn more about attributes see
@@ -32,8 +34,8 @@ class ParkingActivity: AppCompatActivity() {
      */
     private fun enableToggleParkings(map: Map) {
         binding.parkingButton.setOnClickListener {
-            val oldValue = map.attributes.getAttributeValue("parkingOn").asBoolean ?: false
-            map.attributes.setAttributeValue("parkingOn", AttributeValue(!oldValue))
+            val oldValue = map.attributes.getAttributeValue(PARKING_ATTRIBUTE).asBoolean ?: false
+            map.attributes.setAttributeValue(PARKING_ATTRIBUTE, AttributeValue(!oldValue))
             it.isActivated = !oldValue
         }
     }
