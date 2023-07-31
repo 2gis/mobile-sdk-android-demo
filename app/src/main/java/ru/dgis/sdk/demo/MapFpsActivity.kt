@@ -50,7 +50,7 @@ class MapFpsActivity: AppCompatActivity() {
     }
     private fun prepareSettingsListView(): View {
         return ActivityMapFpsSettingsBinding.inflate(layoutInflater).apply {
-            maxFpsSetter.setText(if (mapView.maxFps != null) mapView.maxFps!!.value.toString() else "")
+            maxFpsSetter.setText(mapView.maxFps?.value?.toString() ?: "")
             maxFpsSetter.doAfterTextChanged {
                 if (it.toString() == "") {
                     mapView.maxFps = null
@@ -60,7 +60,7 @@ class MapFpsActivity: AppCompatActivity() {
                 } catch (_: NumberFormatException) { }
             }
 
-            powerSaveFpsSetter.setText(if (mapView.powerSavingMaxFps != null) mapView.powerSavingMaxFps!!.value.toString() else "")
+            powerSaveFpsSetter.setText(mapView.maxFps?.value?.toString() ?: "")
             powerSaveFpsSetter.doAfterTextChanged {
                 if (it.toString() == "") {
                     mapView.powerSavingMaxFps = null
