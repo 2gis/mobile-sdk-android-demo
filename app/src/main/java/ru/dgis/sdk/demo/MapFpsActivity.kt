@@ -42,11 +42,11 @@ class MapFpsActivity: AppCompatActivity() {
         }
     }
     override fun onDestroy() {
-        super.onDestroy()
         closeables.forEach {
             it.close()
         }
         closeables.clear()
+        super.onDestroy()
     }
     private fun prepareSettingsListView(): View {
         return ActivityMapFpsSettingsBinding.inflate(layoutInflater).apply {
