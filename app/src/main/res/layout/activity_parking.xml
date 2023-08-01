@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ru.dgis.sdk.map.MapView
+        android:id="@+id/mapView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:dgis_cameraTargetLat="25.106908"
+        app:dgis_cameraTargetLng="55.147874"
+        app:dgis_cameraTilt="40.0"
+        app:dgis_cameraZoom="16.4"
+        app:dgis_cameraBearing="310">
+        <LinearLayout
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageButton
+                android:id="@+id/parkingButton"
+                android:src="@drawable/ic_parking_sign"
+                android:layout_marginEnd="5dp"
+                android:layout_marginVertical="5dp"
+                android:layout_gravity="end"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:background="@drawable/toggle_background"
+                android:backgroundTint="@color/parking_button_tint"
+                app:tint="?android:attr/textColorPrimary"
+                android:contentDescription="@string/parking_toggle_button" />
+            <ru.dgis.sdk.map.ZoomControl
+                android:layout_gravity="end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </ru.dgis.sdk.map.MapView>
+
+</FrameLayout>

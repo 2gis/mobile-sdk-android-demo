@@ -28,6 +28,7 @@
     <string name="max_fps_limit">FPS limit:</string>
     <string name="power_saving_fps_limit">Power saving FPS limit:</string>
     <string name="start_map_moves">Start map moves</string>
+    <string name="parking_toggle_button">Parking toggle button</string>
     <string-array name="route_search_types">
         <item>Car</item>
         <item>Pedestrian</item>
