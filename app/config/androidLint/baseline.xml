@@ -1,0 +1,1449 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<issues format="6" by="lint 8.0.2" type="baseline" client="gradle" dependencies="false" name="AGP (8.0.2)" variant="all" version="8.0.2">
+
+    <issue
+        id="OldTargetApi"
+        message="Not targeting the latest versions of Android; compatibility modes apply. Consider testing and updating this version. Consult the android.os.Build.VERSION_CODES javadoc for details."
+        errorLine1="        targetSdkVersion 33"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="build.gradle"
+            line="22"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `width` is only used in API level 23 and higher (current min is 21)"
+        errorLine1="        android:width=&quot;54dp&quot;"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/drawable/splash.xml"
+            line="12"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `height` is only used in API level 23 and higher (current min is 21)"
+        errorLine1="        android:height=&quot;24dp&quot;"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/drawable/splash.xml"
+            line="13"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="CustomSplashScreen"
+        message="The application should not provide its own launch screen"
+        errorLine1="class SplashActivity : AppCompatActivity() {"
+        errorLine2="      ~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/ru/dgis/sdk/demo/SplashActivity.kt"
+            line="7"
+            column="7"/>
+    </issue>
+
+    <issue
+        id="VectorRaster"
+        message="Resource references will not work correctly in images generated for this vector icon for API &lt; 24; check generated icon to make sure it looks acceptable"
+        errorLine1="      android:fillColor=&quot;@color/sylvan&quot;"
+        errorLine2="                         ~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/drawable-night/ic_2gis_logo_splash.xml"
+            line="9"
+            column="26"/>
+    </issue>
+
+    <issue
+        id="VectorRaster"
+        message="Resource references will not work correctly in images generated for this vector icon for API &lt; 24; check generated icon to make sure it looks acceptable"
+        errorLine1="      android:fillColor=&quot;@color/laurel&quot;"
+        errorLine2="                         ~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/drawable/ic_2gis_logo_splash.xml"
+            line="9"
+            column="26"/>
+    </issue>
+
+    <issue
+        id="VectorPath"
+        message="Very long vector path (1138 characters), which is bad for performance. Considering reducing precision, removing minor details or rasterizing vector."
+        errorLine1="      android:pathData=&quot;M13.921,20.4v-2.916L6.426,17.484c4.622,-2.678 7.43,-5.292 7.43,-8.597 0,-2.786 -2.397,-4.406 -5.659,-4.406 -3.629,0 -6.264,2.181 -6.134,5.897h3.52C5.498,7.872 6.816,7.116 8.09,7.116c1.188,0 2.182,0.626 2.182,1.987 0,2.57 -4.169,5.314 -8.381,8.381L1.891,20.4h12.031zM22.496,20.68c2.247,0 3.78,-0.647 4.796,-2.008L27.4,20.4h2.83v-8.726h-7.474v3.024h3.78L26.536,15c0,1.987 -1.772,2.635 -3.478,2.635 -2.462,0 -4.104,-1.814 -4.104,-5.119 0,-3.305 1.771,-4.99 4.04,-4.99 2.008,0 3.11,1.037 3.434,2.117h3.628c-0.734,-3.413 -3.542,-5.162 -7.02,-5.162 -4.752,0 -7.992,3.089 -7.992,8.035 0,5.011 2.83,8.165 7.452,8.165zM36.601,20.4L36.601,4.74h-3.693L32.908,20.4L36.6,20.4zM45.544,20.68c3.261,0 6.566,-1.857 6.566,-5.14 0,-3.283 -3.197,-4.06 -5.724,-4.58l-2.138,-0.431c-1.08,-0.238 -1.815,-0.8 -1.815,-1.577 0,-0.972 1.059,-1.512 2.484,-1.512 1.577,0 2.722,0.67 3.089,1.836h3.65c-0.54,-3.456 -3.456,-4.795 -6.523,-4.795 -3.067,0 -6.501,1.49 -6.501,4.687 0,2.808 2.31,4.018 4.86,4.558l1.9,0.388c1.707,0.368 2.916,0.864 2.916,1.88 0,1.296 -1.425,1.706 -2.678,1.706 -1.922,0 -3.218,-0.756 -3.629,-2.398L38.33,15.302c0.562,3.37 3.197,5.379 7.215,5.379z&quot;"
+        errorLine2="                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/drawable-night/ic_2_gis_splash.xml"
+            line="7"
+            column="25"/>
+    </issue>
+
+    <issue
+        id="VectorPath"
+        message="Very long vector path (1138 characters), which is bad for performance. Considering reducing precision, removing minor details or rasterizing vector."
+        errorLine1="      android:pathData=&quot;M13.921,20.4v-2.916L6.426,17.484c4.622,-2.678 7.43,-5.292 7.43,-8.597 0,-2.786 -2.397,-4.406 -5.659,-4.406 -3.629,0 -6.264,2.181 -6.134,5.897h3.52C5.498,7.872 6.816,7.116 8.09,7.116c1.188,0 2.182,0.626 2.182,1.987 0,2.57 -4.169,5.314 -8.381,8.381L1.891,20.4h12.031zM22.496,20.68c2.247,0 3.78,-0.647 4.796,-2.008L27.4,20.4h2.83v-8.726h-7.474v3.024h3.78L26.536,15c0,1.987 -1.772,2.635 -3.478,2.635 -2.462,0 -4.104,-1.814 -4.104,-5.119 0,-3.305 1.771,-4.99 4.04,-4.99 2.008,0 3.11,1.037 3.434,2.117h3.628c-0.734,-3.413 -3.542,-5.162 -7.02,-5.162 -4.752,0 -7.992,3.089 -7.992,8.035 0,5.011 2.83,8.165 7.452,8.165zM36.601,20.4L36.601,4.74h-3.693L32.908,20.4L36.6,20.4zM45.544,20.68c3.261,0 6.566,-1.857 6.566,-5.14 0,-3.283 -3.197,-4.06 -5.724,-4.58l-2.138,-0.431c-1.08,-0.238 -1.815,-0.8 -1.815,-1.577 0,-0.972 1.059,-1.512 2.484,-1.512 1.577,0 2.722,0.67 3.089,1.836h3.65c-0.54,-3.456 -3.456,-4.795 -6.523,-4.795 -3.067,0 -6.501,1.49 -6.501,4.687 0,2.808 2.31,4.018 4.86,4.558l1.9,0.388c1.707,0.368 2.916,0.864 2.916,1.88 0,1.296 -1.425,1.706 -2.678,1.706 -1.922,0 -3.218,-0.756 -3.629,-2.398L38.33,15.302c0.562,3.37 3.197,5.379 7.215,5.379z&quot;"
+        errorLine2="                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/drawable/ic_2_gis_splash.xml"
+            line="7"
+            column="25"/>
+    </issue>
+
+    <issue
+        id="VectorPath"
+        message="Very long vector path (1095 characters), which is bad for performance. Considering reducing precision, removing minor details or rasterizing vector."
+        errorLine1="      android:pathData=&quot;M12,1c2.376,0 4.631,0.297 6.698,0.793 0.726,0.174 1.377,0.36 1.946,0.549 0.29,0.095 0.51,0.175 0.655,0.231l0.078,0.031 0.623,0.254L22,8l0.15,0.005c0.933,0.07 1.688,0.78 1.827,1.692l0.018,0.154L24,10v2.801l-2,1.429L22,21c0,1.002 -0.736,1.831 -1.697,1.977l-0.154,0.018L20,23h-1.667c-0.932,0 -1.678,-0.773 -2.05,-1.705l-0.062,-0.166 -0.042,-0.129L7.82,21l-0.04,0.13c-0.31,0.895 -0.962,1.68 -1.8,1.84l-0.16,0.023 -0.153,0.007L4,23c-1.054,0 -1.918,-0.816 -1.995,-1.85L2,21v-6.77l-2,-1.429L0,10c0,-1.054 0.816,-1.918 1.85,-1.995L2,8L2,2.858l0.623,-0.254c0.046,-0.019 0.104,-0.041 0.174,-0.067l0.114,-0.042 0.445,-0.153c0.569,-0.188 1.22,-0.375 1.946,-0.55C7.37,1.298 9.624,1 12,1zM12,3c-2.209,0 -4.31,0.277 -6.231,0.738 -0.536,0.128 -1.026,0.264 -1.466,0.4L4,4.236L4,10L2,10v1.771l2,1.43L4,21h1.667c-0.032,0 0.255,-0.49 0.303,-0.893L5.976,20v-1h12.048v1c0,0.383 0.289,0.904 0.31,0.988L18.334,21L20,21v-7.8l2,-1.429L22,10h-2L20,4.235l-0.303,-0.097c-0.22,-0.068 -0.452,-0.136 -0.697,-0.203l-0.375,-0.1 -0.394,-0.097C16.311,3.277 14.21,3 12,3zM9,15v2L6,17v-2h3zM18,15v2h-3v-2h3zM19,11l-1,2L6,13l-1,-2h14z&quot;"
+        errorLine2="                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/drawable/ic_bus.xml"
+            line="7"
+            column="25"/>
+    </issue>
+
+    <issue
+        id="MergeRootFrame"
+        message="This `&lt;FrameLayout>` can be replaced with a `&lt;merge>` tag"
+        errorLine1="&lt;FrameLayout"
+        errorLine2="^">
+        <location
+            file="src/main/res/layout/activity_map_generic.xml"
+            line="2"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="MergeRootFrame"
+        message="This `&lt;FrameLayout>` can be replaced with a `&lt;merge>` tag"
+        errorLine1="&lt;FrameLayout"
+        errorLine2="^">
+        <location
+            file="src/main/res/layout/activity_map_style.xml"
+            line="2"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="Overdraw"
+        message="Possible overdraw: Root element paints background `?attr/colorSurface` with a theme that also paints a background (inferred theme is `@style/MainActivityTheme`)"
+        errorLine1="    android:background=&quot;?attr/colorSurface&quot;"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/activity_main.xml"
+            line="6"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.menu.attributes_menu` appears to be unused"
+        errorLine1="&lt;menu xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;"
+        errorLine2="^">
+        <location
+            file="src/main/res/menu/attributes_menu.xml"
+            line="2"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.colorPrimary` appears to be unused"
+        errorLine1="    &lt;color name=&quot;colorPrimary&quot;>@color/seashell&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="3"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.colorPrimaryDark` appears to be unused"
+        errorLine1="    &lt;color name=&quot;colorPrimaryDark&quot;>#33000000&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="4"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.colorAccent` appears to be unused"
+        errorLine1="    &lt;color name=&quot;colorAccent&quot;>@color/laurel&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="5"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.splash_background` appears to be unused"
+        errorLine1="    &lt;color name=&quot;splash_background&quot;>#fff&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="9"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.text_foreground_day` appears to be unused"
+        errorLine1="    &lt;color name=&quot;text_foreground_day&quot;>#000&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="11"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.text_foreground_night` appears to be unused"
+        errorLine1="    &lt;color name=&quot;text_foreground_night&quot;>#fff&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="12"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.status_bar_back` appears to be unused"
+        errorLine1="    &lt;color name=&quot;status_bar_back&quot;>#33000000&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="13"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.white_80` appears to be unused"
+        errorLine1="    &lt;color name=&quot;white_80&quot;>#ccffffff&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="15"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.white_60` appears to be unused"
+        errorLine1="    &lt;color name=&quot;white_60&quot;>#99ffffff&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="16"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.white_40` appears to be unused"
+        errorLine1="    &lt;color name=&quot;white_40&quot;>#66ffffff&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="17"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.white_20` appears to be unused"
+        errorLine1="    &lt;color name=&quot;white_20&quot;>#33ffffff&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="18"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.black_80` appears to be unused"
+        errorLine1="    &lt;color name=&quot;black_80&quot;>#cc000000&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="20"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.black_60` appears to be unused"
+        errorLine1="    &lt;color name=&quot;black_60&quot;>#99000000&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="21"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.black_40` appears to be unused"
+        errorLine1="    &lt;color name=&quot;black_40&quot;>#66000000&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="22"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.black_10` appears to be unused"
+        errorLine1="    &lt;color name=&quot;black_10&quot;>#19000000&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="24"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.black_5` appears to be unused"
+        errorLine1="    &lt;color name=&quot;black_5&quot;>#0c000000&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="25"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.tundra` appears to be unused"
+        errorLine1="    &lt;color name=&quot;tundra&quot;>#4d4d4d&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="26"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.mercury` appears to be unused"
+        errorLine1="    &lt;color name=&quot;mercury&quot;>#e6e6e6&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="29"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.laurel_40` appears to be unused"
+        errorLine1="    &lt;color name=&quot;laurel_40&quot;>#6658a600&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="32"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.laurel_10` appears to be unused"
+        errorLine1="    &lt;color name=&quot;laurel_10&quot;>#1958a600&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="33"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.amazon` appears to be unused"
+        errorLine1="    &lt;color name=&quot;amazon&quot;>#336a4a&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="34"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.everglade` appears to be unused"
+        errorLine1="    &lt;color name=&quot;everglade&quot;>#1d432b&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="35"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.leaves` appears to be unused"
+        errorLine1="    &lt;color name=&quot;leaves&quot;>#41845b&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="36"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.leaves_60` appears to be unused"
+        errorLine1="    &lt;color name=&quot;leaves_60&quot;>#9941845b&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="37"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.vermilion` appears to be unused"
+        errorLine1="    &lt;color name=&quot;vermilion&quot;>#d15536&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="38"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.vermilion_80` appears to be unused"
+        errorLine1="    &lt;color name=&quot;vermilion_80&quot;>#ccd15536&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="39"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.blizzard` appears to be unused"
+        errorLine1="    &lt;color name=&quot;blizzard&quot;>#70aee0&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="40"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.azure` appears to be unused"
+        errorLine1="    &lt;color name=&quot;azure&quot;>#057ddf&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="41"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.azure_10` appears to be unused"
+        errorLine1="    &lt;color name=&quot;azure_10&quot;>#19057ddf&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="42"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.hoki` appears to be unused"
+        errorLine1="    &lt;color name=&quot;hoki&quot;>#6e7d97&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="43"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.golden` appears to be unused"
+        errorLine1="    &lt;color name=&quot;golden&quot;>#ffba00&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="44"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.golden_10` appears to be unused"
+        errorLine1="    &lt;color name=&quot;golden_10&quot;>#19f8c60f&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="45"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.leaf` appears to be unused"
+        errorLine1="    &lt;color name=&quot;leaf&quot;>#b0d66f&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="47"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.majesty` appears to be unused"
+        errorLine1="    &lt;color name=&quot;majesty&quot;>#9f7ebc&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="48"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.viking` appears to be unused"
+        errorLine1="    &lt;color name=&quot;viking&quot;>#6ac1e1&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="49"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.tan` appears to be unused"
+        errorLine1="    &lt;color name=&quot;tan&quot;>#fcab5d&lt;/color>"
+        errorLine2="           ~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="50"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.apricot` appears to be unused"
+        errorLine1="    &lt;color name=&quot;apricot&quot;>#ed7a75&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="51"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.wasteland` appears to be unused"
+        errorLine1="    &lt;color name=&quot;wasteland&quot;>#f7f3df&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="52"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.danube` appears to be unused"
+        errorLine1="    &lt;color name=&quot;danube&quot;>#79a3d4&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="53"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.turquoise` appears to be unused"
+        errorLine1="    &lt;color name=&quot;turquoise&quot;>#30b3c8&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="54"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.allure` appears to be unused"
+        errorLine1="    &lt;color name=&quot;allure&quot;>#ee79b5&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="55"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.fern` appears to be unused"
+        errorLine1="    &lt;color name=&quot;fern&quot;>#62c27e&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="56"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.endeavour` appears to be unused"
+        errorLine1="    &lt;color name=&quot;endeavour&quot;>#005cc6&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="57"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.azure_80` appears to be unused"
+        errorLine1="    &lt;color name=&quot;azure_80&quot;>#cc057ddf&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="58"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.azure_90` appears to be unused"
+        errorLine1="    &lt;color name=&quot;azure_90&quot;>#e6057ddf&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="59"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.dave` appears to be unused"
+        errorLine1="    &lt;color name=&quot;dave&quot;>#333333&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="60"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.golden_30` appears to be unused"
+        errorLine1="    &lt;color name=&quot;golden_30&quot;>#4cf8c60f&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="61"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.darkest` appears to be unused"
+        errorLine1="    &lt;color name=&quot;darkest&quot;>#141414&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="64"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.tundra_80` appears to be unused"
+        errorLine1="    &lt;color name=&quot;tundra_80&quot;>#cc4d4d4d&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="65"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.vermilion_20` appears to be unused"
+        errorLine1="    &lt;color name=&quot;vermilion_20&quot;>#33d15536&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="66"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.blizzard_80` appears to be unused"
+        errorLine1="    &lt;color name=&quot;blizzard_80&quot;>#cc70aee0&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="67"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.leaves_40` appears to be unused"
+        errorLine1="    &lt;color name=&quot;leaves_40&quot;>#6641845b&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="68"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.blizzard_20` appears to be unused"
+        errorLine1="    &lt;color name=&quot;blizzard_20&quot;>#3370aee0&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="69"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.golden_40` appears to be unused"
+        errorLine1="    &lt;color name=&quot;golden_40&quot;>#66f8c60f&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="70"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.sylvan_40` appears to be unused"
+        errorLine1="    &lt;color name=&quot;sylvan_40&quot;>#6650801a&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="71"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.amazon_80` appears to be unused"
+        errorLine1="    &lt;color name=&quot;amazon_80&quot;>#cc336a4a&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="72"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.golden_20` appears to be unused"
+        errorLine1="    &lt;color name=&quot;golden_20&quot;>#33f8c60f&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="73"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.vermilion_40` appears to be unused"
+        errorLine1="    &lt;color name=&quot;vermilion_40&quot;>#66d15536&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="74"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.blizzard_10` appears to be unused"
+        errorLine1="    &lt;color name=&quot;blizzard_10&quot;>#1970aee0&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="75"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.laurel_20` appears to be unused"
+        errorLine1="    &lt;color name=&quot;laurel_20&quot;>#3358a600&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="76"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.leaves_80` appears to be unused"
+        errorLine1="    &lt;color name=&quot;leaves_80&quot;>#cc41845b&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="77"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.white_5` appears to be unused"
+        errorLine1="    &lt;color name=&quot;white_5&quot;>#0cffffff&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="78"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.white_10` appears to be unused"
+        errorLine1="    &lt;color name=&quot;white_10&quot;>#19ffffff&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="79"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.sylvan_20` appears to be unused"
+        errorLine1="    &lt;color name=&quot;sylvan_20&quot;>#3350801a&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="80"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.laurel_60` appears to be unused"
+        errorLine1="    &lt;color name=&quot;laurel_60&quot;>#9958a600&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="81"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.menu.geojson_menu` appears to be unused"
+        errorLine1="&lt;menu xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;"
+        errorLine2="^">
+        <location
+            file="src/main/res/menu/geojson_menu.xml"
+            line="2"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.menu.geometry_menu` appears to be unused"
+        errorLine1="&lt;menu xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;"
+        errorLine2="^">
+        <location
+            file="src/main/res/menu/geometry_menu.xml"
+            line="2"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_blue_nav_pin` appears to be unused"
+        errorLine1="&lt;vector xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
+        errorLine2="^">
+        <location
+            file="src/main/res/drawable/ic_blue_nav_pin.xml"
+            line="1"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_clear` appears to be unused"
+        errorLine1="&lt;vector xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
+        errorLine2="^">
+        <location
+            file="src/main/res/drawable/ic_clear.xml"
+            line="1"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_compare` appears to be unused"
+        errorLine1="&lt;vector xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
+        errorLine2="^">
+        <location
+            file="src/main/res/drawable/ic_compare.xml"
+            line="1"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_compare_white` appears to be unused"
+        errorLine1="&lt;vector xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
+        errorLine2="^">
+        <location
+            file="src/main/res/drawable/ic_compare_white.xml"
+            line="1"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_create_geometry` appears to be unused"
+        errorLine1="&lt;vector android:height=&quot;24dp&quot; android:viewportHeight=&quot;181.75&quot;"
+        errorLine2="^">
+        <location
+            file="src/main/res/drawable/ic_create_geometry.xml"
+            line="1"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_crown` appears to be unused"
+        errorLine1="&lt;vector android:height=&quot;23.5dp&quot; android:viewportHeight=&quot;94&quot;"
+        errorLine2="^">
+        <location
+            file="src/main/res/drawable/ic_crown.xml"
+            line="1"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.mipmap.ic_launcher` appears to be unused"
+        errorLine1="&lt;adaptive-icon xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;>"
+        errorLine2="^">
+        <location
+            file="src/main/res/mipmap-anydpi-v26/ic_launcher.xml"
+            line="2"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_marker` appears to be unused"
+        errorLine1="&lt;vector android:height=&quot;44dp&quot; android:viewportHeight=&quot;172&quot;"
+        errorLine2="^">
+        <location
+            file="src/main/res/drawable/ic_marker.xml"
+            line="1"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_minivan` appears to be unused">
+        <location
+            file="src/main/res/drawable/ic_minivan.png"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_nav_point` appears to be unused"
+        errorLine1="&lt;vector xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
+        errorLine2="^">
+        <location
+            file="src/main/res/drawable/ic_nav_point.xml"
+            line="1"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_pin` appears to be unused"
+        errorLine1="&lt;vector android:height=&quot;14.875dp&quot; android:viewportHeight=&quot;34&quot;"
+        errorLine2="^">
+        <location
+            file="src/main/res/drawable/ic_pin.xml"
+            line="1"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_red_nav_pin` appears to be unused"
+        errorLine1="&lt;vector android:height=&quot;32dp&quot; android:viewportHeight=&quot;24&quot;"
+        errorLine2="^">
+        <location
+            file="src/main/res/drawable/ic_red_nav_pin.xml"
+            line="1"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_route` appears to be unused"
+        errorLine1="&lt;vector android:height=&quot;26dp&quot; android:viewportHeight=&quot;13&quot;"
+        errorLine2="^">
+        <location
+            file="src/main/res/drawable/ic_route.xml"
+            line="1"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_small_pin` appears to be unused"
+        errorLine1="&lt;vector android:height=&quot;10.769231dp&quot; android:viewportHeight=&quot;28&quot;"
+        errorLine2="^">
+        <location
+            file="src/main/res/drawable/ic_small_pin.xml"
+            line="1"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.mipmap.icon` appears to be unused">
+        <location
+            file="src/main/res/mipmap-hdpi/icon.png"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.icon_adaptive_background` appears to be unused">
+        <location
+            file="src/main/res/drawable-hdpi/icon_adaptive_background.png"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.icon_adaptive_foreground` appears to be unused">
+        <location
+            file="src/main/res/drawable-hdpi/icon_adaptive_foreground.png"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.splash_logo` appears to be unused">
+        <location
+            file="src/main/res/drawable-hdpi/splash_logo.png"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.geometry_menu_add_polygon` appears to be unused"
+        errorLine1="    &lt;string name=&quot;geometry_menu_add_polygon&quot;>Add polygon&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="4"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.geometry_menu_add_polyline` appears to be unused"
+        errorLine1="    &lt;string name=&quot;geometry_menu_add_polyline&quot;>Add polyline&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="5"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.geometry_menu_add_point` appears to be unused"
+        errorLine1="    &lt;string name=&quot;geometry_menu_add_point&quot;>Add point&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="6"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.geometry_menu_add_poi` appears to be unused"
+        errorLine1="    &lt;string name=&quot;geometry_menu_add_poi&quot;>Add point with label&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="7"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.geometry_menu_add_point3d` appears to be unused"
+        errorLine1="    &lt;string name=&quot;geometry_menu_add_point3d&quot;>Add point with elevation&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="8"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.geometry_menu_add_poi3d` appears to be unused"
+        errorLine1="    &lt;string name=&quot;geometry_menu_add_poi3d&quot;>Add point with label and elevation&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="9"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.geometry_menu_add_complex_object` appears to be unused"
+        errorLine1="    &lt;string name=&quot;geometry_menu_add_complex_object&quot;>Add complex object&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="10"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.geometry_menu_shift_objects` appears to be unused"
+        errorLine1="    &lt;string name=&quot;geometry_menu_shift_objects&quot;>Shift objects&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="11"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.geometry_menu_remove_last` appears to be unused"
+        errorLine1="    &lt;string name=&quot;geometry_menu_remove_last&quot;>Remove last object&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="12"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.geometry_menu_remove_all` appears to be unused"
+        errorLine1="    &lt;string name=&quot;geometry_menu_remove_all&quot;>Remove all objects&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="13"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.geometry_menu_toggle_visibility` appears to be unused"
+        errorLine1="    &lt;string name=&quot;geometry_menu_toggle_visibility&quot;>Toggle visibility&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="14"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.geometry_menu_toggle_color` appears to be unused"
+        errorLine1="    &lt;string name=&quot;geometry_menu_toggle_color&quot;>Toggle color&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="15"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.attributes_menu_toggle_theme` appears to be unused"
+        errorLine1="    &lt;string name=&quot;attributes_menu_toggle_theme&quot;>Dark Theme&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="16"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.attributes_menu_toggle_dimension` appears to be unused"
+        errorLine1="    &lt;string name=&quot;attributes_menu_toggle_dimension&quot;>2D&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="17"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.my_location_accuracy_text` appears to be unused"
+        errorLine1="    &lt;string name=&quot;my_location_accuracy_text&quot;>Accuracy&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="18"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.my_location_pedestrian_mode_text` appears to be unused"
+        errorLine1="    &lt;string name=&quot;my_location_pedestrian_mode_text&quot;>Pedestrian Mode&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="19"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.my_location_direction_text` appears to be unused"
+        errorLine1="    &lt;string name=&quot;my_location_direction_text&quot;>Direction&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="20"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.my_location_available` appears to be unused"
+        errorLine1="    &lt;string name=&quot;my_location_available&quot;>Location Available&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="21"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.array.route_search_types` appears to be unused"
+        errorLine1="    &lt;string-array name=&quot;route_search_types&quot;>"
+        errorLine2="                  ~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="32"
+            column="19"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.layout.view_map_fps_control` appears to be unused"
+        errorLine1="&lt;TextView xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
+        errorLine2="^">
+        <location
+            file="src/main/res/layout/view_map_fps_control.xml"
+            line="2"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/ic_minivan.png` in densityless folder">
+        <location
+            file="src/main/res/drawable/ic_minivan.png"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/ic_scooter.png` in densityless folder">
+        <location
+            file="src/main/res/drawable/ic_scooter.png"/>
+    </issue>
+
+    <issue
+        id="IconDensities"
+        message="Missing the following drawables in `drawable-mdpi`: splash_logo.png (found in drawable-hdpi)">
+        <location
+            file="src/main/res/drawable-mdpi"/>
+    </issue>
+
+    <issue
+        id="IconDensities"
+        message="Missing the following drawables in `drawable-xhdpi`: splash_logo.png (found in drawable-hdpi)">
+        <location
+            file="src/main/res/drawable-xhdpi"/>
+    </issue>
+
+    <issue
+        id="IconDensities"
+        message="Missing the following drawables in `drawable-xxhdpi`: splash_logo.png (found in drawable-hdpi)">
+        <location
+            file="src/main/res/drawable-xxhdpi"/>
+    </issue>
+
+    <issue
+        id="ContentDescription"
+        message="Missing `contentDescription` attribute on image"
+        errorLine1="            &lt;ImageView"
+        errorLine2="             ~~~~~~~~~">
+        <location
+            file="src/main/res/layout/activity_map_generic.xml"
+            line="60"
+            column="14"/>
+    </issue>
+
+    <issue
+        id="ContentDescription"
+        message="Missing `contentDescription` attribute on image"
+        errorLine1="    &lt;ImageView"
+        errorLine2="     ~~~~~~~~~">
+        <location
+            file="src/main/res/layout/main_list_item.xml"
+            line="22"
+            column="6"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Gestures Setup&quot;, should use `@string` resource"
+        errorLine1="                    android:text=&quot;Gestures Setup&quot;"
+        errorLine2="                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/activity_map_generic.xml"
+            line="93"
+            column="21"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Rotation&quot;, should use `@string` resource"
+        errorLine1="                    android:text=&quot;Rotation&quot;"
+        errorLine2="                    ~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/activity_map_generic.xml"
+            line="102"
+            column="21"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Shift&quot;, should use `@string` resource"
+        errorLine1="                    android:text=&quot;Shift&quot;"
+        errorLine2="                    ~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/activity_map_generic.xml"
+            line="111"
+            column="21"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Scale&quot;, should use `@string` resource"
+        errorLine1="                    android:text=&quot;Scale&quot;"
+        errorLine2="                    ~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/activity_map_generic.xml"
+            line="119"
+            column="21"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Tilt&quot;, should use `@string` resource"
+        errorLine1="                    android:text=&quot;Tilt&quot;"
+        errorLine2="                    ~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/activity_map_generic.xml"
+            line="127"
+            column="21"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Map Attributes&quot;, should use `@string` resource"
+        errorLine1="                    android:text=&quot;Map Attributes&quot;"
+        errorLine2="                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/activity_map_generic.xml"
+            line="143"
+            column="21"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;sberLogo.json&quot;, should use `@string` resource"
+        errorLine1="        android:title=&quot;sberLogo.json&quot; />"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/menu/geojson_menu.xml"
+            line="7"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;someObjects.json&quot;, should use `@string` resource"
+        errorLine1="        android:title=&quot;someObjects.json&quot; />"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/menu/geojson_menu.xml"
+            line="10"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Remove all objects&quot;, should use `@string` resource"
+        errorLine1="        android:title=&quot;Remove all objects&quot; />"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/menu/geojson_menu.xml"
+            line="13"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Toggle visibility&quot;, should use `@string` resource"
+        errorLine1="        android:title=&quot;Toggle visibility&quot; />"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/menu/geojson_menu.xml"
+            line="16"
+            column="9"/>
+    </issue>
+
+</issues>

@@ -1,15 +1,19 @@
 package ru.dgis.sdk.demo
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import ru.dgis.sdk.Context
 import ru.dgis.sdk.demo.common.updateMapCopyrightPosition
-import ru.dgis.sdk.map.*
+import ru.dgis.sdk.map.Gesture
+import ru.dgis.sdk.map.GestureManager
 import ru.dgis.sdk.map.Map
-
+import ru.dgis.sdk.map.MapView
+import ru.dgis.sdk.map.MyLocationDirectionBehaviour
+import ru.dgis.sdk.map.MyLocationMapObjectSource
+import ru.dgis.sdk.map.createSmoothMyLocationController
 
 class GenericMapActivity : AppCompatActivity() {
     private val sdkContext: Context by lazy { application.sdkContext }
@@ -22,7 +26,6 @@ class GenericMapActivity : AppCompatActivity() {
     private lateinit var mapView: MapView
     private lateinit var root: View
     private lateinit var settingsDrawerInnerLayout: View
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,9 +69,11 @@ class GenericMapActivity : AppCompatActivity() {
         )
         map.addSource(mapSource)
 
-        closeables.add(map.camera.paddingChannel.connect { _ ->
-            mapView.updateMapCopyrightPosition(root, settingsDrawerInnerLayout)
-        })
+        closeables.add(
+            map.camera.paddingChannel.connect { _ ->
+                mapView.updateMapCopyrightPosition(root, settingsDrawerInnerLayout)
+            }
+        )
     }
 
     private fun subscribeGestureSwitches(gm: GestureManager) {
@@ -77,7 +82,7 @@ class GenericMapActivity : AppCompatActivity() {
             Pair(R.id.rotationSwitch, Gesture.ROTATION),
             Pair(R.id.shiftSwitch, Gesture.SHIFT),
             Pair(R.id.scaleSwitch, Gesture.SCALING),
-            Pair(R.id.tiltSwitch, Gesture.TILT),
+            Pair(R.id.tiltSwitch, Gesture.TILT)
         )
 
         options.forEach { (viewId, gesture) ->
@@ -86,10 +91,11 @@ class GenericMapActivity : AppCompatActivity() {
                 isChecked = enabledGestures.contains(gesture)
 
                 setOnCheckedChangeListener { _, isChecked ->
-                    if (isChecked)
+                    if (isChecked) {
                         gm.enableGesture(gesture)
-                    else
+                    } else {
                         gm.disableGesture(gesture)
+                    }
                 }
             }
         }

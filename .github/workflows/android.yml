@@ -1,0 +1,25 @@
+name: Android CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+    uses: ./.github/workflows/base.yml
+    with:
+      gradle-task: app:assembleDebug
+
+  android-lint:
+    uses: ./.github/workflows/base.yml
+    with:
+      gradle-task: app:lint
+      artifacts: build/app/reports/lint-results-*.txt
+
+  ktlint:
+    uses: ./.github/workflows/base.yml
+    with:
+      gradle-task: app:ktlintCheck
+      artifacts: build/app/reports/ktlint/**/*.txt

@@ -8,12 +8,31 @@ import ru.dgis.sdk.Context
 import ru.dgis.sdk.await
 import ru.dgis.sdk.demo.R
 import ru.dgis.sdk.geometry.GeoPointWithElevation
-import ru.dgis.sdk.map.*
 import ru.dgis.sdk.map.Map
+import ru.dgis.sdk.map.MapObjectManager
+import ru.dgis.sdk.map.Marker
+import ru.dgis.sdk.map.MarkerOptions
+import ru.dgis.sdk.map.MyLocationDirectionBehaviour
+import ru.dgis.sdk.map.MyLocationMapObjectSource
+import ru.dgis.sdk.map.RouteEditorSource
+import ru.dgis.sdk.map.RouteMapObject
+import ru.dgis.sdk.map.ScreenDistance
+import ru.dgis.sdk.map.ScreenPoint
+import ru.dgis.sdk.map.imageFromResource
 import ru.dgis.sdk.navigation.NavigationManager
 import ru.dgis.sdk.navigation.RouteBuildOptions
+import ru.dgis.sdk.routing.BicycleRouteSearchOptions
+import ru.dgis.sdk.routing.CarRouteSearchOptions
+import ru.dgis.sdk.routing.PedestrianRouteSearchOptions
+import ru.dgis.sdk.routing.PublicTransportRouteSearchOptions
+import ru.dgis.sdk.routing.RouteEditor
+import ru.dgis.sdk.routing.RouteEditorRouteParams
+import ru.dgis.sdk.routing.RouteSearchOptions
+import ru.dgis.sdk.routing.RouteSearchPoint
+import ru.dgis.sdk.routing.ScooterRouteSearchOptions
+import ru.dgis.sdk.routing.TaxiRouteSearchOptions
+import ru.dgis.sdk.routing.TrafficRoute
 import ru.dgis.sdk.navigation.State as NavigationState
-import ru.dgis.sdk.routing.*
 
 class NavigationViewModel(
     private val sdkContext: Context,
@@ -95,13 +114,14 @@ class NavigationViewModel(
             closeables.addAll(it)
         }
 
-
     private val routeEditor = RouteEditor(sdkContext).also {
         closeables.add(it)
-        closeables.add(it.routesInfoChannel.connect { info ->
-            routes = info.routes
-            onRoutesChanged()
-        })
+        closeables.add(
+            it.routesInfoChannel.connect { info ->
+                routes = info.routes
+                onRoutesChanged()
+            }
+        )
     }
 
     private val routeEditorSource = RouteEditorSource(sdkContext, routeEditor).also {
@@ -173,14 +193,24 @@ class NavigationViewModel(
         fun hasRouteWithEndPoint(point: RouteSearchPoint): Boolean {
             if (routes.isEmpty()) return false
             val routeParams = routeEditor.routesInfo.routeParams
-            return point == routeParams.finishPoint
-                || point == routeParams.startPoint
+            return point == routeParams.finishPoint ||
+                point == routeParams.startPoint
         }
 
         points.forEachIndexed { index, point ->
             val marker = markers[index]
-            marker.isVisible = state.value == State.ROUTE_EDITING && point != null && !hasRouteWithEndPoint(point)
-            marker.position = if (point != null) GeoPointWithElevation(point.coordinates.latitude, point.coordinates.longitude) else GeoPointWithElevation(0.0, 0.0)
+            marker.isVisible =
+                state.value == State.ROUTE_EDITING && point != null && !hasRouteWithEndPoint(
+                point
+            )
+            marker.position = if (point != null) {
+                GeoPointWithElevation(
+                    point.coordinates.latitude,
+                    point.coordinates.longitude
+                )
+            } else {
+                GeoPointWithElevation(0.0, 0.0)
+            }
         }
     }
 
@@ -201,7 +231,9 @@ class NavigationViewModel(
     }
 
     private fun updateRouteEditorSource() {
-        routeEditorSource.setRoutesVisible(state.value == State.ROUTE_EDITING && routes.isNotEmpty())
+        routeEditorSource.setRoutesVisible(
+            state.value == State.ROUTE_EDITING && routes.isNotEmpty()
+        )
     }
 
     private fun onRoutesChanged() {
@@ -253,11 +285,15 @@ class NavigationViewModel(
 private fun NavigationViewModel.RouteType.toRouteSearchOptions(): RouteSearchOptions =
     when (this) {
         NavigationViewModel.RouteType.CAR -> RouteSearchOptions(CarRouteSearchOptions())
-        NavigationViewModel.RouteType.PEDESTRIAN -> RouteSearchOptions(PedestrianRouteSearchOptions())
+        NavigationViewModel.RouteType.PEDESTRIAN -> RouteSearchOptions(
+            PedestrianRouteSearchOptions()
+        )
+
         NavigationViewModel.RouteType.BICYCLE -> RouteSearchOptions(BicycleRouteSearchOptions())
         NavigationViewModel.RouteType.PUBLIC_TRANSPORT -> RouteSearchOptions(
             PublicTransportRouteSearchOptions()
         )
+
         NavigationViewModel.RouteType.SCOOTER -> RouteSearchOptions(ScooterRouteSearchOptions())
         NavigationViewModel.RouteType.TAXI -> RouteSearchOptions(
             TaxiRouteSearchOptions(

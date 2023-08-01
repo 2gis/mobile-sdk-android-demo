@@ -50,7 +50,7 @@ pipeline {
             steps {
                 sh(
                     label: 'Building project',
-                    script: "./gradlew clean build test lint"
+                    script: "./gradlew clean build lint ktlintCheck"
                 )
             }
         }

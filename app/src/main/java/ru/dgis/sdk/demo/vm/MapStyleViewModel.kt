@@ -4,14 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import java9.util.concurrent.CompletableFuture
-import ru.dgis.sdk.File as DGisFile
 import ru.dgis.sdk.map.Map
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
+import ru.dgis.sdk.File as DGisFile
 
-
-class MapStyleViewModel: ViewModel() {
+class MapStyleViewModel : ViewModel() {
     private val closeables = mutableListOf<AutoCloseable>()
     private var loadingFuture = CompletableFuture<Void>()
     private var stylePath = ""

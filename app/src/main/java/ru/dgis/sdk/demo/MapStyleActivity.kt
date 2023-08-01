@@ -1,16 +1,17 @@
 package ru.dgis.sdk.demo
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Gravity
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.progressindicator.CircularProgressIndicator
 import ru.dgis.sdk.File
 import ru.dgis.sdk.demo.vm.MapStyleViewModel
-import ru.dgis.sdk.map.*
+import ru.dgis.sdk.map.MapOptions
+import ru.dgis.sdk.map.MapView
 
 internal const val MAP_STYLE_FILE = 4433
 
@@ -29,8 +30,9 @@ class MapStyleActivity : AppCompatActivity() {
         if (!viewModel.isStyleSelected) {
             val params = FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT).apply {
-                    gravity = Gravity.CENTER
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            ).apply {
+                gravity = Gravity.CENTER
             }
             val loadingView = CircularProgressIndicator(this).apply {
                 layoutParams = params
@@ -64,7 +66,7 @@ class MapStyleActivity : AppCompatActivity() {
     }
 
     private fun requestStylesFile() {
-        val intent = Intent().apply{
+        val intent = Intent().apply {
             type = "*/*"
             action = Intent.ACTION_GET_CONTENT
         }

@@ -15,8 +15,12 @@ private const val PARKING_ATTRIBUTE = "parkingOn"
  *
  * Demonstration: open activity and toggle parking button to see parkings on map
  */
-class ParkingActivity: AppCompatActivity() {
-    private val binding: ActivityParkingBinding by lazy { ActivityParkingBinding.inflate(layoutInflater) }
+class ParkingActivity : AppCompatActivity() {
+    private val binding: ActivityParkingBinding by lazy {
+        ActivityParkingBinding.inflate(
+            layoutInflater
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

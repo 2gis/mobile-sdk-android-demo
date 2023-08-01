@@ -12,7 +12,6 @@ import ru.dgis.sdk.hours
 import ru.dgis.sdk.map.CameraMoveController
 import ru.dgis.sdk.map.CameraPosition
 import ru.dgis.sdk.map.Fps
-import java.lang.NumberFormatException
 import kotlin.math.sin
 
 /**
@@ -22,9 +21,13 @@ import kotlin.math.sin
  * Demonstration: open activity, slide up the bottom sheet, push "Start map moves button"
  * Map will start instant updates, you can adjust limits in EditText fields to see the effect of increased / decreased FPS
  */
-class MapFpsActivity: AppCompatActivity() {
+class MapFpsActivity : AppCompatActivity() {
 
-    private val binding: ActivityMapFpsBinding by lazy { ActivityMapFpsBinding.inflate(layoutInflater) }
+    private val binding: ActivityMapFpsBinding by lazy {
+        ActivityMapFpsBinding.inflate(
+            layoutInflater
+        )
+    }
     private val mapView by lazy { binding.mapView }
     private val closeables = mutableListOf<AutoCloseable>()
 
@@ -36,11 +39,14 @@ class MapFpsActivity: AppCompatActivity() {
         }
 
         mapView.getMapAsync {
-            closeables.add(binding.mapView.fpsChannel.connect {
-                binding.fpsControl.text = it.toString()
-            })
+            closeables.add(
+                binding.mapView.fpsChannel.connect {
+                    binding.fpsControl.text = it.toString()
+                }
+            )
         }
     }
+
     override fun onDestroy() {
         closeables.forEach {
             it.close()
@@ -48,6 +54,7 @@ class MapFpsActivity: AppCompatActivity() {
         closeables.clear()
         super.onDestroy()
     }
+
     private fun prepareSettingsListView(): View {
         return ActivityMapFpsSettingsBinding.inflate(layoutInflater).apply {
             maxFpsSetter.setText(mapView.maxFps?.value?.toString() ?: "")
@@ -57,7 +64,8 @@ class MapFpsActivity: AppCompatActivity() {
                 }
                 try {
                     mapView.maxFps = Fps(it.toString().toInt())
-                } catch (_: NumberFormatException) { }
+                } catch (_: NumberFormatException) {
+                }
             }
 
             powerSaveFpsSetter.setText(mapView.maxFps?.value?.toString() ?: "")
@@ -67,7 +75,8 @@ class MapFpsActivity: AppCompatActivity() {
                 }
                 try {
                     mapView.powerSavingMaxFps = Fps(it.toString().toInt())
-                } catch (_: NumberFormatException) { }
+                } catch (_: NumberFormatException) {
+                }
             }
 
             startButton.setOnClickListener {
@@ -77,7 +86,7 @@ class MapFpsActivity: AppCompatActivity() {
                     }
                 }
             }
-        } .root
+        }.root
     }
 }
 
