@@ -5,7 +5,6 @@ import ru.dgis.sdk.Context
 import ru.dgis.sdk.positioning.DefaultLocationSource
 import ru.dgis.sdk.positioning.registerPlatformLocationSource
 
-
 class Application : Application() {
     lateinit var sdkContext: Context
 

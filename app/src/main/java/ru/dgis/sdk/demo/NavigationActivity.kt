@@ -35,7 +35,6 @@ import ru.dgis.sdk.navigation.NavigationView
 import ru.dgis.sdk.navigation.State
 import ru.dgis.sdk.routing.RouteSearchPoint
 
-
 class NavigationActivity : AppCompatActivity(), TouchEventsObserver {
     private val sdkContext: Context by lazy { application.sdkContext }
 
@@ -69,9 +68,14 @@ class NavigationActivity : AppCompatActivity(), TouchEventsObserver {
             setTouchEventsObserver(this@NavigationActivity)
             getMapAsync {
                 initViewModel(it)
-                closeables.add(it.camera.paddingChannel.connect { _ ->
-                    updateMapCopyrightPosition(binding.content, binding.settingsDrawerInnerLayout)
-                })
+                closeables.add(
+                    it.camera.paddingChannel.connect { _ ->
+                        updateMapCopyrightPosition(
+                            binding.content,
+                            binding.settingsDrawerInnerLayout
+                        )
+                    }
+                )
             }
         }
 
@@ -85,7 +89,10 @@ class NavigationActivity : AppCompatActivity(), TouchEventsObserver {
             addBottomSheetCallback(object : BottomSheetCallback() {
                 override fun onStateChanged(bottomSheet: View, newState: Int) {}
                 override fun onSlide(bottomSheet: View, slideOffset: Float) {
-                    mapView.updateMapCopyrightPosition(binding.content, binding.settingsDrawerInnerLayout)
+                    mapView.updateMapCopyrightPosition(
+                        binding.content,
+                        binding.settingsDrawerInnerLayout
+                    )
                 }
             })
         }
@@ -97,45 +104,47 @@ class NavigationActivity : AppCompatActivity(), TouchEventsObserver {
             }
         }
 
-        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                viewModel?.let {
-                    when(it.state.value) {
-                        NavigationViewModel.State.NAVIGATION -> it.stopNavigation()
-                        NavigationViewModel.State.ROUTE_EDITING -> this@NavigationActivity.finish()
+        onBackPressedDispatcher.addCallback(
+            this,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    viewModel?.let {
+                        when (it.state.value) {
+                            NavigationViewModel.State.NAVIGATION -> it.stopNavigation()
+                            NavigationViewModel.State.ROUTE_EDITING -> this@NavigationActivity.finish()
+                        }
                     }
                 }
             }
-        })
+        )
     }
 
     private fun initRouteTypeTabs() {
         binding.routeTypeTabsLayout.addOnTabSelectedListener(object :
-            TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                // Should match on contentDescription field, because icons don't have text field and
-                // id is useless because of bug
-                // https://issuetracker.google.com/issues/145687658
-                viewModel?.routeType = when (tab?.contentDescription) {
-                    getString(R.string.content_description_car) -> NavigationViewModel.RouteType.CAR
-                    getString(R.string.content_description_bus) -> NavigationViewModel.RouteType.PUBLIC_TRANSPORT
-                    getString(R.string.content_description_bicycle) -> NavigationViewModel.RouteType.BICYCLE
-                    getString(R.string.content_description_pedestrian) -> NavigationViewModel.RouteType.PEDESTRIAN
-                    getString(R.string.content_description_scooter) -> NavigationViewModel.RouteType.SCOOTER
-                    getString(R.string.content_description_taxi) -> NavigationViewModel.RouteType.TAXI
-                    else -> NavigationViewModel.RouteType.CAR
+                TabLayout.OnTabSelectedListener {
+                override fun onTabSelected(tab: TabLayout.Tab?) {
+                    // Should match on contentDescription field, because icons don't have text field and
+                    // id is useless because of bug
+                    // https://issuetracker.google.com/issues/145687658
+                    viewModel?.routeType = when (tab?.contentDescription) {
+                        getString(R.string.content_description_car) -> NavigationViewModel.RouteType.CAR
+                        getString(R.string.content_description_bus) -> NavigationViewModel.RouteType.PUBLIC_TRANSPORT
+                        getString(R.string.content_description_bicycle) -> NavigationViewModel.RouteType.BICYCLE
+                        getString(R.string.content_description_pedestrian) -> NavigationViewModel.RouteType.PEDESTRIAN
+                        getString(R.string.content_description_scooter) -> NavigationViewModel.RouteType.SCOOTER
+                        getString(R.string.content_description_taxi) -> NavigationViewModel.RouteType.TAXI
+                        else -> NavigationViewModel.RouteType.CAR
+                    }
                 }
-            }
 
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
-                return
-            }
+                override fun onTabUnselected(tab: TabLayout.Tab?) {
+                    return
+                }
 
-            override fun onTabReselected(tab: TabLayout.Tab?) {
-                return
-            }
-
-        })
+                override fun onTabReselected(tab: TabLayout.Tab?) {
+                    return
+                }
+            })
     }
 
     private fun initViewModel(map: Map) {
@@ -146,30 +155,34 @@ class NavigationActivity : AppCompatActivity(), TouchEventsObserver {
             viewModel.messageCallback = {
                 Toast.makeText(activity, it, Toast.LENGTH_LONG).show()
             }
-             lifecycleScope.launch {
-                 repeatOnLifecycle(Lifecycle.State.STARTED) {
-                     viewModel.state.collect {
-                         navigationView.removeAllViews()
-                         when (it) {
-                             NavigationViewModel.State.ROUTE_EDITING -> {
-                                 routeEditorView.visibility = View.VISIBLE
-                                 routeEditorSettingsView.visibility = View.VISIBLE
-                                 navigationView.navigationManager = null
-                             }
-                             NavigationViewModel.State.NAVIGATION -> {
-                                 routeEditorView.visibility = View.INVISIBLE
-                                 routeEditorSettingsView.visibility = View.GONE
-                                 navigationView.navigationManager = viewModel.navigationManager
-                                 navigationView.addView(DefaultNavigationControls(navigationView.context).apply {
-                                     isFreeRoamDefault = viewModel.navigationType != State.NAVIGATION
-                                     onFinishClicked = {
-                                         viewModel.stopNavigation()
-                                     }
-                                 })
-                             }
-                         }
-                     }
-                 }
+            lifecycleScope.launch {
+                repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    viewModel.state.collect {
+                        navigationView.removeAllViews()
+                        when (it) {
+                            NavigationViewModel.State.ROUTE_EDITING -> {
+                                routeEditorView.visibility = View.VISIBLE
+                                routeEditorSettingsView.visibility = View.VISIBLE
+                                navigationView.navigationManager = null
+                            }
+
+                            NavigationViewModel.State.NAVIGATION -> {
+                                routeEditorView.visibility = View.INVISIBLE
+                                routeEditorSettingsView.visibility = View.GONE
+                                navigationView.navigationManager = viewModel.navigationManager
+                                navigationView.addView(
+                                    DefaultNavigationControls(navigationView.context).apply {
+                                        isFreeRoamDefault =
+                                            viewModel.navigationType != State.NAVIGATION
+                                        onFinishClicked = {
+                                            viewModel.stopNavigation()
+                                        }
+                                    }
+                                )
+                            }
+                        }
+                    }
+                }
             }
             lifecycleScope.launch {
                 repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -226,7 +239,9 @@ class NavigationActivity : AppCompatActivity(), TouchEventsObserver {
                             levelId = this.first().item.levelId
                         )
                     )
-                    else -> showMenu(point,
+
+                    else -> showMenu(
+                        point,
                         RouteSearchPoint(map.camera.projection.screenToMap(point)!!)
                     )
                 }

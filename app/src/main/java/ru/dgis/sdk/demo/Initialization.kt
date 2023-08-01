@@ -1,7 +1,7 @@
 package ru.dgis.sdk.demo
 
-import ru.dgis.sdk.DGis
 import ru.dgis.sdk.Context
+import ru.dgis.sdk.DGis
 import ru.dgis.sdk.LogLevel
 import ru.dgis.sdk.LogOptions
 
