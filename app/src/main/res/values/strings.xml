@@ -25,6 +25,9 @@
     <string name="content_description_bicycle">bicycle</string>
     <string name="content_description_taxi">taxi</string>
     <string name="content_description_scooter">scooter</string>
+    <string name="max_fps_limit">FPS limit:</string>
+    <string name="power_saving_fps_limit">Power saving FPS limit:</string>
+    <string name="start_map_moves">Start map moves</string>
     <string-array name="route_search_types">
         <item>Car</item>
         <item>Pedestrian</item>
