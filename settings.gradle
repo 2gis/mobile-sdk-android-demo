@@ -17,5 +17,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name='native-sdk-android-demo'
+rootProject.name='mobile-sdk-android-demo'
 include ':app'
