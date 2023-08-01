@@ -14,12 +14,12 @@ def unstrippedLibsDir = "${project.buildDir}/unstripped/"
 
 android {
     namespace "ru.dgis.sdk.demo"
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "ru.dgis.sdk.demo"
         minSdkVersion 21
-        targetSdkVersion 33
+        targetSdkVersion 34
         versionCode 1
         versionName "0.0.1"
     }
