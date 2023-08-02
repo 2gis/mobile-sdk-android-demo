@@ -45,9 +45,16 @@
     <string name="verticalswervedeg">verticalSwerveDeg</string>
     <string name="thresholdmm">thresholdMm</string>
     <string name="multi_touch_shift">MULTI TOUCH SHIFT</string>
+    <string name="rotation_center">ROTATION CENTER</string>
+    <string name="choose">Choose</string>
+    <string name="scailing_center">SCAILING CENTER</string>
     <string-array name="route_search_types">
         <item>Car</item>
         <item>Pedestrian</item>
         <item>Bicycle</item>
+    </string-array>
+    <string-array name="events_processing_settings">
+        <item>EVENT_CENTER</item>
+        <item>MAP_POSITION</item>
     </string-array>
 </resources>

@@ -49,6 +49,10 @@ class MainActivity : AppCompatActivity() {
         Page("Gestures") {
             val intent = Intent(this@MainActivity, GesturesActivity::class.java)
             startActivity(intent)
+        },
+        Page("Gestures: center point") {
+            val intent = Intent(this@MainActivity, GesturesMapPointActivity::class.java)
+            startActivity(intent)
         }
     )
 
