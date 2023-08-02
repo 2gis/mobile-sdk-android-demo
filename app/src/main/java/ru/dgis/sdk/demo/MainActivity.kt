@@ -45,6 +45,10 @@ class MainActivity : AppCompatActivity() {
         Page("Parkings on map") {
             val intent = Intent(this@MainActivity, ParkingActivity::class.java)
             startActivity(intent)
+        },
+        Page("Gestures") {
+            val intent = Intent(this@MainActivity, GesturesActivity::class.java)
+            startActivity(intent)
         }
     )
 
