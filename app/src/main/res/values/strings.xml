@@ -36,7 +36,7 @@
     <string name="distancediffmm">distanceDiffMm</string>
     <string name="anglediffinscalingdeg">angleDiffInScalingDeg</string>
     <string name="distancediffinscalingmm">distanceDiffInScalingMm</string>
-    <string name="scailing">SCAILING</string>
+    <string name="scailing">SCALING</string>
     <string name="scaleratiothreshold">scaleRatioThreshold</string>
     <string name="scaleratiothresholdinrotation">scaleRatioThresholdInRotation</string>
     <string name="tilt">TILT</string>
@@ -44,10 +44,13 @@
     <string name="horizontalswervedeg">horizontalSwerveDeg</string>
     <string name="verticalswervedeg">verticalSwerveDeg</string>
     <string name="thresholdmm">thresholdMm</string>
-    <string name="multi_touch_shift">MULTI TOUCH SHIFT</string>
+    <string name="multi_touch_shift">MULTI_TOUCH_SHIFT</string>
     <string name="rotation_center">ROTATION CENTER</string>
     <string name="choose">Choose</string>
     <string name="scailing_center">SCAILING CENTER</string>
+    <string name="gestures">GESTURES</string>
+    <string name="apply_rule">Apply Rule</string>
+    <string name="clear_rules">Clear Rules</string>
     <string-array name="route_search_types">
         <item>Car</item>
         <item>Pedestrian</item>

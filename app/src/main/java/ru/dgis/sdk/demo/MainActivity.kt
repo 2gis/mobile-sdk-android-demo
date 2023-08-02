@@ -53,6 +53,10 @@ class MainActivity : AppCompatActivity() {
         Page("Gestures: center point") {
             val intent = Intent(this@MainActivity, GesturesMapPointActivity::class.java)
             startActivity(intent)
+        },
+        Page("Mutually exclusive gestures") {
+            val intent = Intent(this@MainActivity, MutuallyExclusiveGesturesActivity::class.java)
+            startActivity(intent)
         }
     )
 
