@@ -29,9 +29,25 @@
     <string name="power_saving_fps_limit">Power saving FPS limit:</string>
     <string name="start_map_moves">Start map moves</string>
     <string name="parking_toggle_button">Parking toggle button</string>
+    <string name="shift">SHIFT</string>
+    <string name="enabled">Enabled</string>
+    <string name="rotation">ROTATION</string>
+    <string name="anglediffdeg">angleDiffDeg</string>
+    <string name="distancediffmm">distanceDiffMm</string>
+    <string name="anglediffinscalingdeg">angleDiffInScalingDeg</string>
+    <string name="distancediffinscalingmm">distanceDiffInScalingMm</string>
+    <string name="scailing">SCAILING</string>
+    <string name="scaleratiothreshold">scaleRatioThreshold</string>
+    <string name="scaleratiothresholdinrotation">scaleRatioThresholdInRotation</string>
+    <string name="tilt">TILT</string>
+    <string name="lenondegreemm">lenOnDegreeMm</string>
+    <string name="horizontalswervedeg">horizontalSwerveDeg</string>
+    <string name="verticalswervedeg">verticalSwerveDeg</string>
+    <string name="thresholdmm">thresholdMm</string>
+    <string name="multi_touch_shift">MULTI TOUCH SHIFT</string>
     <string-array name="route_search_types">
         <item>Car</item>
         <item>Pedestrian</item>
         <item>Bicycle</item>
-    </string-array>    
+    </string-array>
 </resources>
