@@ -15,10 +15,10 @@
             android:text="@string/max_fps_limit"/>
 
         <EditText
+            style="@style/EditText.Number.Int"
             android:id="@+id/maxFpsSetter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="number"
             android:importantForAutofill="no"
             tools:ignore="LabelFor" />
     </LinearLayout>
@@ -33,10 +33,10 @@
             android:text="@string/power_saving_fps_limit"/>
 
         <EditText
+            style="@style/EditText.Number.Int"
             android:id="@+id/powerSaveFpsSetter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="number"
             android:importantForAutofill="no"
             tools:ignore="LabelFor" />
     </LinearLayout>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="EditText.Number.Int">
+        <item name="android:inputType">number</item>
+        <item name="android:importantForAutofill">no</item>
+        <item name="android:autofillHints">no</item>
+    </style>
+    <style name="EditText.Number.Float">
+        <item name="android:inputType">numberDecimal</item>
+        <item name="android:importantForAutofill">no</item>
+        <item name="android:autofillHints">no</item>
+    </style>
+</resources>
