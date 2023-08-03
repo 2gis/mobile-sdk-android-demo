@@ -1,0 +1,26 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "db_sublayer": "s_dynamic_polyline",
+        "width_zpt": 10,
+        "color": "#ccff0000"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            55.294727300000261,
+            25.356358000000171
+          ],
+          [
+            55.189856000000134,
+            25.144632000000115
+          ]
+        ]
+      }
+    }
+  ]
+}

@@ -51,6 +51,9 @@
     <string name="gestures">GESTURES</string>
     <string name="apply_rule">Apply Rule</string>
     <string name="clear_rules">Clear Rules</string>
+    <string name="multipolygon">MultiPolygon</string>
+    <string name="polygon">Polygon</string>
+    <string name="polyline">Polyline</string>
     <string-array name="route_search_types">
         <item>Car</item>
         <item>Pedestrian</item>

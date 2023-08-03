@@ -16,6 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".GeoJsonActivity"
+            android:exported="false" />
+        <activity
             android:name=".MutuallyExclusiveGesturesActivity"
             android:exported="false" />
         <activity

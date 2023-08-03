@@ -57,6 +57,10 @@ class MainActivity : AppCompatActivity() {
         Page("Mutually exclusive gestures") {
             val intent = Intent(this@MainActivity, MutuallyExclusiveGesturesActivity::class.java)
             startActivity(intent)
+        },
+        Page("GeoJson") {
+            val intent = Intent(this@MainActivity, GeoJsonActivity::class.java)
+            startActivity(intent)
         }
     )
 
