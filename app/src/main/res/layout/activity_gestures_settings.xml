@@ -78,7 +78,7 @@
                 android:text="@string/distancediffmm" />
 
             <EditText
-                android:id="@+id/rotation_distancediffmm"
+                android:id="@+id/rotation_distancediffmm_editText"
                 style="@style/EditText.Number.Float"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -101,7 +101,7 @@
                 android:text="@string/anglediffinscalingdeg" />
 
             <EditText
-                android:id="@+id/rotation_anglediffinscalingdeg"
+                android:id="@+id/rotation_anglediffinscalingdeg_editText"
                 style="@style/EditText.Number.Float"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -124,7 +124,7 @@
                 android:text="@string/distancediffinscalingmm" />
 
             <EditText
-                android:id="@+id/rotation_distancediffinscalingmm"
+                android:id="@+id/rotation_distancediffinscalingmm_editText"
                 style="@style/EditText.Number.Float"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -165,7 +165,7 @@
                 android:text="@string/scaleratiothreshold" />
 
             <EditText
-                android:id="@+id/scailing_scaleratiothreshold"
+                android:id="@+id/scailing_scaleratiothreshold_editText"
                 style="@style/EditText.Number.Float"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -188,7 +188,7 @@
                 android:text="@string/scaleratiothresholdinrotation" />
 
             <EditText
-                android:id="@+id/scailing_scaleratiothresholdinrotation"
+                android:id="@+id/scailing_scaleratiothresholdinrotation_editText"
                 style="@style/EditText.Number.Float"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -229,7 +229,7 @@
                 android:text="@string/lenondegreemm" />
 
             <EditText
-                android:id="@+id/tilt_lenondegreemm"
+                android:id="@+id/tilt_lenondegreemm_editText"
                 style="@style/EditText.Number.Float"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -252,7 +252,7 @@
                 android:text="@string/horizontalswervedeg" />
 
             <EditText
-                android:id="@+id/tilt_horizontalswervedeg"
+                android:id="@+id/tilt_horizontalswervedeg_editText"
                 style="@style/EditText.Number.Float"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -275,7 +275,7 @@
                 android:text="@string/verticalswervedeg" />
 
             <EditText
-                android:id="@+id/tilt_verticalswervedeg"
+                android:id="@+id/tilt_verticalswervedeg_editText"
                 style="@style/EditText.Number.Float"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -298,7 +298,7 @@
                 android:text="@string/thresholdmm" />
 
             <EditText
-                android:id="@+id/tilt_thresholdmm"
+                android:id="@+id/tilt_thresholdmm_editText"
                 style="@style/EditText.Number.Float"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -339,7 +339,7 @@
                 android:text="@string/thresholdmm" />
 
             <EditText
-                android:id="@+id/multiTouchShift_thresholdmm"
+                android:id="@+id/multiTouchShift_thresholdmm_editText"
                 style="@style/EditText.Number.Float"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

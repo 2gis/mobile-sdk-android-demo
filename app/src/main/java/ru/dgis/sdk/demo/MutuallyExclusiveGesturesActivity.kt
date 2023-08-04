@@ -21,6 +21,7 @@ class MutuallyExclusiveGesturesActivity : AppCompatActivity() {
     private val gestureManager by lazy { mapView.gestureManager }
 
     private var checkedGestures = EnumSet.noneOf(Gesture::class.java)
+    private var addedRules = mutableListOf<EnumSet<Gesture>>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -43,7 +44,6 @@ class MutuallyExclusiveGesturesActivity : AppCompatActivity() {
                 tiltCheckbox,
                 rotationCheckbox,
                 scailingCheckbox,
-                shiftCheckbox,
                 multiTouchShiftCheckbox
             )
             checkboxes.forEach { checkBox ->
@@ -57,7 +57,8 @@ class MutuallyExclusiveGesturesActivity : AppCompatActivity() {
             }
 
             applyRuleButton.setOnClickListener {
-                gestureManager.setMutuallyExclusiveGestures(listOf(checkedGestures))
+                addedRules += listOf(checkedGestures)
+                gestureManager.setMutuallyExclusiveGestures(addedRules)
                 checkedGestures = EnumSet.noneOf(Gesture::class.java)
                 checkboxes.forEach {
                     it.isChecked = false
@@ -66,6 +67,7 @@ class MutuallyExclusiveGesturesActivity : AppCompatActivity() {
 
             cleanRulesButton.setOnClickListener {
                 gestureManager.setMutuallyExclusiveGestures(listOf())
+                addedRules.clear()
                 checkedGestures = EnumSet.noneOf(Gesture::class.java)
                 checkboxes.forEach {
                     it.isChecked = false

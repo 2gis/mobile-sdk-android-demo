@@ -85,10 +85,10 @@ class GesturesActivity : AppCompatActivity() {
         val rotationSettings = gestureManager.rotationSettings
 
         mapOf(
-            settingsBinding.rotationAnglediffinscalingdeg to "angleDiffInScalingDeg",
-            settingsBinding.rotationDistancediffmm to "distanceDiffMm",
+            settingsBinding.rotationAnglediffinscalingdegEditText to "angleDiffInScalingDeg",
+            settingsBinding.rotationDistancediffmmEditText to "distanceDiffMm",
             settingsBinding.rotationAnglediffdegEditText to "angleDiffDeg",
-            settingsBinding.rotationDistancediffinscalingmm to "distanceDiffInScalingMm"
+            settingsBinding.rotationDistancediffinscalingmmEditText to "distanceDiffInScalingMm"
         ).forEach { (editText, setting) ->
             val propertyValue = readSettingsPropertyByName<Float>(rotationSettings, setting)
             editText.apply {
@@ -108,10 +108,10 @@ class GesturesActivity : AppCompatActivity() {
         val tiltSettings = gestureManager.tiltSettings
 
         mapOf(
-            settingsBinding.tiltHorizontalswervedeg to "horizontalSwerveDeg",
-            settingsBinding.tiltLenondegreemm to "lenOnDegreeMm",
-            settingsBinding.tiltThresholdmm to "thresholdMm",
-            settingsBinding.tiltVerticalswervedeg to "verticalSwerveDeg"
+            settingsBinding.tiltHorizontalswervedegEditText to "horizontalSwerveDeg",
+            settingsBinding.tiltLenondegreemmEditText to "lenOnDegreeMm",
+            settingsBinding.tiltThresholdmmEditText to "thresholdMm",
+            settingsBinding.tiltVerticalswervedegEditText to "verticalSwerveDeg"
         ).forEach { (editText, setting) ->
             val propertyValue = readSettingsPropertyByName<Float>(tiltSettings, setting)
             editText.apply {
@@ -131,8 +131,8 @@ class GesturesActivity : AppCompatActivity() {
         val scalingSettings = gestureManager.scalingSettings
 
         mapOf(
-            settingsBinding.scailingScaleratiothreshold to "scaleRatioThreshold",
-            settingsBinding.scailingScaleratiothresholdinrotation to "scaleRatioThresholdInRotation"
+            settingsBinding.scailingScaleratiothresholdEditText to "scaleRatioThreshold",
+            settingsBinding.scailingScaleratiothresholdinrotationEditText to "scaleRatioThresholdInRotation"
         ).forEach { (editText, setting) ->
             val propertyValue = readSettingsPropertyByName<Float>(scalingSettings, setting)
             editText.apply {
@@ -151,7 +151,7 @@ class GesturesActivity : AppCompatActivity() {
         val multiTouchShiftSettings = gestureManager.multitouchShiftSettings
 
         mapOf(
-            settingsBinding.multiTouchShiftThresholdmm to "thresholdMm"
+            settingsBinding.multiTouchShiftThresholdmmEditText to "thresholdMm"
         ).forEach { (editText, setting) ->
             val propertyValue = readSettingsPropertyByName<Float>(multiTouchShiftSettings, setting)
             editText.apply {
