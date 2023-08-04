@@ -142,6 +142,8 @@ afterEvaluate { project ->
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation libs.kotlin.stdlib
+    implementation libs.kotlinx.coroutines.core
+    implementation libs.kotlin.reflect
 
     implementation libs.androidx.appcompat
     implementation libs.androidx.constraintlayout
@@ -166,5 +168,4 @@ dependencies {
             classifier = "sources"
         }
     }
-    implementation libs.kotlin.reflect
 }
