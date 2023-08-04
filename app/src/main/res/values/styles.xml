@@ -12,19 +12,24 @@
     <style name="SubheadMediumLeftBlack">
         <item name="android:fontFamily">@font/suisse_intl_medium</item>
         <item name="android:textStyle">normal</item>
-        <item name="android:textSize">11.5sp</item>
+        <item name="android:textSize">13.5sp</item>
         <item name="android:lineSpacingExtra">4.5sp</item>
         <item name="android:textColor">?android:attr/textColorPrimary</item>
+        <item name="android:paddingStart">24dp</item>
+        <item name="android:paddingEnd">24dp</item>
+        <item name="android:background">?android:attr/colorBackground</item>
+
     </style>
 
     <style name="SwitchItem" parent="Widget.MaterialComponents.CompoundButton.Switch">
-        <item name="android:enabled">false</item>
+        <item name="android:layout_marginStart">12dp</item>
+        <item name="android:enabled">true</item>
         <item name="android:textAppearance">@style/BodyRegularLeftBlack</item>
-        <item name="android:background">?android:attr/colorBackground</item>
         <item name="android:backgroundTint">?attr/colorSurface</item>
         <item name="showText">false</item>
         <item name="lineHeight">18dp</item>
         <item name="useMaterialThemeColors">false</item>
+
     </style>
 
     <style name="SwitchItem.Settings" parent="SwitchItem">
@@ -33,4 +38,15 @@
         <item name="android:enabled">false</item>
     </style>
 
+    <style name="EditText" parent="Widget.AppCompat.EditText">
+    </style>
+    <style name="EditText.Number">
+        <item name="android:width">80dp</item>
+    </style>
+    <style name="EditText.Number.Int">
+        <item name="android:inputType">number</item>
+    </style>
+    <style name="EditText.Number.Float">
+        <item name="android:inputType">numberDecimal</item>
+    </style>
 </resources>

@@ -45,6 +45,18 @@ class MainActivity : AppCompatActivity() {
         Page("Parkings on map") {
             val intent = Intent(this@MainActivity, ParkingActivity::class.java)
             startActivity(intent)
+        },
+        Page("Gestures") {
+            val intent = Intent(this@MainActivity, GesturesActivity::class.java)
+            startActivity(intent)
+        },
+        Page("Gestures: center point") {
+            val intent = Intent(this@MainActivity, GesturesMapPointActivity::class.java)
+            startActivity(intent)
+        },
+        Page("Mutually exclusive gestures") {
+            val intent = Intent(this@MainActivity, MutuallyExclusiveGesturesActivity::class.java)
+            startActivity(intent)
         }
     )
 

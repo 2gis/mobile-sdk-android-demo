@@ -166,4 +166,5 @@ dependencies {
             classifier = "sources"
         }
     }
+    implementation libs.kotlin.reflect
 }

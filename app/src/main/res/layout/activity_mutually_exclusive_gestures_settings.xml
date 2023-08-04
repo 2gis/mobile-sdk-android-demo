@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        style="@style/SubheadMediumLeftBlack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/gestures" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/BodyRegularLeftBlack"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_weight="1"
+            android:text="@string/tilt" />
+
+        <CheckBox
+            android:id="@+id/tiltCheckbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:tag="@string/tilt" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/BodyRegularLeftBlack"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_weight="1"
+            android:text="@string/scailing" />
+
+        <CheckBox
+            android:id="@+id/scailingCheckbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:tag="@string/scailing" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/BodyRegularLeftBlack"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_weight="1"
+            android:text="@string/rotation" />
+
+        <CheckBox
+            android:id="@+id/rotationCheckbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:tag="@string/rotation" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/BodyRegularLeftBlack"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_weight="1"
+            android:text="@string/multi_touch_shift" />
+
+        <CheckBox
+            android:id="@+id/multiTouchShiftCheckbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:tag="@string/multi_touch_shift" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/applyRuleButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="48dp"
+        android:text="@string/apply_rule" />
+
+    <Button
+        android:id="@+id/cleanRulesButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="48dp"
+        android:backgroundTint="@android:color/holo_red_light"
+        android:text="@string/clear_rules" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="24dp" />
+</LinearLayout>

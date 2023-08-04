@@ -37,6 +37,7 @@ androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "core" }
 androidx-fragment = { module = "androidx.fragment:fragment-ktx", version.ref = "fragment" }
 androidx-legacySupport = { module = "androidx.legacy:legacy-support-v4", version.ref = "legacySupport" }
 
+kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
 
 gms-locations = { module = "com.google.android.gms:play-services-location", version.ref = 'gms-location' }
