@@ -25,8 +25,8 @@ class MutuallyExclusiveGesturesActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        binding.addSettingsLayout().apply {
-            settingsDrawerInnerLayout.addView(settingsBinding.root)
+        binding.addSettingsLayout {
+            addView(settingsBinding.root)
         }
 
         /**
