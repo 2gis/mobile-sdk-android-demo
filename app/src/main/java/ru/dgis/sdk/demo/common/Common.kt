@@ -21,8 +21,12 @@ fun MapView.updateMapCopyrightPosition(rootView: View, bottomSheet: View) {
     setCopyrightMargins(0, 0, 0, rootView.height + rootView.globalY - bottomSheet.globalY)
 }
 
-// Helper method for adding BottomSheet to main layout.
-fun ViewBinding.addSettingsLayout(): SettingsLayoutView {
+/**
+ * Provides generic BottomSheet to layout. Should be used as parent layout for some useful view / layout, such as settings.
+ * Takes lambda as a parameter, in which child layout should be added
+ * @param init lambda which configures BottomSheet, adding child layout, etc
+ */
+fun ViewBinding.addSettingsLayout(init: ViewGroup.() -> Unit): SettingsLayoutView {
     val settingsView = SettingsLayoutView(root.context)
     val innerLayoutView = settingsView.findViewById<LinearLayout>(R.id.settingsDrawerInnerLayout)
     (root as ViewGroup).addView(settingsView)
@@ -36,6 +40,7 @@ fun ViewBinding.addSettingsLayout(): SettingsLayoutView {
             }
         })
     }
+    innerLayoutView.init()
     return settingsView
 }
 

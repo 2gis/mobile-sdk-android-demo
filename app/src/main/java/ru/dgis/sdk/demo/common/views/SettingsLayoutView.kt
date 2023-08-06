@@ -12,7 +12,7 @@ class SettingsLayoutView(
     defStyle: Int = 0
 ) : CoordinatorLayout(context, attrs, defStyle) {
 
-    val settingsDrawerInnerLayout: LinearLayout
+    private val settingsDrawerInnerLayout: LinearLayout
     init {
         inflate(context, R.layout.bottom_settings_layout, this)
         settingsDrawerInnerLayout = findViewById(R.id.settingsDrawerInnerLayout)
