@@ -1,7 +1,6 @@
 package ru.dgis.sdk.demo
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
@@ -56,8 +55,8 @@ class GeoJsonActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        binding.addSettingsLayout().apply {
-            settingsDrawerInnerLayout.addView(settingsBinding.root)
+        binding.addSettingsLayout {
+            addView(settingsBinding.root)
         }
 
         binding.mapView.getMapAsync {
@@ -115,7 +114,6 @@ class GeoJsonActivity : AppCompatActivity() {
             val geoJsonString = assets.open(filename).bufferedReader().use { it.readText() }
             objects = parseGeoJson(geoJsonString)
         }
-        Log.w("FILES", "Reading file $filename")
         return objects
     }
 }
@@ -124,11 +122,11 @@ class GeoJsonActivity : AppCompatActivity() {
 // We are introducing custom function to overcome this.
 // For details see: https://kt.academy/article/cc-recipes
 @Suppress("UNCHECKED_CAST")
-fun <T> suspendLazy(
+fun <T : Any> suspendLazy(
     initializer: suspend () -> T
 ): suspend () -> T {
     var initializerInner: (suspend () -> T)? = initializer
-    var holder: Any? = Any()
+    var holder = Any()
 
     return {
         if (initializerInner == null) { holder as T }
