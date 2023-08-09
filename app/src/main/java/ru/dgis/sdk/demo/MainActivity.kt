@@ -61,6 +61,10 @@ class MainActivity : AppCompatActivity() {
         Page("GeoJson") {
             val intent = Intent(this@MainActivity, GeoJsonActivity::class.java)
             startActivity(intent)
+        },
+        Page("Camera moves") {
+            val intent = Intent(this@MainActivity, CameraMovesActivity::class.java)
+            startActivity(intent)
         }
     )
 

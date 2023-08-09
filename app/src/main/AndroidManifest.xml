@@ -19,6 +19,9 @@
             android:name=".GeoJsonActivity"
             android:exported="false" />
         <activity
+            android:name=".CameraMovesActivity"
+            android:exported="false" />
+        <activity
             android:name=".MutuallyExclusiveGesturesActivity"
             android:exported="false" />
         <activity
