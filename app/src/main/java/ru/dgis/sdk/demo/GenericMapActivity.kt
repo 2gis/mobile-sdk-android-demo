@@ -7,13 +7,13 @@ import androidx.appcompat.widget.SwitchCompat
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import ru.dgis.sdk.Context
 import ru.dgis.sdk.demo.common.updateMapCopyrightPosition
+import ru.dgis.sdk.map.BearingSource
 import ru.dgis.sdk.map.Gesture
 import ru.dgis.sdk.map.GestureManager
 import ru.dgis.sdk.map.Map
 import ru.dgis.sdk.map.MapView
-import ru.dgis.sdk.map.MyLocationDirectionBehaviour
+import ru.dgis.sdk.map.MyLocationController
 import ru.dgis.sdk.map.MyLocationMapObjectSource
-import ru.dgis.sdk.map.createSmoothMyLocationController
 
 class GenericMapActivity : AppCompatActivity() {
     private val sdkContext: Context by lazy { application.sdkContext }
@@ -64,8 +64,7 @@ class GenericMapActivity : AppCompatActivity() {
 
         mapSource = MyLocationMapObjectSource(
             sdkContext,
-            MyLocationDirectionBehaviour.FOLLOW_MAGNETIC_HEADING,
-            createSmoothMyLocationController()
+            MyLocationController(BearingSource.MAGNETIC)
         )
         map.addSource(mapSource)
 
