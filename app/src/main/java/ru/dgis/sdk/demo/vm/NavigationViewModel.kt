@@ -8,11 +8,12 @@ import ru.dgis.sdk.Context
 import ru.dgis.sdk.await
 import ru.dgis.sdk.demo.R
 import ru.dgis.sdk.geometry.GeoPointWithElevation
+import ru.dgis.sdk.map.BearingSource
 import ru.dgis.sdk.map.Map
 import ru.dgis.sdk.map.MapObjectManager
 import ru.dgis.sdk.map.Marker
 import ru.dgis.sdk.map.MarkerOptions
-import ru.dgis.sdk.map.MyLocationDirectionBehaviour
+import ru.dgis.sdk.map.MyLocationController
 import ru.dgis.sdk.map.MyLocationMapObjectSource
 import ru.dgis.sdk.map.RouteEditorSource
 import ru.dgis.sdk.map.RouteMapObject
@@ -140,7 +141,7 @@ class NavigationViewModel(
     private fun initLocationSource() {
         MyLocationMapObjectSource(
             sdkContext,
-            MyLocationDirectionBehaviour.FOLLOW_SATELLITE_HEADING
+            MyLocationController(BearingSource.SATELLITE)
         ).also {
             map.addSource(it)
             closeables.add(it)
