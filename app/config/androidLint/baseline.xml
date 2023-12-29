@@ -91,7 +91,7 @@
 
     <issue
         id="GradleDependency"
-        message="A newer version of com.google.android.material:material than 1.9.0 is available: 1.10.0"
+        message="A newer version of com.google.android.material:material than 1.9.0 is available: 1.11.0"
         errorLine1="material = &quot;1.9.0&quot;"
         errorLine2="           ~~~~~~~">
         <location
@@ -1354,7 +1354,7 @@
         errorLine2="                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="build.gradle"
-            line="160"
+            line="159"
             column="27"/>
     </issue>
 
@@ -1365,7 +1365,7 @@
         errorLine2="                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="build.gradle"
-            line="161"
+            line="160"
             column="27"/>
     </issue>
 
