@@ -63,6 +63,10 @@
         <activity
             android:name=".ParkingActivity"
             android:theme="@style/AppTheme" />
+        <activity
+            android:windowSoftInputMode="adjustNothing"
+            android:name=".SearchActivity"
+            android:theme="@style/AppTheme" />
     </application>
 
 </manifest>

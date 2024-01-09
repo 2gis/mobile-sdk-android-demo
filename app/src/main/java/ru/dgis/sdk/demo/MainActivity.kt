@@ -65,6 +65,10 @@ class MainActivity : AppCompatActivity() {
         Page("Camera moves") {
             val intent = Intent(this@MainActivity, CameraMovesActivity::class.java)
             startActivity(intent)
+        },
+        Page("Search") {
+            val intent = Intent(this@MainActivity, SearchActivity::class.java)
+            startActivity(intent)
         }
     )
 
