@@ -50,7 +50,7 @@ android {
                 enable true
                 reset()
                 //noinspection ChromeOsAbiSupport
-                include "x86", "armeabi-v7a"
+                include "x86", "armeabi-v7a", "arm64-v8a"
                 universalApk false
             }
         }
@@ -77,6 +77,8 @@ android {
     }
 
     lint {
+        disable 'GradleDependency'
+        absolutePaths = false
         abortOnError = true
         ignoreWarnings = false
         warningsAsErrors = true
