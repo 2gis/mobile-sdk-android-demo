@@ -21,8 +21,6 @@ import ru.dgis.sdk.map.calcPosition
 import ru.dgis.sdk.map.imageFromResource
 import ru.dgis.sdk.platform.Locale
 import ru.dgis.sdk.platform.getLocaleManager
-import ru.dgis.sdk.positioning.DefaultLocationSource
-import ru.dgis.sdk.positioning.LocationService
 
 // Spatial restriction for search in this activity.
 private val dubaiGeoRect = GeoRect(GeoPoint(25.140595, 55.240626), GeoPoint(25.226267, 55.318421))
@@ -35,7 +33,7 @@ private val dubaiGeoRect = GeoRect(GeoPoint(25.140595, 55.240626), GeoPoint(25.2
  */
 class SearchActivity : AppCompatActivity() {
     private val binding by lazy { ActivitySearchBinding.inflate(layoutInflater) }
-    private val locationSource by lazy { DefaultLocationSource(this) }
+    private val locationService by lazy { application.locationService }
     private var mapObjectManager: MapObjectManager? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,7 +57,7 @@ class SearchActivity : AppCompatActivity() {
         // and location provider (to show distance to search result object)
         // You can further modify search engine in this block, see documentation on search engine: https://docs.2gis.com/en/android/sdk/reference/10.0/ru.dgis.sdk.directory.SearchLayout#nav-lvl1--configureSearchEngine
         binding.searchLayout.configureSearchEngine {
-            setLocationProvider(locationSource as LocationService)
+            setLocationProvider(locationService)
             setAreaOfInterest(dubaiGeoRect)
         }
 
