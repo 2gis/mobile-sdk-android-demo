@@ -163,6 +163,9 @@ dependencies {
 
     implementation libs.dgis.sdk
 
+    implementation libs.huawei.base
+    implementation libs.huawei.location
+
     // Without version catalogs you can just use:
     // - compileOnlyDependenciesMetadata "ru.dgis.sdk:sdk-full:<version>:sources"
     compileOnlyDependenciesMetadata(libs.dgis.sdk) {

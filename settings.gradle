@@ -14,6 +14,9 @@ dependencyResolutionManagement {
         maven {
             url "https://artifactory.2gis.dev/sdk-maven-release"
         }
+        maven {
+            url "https://developer.huawei.com/repo/"
+        }
     }
 }
 

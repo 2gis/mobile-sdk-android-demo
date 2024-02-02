@@ -20,6 +20,9 @@ material = "1.9.0"
 retrofuture = "1.7.3"
 firebase-bom = "26.1.0"
 
+huawei-base = "6.11.0.302"
+huawei-location = "6.12.0.300"
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
@@ -46,4 +49,7 @@ material = { module = "com.google.android.material:material", version.ref = "mat
 retrofuture = { module = "net.sourceforge.streamsupport:android-retrofuture", version.ref = "retrofuture" }
 
 dgis-sdk = { module = "ru.dgis.sdk:sdk-full", version.ref = "dgis-sdk" }
+
+huawei-base = { module = "com.huawei.hms:base", version.ref = "huawei-base" }
+huawei-location = { module= "com.huawei.hms:location", version.ref = "huawei-location" }
 
