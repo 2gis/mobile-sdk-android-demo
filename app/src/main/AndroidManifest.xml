@@ -16,6 +16,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".SimulateNavigationActivity"
+            android:hardwareAccelerated="true"
+            android:exported="false" />
+        <activity
             android:name=".GeoJsonActivity"
             android:exported="false" />
         <activity
@@ -64,9 +68,9 @@
             android:name=".ParkingActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:windowSoftInputMode="adjustNothing"
             android:name=".SearchActivity"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustNothing" />
     </application>
 
 </manifest>

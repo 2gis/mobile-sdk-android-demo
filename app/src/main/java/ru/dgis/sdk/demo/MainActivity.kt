@@ -69,6 +69,10 @@ class MainActivity : AppCompatActivity() {
         Page("Search") {
             val intent = Intent(this@MainActivity, SearchActivity::class.java)
             startActivity(intent)
+        },
+        Page("Simulate navigation") {
+            val intent = Intent(this@MainActivity, SimulateNavigationActivity::class.java)
+            startActivity(intent)
         }
     )
 

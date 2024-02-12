@@ -156,6 +156,7 @@ dependencies {
     implementation libs.material
 
     implementation libs.retrofuture
+    implementation libs.androidx.activity
 
     releaseImplementation platform("com.google.firebase:firebase-bom:${libs.versions.firebase.bom.get()}")
     releaseImplementation 'com.google.firebase:firebase-analytics-ktx'
