@@ -22,6 +22,7 @@ firebase-bom = "26.1.0"
 
 huawei-base = "6.11.0.302"
 huawei-location = "6.12.0.300"
+activity = "1.8.0"
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -52,4 +53,5 @@ dgis-sdk = { module = "ru.dgis.sdk:sdk-full", version.ref = "dgis-sdk" }
 
 huawei-base = { module = "com.huawei.hms:base", version.ref = "huawei-base" }
 huawei-location = { module= "com.huawei.hms:location", version.ref = "huawei-location" }
+androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 
