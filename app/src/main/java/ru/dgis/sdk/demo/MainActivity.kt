@@ -11,6 +11,7 @@ import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import ru.dgis.sdk.demo.markers.MarkersMapActivity
 
 typealias ScreenSelectedCallback = () -> Unit
 
@@ -28,6 +29,10 @@ class MainActivity : AppCompatActivity() {
     private val pages = listOf(
         Page("Generic Map") {
             val intent = Intent(this@MainActivity, GenericMapActivity::class.java)
+            startActivity(intent)
+        },
+        Page("Markers Map") {
+            val intent = Intent(this@MainActivity, MarkersMapActivity::class.java)
             startActivity(intent)
         },
         Page("Custom Style") {

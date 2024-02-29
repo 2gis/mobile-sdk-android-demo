@@ -49,4 +49,9 @@
     <style name="EditText.Number.Float">
         <item name="android:inputType">numberDecimal</item>
     </style>
+    <style name="ClusterTextAppearance" parent="android:TextAppearance">
+        <item name="android:textColor">#FF0D29</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 </resources>

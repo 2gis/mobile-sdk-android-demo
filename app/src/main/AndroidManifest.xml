@@ -55,6 +55,11 @@
             android:theme="@style/GenericActivityTheme"
             tools:ignore="LockedOrientationActivity" />
         <activity
+            android:name=".markers.MarkersMapActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/GenericActivityTheme"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
             android:name=".MapStyleActivity"
             android:theme="@style/MapStyleActivityTheme" />
         <activity

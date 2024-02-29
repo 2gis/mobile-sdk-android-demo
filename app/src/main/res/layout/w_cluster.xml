@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/cluster_height"
+    android:layout_height="@dimen/cluster_height"
+    android:background="@drawable/ic_geocluster"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/clusterSize"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:paddingBottom="4dp"
+        android:textAppearance="@style/ClusterTextAppearance"
+        android:textSize="11sp"
+        tools:text="3" />
+
+</FrameLayout>
