@@ -38,6 +38,7 @@ android {
 
     buildFeatures {
         viewBinding true
+        buildConfig true
     }
 
     splits {
@@ -159,8 +160,8 @@ dependencies {
     implementation libs.androidx.activity
 
     releaseImplementation platform("com.google.firebase:firebase-bom:${libs.versions.firebase.bom.get()}")
-    releaseImplementation 'com.google.firebase:firebase-analytics-ktx'
-    releaseImplementation 'com.google.firebase:firebase-crashlytics-ndk'
+    releaseImplementation libs.firebase.analytics.ktx
+    releaseImplementation libs.firebase.crashlytics.ndk
 
     implementation libs.dgis.sdk
 
