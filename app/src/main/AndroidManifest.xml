@@ -48,12 +48,12 @@
             android:name=".MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/MainActivityTheme"
-            tools:ignore="LockedOrientationActivity" />
+            tools:ignore="DiscouragedApi,LockedOrientationActivity" />
         <activity
             android:name=".GenericMapActivity"
             android:screenOrientation="portrait"
             android:theme="@style/GenericActivityTheme"
-            tools:ignore="LockedOrientationActivity" />
+            tools:ignore="DiscouragedApi,LockedOrientationActivity" />
         <activity
             android:name=".MapStyleActivity"
             android:theme="@style/MapStyleActivityTheme" />
