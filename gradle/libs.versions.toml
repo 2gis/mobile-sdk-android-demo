@@ -1,13 +1,13 @@
 [versions]
 kotlin = "1.9.22"
-agp = "8.3.0"
+agp = "8.3.1"
 google-services = "4.3.15"
 crashlytics = "2.9.2"
 taskTree = "2.1.1"
 undercouch-download = "5.4.0"
 ktlint = "11.5.0"
 
-dgis-sdk = "10.1.0"
+dgis-sdk = "10.2.0"
 
 appcompat = "1.6.1"
 constraintlayout = "2.1.4"
