@@ -54,6 +54,7 @@
     <string name="multipolygon">Multipolygon</string>
     <string name="polygon">Polygon</string>
     <string name="polyline">Polyline</string>
+    <string name="take_snapshot">Take snapshot!</string>
     <string-array name="route_search_types">
         <item>Car</item>
         <item>Pedestrian</item>
