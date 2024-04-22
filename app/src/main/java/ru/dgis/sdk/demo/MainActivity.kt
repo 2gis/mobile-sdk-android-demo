@@ -73,6 +73,10 @@ class MainActivity : AppCompatActivity() {
         Page("Simulate navigation") {
             val intent = Intent(this@MainActivity, SimulateNavigationActivity::class.java)
             startActivity(intent)
+        },
+        Page("Take Map Snapshot") {
+            val intent = Intent(this@MainActivity, TakeSnapshotActivity::class.java)
+            startActivity(intent)
         }
     )
 

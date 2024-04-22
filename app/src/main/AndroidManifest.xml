@@ -16,9 +16,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".SimulateNavigationActivity"
-            android:hardwareAccelerated="true"
+            android:name=".TakeSnapshotActivity"
             android:exported="false" />
+        <activity
+            android:name=".SimulateNavigationActivity"
+            android:exported="false"
+            android:hardwareAccelerated="true" />
         <activity
             android:name=".GeoJsonActivity"
             android:exported="false" />

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TakeSnapshotActivity">
+
+    <ru.dgis.sdk.map.MapView
+        android:id="@+id/mapView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:dgis_cameraTargetLat="25.19473094728837"
+        app:dgis_cameraTargetLng="55.274968072772026"
+        app:dgis_cameraZoom="15.94"
+        app:layout_constraintBottom_toTopOf="@id/snapshotView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_weight="1">
+
+        <ru.dgis.sdk.map.ZoomControl
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|end" />
+    </ru.dgis.sdk.map.MapView>
+
+    <ImageView
+        android:id="@+id/snapshotView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#00000000"
+        android:importantForAccessibility="no"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/mapView"
+        app:layout_constraintVertical_weight="1" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/snapshotButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/take_snapshot"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
