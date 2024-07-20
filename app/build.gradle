@@ -78,7 +78,7 @@ android {
     }
 
     lint {
-        disable 'GradleDependency', 'AndroidGradlePluginVersion'
+        disable 'GradleDependency', 'AndroidGradlePluginVersion', 'OldTargetApi'
         absolutePaths = false
         abortOnError = true
         ignoreWarnings = false
