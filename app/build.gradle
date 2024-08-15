@@ -149,6 +149,7 @@ dependencies {
     implementation libs.kotlin.reflect
 
     implementation libs.androidx.appcompat
+    implementation libs.androidx.car.app
     implementation libs.androidx.constraintlayout
     implementation libs.androidx.core.ktx
     implementation libs.androidx.fragment
