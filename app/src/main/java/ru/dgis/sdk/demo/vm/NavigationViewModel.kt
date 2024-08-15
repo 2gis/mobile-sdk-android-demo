@@ -13,7 +13,7 @@ import ru.dgis.sdk.map.Map
 import ru.dgis.sdk.map.MapObjectManager
 import ru.dgis.sdk.map.Marker
 import ru.dgis.sdk.map.MarkerOptions
-import ru.dgis.sdk.map.MyLocationController
+import ru.dgis.sdk.map.MyLocationControllerSettings
 import ru.dgis.sdk.map.MyLocationMapObjectSource
 import ru.dgis.sdk.map.RouteEditorSource
 import ru.dgis.sdk.map.RouteMapObject
@@ -141,7 +141,7 @@ class NavigationViewModel(
     private fun initLocationSource() {
         MyLocationMapObjectSource(
             sdkContext,
-            MyLocationController(BearingSource.SATELLITE)
+            MyLocationControllerSettings(BearingSource.SATELLITE)
         ).also {
             map.addSource(it)
             closeables.add(it)
