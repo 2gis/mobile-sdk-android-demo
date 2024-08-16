@@ -77,6 +77,10 @@ class MainActivity : AppCompatActivity() {
         Page("Take Map Snapshot") {
             val intent = Intent(this@MainActivity, TakeSnapshotActivity::class.java)
             startActivity(intent)
+        },
+        Page("Download Territories") {
+            val intent = Intent(this@MainActivity, DownloadTerritoriesActivity::class.java)
+            startActivity(intent)
         }
     )
 
