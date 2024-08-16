@@ -74,6 +74,10 @@
             android:name=".SearchActivity"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustNothing" />
+        <activity
+            android:name=".DownloadTerritoriesActivity"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustNothing" />
     </application>
 
 </manifest>
