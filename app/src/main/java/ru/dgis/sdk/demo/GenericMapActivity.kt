@@ -12,7 +12,6 @@ import ru.dgis.sdk.map.Gesture
 import ru.dgis.sdk.map.GestureManager
 import ru.dgis.sdk.map.Map
 import ru.dgis.sdk.map.MapView
-import ru.dgis.sdk.map.MyLocationControl
 import ru.dgis.sdk.map.MyLocationControllerSettings
 import ru.dgis.sdk.map.MyLocationMapObjectSource
 
