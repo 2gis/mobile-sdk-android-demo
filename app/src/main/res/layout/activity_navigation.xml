@@ -163,6 +163,41 @@
                 android:text="Use simulation"
                 tools:ignore="HardcodedText" />
 
+            <RadioGroup
+                android:id="@+id/presetOptionSwitch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp">
+
+                <RadioButton
+                    android:id="@+id/litePreset"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Lite"
+                    tools:ignore="HardcodedText" />
+
+                <RadioButton
+                    android:id="@+id/normalPreset"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Normal"
+                    tools:ignore="HardcodedText" />
+
+                <RadioButton
+                    android:id="@+id/immersivePreset"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Immersive"
+                    tools:ignore="HardcodedText" />
+
+            </RadioGroup>
+
             <TextView
                 android:id="@+id/availabilityTextView"
                 android:layout_width="match_parent"
@@ -173,6 +208,7 @@
                 tools:ignore="HardcodedText" />
         </LinearLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
     <androidx.constraintlayout.widget.Group
         android:id="@+id/route_editing_group"
         android:layout_width="wrap_content"

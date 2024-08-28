@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
@@ -25,6 +26,7 @@ import ru.dgis.sdk.demo.databinding.ActivityNavigationBinding
 import ru.dgis.sdk.demo.vm.NavigationViewModel
 import ru.dgis.sdk.geometry.point
 import ru.dgis.sdk.map.DgisMapObject
+import ru.dgis.sdk.map.GraphicsPreset
 import ru.dgis.sdk.map.Map
 import ru.dgis.sdk.map.MapView
 import ru.dgis.sdk.map.ScreenDistance
@@ -42,6 +44,7 @@ class NavigationActivity : AppCompatActivity(), TouchEventsObserver {
 
     private var viewModel: NavigationViewModel? = null
 
+    private lateinit var presetOptionSwitch: RadioGroup
     private lateinit var map: Map
     private lateinit var mapView: MapView
     private lateinit var binding: ActivityNavigationBinding
@@ -55,6 +58,15 @@ class NavigationActivity : AppCompatActivity(), TouchEventsObserver {
 
         binding = ActivityNavigationBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        presetOptionSwitch = findViewById(R.id.presetOptionSwitch)
+        presetOptionSwitch.setOnCheckedChangeListener { _, checkedId ->
+            when (checkedId) {
+                R.id.litePreset -> setGraphicsPreset(GraphicsPreset.LITE)
+                R.id.normalPreset -> setGraphicsPreset(GraphicsPreset.NORMAL)
+                R.id.immersivePreset -> setGraphicsPreset(GraphicsPreset.IMMERSIVE)
+            }
+        }
 
         mapView = findViewById(R.id.mapView)
         routeEditorView = findViewById(R.id.routeEditorView)
@@ -119,6 +131,10 @@ class NavigationActivity : AppCompatActivity(), TouchEventsObserver {
         )
     }
 
+    private fun setGraphicsPreset(preset: GraphicsPreset) {
+        map.graphicsPreset = preset
+    }
+
     private fun initRouteTypeTabs() {
         binding.routeTypeTabsLayout.addOnTabSelectedListener(object :
                 TabLayout.OnTabSelectedListener {
@@ -150,6 +166,10 @@ class NavigationActivity : AppCompatActivity(), TouchEventsObserver {
     private fun initViewModel(map: Map) {
         val activity = this
         this.map = map
+
+        presetOptionSwitch.check(R.id.normalPreset)
+        setGraphicsPreset(GraphicsPreset.NORMAL)
+
         viewModel = NavigationViewModel(sdkContext, map, lifecycleScope).also { viewModel ->
             closeables.add(viewModel)
             viewModel.messageCallback = {
