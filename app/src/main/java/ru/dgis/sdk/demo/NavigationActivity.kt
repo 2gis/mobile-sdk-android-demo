@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
@@ -25,6 +26,7 @@ import ru.dgis.sdk.demo.databinding.ActivityNavigationBinding
 import ru.dgis.sdk.demo.vm.NavigationViewModel
 import ru.dgis.sdk.geometry.point
 import ru.dgis.sdk.map.DgisMapObject
+import ru.dgis.sdk.map.GraphicsPreset
 import ru.dgis.sdk.map.Map
 import ru.dgis.sdk.map.MapView
 import ru.dgis.sdk.map.ScreenDistance
@@ -42,6 +44,7 @@ class NavigationActivity : AppCompatActivity(), TouchEventsObserver {
 
     private var viewModel: NavigationViewModel? = null
 
+    private lateinit var graphicPreset: RadioGroup
     private lateinit var map: Map
     private lateinit var mapView: MapView
     private lateinit var binding: ActivityNavigationBinding
@@ -56,6 +59,8 @@ class NavigationActivity : AppCompatActivity(), TouchEventsObserver {
         binding = ActivityNavigationBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        graphicPreset = findViewById(R.id.graphicPreset)
+        graphicPreset.check(R.id.normalPreset)
         mapView = findViewById(R.id.mapView)
         routeEditorView = findViewById(R.id.routeEditorView)
         navigationView = findViewById(R.id.navigationView)
@@ -76,6 +81,22 @@ class NavigationActivity : AppCompatActivity(), TouchEventsObserver {
                         )
                     }
                 )
+                when (it.graphicsPresetHintChannel.value) {
+                    GraphicsPreset.LITE -> graphicPreset.check(R.id.litePreset)
+                    GraphicsPreset.NORMAL -> graphicPreset.check(R.id.normalPreset)
+                    GraphicsPreset.IMMERSIVE -> graphicPreset.check(R.id.immersivePreset)
+                    else -> {}
+                }
+            }
+        }
+
+        graphicPreset.setOnCheckedChangeListener { _, checkedId ->
+            mapView.getMapAsync { map ->
+                when (checkedId) {
+                    R.id.litePreset -> map.graphicsPreset = GraphicsPreset.LITE
+                    R.id.normalPreset -> map.graphicsPreset = GraphicsPreset.NORMAL
+                    R.id.immersivePreset -> map.graphicsPreset = GraphicsPreset.IMMERSIVE
+                }
             }
         }
 
