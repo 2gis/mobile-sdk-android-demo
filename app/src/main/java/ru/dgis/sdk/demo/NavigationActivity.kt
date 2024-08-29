@@ -81,7 +81,12 @@ class NavigationActivity : AppCompatActivity(), TouchEventsObserver {
                         )
                     }
                 )
-                it.graphicsPreset = GraphicsPreset.NORMAL
+                when (it.graphicsPresetHintChannel.value) {
+                    GraphicsPreset.LITE -> graphicPreset.check(R.id.litePreset)
+                    GraphicsPreset.NORMAL -> graphicPreset.check(R.id.normalPreset)
+                    GraphicsPreset.IMMERSIVE -> graphicPreset.check(R.id.immersivePreset)
+                    else -> {}
+                }
             }
         }
 
