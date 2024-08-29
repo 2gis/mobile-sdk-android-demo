@@ -82,7 +82,6 @@ class NavigationActivity : AppCompatActivity(), TouchEventsObserver {
                     }
                 )
                 it.graphicsPreset = GraphicsPreset.NORMAL
-
             }
         }
 
