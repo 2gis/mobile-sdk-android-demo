@@ -44,7 +44,7 @@ class NavigationActivity : AppCompatActivity(), TouchEventsObserver {
 
     private var viewModel: NavigationViewModel? = null
 
-    private lateinit var presetOptionSwitch: RadioGroup
+    private lateinit var graphicPreset: RadioGroup
     private lateinit var map: Map
     private lateinit var mapView: MapView
     private lateinit var binding: ActivityNavigationBinding
@@ -59,15 +59,8 @@ class NavigationActivity : AppCompatActivity(), TouchEventsObserver {
         binding = ActivityNavigationBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        presetOptionSwitch = findViewById(R.id.presetOptionSwitch)
-        presetOptionSwitch.setOnCheckedChangeListener { _, checkedId ->
-            when (checkedId) {
-                R.id.litePreset -> setGraphicsPreset(GraphicsPreset.LITE)
-                R.id.normalPreset -> setGraphicsPreset(GraphicsPreset.NORMAL)
-                R.id.immersivePreset -> setGraphicsPreset(GraphicsPreset.IMMERSIVE)
-            }
-        }
-
+        graphicPreset = findViewById(R.id.graphicPreset)
+        graphicPreset.check(R.id.normalPreset)
         mapView = findViewById(R.id.mapView)
         routeEditorView = findViewById(R.id.routeEditorView)
         navigationView = findViewById(R.id.navigationView)
@@ -88,6 +81,18 @@ class NavigationActivity : AppCompatActivity(), TouchEventsObserver {
                         )
                     }
                 )
+                it.graphicsPreset = GraphicsPreset.NORMAL
+
+            }
+        }
+
+        graphicPreset.setOnCheckedChangeListener { _, checkedId ->
+            mapView.getMapAsync { map ->
+                when (checkedId) {
+                    R.id.litePreset -> map.graphicsPreset = GraphicsPreset.LITE
+                    R.id.normalPreset -> map.graphicsPreset = GraphicsPreset.NORMAL
+                    R.id.immersivePreset -> map.graphicsPreset = GraphicsPreset.IMMERSIVE
+                }
             }
         }
 
@@ -131,10 +136,6 @@ class NavigationActivity : AppCompatActivity(), TouchEventsObserver {
         )
     }
 
-    private fun setGraphicsPreset(preset: GraphicsPreset) {
-        map.graphicsPreset = preset
-    }
-
     private fun initRouteTypeTabs() {
         binding.routeTypeTabsLayout.addOnTabSelectedListener(object :
                 TabLayout.OnTabSelectedListener {
@@ -166,10 +167,6 @@ class NavigationActivity : AppCompatActivity(), TouchEventsObserver {
     private fun initViewModel(map: Map) {
         val activity = this
         this.map = map
-
-        presetOptionSwitch.check(R.id.normalPreset)
-        setGraphicsPreset(GraphicsPreset.NORMAL)
-
         viewModel = NavigationViewModel(sdkContext, map, lifecycleScope).also { viewModel ->
             closeables.add(viewModel)
             viewModel.messageCallback = {
