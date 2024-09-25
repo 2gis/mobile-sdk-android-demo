@@ -8,7 +8,7 @@ taskTree = "2.1.1"
 undercouch-download = "5.4.0"
 ktlint = "11.5.0"
 
-dgis-sdk = "12.0.0"
+dgis-sdk = "12.1.0"
 
 appcompat = "1.6.1"
 constraintlayout = "2.1.4"
