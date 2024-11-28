@@ -21,6 +21,11 @@ import ru.dgis.sdk.map.Zoom
 import ru.dgis.sdk.platform.Locale
 import ru.dgis.sdk.platform.getLocaleManager
 
+/**
+ * Activity that demonstrates how to dynamically switch map locales in a DGis-based application.
+ * The locale changes are applied through a dropdown menu, and the map is recreated to reflect the
+ * changes.
+ */
 class LocaleSwitchActivity : AppCompatActivity() {
     private val sdkContext: Context by lazy { application.sdkContext }
     private lateinit var mapView: MapView
@@ -37,6 +42,12 @@ class LocaleSwitchActivity : AppCompatActivity() {
         recreateMap()
     }
 
+    /**
+     * Handles selection changes in the locale dropdown. Updates the locale settings in the
+     * DGis SDK and recreates the map to apply the changes.
+     *
+     * @param item The selected locale as a string.
+     */
     private fun onLocaleItemSelected(item: String) {
         if (item == "System") {
             getLocaleManager(sdkContext).overrideLocales(emptyList())
@@ -48,6 +59,10 @@ class LocaleSwitchActivity : AppCompatActivity() {
         recreateMap()
     }
 
+    /**
+     * Recreates the map to reflect any changes in settings (e.g., locale). The current map view
+     * is removed, and a new one is initialized with the updated options.
+     */
     private fun recreateMap() {
         map?.let { lifecycle.removeObserver(mapView) }
         mapContainer.removeAllViews()
@@ -74,6 +89,11 @@ class LocaleSwitchActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Initializes a dropdown spinner with a list of items and a callback for selection changes.
+     *
+     * @param onItemSelected Callback invoked when an item is selected.
+     */
     private fun initSpinner(spinner: Spinner, itemsResource: Int, onItemSelected: (String) -> Unit) {
         ArrayAdapter.createFromResource(this, itemsResource, android.R.layout.simple_spinner_item).also { adapter ->
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
