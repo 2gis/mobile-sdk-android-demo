@@ -69,4 +69,11 @@
         <item>EVENT_CENTER</item>
         <item>MAP_POSITION</item>
     </string-array>
+    <string-array name="locales_list">
+        <item>az_AZ</item>
+        <item>en-En</item>
+        <item>ru-Ru</item>
+        <item>System</item>
+    </string-array>
+    <string name="locale">Locale</string>
 </resources>

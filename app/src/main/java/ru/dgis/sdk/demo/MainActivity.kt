@@ -81,6 +81,10 @@ class MainActivity : AppCompatActivity() {
         Page("Download Territories") {
             val intent = Intent(this@MainActivity, DownloadTerritoriesActivity::class.java)
             startActivity(intent)
+        },
+        Page("Locale switch") {
+            val intent = Intent(this@MainActivity, LocaleSwitchActivity::class.java)
+            startActivity(intent)
         }
     )
 
