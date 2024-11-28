@@ -95,7 +95,7 @@ class LocaleSwitchActivity : AppCompatActivity() {
      * @param onItemSelected Callback invoked when an item is selected.
      */
     private fun initSpinner(spinner: Spinner, itemsResource: Int, onItemSelected: (String) -> Unit) {
-        ArrayAdapter.createFromResource(this, itemsResource, android.R.layout.simple_spinner_item).also { adapter ->
+        ArrayAdapter.createFromResource(this, itemsResource, R.layout.spinner_item).also { adapter ->
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             spinner.adapter = adapter
         }
