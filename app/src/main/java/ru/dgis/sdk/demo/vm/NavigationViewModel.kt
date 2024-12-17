@@ -100,8 +100,8 @@ class NavigationViewModel(
     }
     private val markers: List<Marker> =
         listOf(
-            R.drawable.ic_start,
-            R.drawable.ic_finish
+            R.drawable.ic_small_pin,
+            R.drawable.ic_marker
         ).map {
             Marker(
                 MarkerOptions(
@@ -200,10 +200,11 @@ class NavigationViewModel(
 
         points.forEachIndexed { index, point ->
             val marker = markers[index]
-            marker.isVisible =
-                state.value == State.ROUTE_EDITING && point != null && !hasRouteWithEndPoint(
-                point
-            )
+            // Uncomment this to enable hiding markers when route is built.
+//            marker.isVisible =
+//                state.value == State.ROUTE_EDITING && point != null && !hasRouteWithEndPoint(
+//                point
+//            )
             marker.position = if (point != null) {
                 GeoPointWithElevation(
                     point.coordinates.latitude,
