@@ -26,6 +26,10 @@ class MainActivity : AppCompatActivity() {
     private val RECORD_REQUEST_CODE = 101
 
     private val pages = listOf(
+        Page("Compose Examples") {
+            val intent = Intent(this@MainActivity, ComposeActivity::class.java)
+            startActivity(intent)
+        },
         Page("Generic Map") {
             val intent = Intent(this@MainActivity, GenericMapActivity::class.java)
             startActivity(intent)

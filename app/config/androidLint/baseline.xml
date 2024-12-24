@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<issues format="6" by="lint 8.2.0" type="baseline" client="gradle" dependencies="false" name="AGP (8.2.0)" variant="all" version="8.2.0">
+<issues format="6" by="lint 8.5.1" type="baseline" client="gradle" dependencies="false" name="AGP (8.5.1)" variant="all" version="8.5.1">
 
     <issue
         id="UnusedAttribute"
@@ -54,6 +54,39 @@
             file="src/main/res/drawable/ic_2gis_logo_splash.xml"
             line="9"
             column="26"/>
+    </issue>
+
+    <issue
+        id="UsingMaterialAndMaterial3Libraries"
+        message="Using a material import while also using the material3 library"
+        errorLine1="import androidx.compose.material.ModalBottomSheetLayout"
+        errorLine2="       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/ru/dgis/sdk/demo/compose/screens/ObjectsScreen.kt"
+            line="9"
+            column="8"/>
+    </issue>
+
+    <issue
+        id="UsingMaterialAndMaterial3Libraries"
+        message="Using a material import while also using the material3 library"
+        errorLine1="import androidx.compose.material.ModalBottomSheetValue"
+        errorLine2="       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/ru/dgis/sdk/demo/compose/screens/ObjectsScreen.kt"
+            line="10"
+            column="8"/>
+    </issue>
+
+    <issue
+        id="UsingMaterialAndMaterial3Libraries"
+        message="Using a material import while also using the material3 library"
+        errorLine1="import androidx.compose.material.rememberModalBottomSheetState"
+        errorLine2="       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/ru/dgis/sdk/demo/compose/screens/ObjectsScreen.kt"
+            line="11"
+            column="8"/>
     </issue>
 
     <issue
@@ -157,45 +190,12 @@
 
     <issue
         id="UnusedResources"
-        message="The resource `R.color.colorAccent` appears to be unused"
-        errorLine1="    &lt;color name=&quot;colorAccent&quot;>@color/laurel&lt;/color>"
-        errorLine2="           ~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/colors.xml"
-            line="5"
-            column="12"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
         message="The resource `R.color.splash_background` appears to be unused"
         errorLine1="    &lt;color name=&quot;splash_background&quot;>#fff&lt;/color>"
         errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/colors.xml"
             line="9"
-            column="12"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.color.text_foreground_day` appears to be unused"
-        errorLine1="    &lt;color name=&quot;text_foreground_day&quot;>#000&lt;/color>"
-        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/colors.xml"
-            line="11"
-            column="12"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.color.text_foreground_night` appears to be unused"
-        errorLine1="    &lt;color name=&quot;text_foreground_night&quot;>#fff&lt;/color>"
-        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/colors.xml"
-            line="12"
             column="12"/>
     </issue>
 
@@ -949,24 +949,6 @@
 
     <issue
         id="UnusedResources"
-        message="The resource `R.drawable.ic_minivan` appears to be unused">
-        <location
-            file="src/main/res/drawable/ic_minivan.png"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.drawable.ic_nav_point` appears to be unused"
-        errorLine1="&lt;vector xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
-        errorLine2="^">
-        <location
-            file="src/main/res/drawable/ic_nav_point.xml"
-            line="1"
-            column="1"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
         message="The resource `R.drawable.ic_pin` appears to be unused"
         errorLine1="&lt;vector android:height=&quot;14.875dp&quot; android:viewportHeight=&quot;34&quot;"
         errorLine2="^">
@@ -1242,7 +1224,7 @@
         errorLine2="                  ~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings.xml"
-            line="57"
+            line="63"
             column="19"/>
     </issue>
 
@@ -1290,28 +1272,6 @@
         message="Missing the following drawables in `drawable-xxhdpi`: splash_logo.png (found in drawable-hdpi)">
         <location
             file="src/main/res/drawable-xxhdpi"/>
-    </issue>
-
-    <issue
-        id="UseTomlInstead"
-        message="Use version catalog instead"
-        errorLine1="    releaseImplementation &apos;com.google.firebase:firebase-analytics-ktx&apos;"
-        errorLine2="                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="build.gradle"
-            line="161"
-            column="27"/>
-    </issue>
-
-    <issue
-        id="UseTomlInstead"
-        message="Use version catalog instead"
-        errorLine1="    releaseImplementation &apos;com.google.firebase:firebase-crashlytics-ndk&apos;"
-        errorLine2="                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="build.gradle"
-            line="162"
-            column="27"/>
     </issue>
 
     <issue

@@ -39,6 +39,7 @@ android {
     buildFeatures {
         viewBinding true
         buildConfig true
+        compose true
     }
 
     splits {
@@ -63,6 +64,9 @@ android {
     }
     kotlinOptions {
         jvmTarget = "1.8"
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = libs.versions.compose.extension.get()
     }
 
     applicationVariants.configureEach {
@@ -165,6 +169,7 @@ dependencies {
     releaseImplementation libs.firebase.crashlytics.ndk
 
     implementation libs.dgis.sdk
+    implementation libs.dgis.compose
 
     implementation libs.huawei.base
     implementation libs.huawei.location
@@ -176,4 +181,15 @@ dependencies {
             classifier = "sources"
         }
     }
+
+    // Compose
+    def composeBom = platform(libs.compose.bom)
+    implementation(composeBom)
+    implementation(libs.compose.foundational)
+    implementation(libs.compose.material3)
+    implementation(libs.compose.preview)
+    implementation(libs.compose.material)
+    debugImplementation(libs.compose.preview.debug)
+    implementation(libs.navigation.runtime)
+    implementation(libs.navigation.compose)
 }

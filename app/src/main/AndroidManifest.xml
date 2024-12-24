@@ -79,6 +79,10 @@
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustNothing" />
         <activity
+            android:name=".ComposeActivity"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustNothing" />
+        <activity
             android:name=".LocaleSwitchActivity"
             android:screenOrientation="portrait"
             android:theme="@style/GenericActivityTheme"
