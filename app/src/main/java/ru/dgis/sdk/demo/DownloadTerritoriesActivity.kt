@@ -26,15 +26,15 @@ import ru.dgis.sdk.demo.databinding.ActivityDownloadTerritoriesBinding
 import ru.dgis.sdk.demo.vm.DownloadTerritoriesViewModel
 import ru.dgis.sdk.demo.vm.Geometry
 import ru.dgis.sdk.map.Map
+import ru.dgis.sdk.update.Package
 import ru.dgis.sdk.update.PackageUpdateStatus
-import ru.dgis.sdk.update.Territory
 
 private class TerritoryViewHolder(
     view: View,
     private val scope: CoroutineScope
 ) : RecyclerView.ViewHolder(view) {
     private var job: Job? = null
-    private var territory: Territory? = null
+    private var offlinePackage: Package? = null
 
     private val name = view.findViewById<TextView>(R.id.pkgName)!!
     private val progressBar = view.findViewById<ProgressBar>(R.id.pkgProgressBar)!!
@@ -45,26 +45,26 @@ private class TerritoryViewHolder(
         progressBar.max = 100
 
         installButton.setOnClickListener {
-            territory?.install()
+            offlinePackage?.install()
         }
 
         uninstallButton.setOnClickListener {
-            territory?.uninstall()
+            offlinePackage?.uninstall()
         }
     }
 
-    fun setTerritory(territory: Territory) {
+    fun setPackage(pkg: Package) {
         job?.cancel()
 
         job = scope.launch {
             launch {
-                territory.progressChannel.asFlow().collect {
+                pkg.progressChannel.asFlow().collect {
                     progressBar.progress = it.toInt()
                 }
             }
 
             launch {
-                territory.infoChannel.asFlow().collect {
+                pkg.infoChannel.asFlow().collect {
                     name.text = it.name
                     progressBar.isVisible = it.updateStatus == PackageUpdateStatus.IN_PROGRESS
                     installButton.isVisible = it.updateStatus == PackageUpdateStatus.PAUSED
@@ -73,12 +73,12 @@ private class TerritoryViewHolder(
             }
         }
 
-        this.territory = territory
+        this.offlinePackage = pkg
     }
 }
 
-private class TerritoriesAdapter(
-    private val territory: List<Territory>,
+private class PackagesAdapter(
+    private val packages: List<Package>,
     private val scope: CoroutineScope
 ) : RecyclerView.Adapter<TerritoryViewHolder>() {
 
@@ -88,10 +88,10 @@ private class TerritoriesAdapter(
         return TerritoryViewHolder(view, scope)
     }
 
-    override fun getItemCount() = territory.size
+    override fun getItemCount() = packages.size
 
     override fun onBindViewHolder(holder: TerritoryViewHolder, position: Int) {
-        holder.setTerritory(territory[position])
+        holder.setPackage(packages[position])
     }
 }
 
@@ -113,7 +113,7 @@ class DownloadTerritoriesActivity : AppCompatActivity() {
 
         binding = ActivityDownloadTerritoriesBinding.inflate(layoutInflater)
 
-        binding.territoriesRecycleView.adapter = TerritoriesAdapter(listOf(), lifecycleScope)
+        binding.territoriesRecycleView.adapter = PackagesAdapter(listOf(), lifecycleScope)
 
         binding.searchView.setOnQueryTextFocusChangeListener(object : View.OnFocusChangeListener {
             private val bottomSheetBehavior = BottomSheetBehavior.from(binding.bottomSheet)
@@ -146,8 +146,8 @@ class DownloadTerritoriesActivity : AppCompatActivity() {
         binding.mapView.getMapAsync { map ->
             lifecycleScope.launch {
                 repeatOnLifecycle(Lifecycle.State.STARTED) {
-                    viewModel.territories.collect { territories ->
-                        binding.territoriesRecycleView.adapter = TerritoriesAdapter(territories, lifecycleScope)
+                    viewModel.packages.collect { territories ->
+                        binding.territoriesRecycleView.adapter = PackagesAdapter(territories, lifecycleScope)
                     }
                 }
             }

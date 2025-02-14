@@ -9,6 +9,8 @@ import ru.dgis.sdk.DGis
 import ru.dgis.sdk.coordinates.GeoPoint
 import ru.dgis.sdk.coordinates.GeoRect
 import ru.dgis.sdk.demo.common.asFlow
+import ru.dgis.sdk.routing.getRoadMacroGraph
+import ru.dgis.sdk.update.Package
 import ru.dgis.sdk.update.Territory
 import ru.dgis.sdk.update.getTerritoryManager
 
@@ -19,9 +21,10 @@ sealed class Geometry {
 
 class DownloadTerritoriesViewModel : ViewModel() {
     private val territoryManager = getTerritoryManager(DGis.context())
+    private val macroGraph = getRoadMacroGraph(DGis.context())
 
-    private val _territories = MutableStateFlow(listOf<Territory>())
-    val territories = _territories.asStateFlow()
+    private val _packages = MutableStateFlow(listOf<Package>())
+    val packages = _packages.asStateFlow()
 
     private fun sortTerritories(territories: List<Territory>): List<Territory> {
         return territories.sortedWith(
@@ -30,10 +33,10 @@ class DownloadTerritoriesViewModel : ViewModel() {
         )
     }
 
-    private fun getTerritories(
+    private fun getPackages(
         nameFilter: String?,
         geometryFilter: Geometry?
-    ): List<Territory> {
+    ): List<Package> {
         var territories = when (geometryFilter) {
             is Geometry.Point ->
                 territoryManager.findByPoint(geometryFilter.geoPoint)
@@ -49,7 +52,9 @@ class DownloadTerritoriesViewModel : ViewModel() {
             territories = territories.filter { it.info.name.lowercase().contains(query) }
         }
 
-        return sortTerritories(territories)
+        val sortedTerritories = sortTerritories(territories)
+        return listOf(macroGraph) + sortedTerritories
+
     }
 
     var geometryFilter: Geometry? = null
@@ -59,7 +64,7 @@ class DownloadTerritoriesViewModel : ViewModel() {
             }
             field = value
 
-            _territories.value = getTerritories(nameFilter, value)
+            _packages.value = getPackages(nameFilter, value)
         }
 
     var nameFilter: String? = null
@@ -69,13 +74,13 @@ class DownloadTerritoriesViewModel : ViewModel() {
             }
             field = value
 
-            _territories.value = getTerritories(value, geometryFilter)
+            _packages.value = getPackages(value, geometryFilter)
         }
 
     init {
         viewModelScope.launch {
             territoryManager.territoriesChannel.asFlow().collect {
-                _territories.value = getTerritories(nameFilter, geometryFilter)
+                _packages.value = getPackages(nameFilter, geometryFilter)
             }
         }
     }
