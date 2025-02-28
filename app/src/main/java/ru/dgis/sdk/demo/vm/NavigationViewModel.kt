@@ -34,6 +34,7 @@ import ru.dgis.sdk.routing.ScooterRouteSearchOptions
 import ru.dgis.sdk.routing.TaxiRouteSearchOptions
 import ru.dgis.sdk.routing.TrafficRoute
 import ru.dgis.sdk.navigation.State as NavigationState
+import android.util.Log
 
 class NavigationViewModel(
     private val sdkContext: Context,
@@ -132,6 +133,8 @@ class NavigationViewModel(
     }
 
     val navigationManager = NavigationManager(sdkContext)
+
+    private var routeClosable : AutoCloseable?  = null
 
     init {
         closeables.add(map)
@@ -262,6 +265,16 @@ class NavigationViewModel(
         } else {
             navigationManager.start()
         }
+
+        
+        routeClosable?.close()
+        val connect = navigationManager.uiModel.routeChannel.connect { routeInfo ->
+            Log.d("test ------->", "startNavigation: route ${routeInfo.route.toString()}")
+            Log.d("test ------->", "startNavigation: route ${routeInfo.route.maxSpeedLimits.entries.toString()}")
+        }
+
+        routeClosable = connect
+        
         setState(State.NAVIGATION)
     }
 
