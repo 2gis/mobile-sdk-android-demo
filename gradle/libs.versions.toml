@@ -13,7 +13,7 @@ compose-bom = "2024.12.01"
 compose-material3 = "1.3.1"
 
 dgis-sdk = "12.7.0"
-dgis-compose = "12.4.0"
+dgis-compose = "12.7.0"
 
 appcompat = "1.6.1"
 constraintlayout = "2.1.4"
