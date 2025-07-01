@@ -48,6 +48,11 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".ModelWithAnimationInMapActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/GenericActivityTheme"
+            tools:ignore="DiscouragedApi,LockedOrientationActivity" />
+        <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/MainActivityTheme"
