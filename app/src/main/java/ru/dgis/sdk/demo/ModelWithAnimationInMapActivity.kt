@@ -1,11 +1,18 @@
 package ru.dgis.sdk.demo
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
+import android.animation.AnimatorSet
 import android.animation.ValueAnimator
 import android.os.Bundle
 import android.view.View
 import android.view.animation.LinearInterpolator
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.animation.doOnEnd
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.suspendCancellableCoroutine
 import ru.dgis.sdk.Context
 import ru.dgis.sdk.Duration
 import ru.dgis.sdk.coordinates.GeoPoint
@@ -29,11 +36,12 @@ import ru.dgis.sdk.map.modelDataFromAsset
 class ModelWithAnimationInMapActivity : AppCompatActivity() {
     private val sdkContext: Context by lazy { application.sdkContext }
     lateinit var mapSource: MyLocationMapObjectSource
-
+    private var mapObjectManager: MapObjectManager? = null
 
     private var map: Map? = null
     var movementAnimator: ValueAnimator? = null
     var rotationAnimator: ValueAnimator? = null
+    private var movingJob: Job? = null
 
     private lateinit var mapView: MapView
     private lateinit var root: View
@@ -46,7 +54,6 @@ class ModelWithAnimationInMapActivity : AppCompatActivity() {
             it.getMapAsync(this::onMapReady)
             it.showApiVersionInCopyrightView = true
         }
-
     }
 
     override fun onDestroy() {
@@ -70,7 +77,7 @@ class ModelWithAnimationInMapActivity : AppCompatActivity() {
             ), time = Duration.ofMilliseconds(300)
         )
         //loading 3d model
-        val mapObjectManager = MapObjectManager(map)
+        mapObjectManager = MapObjectManager(map)
         val fileName = "blue_car.glb"
         val location = GeoPointWithElevation(40.209339212102556, 44.51782621674358)
         val modelData = modelDataFromAsset(sdkContext, fileName)
@@ -83,11 +90,13 @@ class ModelWithAnimationInMapActivity : AppCompatActivity() {
         )
         map.addSource(mapSource)
         //adding 3d model to map
-        mapObjectManager.addObject(modelObject)
+        mapObjectManager?.addObject(modelObject)
         //animating model movements and rotation with animation
-        animateCarMovement(modelObject, GeoPoint(40.20949240044926, 44.51422545018235))
-        animateCarRotation(modelObject)
+        movingJob = lifecycleScope.launch(Dispatchers.Main) {
+            animateCarMovementAndRotation(modelObject, GeoPoint(40.20949240044926, 44.51422545018235))
+        }
     }
+
 
     fun Double.roundToTop(): Int {
         val intPart = this.toInt()
@@ -97,10 +106,19 @@ class ModelWithAnimationInMapActivity : AppCompatActivity() {
 
     private fun Double.normalizeAngle(): Double = (this % 360 + 360) % 360
 
-    //car rotating animation
-    private fun animateCarRotation(modelData: ModelMapObject) {
-        val currentAngle = modelData.mapDirection?.value ?: 0.0
-        val targetAngle = modelData.mapDirection?.value?.normalizeAngle() ?: return
+    suspend fun animateCarMovementAndRotation(
+        modelObject: ModelMapObject,
+        newLocation: GeoPoint,
+    ): Unit = suspendCancellableCoroutine { continuation ->
+
+        // Target latitude and longitude for the animation.
+        val toLat: Double = newLocation.latitude.value
+        val toLng: Double = newLocation.longitude.value
+        val fromLat = 40.209339212102556
+        val fromLng = 44.51782621674358
+        modelObject.mapDirection = MapDirection(70.0)
+        val currentAngle = modelObject.mapDirection?.value ?: 0.0
+        val targetAngle = modelObject.mapDirection?.value?.normalizeAngle() ?: return@suspendCancellableCoroutine
         val angleDelta = ((targetAngle - currentAngle + 540) % 360) - 180 // Shortest way
 
         rotationAnimator = ValueAnimator.ofFloat(0f, angleDelta.toFloat()).apply {
@@ -110,22 +128,10 @@ class ModelWithAnimationInMapActivity : AppCompatActivity() {
             addUpdateListener { animator ->
                 val animatedDelta = animator.animatedValue as Float
                 val newAngle = (currentAngle + animatedDelta).normalizeAngle()
-                modelData.mapDirection = MapDirection(newAngle)
-            }
-            start()
-            doOnEnd {
-                rotationAnimator?.start()
+                modelObject.mapDirection = MapDirection(newAngle)
             }
         }
-    }
 
-    //car movement animation
-    private fun animateCarMovement(modelObject: ModelMapObject, newLocation: GeoPoint) {
-        val fromLat = 40.209339212102556
-        val fromLng = 44.51782621674358
-        // Target latitude and longitude for the animation.
-        val toLat: Double = newLocation.latitude.value
-        val toLng: Double = newLocation.longitude.value
         // Calculate the distance to determine animation duration.
         movementAnimator = ValueAnimator.ofFloat(0f, 1f).apply {
             duration = 4000L
@@ -138,9 +144,20 @@ class ModelWithAnimationInMapActivity : AppCompatActivity() {
                     longitude = (1 - t) * fromLng + t * toLng
                 )
             }
+        }
+
+        AnimatorSet().apply {
+            playTogether(rotationAnimator, movementAnimator)
+            addListener(object : AnimatorListenerAdapter() {
+                override fun onAnimationEnd(animation: Animator) {
+                    super.onAnimationEnd(animation)
+                    start()
+                }
+            })
             start()
-            doOnEnd {
-                movementAnimator?.start()
+        }.also { animator ->
+            continuation.invokeOnCancellation {
+                animator.cancel()
             }
         }
     }
