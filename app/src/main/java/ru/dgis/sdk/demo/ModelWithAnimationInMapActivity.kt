@@ -39,8 +39,6 @@ class ModelWithAnimationInMapActivity : AppCompatActivity() {
     private var mapObjectManager: MapObjectManager? = null
 
     private var map: Map? = null
-    var movementAnimator: ValueAnimator? = null
-    var rotationAnimator: ValueAnimator? = null
     private var movingJob: Job? = null
 
     private lateinit var mapView: MapView
@@ -121,7 +119,7 @@ class ModelWithAnimationInMapActivity : AppCompatActivity() {
         val targetAngle = modelObject.mapDirection?.value?.normalizeAngle() ?: return@suspendCancellableCoroutine
         val angleDelta = ((targetAngle - currentAngle + 540) % 360) - 180 // Shortest way
 
-        rotationAnimator = ValueAnimator.ofFloat(0f, angleDelta.toFloat()).apply {
+       val rotationAnimator = ValueAnimator.ofFloat(0f, angleDelta.toFloat()).apply {
             duration = 4000L
             interpolator = LinearInterpolator()
             // Listener to update the model's direction during animation.
@@ -133,7 +131,7 @@ class ModelWithAnimationInMapActivity : AppCompatActivity() {
         }
 
         // Calculate the distance to determine animation duration.
-        movementAnimator = ValueAnimator.ofFloat(0f, 1f).apply {
+        val  movementAnimator = ValueAnimator.ofFloat(0f, 1f).apply {
             duration = 4000L
             interpolator = LinearInterpolator()
             addUpdateListener { animation ->
