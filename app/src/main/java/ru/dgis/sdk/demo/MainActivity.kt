@@ -89,6 +89,10 @@ class MainActivity : AppCompatActivity() {
         Page("Locale switch") {
             val intent = Intent(this@MainActivity, LocaleSwitchActivity::class.java)
             startActivity(intent)
+        },
+        Page("Copyright") {
+            val intent = Intent(this@MainActivity, CopyrightActivity::class.java)
+            startActivity(intent)
         }
     )
 
