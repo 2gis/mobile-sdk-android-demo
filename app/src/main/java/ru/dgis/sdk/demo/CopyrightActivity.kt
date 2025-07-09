@@ -1,12 +1,12 @@
 package ru.dgis.sdk.demo
 
 import android.os.Bundle
+import android.view.Gravity
 import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
-import ru.dgis.sdk.map.Map
 import ru.dgis.sdk.compose.map.CopyrightMargins
-import android.view.Gravity
 import ru.dgis.sdk.demo.databinding.ActivityCopyrightBinding
+import ru.dgis.sdk.map.Map
 
 /**
  * Sample activity to demonstrate copyright control in the DGis SDK map.
@@ -17,7 +17,6 @@ import ru.dgis.sdk.demo.databinding.ActivityCopyrightBinding
  * - Show/hide SDK version in the copyright view
  *
  */
-
 class CopyrightActivity : AppCompatActivity() {
     private val binding by lazy { ActivityCopyrightBinding.inflate(layoutInflater) }
     private val mapView by lazy { binding.mapView }
