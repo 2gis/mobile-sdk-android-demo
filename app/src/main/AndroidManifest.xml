@@ -87,6 +87,9 @@
             android:screenOrientation="portrait"
             android:theme="@style/GenericActivityTheme"
             tools:ignore="DiscouragedApi,LockedOrientationActivity" />
+        <activity
+            android:name=".CopyrightActivity"
+            android:exported="false" />
 
         <meta-data
             android:name="com.google.android.gms.car.application"
