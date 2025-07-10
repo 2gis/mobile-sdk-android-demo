@@ -67,36 +67,30 @@ class CopyrightActivity : AppCompatActivity() {
             override fun onStopTrackingTouch(seekBar: SeekBar?) {}
         })
 
-        val toggles = listOf(
-            binding.toggleTopLeft,
-            binding.toggleTopRight,
-            binding.toggleBottomLeft,
-            binding.toggleBottomRight
-        )
         val gravityList = listOf(
             Gravity.TOP or Gravity.START,
             Gravity.TOP or Gravity.END,
             Gravity.BOTTOM or Gravity.START,
             Gravity.BOTTOM or Gravity.END
         )
-        toggles.forEachIndexed { index, btn ->
-            btn.setOnCheckedChangeListener { _, isChecked ->
-                if (isChecked) {
-                    toggles.forEachIndexed { i, other -> if (i != index) other.isChecked = false }
-                    copyrightGravity = gravityList[index]
-                    updateCopyrightGravity()
-                }
+
+        binding.gravityRadioGroup.setOnCheckedChangeListener { _, checkedId ->
+            val index = when (checkedId) {
+                R.id.radioTopLeft -> 0
+                R.id.radioTopRight -> 1
+                R.id.radioBottomLeft -> 2
+                R.id.radioBottomRight -> 3
+                else -> 0
             }
+            copyrightGravity = gravityList[index]
+            updateCopyrightGravity()
         }
 
         binding.versionCheckBox.setOnCheckedChangeListener { _, isChecked ->
             showVersion = isChecked
             updateShowVersion()
         }
-    }
 
-    override fun onResume() {
-        super.onResume()
         mapView.getMapAsync {
             this.map = it
             updateCopyrightMargins()
