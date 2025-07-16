@@ -17,7 +17,7 @@ class Application : Application() {
 
     override fun onCreate() {
         super.onCreate()
-
+        instance = this
         sdkContext = initializeDGis(this)
         hasHms = HuaweiApiAvailability.getInstance().isHuaweiMobileServicesAvailable(this) ==
             com.huawei.hms.api.ConnectionResult.SUCCESS
@@ -33,6 +33,10 @@ class Application : Application() {
         }
         registerPlatformLocationSource(sdkContext, locationSource)
     }
+
+    companion object {
+        lateinit var instance: ru.dgis.sdk.demo.Application
+    }
 }
 
 val Application.sdkContext: Context
@@ -40,3 +44,4 @@ val Application.sdkContext: Context
 
 val Application.locationService: LocationService
     get() = (this as ru.dgis.sdk.demo.Application).locationSource as LocationService
+

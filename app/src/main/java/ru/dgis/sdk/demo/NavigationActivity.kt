@@ -73,6 +73,8 @@ class NavigationActivity : AppCompatActivity(), TouchEventsObserver {
             setTouchEventsObserver(this@NavigationActivity)
             getMapAsync {
                 initViewModel(it)
+                it.camera.maxTiltRestriction =
+                    StyleZoomToTiltRelationProvider()
                 closeables.add(
                     it.camera.paddingChannel.connect { _ ->
                         updateMapCopyrightPosition(
@@ -191,6 +193,7 @@ class NavigationActivity : AppCompatActivity(), TouchEventsObserver {
                                 routeEditorView.visibility = View.INVISIBLE
                                 routeEditorSettingsView.visibility = View.GONE
                                 navigationView.navigationManager = viewModel.navigationManager
+                                setZoomStyle()
                                 navigationView.addView(
                                     DefaultNavigationControls(navigationView.context).apply {
                                         isFreeRoamDefault =
@@ -213,6 +216,13 @@ class NavigationActivity : AppCompatActivity(), TouchEventsObserver {
                 }
             }
         }
+    }
+
+    private fun setZoomStyle() {
+        val speedRangeToStyleZoomFreeRoamSequence =
+            StyleSpeedToZoomRelationProvider().speedRangeToStyleZooms()
+        navigationView.navigationManager?.zoomFollowSettings?.speedRangeToStyleZoomFreeRoamSequence =
+            speedRangeToStyleZoomFreeRoamSequence
     }
 
     private fun showMenu(point: ScreenPoint, routeSearchPoint: RouteSearchPoint) {

@@ -1,0 +1,116 @@
+{
+  "name": "Zoom config",
+  "comment": "Зависимость уровня зума от скорости",
+  "overrides": {
+    "dgis/native-sdk/navigation/plugins/map/map_location_controller/ZoomFollowSettings/free_roam_speed_range_sequence": [
+      {
+        "range": {
+          "min_speed": 0.0,
+          "max_speed": 11.11
+        },
+        "min_distance_to_maneuver": 300,
+        "max_distance_to_maneuver": 50,
+        "style_zoom": 18.2
+      },
+      {
+        "range": {
+          "min_speed": 8.33,
+          "max_speed": 13.89
+        },
+        "min_distance_to_maneuver": 390,
+        "max_distance_to_maneuver": 50,
+        "style_zoom": 18.0
+      },
+      {
+        "range": {
+          "min_speed": 11.11,
+          "max_speed": 16.67
+        },
+        "min_distance_to_maneuver": 400,
+        "max_distance_to_maneuver": 50,
+        "style_zoom": 18.5
+      },
+      {
+        "range": {
+          "min_speed": 13.89,
+          "max_speed": 19.44
+        },
+        "min_distance_to_maneuver": 600,
+        "max_distance_to_maneuver": 50,
+        "style_zoom": 18.25
+      },
+      {
+        "range": {
+          "min_speed": 16.67,
+          "max_speed": 22.22
+        },
+        "min_distance_to_maneuver": 720,
+        "max_distance_to_maneuver": 50,
+        "style_zoom": 17.75
+      },
+      {
+        "range": {
+          "min_speed": 19.44,
+          "max_speed": 25.0
+        },
+        "min_distance_to_maneuver": 840,
+        "max_distance_to_maneuver": 50,
+        "style_zoom": 17.0
+      },
+      {
+        "range": {
+          "min_speed": 22.22,
+          "max_speed": 27.78
+        },
+        "min_distance_to_maneuver": 900,
+        "max_distance_to_maneuver": 50,
+        "style_zoom": 16.5
+      },
+      {
+        "range": {
+          "min_speed": 25.0,
+          "max_speed": 30.56
+        },
+        "min_distance_to_maneuver": 1020,
+        "max_distance_to_maneuver": 50,
+        "style_zoom": 16.25
+      },
+      {
+        "range": {
+          "min_speed": 27.78,
+          "max_speed": 33.33
+        },
+        "min_distance_to_maneuver": 1080,
+        "max_distance_to_maneuver": 50,
+        "style_zoom": 16.0
+      },
+      {
+        "range": {
+          "min_speed": 30.56,
+          "max_speed": 36.11
+        },
+        "min_distance_to_maneuver": 1200,
+        "max_distance_to_maneuver": 50,
+        "style_zoom": 15.75
+      },
+      {
+        "range": {
+          "min_speed": 33.33,
+          "max_speed": 38.88
+        },
+        "min_distance_to_maneuver": 1260,
+        "max_distance_to_maneuver": 50,
+        "style_zoom": 15.75
+      },
+      {
+        "range": {
+          "min_speed": 36.11,
+          "max_speed": 41.67
+        },
+        "min_distance_to_maneuver": 1320,
+        "max_distance_to_maneuver": 50,
+        "style_zoom": 15.5
+      }
+    ]
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "name": "ViewportTiltRestrictions",
+  "comment": "Зависимость ограничения угла наклона вьюпорта от масштаба",
+  "overrides": {
+    "dgis/core/map/viewport/tilt_restrictions": {
+      "tilt_style_zooms": [
+        8,
+        11.5,
+        13,
+        14,
+        15,
+        16,
+        17.5,
+        18.5,
+        19
+      ],
+      "tilt_values": [
+        0,
+        12,
+        25,
+        31,
+        36,
+        42,
+        44,
+        50,
+        55
+      ]
+    }
+  }
+}
