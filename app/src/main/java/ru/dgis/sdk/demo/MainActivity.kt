@@ -26,6 +26,10 @@ class MainActivity : AppCompatActivity() {
     private val RECORD_REQUEST_CODE = 101
 
     private val pages = listOf(
+        Page("Issue with 3D model animation") {
+            val intent = Intent(this@MainActivity, ModelWithAnimationInMapActivity::class.java)
+            startActivity(intent)
+        },
         Page("Compose Examples") {
             val intent = Intent(this@MainActivity, ComposeActivity::class.java)
             startActivity(intent)
