@@ -11,11 +11,11 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.buffer
 import kotlinx.coroutines.flow.callbackFlow
-import ru.dgis.sdk.Channel as SdkChannel
 import ru.dgis.sdk.StatefulChannel
 import ru.dgis.sdk.demo.R
 import ru.dgis.sdk.demo.common.views.SettingsLayoutView
 import ru.dgis.sdk.map.MapView
+import ru.dgis.sdk.Channel as SdkChannel
 
 val View.globalY
     get(): Int {

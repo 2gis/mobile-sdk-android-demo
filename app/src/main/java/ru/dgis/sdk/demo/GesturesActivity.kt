@@ -29,7 +29,11 @@ import kotlin.reflect.full.instanceParameter
  * Be sure to not use this in production code because reflection is slow. Use strict data class methods instead.
  */
 class GesturesActivity : AppCompatActivity() {
-    private val binding: ActivityGesturesBinding by lazy { ActivityGesturesBinding.inflate(layoutInflater) }
+    private val binding: ActivityGesturesBinding by lazy {
+        ActivityGesturesBinding.inflate(
+            layoutInflater
+        )
+    }
     private val mapView by lazy { binding.mapView }
     private val gestureManager by lazy { mapView.gestureManager }
     private val settingsBinding by lazy { prepareSettingsBinding() }
@@ -83,16 +87,26 @@ class GesturesActivity : AppCompatActivity() {
     private fun initRotationSettings() {
         val gestureManager = this.gestureManager!!
         val rotationSettings = gestureManager.rotationSettings.recognizeSettings
-        settingsBinding.rotationAnglediffinscalingdegEditText.setText(rotationSettings.rotationThresholdInScaling.angleDiffDeg.toString())
-        settingsBinding.rotationDistancediffmmEditText.setText(rotationSettings.rotationThreshold.distanceDiffMm.toString())
-        settingsBinding.rotationAnglediffdegEditText.setText(rotationSettings.rotationThreshold.angleDiffDeg.toString())
-        settingsBinding.rotationDistancediffinscalingmmEditText.setText(rotationSettings.rotationThresholdInScaling.distanceDiffMm.toString())
+        settingsBinding.rotationAnglediffinscalingdegEditText.setText(
+            rotationSettings.rotationThresholdInScaling.angleDiffDeg.toString()
+        )
+        settingsBinding.rotationDistancediffmmEditText.setText(
+            rotationSettings.rotationThreshold.distanceDiffMm.toString()
+        )
+        settingsBinding.rotationAnglediffdegEditText.setText(
+            rotationSettings.rotationThreshold.angleDiffDeg.toString()
+        )
+        settingsBinding.rotationDistancediffinscalingmmEditText.setText(
+            rotationSettings.rotationThresholdInScaling.distanceDiffMm.toString()
+        )
 
         settingsBinding.rotationAnglediffinscalingdegEditText.addTextChangedListener { text ->
             text?.toString()?.toFloatOrNull()?.let { value ->
                 val rotationRecognizeSettings = gestureManager.rotationSettings.recognizeSettings
                 gestureManager.rotationSettings.recognizeSettings = rotationRecognizeSettings.copy(
-                    rotationThresholdInScaling = rotationRecognizeSettings.rotationThresholdInScaling.copy(angleDiffDeg = value)
+                    rotationThresholdInScaling = rotationRecognizeSettings.rotationThresholdInScaling.copy(
+                        angleDiffDeg = value
+                    )
                 )
             }
         }
@@ -100,7 +114,9 @@ class GesturesActivity : AppCompatActivity() {
             text?.toString()?.toFloatOrNull()?.let { value ->
                 val rotationRecognizeSettings = gestureManager.rotationSettings.recognizeSettings
                 gestureManager.rotationSettings.recognizeSettings = rotationRecognizeSettings.copy(
-                    rotationThreshold = rotationRecognizeSettings.rotationThreshold.copy(distanceDiffMm = value)
+                    rotationThreshold = rotationRecognizeSettings.rotationThreshold.copy(
+                        distanceDiffMm = value
+                    )
                 )
             }
         }
@@ -108,7 +124,9 @@ class GesturesActivity : AppCompatActivity() {
             text?.toString()?.toFloatOrNull()?.let { value ->
                 val rotationRecognizeSettings = gestureManager.rotationSettings.recognizeSettings
                 gestureManager.rotationSettings.recognizeSettings = rotationRecognizeSettings.copy(
-                    rotationThreshold = rotationRecognizeSettings.rotationThreshold.copy(angleDiffDeg = value)
+                    rotationThreshold = rotationRecognizeSettings.rotationThreshold.copy(
+                        angleDiffDeg = value
+                    )
                 )
             }
         }
@@ -116,7 +134,9 @@ class GesturesActivity : AppCompatActivity() {
             text?.toString()?.toFloatOrNull()?.let { value ->
                 val rotationRecognizeSettings = gestureManager.rotationSettings.recognizeSettings
                 gestureManager.rotationSettings.recognizeSettings = rotationRecognizeSettings.copy(
-                    rotationThresholdInScaling = rotationRecognizeSettings.rotationThresholdInScaling.copy(distanceDiffMm = value)
+                    rotationThresholdInScaling = rotationRecognizeSettings.rotationThresholdInScaling.copy(
+                        distanceDiffMm = value
+                    )
                 )
             }
         }
@@ -125,10 +145,18 @@ class GesturesActivity : AppCompatActivity() {
     private fun initTiltSettings() {
         val gestureManager = this.gestureManager!!
         val tiltSettings = gestureManager.tiltSettings.recognizeSettings
-        settingsBinding.tiltHorizontalswervedegEditText.setText(tiltSettings.horizontalSwerveDeg.toString())
-        settingsBinding.tiltLenondegreemmEditText.setText(tiltSettings.lenOnDegreeMm.toString())
-        settingsBinding.tiltThresholdmmEditText.setText(tiltSettings.thresholdMm.toString())
-        settingsBinding.tiltVerticalswervedegEditText.setText(tiltSettings.verticalSwerveDeg.toString())
+        settingsBinding.tiltHorizontalswervedegEditText.setText(
+            tiltSettings.horizontalSwerveDeg.toString()
+        )
+        settingsBinding.tiltLenondegreemmEditText.setText(
+            tiltSettings.lenOnDegreeMm.toString()
+        )
+        settingsBinding.tiltThresholdmmEditText.setText(
+            tiltSettings.thresholdMm.toString()
+        )
+        settingsBinding.tiltVerticalswervedegEditText.setText(
+            tiltSettings.verticalSwerveDeg.toString()
+        )
 
         settingsBinding.tiltHorizontalswervedegEditText.addTextChangedListener { t ->
             t?.toString()?.toFloatOrNull()?.let { v ->
@@ -139,7 +167,9 @@ class GesturesActivity : AppCompatActivity() {
         settingsBinding.tiltLenondegreemmEditText.addTextChangedListener { t ->
             t?.toString()?.toFloatOrNull()?.let { v ->
                 val cur = gestureManager.tiltSettings.recognizeSettings
-                gestureManager.tiltSettings.recognizeSettings = cur.copy(lenOnDegreeMm = if (v == 0f) 1f else v)
+                gestureManager.tiltSettings.recognizeSettings = cur.copy(
+                    lenOnDegreeMm = if (v == 0f) 1f else v
+                )
             }
         }
         settingsBinding.tiltThresholdmmEditText.addTextChangedListener { t ->
@@ -159,19 +189,27 @@ class GesturesActivity : AppCompatActivity() {
     private fun initScailingSettings() {
         val gestureManager = this.gestureManager!!
         val scalingSettings = gestureManager.scalingSettings.recognizeSettings
-        settingsBinding.scailingScaleratiothresholdEditText.setText(scalingSettings.scaleRatioThreshold.toString())
-        settingsBinding.scailingScaleratiothresholdinrotationEditText.setText(scalingSettings.scaleRatioThresholdInRotation.toString())
+        settingsBinding.scailingScaleratiothresholdEditText.setText(
+            scalingSettings.scaleRatioThreshold.toString()
+        )
+        settingsBinding.scailingScaleratiothresholdinrotationEditText.setText(
+            scalingSettings.scaleRatioThresholdInRotation.toString()
+        )
 
         settingsBinding.scailingScaleratiothresholdEditText.addTextChangedListener { t ->
             t?.toString()?.toFloatOrNull()?.let { v ->
                 val cur = gestureManager.scalingSettings.recognizeSettings
-                gestureManager.scalingSettings.recognizeSettings = cur.copy(scaleRatioThreshold = if (v < 0f) 0f else v)
+                gestureManager.scalingSettings.recognizeSettings = cur.copy(
+                    scaleRatioThreshold = if (v < 0f) 0f else v
+                )
             }
         }
         settingsBinding.scailingScaleratiothresholdinrotationEditText.addTextChangedListener { t ->
             t?.toString()?.toFloatOrNull()?.let { v ->
                 val cur = gestureManager.scalingSettings.recognizeSettings
-                gestureManager.scalingSettings.recognizeSettings = cur.copy(scaleRatioThresholdInRotation = if (v < 0f) 0f else v)
+                gestureManager.scalingSettings.recognizeSettings = cur.copy(
+                    scaleRatioThresholdInRotation = if (v < 0f) 0f else v
+                )
             }
         }
     }
@@ -179,19 +217,24 @@ class GesturesActivity : AppCompatActivity() {
     private fun initMultiTouchShiftSettings() {
         val gestureManager = this.gestureManager!!
         val multitouchShiftSettings = gestureManager.multitouchShiftSettings.recognizeSettings
-        settingsBinding.multiTouchShiftThresholdmmEditText.setText(multitouchShiftSettings.multitouchShiftThresholdMm.toString())
+        settingsBinding.multiTouchShiftThresholdmmEditText.setText(
+            multitouchShiftSettings.multitouchShiftThresholdMm.toString()
+        )
 
         settingsBinding.multiTouchShiftThresholdmmEditText.addTextChangedListener { t ->
             t?.toString()?.toFloatOrNull()?.let { v ->
                 val cur = gestureManager.multitouchShiftSettings.recognizeSettings
-                gestureManager.multitouchShiftSettings.recognizeSettings = cur.copy(multitouchShiftThresholdMm = if (v < 0f) 0f else v)
+                gestureManager.multitouchShiftSettings.recognizeSettings = cur.copy(
+                    multitouchShiftThresholdMm = if (v < 0f) 0f else v
+                )
             }
         }
     }
 
     @Suppress("UNCHECKED_CAST")
     private fun <T> readSettingsPropertyByName(instance: Any, propertyName: String): T {
-        val property = instance::class.members.first { it.name == propertyName } as KProperty1<Any, *>
+        val property =
+            instance::class.members.first { it.name == propertyName } as KProperty1<Any, *>
         return property.get(instance) as T
     }
 
@@ -203,6 +246,7 @@ class GesturesActivity : AppCompatActivity() {
             .filter { param -> newValues.keys.contains(param.name) }
             .map { param -> param to newValues[param.name] }
 
-        return copyFunction.callBy(mapOf(copyFunction.instanceParameter!! to instance) + args) as? T ?: error("error")
+        return copyFunction.callBy(mapOf(copyFunction.instanceParameter!! to instance) + args) as? T
+            ?: error("error")
     }
 }
