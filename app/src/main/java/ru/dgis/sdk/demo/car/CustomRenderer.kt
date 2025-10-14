@@ -3,9 +3,7 @@ package ru.dgis.sdk.demo.car
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
-import android.os.Build
 import android.view.Surface
-import androidx.annotation.RequiresApi
 
 /*
  A sample renderer demonstrating drawing capabilities on a surface provided by AndroidAutoMapSession.
