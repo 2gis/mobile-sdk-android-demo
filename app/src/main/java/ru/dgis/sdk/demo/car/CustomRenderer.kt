@@ -29,18 +29,14 @@ class CustomRenderer {
     private class RenderThread(private val surface: Surface) : Thread() {
         private val renderIntervalMs = 1000L
 
-        @RequiresApi(Build.VERSION_CODES.M)
         override fun run() {
             var value = 0
 
             while (!isInterrupted) {
                 var canvas: Canvas? = null
                 try {
-                    canvas = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    canvas =
                         surface.lockHardwareCanvas()
-                    } else {
-                        surface.lockCanvas(null)
-                    }
                     draw(value++, canvas)
                 } catch (e: Exception) {
                     e.printStackTrace()

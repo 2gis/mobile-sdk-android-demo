@@ -18,7 +18,7 @@
     </style>
 
     <style name="SplashTheme" parent="@style/AppTheme">
-        <item name="android:windowBackground">?android:colorBackground</item>
+        <item name="android:windowBackground">@drawable/splash</item>
     </style>
 
     <style name="MainActivityTheme" parent="@style/AppTheme">
