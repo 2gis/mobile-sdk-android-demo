@@ -19,6 +19,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
+import ru.dgis.sdk.ScreenPoint
 import ru.dgis.sdk.coordinates.GeoPoint
 import ru.dgis.sdk.coordinates.Latitude
 import ru.dgis.sdk.coordinates.Longitude
@@ -34,7 +35,6 @@ import ru.dgis.sdk.map.MapDirection
 import ru.dgis.sdk.map.MapObjectManager
 import ru.dgis.sdk.map.Marker
 import ru.dgis.sdk.map.MarkerOptions
-import ru.dgis.sdk.map.ScreenPoint
 import ru.dgis.sdk.map.TouchEventsObserver
 import ru.dgis.sdk.map.imageFromResource
 import ru.dgis.sdk.routing.Route

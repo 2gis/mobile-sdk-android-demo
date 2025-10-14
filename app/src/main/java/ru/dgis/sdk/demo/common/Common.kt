@@ -15,6 +15,7 @@ import ru.dgis.sdk.StatefulChannel
 import ru.dgis.sdk.demo.R
 import ru.dgis.sdk.demo.common.views.SettingsLayoutView
 import ru.dgis.sdk.map.MapView
+import ru.dgis.sdk.Channel as SdkChannel
 
 val View.globalY
     get(): Int {
@@ -62,4 +63,9 @@ fun <T : Any?> StatefulChannel<T>.asFlow(): Flow<T> = callbackFlow {
     awaitClose {
         connection.close()
     }
+}.buffer(Channel.CONFLATED)
+
+fun <T : Any?> SdkChannel<T>.asFlow(): Flow<T> = callbackFlow {
+    val connection = connect { value -> trySend(value) }
+    awaitClose { connection.close() }
 }.buffer(Channel.CONFLATED)

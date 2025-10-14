@@ -20,7 +20,7 @@ import ru.dgis.sdk.map.Zoom
 import ru.dgis.sdk.map.calcPosition
 import ru.dgis.sdk.map.imageFromResource
 import ru.dgis.sdk.platform.Locale
-import ru.dgis.sdk.platform.getLocaleManager
+import ru.dgis.sdk.platform.LocaleManager
 
 // Spatial restriction for search in this activity.
 private val dubaiGeoRect = GeoRect(GeoPoint(25.140595, 55.240626), GeoPoint(25.226267, 55.318421))
@@ -41,7 +41,7 @@ class SearchActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         // Setting locale for English in test purposes, so search results will be in english.
-        getLocaleManager(DGis.context()).overrideLocales(listOf(Locale("en", "EN")))
+        LocaleManager.instance(DGis.context()).overrideLocales(listOf(Locale("en", "EN")))
 
         binding.mapView.getMapAsync { map ->
             mapObjectManager = MapObjectManager(map)

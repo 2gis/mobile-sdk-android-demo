@@ -8,12 +8,14 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import ru.dgis.sdk.Context
 import ru.dgis.sdk.demo.common.updateMapCopyrightPosition
 import ru.dgis.sdk.map.BearingSource
-import ru.dgis.sdk.map.Gesture
+import ru.dgis.sdk.map.CameraChangeReason
 import ru.dgis.sdk.map.GestureManager
 import ru.dgis.sdk.map.Map
 import ru.dgis.sdk.map.MapView
 import ru.dgis.sdk.map.MyLocationControllerSettings
 import ru.dgis.sdk.map.MyLocationMapObjectSource
+import ru.dgis.sdk.map.TransformGesture
+import ru.dgis.sdk.map.statefulChanges
 
 class GenericMapActivity : AppCompatActivity() {
     private val sdkContext: Context by lazy { application.sdkContext }
@@ -68,8 +70,10 @@ class GenericMapActivity : AppCompatActivity() {
         )
         map.addSource(mapSource)
 
+        val paddingChannel = map.camera
+            .statefulChanges(CameraChangeReason.PADDING) { map.camera.padding }
         closeables.add(
-            map.camera.paddingChannel.connect { _ ->
+            paddingChannel.connect { _ ->
                 mapView.updateMapCopyrightPosition(root, settingsDrawerInnerLayout)
             }
         )
@@ -78,10 +82,10 @@ class GenericMapActivity : AppCompatActivity() {
     private fun subscribeGestureSwitches(gm: GestureManager) {
         val enabledGestures = gm.enabledGestures
         val options = listOf(
-            Pair(R.id.rotationSwitch, Gesture.ROTATION),
-            Pair(R.id.shiftSwitch, Gesture.SHIFT),
-            Pair(R.id.scaleSwitch, Gesture.SCALING),
-            Pair(R.id.tiltSwitch, Gesture.TILT)
+            Pair(R.id.rotationSwitch, TransformGesture.ROTATION),
+            Pair(R.id.shiftSwitch, TransformGesture.SHIFT),
+            Pair(R.id.scaleSwitch, TransformGesture.SCALING),
+            Pair(R.id.tiltSwitch, TransformGesture.TILT)
         )
 
         options.forEach { (viewId, gesture) ->

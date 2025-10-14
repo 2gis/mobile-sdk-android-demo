@@ -25,7 +25,9 @@ import ru.dgis.sdk.demo.common.asFlow
 import ru.dgis.sdk.demo.databinding.ActivityDownloadTerritoriesBinding
 import ru.dgis.sdk.demo.vm.DownloadTerritoriesViewModel
 import ru.dgis.sdk.demo.vm.Geometry
+import ru.dgis.sdk.map.CameraChangeReason
 import ru.dgis.sdk.map.Map
+import ru.dgis.sdk.map.statefulChanges
 import ru.dgis.sdk.update.Package
 import ru.dgis.sdk.update.PackageUpdateStatus
 
@@ -178,7 +180,8 @@ class DownloadTerritoriesActivity : AppCompatActivity() {
     @OptIn(FlowPreview::class)
     private fun startFilterByGeoPoint(map: Map) = lifecycleScope.launch {
         repeatOnLifecycle(Lifecycle.State.STARTED) {
-            map.camera.positionChannel
+            map.camera
+                .statefulChanges(CameraChangeReason.POSITION) { map.camera.position }
                 .asFlow()
                 .debounce(512)
                 .collect {
@@ -190,7 +193,8 @@ class DownloadTerritoriesActivity : AppCompatActivity() {
     @OptIn(FlowPreview::class)
     private fun startFilterByGeoRect(map: Map) = lifecycleScope.launch {
         repeatOnLifecycle(Lifecycle.State.STARTED) {
-            map.camera.visibleRectChannel
+            map.camera
+                .statefulChanges(CameraChangeReason.VISIBLE_RECT) { map.camera.visibleRect }
                 .asFlow()
                 .debounce(512)
                 .collect {
