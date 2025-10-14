@@ -11,6 +11,7 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.buffer
 import kotlinx.coroutines.flow.callbackFlow
+import ru.dgis.sdk.Channel as SdkChannel
 import ru.dgis.sdk.StatefulChannel
 import ru.dgis.sdk.demo.R
 import ru.dgis.sdk.demo.common.views.SettingsLayoutView
@@ -62,4 +63,9 @@ fun <T : Any?> StatefulChannel<T>.asFlow(): Flow<T> = callbackFlow {
     awaitClose {
         connection.close()
     }
+}.buffer(Channel.CONFLATED)
+
+fun <T : Any?> SdkChannel<T>.asFlow(): Flow<T> = callbackFlow {
+    val connection = connect { value -> trySend(value) }
+    awaitClose { connection.close() }
 }.buffer(Channel.CONFLATED)

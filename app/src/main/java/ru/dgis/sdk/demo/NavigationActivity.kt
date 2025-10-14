@@ -20,18 +20,20 @@ import com.google.android.material.switchmaterial.SwitchMaterial
 import com.google.android.material.tabs.TabLayout
 import kotlinx.coroutines.launch
 import ru.dgis.sdk.Context
+import ru.dgis.sdk.ScreenDistance
+import ru.dgis.sdk.ScreenPoint
 import ru.dgis.sdk.await
 import ru.dgis.sdk.demo.common.updateMapCopyrightPosition
 import ru.dgis.sdk.demo.databinding.ActivityNavigationBinding
 import ru.dgis.sdk.demo.vm.NavigationViewModel
 import ru.dgis.sdk.geometry.point
+import ru.dgis.sdk.map.CameraChangeReason
 import ru.dgis.sdk.map.DgisMapObject
 import ru.dgis.sdk.map.GraphicsPreset
 import ru.dgis.sdk.map.Map
 import ru.dgis.sdk.map.MapView
-import ru.dgis.sdk.map.ScreenDistance
-import ru.dgis.sdk.map.ScreenPoint
 import ru.dgis.sdk.map.TouchEventsObserver
+import ru.dgis.sdk.map.statefulChanges
 import ru.dgis.sdk.navigation.DefaultNavigationControls
 import ru.dgis.sdk.navigation.NavigationView
 import ru.dgis.sdk.navigation.State
@@ -74,12 +76,14 @@ class NavigationActivity : AppCompatActivity(), TouchEventsObserver {
             getMapAsync {
                 initViewModel(it)
                 closeables.add(
-                    it.camera.paddingChannel.connect { _ ->
-                        updateMapCopyrightPosition(
-                            binding.content,
-                            binding.settingsDrawerInnerLayout
-                        )
-                    }
+                    it.camera
+                        .statefulChanges(CameraChangeReason.PADDING) { it.camera.padding }
+                        .connect { _ ->
+                            updateMapCopyrightPosition(
+                                binding.content,
+                                binding.settingsDrawerInnerLayout
+                            )
+                        }
                 )
                 when (it.graphicsPresetHintChannel.value) {
                     GraphicsPreset.LITE -> graphicPreset.check(R.id.litePreset)

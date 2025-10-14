@@ -7,9 +7,9 @@ import androidx.core.widget.doAfterTextChanged
 import ru.dgis.sdk.demo.common.addSettingsLayout
 import ru.dgis.sdk.demo.databinding.ActivityGesturesBinding
 import ru.dgis.sdk.demo.databinding.ActivityGesturesMapPointSettingsBinding
-import ru.dgis.sdk.map.EventsProcessingSettings
-import ru.dgis.sdk.map.RotationCenter
-import ru.dgis.sdk.map.ScalingCenter
+import ru.dgis.sdk.map.GestureActionEventCenter
+import ru.dgis.sdk.map.GestureActionMapPosition
+import ru.dgis.sdk.map.GestureActionPoint
 
 /**
  * Sample activity for demonstration of maps's Gesture Manager possibilities in terms of setting map point, which gestures will be relative to
@@ -24,10 +24,8 @@ class GesturesMapPointActivity : AppCompatActivity() {
     private val mapView by lazy { binding.mapView }
     private val gestureManager by lazy { mapView.gestureManager }
     private val settingsBinding by lazy { prepareSettingsBinding() }
-    private var eventProcessingSettings = EventsProcessingSettings(
-        RotationCenter.MAP_POSITION,
-        ScalingCenter.MAP_POSITION
-    )
+    private var rotationCenterValue: String = "MAP_POSITION"
+    private var scalingCenterValue: String = "MAP_POSITION"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -55,18 +53,24 @@ class GesturesMapPointActivity : AppCompatActivity() {
     private fun initSettings() {
         val gestureManager = this.gestureManager!!
 
-        settingsBinding.rotationCenterTextView.setText(eventProcessingSettings.rotationCenter.toString(), false)
+        settingsBinding.rotationCenterTextView.setText(rotationCenterValue, false)
         settingsBinding.rotationCenterTextView.doAfterTextChanged { editable ->
-            val newRotationCenter = RotationCenter.entries.first { it.name == editable.toString() }
-            eventProcessingSettings = eventProcessingSettings.copy(rotationCenter = newRotationCenter)
-            gestureManager.setSettingsAboutMapPositionPoint(eventProcessingSettings)
+            val name = editable?.toString() ?: return@doAfterTextChanged
+            rotationCenterValue = name
+            gestureManager.rotationSettings.rotationCenter = when (name) {
+                "EVENT_CENTER" -> GestureActionPoint(GestureActionEventCenter())
+                else -> GestureActionPoint(GestureActionMapPosition())
+            }
         }
 
-        settingsBinding.scailingCenterTextView.setText(eventProcessingSettings.scalingCenter.toString(), false)
+        settingsBinding.scailingCenterTextView.setText(scalingCenterValue, false)
         settingsBinding.scailingCenterTextView.doAfterTextChanged { editable ->
-            val newScailingCenter = ScalingCenter.entries.first { it.name == editable.toString() }
-            eventProcessingSettings = eventProcessingSettings.copy(scalingCenter = newScailingCenter)
-            gestureManager.setSettingsAboutMapPositionPoint(eventProcessingSettings)
+            val name = editable?.toString() ?: return@doAfterTextChanged
+            scalingCenterValue = name
+            gestureManager.scalingSettings.scalingCenter = when (name) {
+                "EVENT_CENTER" -> GestureActionPoint(GestureActionEventCenter())
+                else -> GestureActionPoint(GestureActionMapPosition())
+            }
         }
     }
 }
