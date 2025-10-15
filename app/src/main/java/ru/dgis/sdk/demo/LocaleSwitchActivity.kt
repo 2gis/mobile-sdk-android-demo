@@ -19,7 +19,7 @@ import ru.dgis.sdk.map.MyLocationControllerSettings
 import ru.dgis.sdk.map.MyLocationMapObjectSource
 import ru.dgis.sdk.map.Zoom
 import ru.dgis.sdk.platform.Locale
-import ru.dgis.sdk.platform.getLocaleManager
+import ru.dgis.sdk.platform.LocaleManager
 
 /**
  * Activity that demonstrates how to dynamically switch map locales in a DGis-based application.
@@ -50,13 +50,12 @@ class LocaleSwitchActivity : AppCompatActivity() {
      */
     private fun onLocaleItemSelected(item: String) {
         if (item == "System") {
-            getLocaleManager(sdkContext).overrideLocales(emptyList())
+            LocaleManager.instance(sdkContext).overrideLocales(emptyList())
         } else {
             Locale.makeLocale(item)?.let {
-                getLocaleManager(sdkContext).overrideLocales(listOf(it))
+                LocaleManager.instance(sdkContext).overrideLocales(listOf(it))
             }
         }
-        recreateMap()
     }
 
     /**
