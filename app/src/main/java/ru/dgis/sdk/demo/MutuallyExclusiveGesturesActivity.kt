@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import ru.dgis.sdk.demo.common.addSettingsLayout
 import ru.dgis.sdk.demo.databinding.ActivityGesturesBinding
 import ru.dgis.sdk.demo.databinding.ActivityMutuallyExclusiveGesturesSettingsBinding
-import ru.dgis.sdk.map.Gesture
+import ru.dgis.sdk.map.TransformGesture
 import java.util.EnumSet
 
 /**
@@ -20,8 +20,8 @@ class MutuallyExclusiveGesturesActivity : AppCompatActivity() {
     private val mapView by lazy { binding.mapView }
     private val gestureManager by lazy { mapView.gestureManager }
 
-    private var checkedGestures = EnumSet.noneOf(Gesture::class.java)
-    private var addedRules = mutableListOf<EnumSet<Gesture>>()
+    private var checkedGestures = EnumSet.noneOf(TransformGesture::class.java)
+    private var addedRules = mutableListOf<EnumSet<TransformGesture>>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -49,9 +49,9 @@ class MutuallyExclusiveGesturesActivity : AppCompatActivity() {
             checkboxes.forEach { checkBox ->
                 checkBox.setOnCheckedChangeListener { _, isChecked ->
                     if (isChecked) {
-                        checkedGestures.add(ru.dgis.sdk.map.Gesture.entries.first { it.name == checkBox.tag })
+                        checkedGestures.add(TransformGesture.entries.first { it.name == checkBox.tag })
                     } else {
-                        checkedGestures.remove(ru.dgis.sdk.map.Gesture.entries.first { it.name == checkBox.tag })
+                        checkedGestures.remove(TransformGesture.entries.first { it.name == checkBox.tag })
                     }
                 }
             }
@@ -59,7 +59,7 @@ class MutuallyExclusiveGesturesActivity : AppCompatActivity() {
             applyRuleButton.setOnClickListener {
                 addedRules += listOf(checkedGestures)
                 gestureManager.setMutuallyExclusiveGestures(addedRules)
-                checkedGestures = EnumSet.noneOf(Gesture::class.java)
+                checkedGestures = EnumSet.noneOf(TransformGesture::class.java)
                 checkboxes.forEach {
                     it.isChecked = false
                 }
@@ -68,7 +68,7 @@ class MutuallyExclusiveGesturesActivity : AppCompatActivity() {
             cleanRulesButton.setOnClickListener {
                 gestureManager.setMutuallyExclusiveGestures(listOf())
                 addedRules.clear()
-                checkedGestures = EnumSet.noneOf(Gesture::class.java)
+                checkedGestures = EnumSet.noneOf(TransformGesture::class.java)
                 checkboxes.forEach {
                     it.isChecked = false
                 }

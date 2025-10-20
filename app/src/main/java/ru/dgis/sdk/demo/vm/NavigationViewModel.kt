@@ -5,6 +5,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import ru.dgis.sdk.Context
+import ru.dgis.sdk.ScreenDistance
+import ru.dgis.sdk.ScreenPoint
 import ru.dgis.sdk.await
 import ru.dgis.sdk.demo.R
 import ru.dgis.sdk.geometry.GeoPointWithElevation
@@ -17,8 +19,6 @@ import ru.dgis.sdk.map.MyLocationControllerSettings
 import ru.dgis.sdk.map.MyLocationMapObjectSource
 import ru.dgis.sdk.map.RouteEditorSource
 import ru.dgis.sdk.map.RouteMapObject
-import ru.dgis.sdk.map.ScreenDistance
-import ru.dgis.sdk.map.ScreenPoint
 import ru.dgis.sdk.map.imageFromResource
 import ru.dgis.sdk.navigation.NavigationManager
 import ru.dgis.sdk.navigation.RouteBuildOptions
