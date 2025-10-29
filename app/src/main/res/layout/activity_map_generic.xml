@@ -13,6 +13,9 @@
         android:id="@+id/mapView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:dgis_cameraTargetLat="24.701109"
+        app:dgis_cameraTargetLng="46.676640"
+        app:dgis_cameraZoom="17.0"
         android:gravity="center"
         >
         <androidx.constraintlayout.widget.ConstraintLayout

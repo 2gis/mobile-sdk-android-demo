@@ -26,74 +26,74 @@ class MainActivity : AppCompatActivity() {
     private val RECORD_REQUEST_CODE = 101
 
     private val pages = listOf(
-        Page("Compose Examples") {
-            val intent = Intent(this@MainActivity, ComposeActivity::class.java)
-            startActivity(intent)
-        },
-        Page("Generic Map") {
+//        Page("Compose Examples") {
+//            val intent = Intent(this@MainActivity, ComposeActivity::class.java)
+//            startActivity(intent)
+//        },
+        Page("Generic Map (without style)") {
             val intent = Intent(this@MainActivity, GenericMapActivity::class.java)
             startActivity(intent)
         },
-        Page("Custom Style") {
-            val intent = Intent(this@MainActivity, MapStyleActivity::class.java)
-            startActivity(intent)
-        },
-        Page("Navigation") {
+//        Page("Custom Style") {
+//            val intent = Intent(this@MainActivity, MapStyleActivity::class.java)
+//            startActivity(intent)
+//        },
+        Page("Navigation (with style)") {
             val intent = Intent(this@MainActivity, NavigationActivity::class.java)
             startActivity(intent)
         },
-        Page("Map FPS Limeter") {
-            val intent = Intent(this@MainActivity, MapFpsActivity::class.java)
-            startActivity(intent)
-        },
-        Page("Parkings on map") {
-            val intent = Intent(this@MainActivity, ParkingActivity::class.java)
-            startActivity(intent)
-        },
-        Page("Gestures") {
-            val intent = Intent(this@MainActivity, GesturesActivity::class.java)
-            startActivity(intent)
-        },
-        Page("Gestures: center point") {
-            val intent = Intent(this@MainActivity, GesturesMapPointActivity::class.java)
-            startActivity(intent)
-        },
-        Page("Mutually exclusive gestures") {
-            val intent = Intent(this@MainActivity, MutuallyExclusiveGesturesActivity::class.java)
-            startActivity(intent)
-        },
-        Page("GeoJson") {
-            val intent = Intent(this@MainActivity, GeoJsonActivity::class.java)
-            startActivity(intent)
-        },
-        Page("Camera moves") {
-            val intent = Intent(this@MainActivity, CameraMovesActivity::class.java)
-            startActivity(intent)
-        },
-        Page("Search") {
-            val intent = Intent(this@MainActivity, SearchActivity::class.java)
-            startActivity(intent)
-        },
-        Page("Simulate navigation") {
-            val intent = Intent(this@MainActivity, SimulateNavigationActivity::class.java)
-            startActivity(intent)
-        },
-        Page("Take Map Snapshot") {
-            val intent = Intent(this@MainActivity, TakeSnapshotActivity::class.java)
-            startActivity(intent)
-        },
-        Page("Download Territories") {
-            val intent = Intent(this@MainActivity, DownloadTerritoriesActivity::class.java)
-            startActivity(intent)
-        },
-        Page("Locale switch") {
-            val intent = Intent(this@MainActivity, LocaleSwitchActivity::class.java)
-            startActivity(intent)
-        },
-        Page("Copyright") {
-            val intent = Intent(this@MainActivity, CopyrightActivity::class.java)
-            startActivity(intent)
-        }
+//        Page("Map FPS Limeter") {
+//            val intent = Intent(this@MainActivity, MapFpsActivity::class.java)
+//            startActivity(intent)
+//        },
+//        Page("Parkings on map") {
+//            val intent = Intent(this@MainActivity, ParkingActivity::class.java)
+//            startActivity(intent)
+//        },
+//        Page("Gestures") {
+//            val intent = Intent(this@MainActivity, GesturesActivity::class.java)
+//            startActivity(intent)
+//        },
+//        Page("Gestures: center point") {
+//            val intent = Intent(this@MainActivity, GesturesMapPointActivity::class.java)
+//            startActivity(intent)
+//        },
+//        Page("Mutually exclusive gestures") {
+//            val intent = Intent(this@MainActivity, MutuallyExclusiveGesturesActivity::class.java)
+//            startActivity(intent)
+//        },
+//        Page("GeoJson") {
+//            val intent = Intent(this@MainActivity, GeoJsonActivity::class.java)
+//            startActivity(intent)
+//        },
+//        Page("Camera moves") {
+//            val intent = Intent(this@MainActivity, CameraMovesActivity::class.java)
+//            startActivity(intent)
+//        },
+//        Page("Search") {
+//            val intent = Intent(this@MainActivity, SearchActivity::class.java)
+//            startActivity(intent)
+//        },
+//        Page("Simulate navigation") {
+//            val intent = Intent(this@MainActivity, SimulateNavigationActivity::class.java)
+//            startActivity(intent)
+//        },
+//        Page("Take Map Snapshot") {
+//            val intent = Intent(this@MainActivity, TakeSnapshotActivity::class.java)
+//            startActivity(intent)
+//        },
+//        Page("Download Territories") {
+//            val intent = Intent(this@MainActivity, DownloadTerritoriesActivity::class.java)
+//            startActivity(intent)
+//        },
+//        Page("Locale switch") {
+//            val intent = Intent(this@MainActivity, LocaleSwitchActivity::class.java)
+//            startActivity(intent)
+//        },
+//        Page("Copyright") {
+//            val intent = Intent(this@MainActivity, CopyrightActivity::class.java)
+//            startActivity(intent)
+//        }
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
