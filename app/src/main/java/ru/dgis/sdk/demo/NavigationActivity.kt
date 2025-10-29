@@ -1,6 +1,7 @@
 package ru.dgis.sdk.demo
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
@@ -20,6 +21,7 @@ import com.google.android.material.switchmaterial.SwitchMaterial
 import com.google.android.material.tabs.TabLayout
 import kotlinx.coroutines.launch
 import ru.dgis.sdk.Context
+import ru.dgis.sdk.File
 import ru.dgis.sdk.ScreenDistance
 import ru.dgis.sdk.ScreenPoint
 import ru.dgis.sdk.await
@@ -32,6 +34,7 @@ import ru.dgis.sdk.map.DgisMapObject
 import ru.dgis.sdk.map.GraphicsPreset
 import ru.dgis.sdk.map.Map
 import ru.dgis.sdk.map.MapView
+import ru.dgis.sdk.map.StyleBuilder
 import ru.dgis.sdk.map.TouchEventsObserver
 import ru.dgis.sdk.map.statefulChanges
 import ru.dgis.sdk.navigation.DefaultNavigationControls
@@ -175,6 +178,16 @@ class NavigationActivity : AppCompatActivity(), TouchEventsObserver {
     private fun initViewModel(map: Map) {
         val activity = this
         this.map = map
+        StyleBuilder(context = sdkContext).loadStyle(File.fromAsset(sdkContext, "styles_dark.2gis")).apply {
+            onResult { s ->
+                map.fontIconSizeMultiplier = 2f
+                map.interactive = true
+                map.style = s
+            }
+            onError { it ->
+                Log.d("initViewModel style setup", it.message ?: "Unknown error")
+            }
+        }
         viewModel = NavigationViewModel(sdkContext, map, lifecycleScope).also { viewModel ->
             closeables.add(viewModel)
             viewModel.messageCallback = {

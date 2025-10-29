@@ -1,5 +1,6 @@
 package ru.dgis.sdk.demo.vm
 
+import android.util.Log
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,6 +17,7 @@ import ru.dgis.sdk.map.MapObjectManager
 import ru.dgis.sdk.map.Marker
 import ru.dgis.sdk.map.MarkerOptions
 import ru.dgis.sdk.map.MyLocationControllerSettings
+import ru.dgis.sdk.map.MyLocationMapObject
 import ru.dgis.sdk.map.MyLocationMapObjectSource
 import ru.dgis.sdk.map.RouteEditorSource
 import ru.dgis.sdk.map.RouteMapObject
@@ -180,6 +182,9 @@ class NavigationViewModel(
         coroutineScope.launch {
             val objects = map.getRenderedObjects(point, ScreenDistance(5f)).await()
             for (obj in objects) {
+                if (obj.item.item is MyLocationMapObject) {
+                    Log.d("tap event", "MyLocationMapObject tapped, zoom: ${map.camera.position.zoom}")
+                }
                 val routeMapObject = obj.item.item as? RouteMapObject ?: continue
                 if (routeMapObject.isActive) {
                     continue
