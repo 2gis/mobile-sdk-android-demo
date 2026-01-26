@@ -101,7 +101,7 @@ class MainActivity : AppCompatActivity() {
                 .setTitle("Reset 2GIS SDK")
                 .setMessage(
                     "This is a demo of DGis.deinitialize(): SDK will be deallocated and reinitialized.\n\n" +
-                            "Important: Make sure all SDK maps/objects are closed before deinitialize()."
+                        "Important: Make sure all SDK maps/objects are closed before deinitialize()."
                 )
                 .setPositiveButton("Reset") { _, _ ->
                     runCatching {
@@ -153,10 +153,10 @@ class MainActivity : AppCompatActivity() {
             this,
             Manifest.permission.ACCESS_COARSE_LOCATION
         ) == PackageManager.PERMISSION_GRANTED &&
-                ContextCompat.checkSelfPermission(
-                    this,
-                    Manifest.permission.ACCESS_FINE_LOCATION
-                ) == PackageManager.PERMISSION_GRANTED
+            ContextCompat.checkSelfPermission(
+            this,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
 
         if (!permission) {
             Log.i("APP", "Permission to record denied")
