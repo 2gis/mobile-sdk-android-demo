@@ -3,6 +3,7 @@ package ru.dgis.sdk.demo
 import android.app.Application
 import com.huawei.hms.api.HuaweiApiAvailability
 import ru.dgis.sdk.Context
+import ru.dgis.sdk.DGis
 import ru.dgis.sdk.demo.location.HMSLocationSource
 import ru.dgis.sdk.positioning.DefaultLocationSource
 import ru.dgis.sdk.positioning.LocationService
@@ -32,6 +33,17 @@ class Application : Application() {
             )
         }
         registerPlatformLocationSource(sdkContext, locationSource)
+    }
+
+    /**
+     * Example of using [DGis.deinitialize] in the demo.
+     *
+     * Important: Before deinitializing, you must close all SDK objects (maps, layers, data sources).
+     */
+    fun resetSdk() {
+        DGis.deinitialize()
+        sdkContext = initializeDGis(this)
+        registerServices()
     }
 }
 

@@ -8,6 +8,8 @@ import android.util.Log
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ListView
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -93,6 +95,33 @@ class MainActivity : AppCompatActivity() {
         Page("Copyright") {
             val intent = Intent(this@MainActivity, CopyrightActivity::class.java)
             startActivity(intent)
+        },
+        Page("DGis.deinitialize() example") {
+            AlertDialog.Builder(this@MainActivity)
+                .setTitle("Reset 2GIS SDK")
+                .setMessage(
+                    "This is a demo of DGis.deinitialize(): SDK will be deallocated and reinitialized.\n\n" +
+                            "Important: Make sure all SDK maps/objects are closed before deinitialize()."
+                )
+                .setPositiveButton("Reset") { _, _ ->
+                    runCatching {
+                        (applicationContext as Application).resetSdk()
+                    }.onSuccess {
+                        Toast.makeText(
+                            this,
+                            "SDK was successfully deinitialized and reinitialized.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }.onFailure { error ->
+                        AlertDialog.Builder(this)
+                            .setTitle("Error clearing context")
+                            .setMessage(error.message ?: "Unknown error")
+                            .setPositiveButton(android.R.string.ok, null)
+                            .show()
+                    }
+                }
+                .setNegativeButton(android.R.string.cancel, null)
+                .show()
         }
     )
 
@@ -124,10 +153,10 @@ class MainActivity : AppCompatActivity() {
             this,
             Manifest.permission.ACCESS_COARSE_LOCATION
         ) == PackageManager.PERMISSION_GRANTED &&
-            ContextCompat.checkSelfPermission(
-            this,
-            Manifest.permission.ACCESS_FINE_LOCATION
-        ) == PackageManager.PERMISSION_GRANTED
+                ContextCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) == PackageManager.PERMISSION_GRANTED
 
         if (!permission) {
             Log.i("APP", "Permission to record denied")
