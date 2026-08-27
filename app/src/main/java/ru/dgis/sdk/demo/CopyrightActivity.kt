@@ -4,9 +4,14 @@ import android.os.Bundle
 import android.view.Gravity
 import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
-import ru.dgis.sdk.compose.map.CopyrightMargins
+import ru.dgis.sdk.coordinates.GeoPoint
+import ru.dgis.sdk.demo.common.attachMapView
+import ru.dgis.sdk.demo.common.demoMapOwner
 import ru.dgis.sdk.demo.databinding.ActivityCopyrightBinding
-import ru.dgis.sdk.map.Map
+import ru.dgis.sdk.map.CameraPosition
+import ru.dgis.sdk.map.CopyrightMargins
+import ru.dgis.sdk.map.MapView
+import ru.dgis.sdk.map.Zoom
 
 /**
  * Sample activity to demonstrate copyright control in the DGis SDK map.
@@ -19,8 +24,10 @@ import ru.dgis.sdk.map.Map
  */
 class CopyrightActivity : AppCompatActivity() {
     private val binding by lazy { ActivityCopyrightBinding.inflate(layoutInflater) }
-    private val mapView by lazy { binding.mapView }
-    private lateinit var map: Map
+    private lateinit var mapView: MapView
+    private val mapOwner by demoMapOwner(
+        CameraPosition(GeoPoint(25.204575, 55.25939), Zoom(9f))
+    )
 
     private var copyrightMargins = CopyrightMargins(0, 0, 0, 0)
     private var copyrightGravity = Gravity.BOTTOM or Gravity.START
@@ -29,6 +36,7 @@ class CopyrightActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        mapView = binding.mapContainer.attachMapView(mapOwner.mapViewModel)
 
         binding.seekLeft.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
@@ -91,28 +99,22 @@ class CopyrightActivity : AppCompatActivity() {
             updateShowVersion()
         }
 
-        mapView.getMapAsync {
-            this.map = it
-            updateCopyrightMargins()
-            updateCopyrightGravity()
-            updateShowVersion()
-        }
+        updateCopyrightMargins()
+        updateCopyrightGravity()
+        updateShowVersion()
     }
 
     private fun updateCopyrightMargins() {
-        mapView.setCopyrightMargins(
-            copyrightMargins.left,
-            copyrightMargins.top,
-            copyrightMargins.right,
-            copyrightMargins.bottom
+        mapView.copyrightOptions = mapView.copyrightOptions.copy(
+            margins = copyrightMargins
         )
     }
 
     private fun updateCopyrightGravity() {
-        mapView.setCopyrightGravity(copyrightGravity)
+        mapView.copyrightOptions = mapView.copyrightOptions.copy(gravity = copyrightGravity)
     }
 
     private fun updateShowVersion() {
-        mapView.showApiVersionInCopyrightView = showVersion
+        mapView.copyrightOptions = mapView.copyrightOptions.copy(showApiVersion = showVersion)
     }
 }

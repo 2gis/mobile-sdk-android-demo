@@ -4,19 +4,35 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ru.dgis.sdk.compose.map.MapComposable
-import ru.dgis.sdk.compose.map.MapComposableState
+import ru.dgis.sdk.compose.map.collectMap
 import ru.dgis.sdk.demo.compose.configurators.MapThemeConfigurator
-import ru.dgis.sdk.map.MapOptions
+import ru.dgis.sdk.demo.compose.demoMapCopyrightOptions
+import ru.dgis.sdk.demo.compose.demoMapRenderOptions
+import ru.dgis.sdk.demo.compose.previewMapViewModel
+import ru.dgis.sdk.map.Fixed
+import ru.dgis.sdk.map.MapAppearance
+import ru.dgis.sdk.map.MapControllerViewModel
+import ru.dgis.sdk.map.MapTheme
 
 @Composable
-fun ThemeScreen(mapState: MapComposableState) {
-    MapComposable(state = mapState)
+fun ThemeScreen(mapViewModel: MapControllerViewModel) {
+    val map = mapViewModel.collectMap()
+    var theme by remember(map) { mutableStateOf(map?.theme ?: MapTheme.defaultTheme) }
+
+    MapComposable(
+        viewModel = mapViewModel,
+        renderOptions = demoMapRenderOptions,
+        copyrightOptions = demoMapCopyrightOptions
+    )
 
     Box(
         modifier = Modifier
@@ -25,8 +41,11 @@ fun ThemeScreen(mapState: MapComposableState) {
         contentAlignment = Alignment.CenterStart
     ) {
         MapThemeConfigurator(
-            theme = mapState.theme.collectAsState().value,
-            onThemeChange = { mapState.setTheme(it) }
+            theme = theme,
+            onThemeChange = {
+                theme = it
+                map?.appearance = MapAppearance(Fixed(it))
+            }
         )
     }
 }
@@ -34,5 +53,5 @@ fun ThemeScreen(mapState: MapComposableState) {
 @Preview(showBackground = true)
 @Composable
 fun ThemeScreenPreview() {
-    ThemeScreen(mapState = MapComposableState(MapOptions()))
+    ThemeScreen(mapViewModel = previewMapViewModel())
 }

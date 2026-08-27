@@ -6,12 +6,9 @@
     android:layout_height="match_parent"
     tools:context=".CameraMovesActivity">
 
-    <ru.dgis.sdk.map.MapView
-        android:id="@+id/mapView"
+    <FrameLayout
+        android:id="@+id/mapContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:dgis_cameraTargetLat="25.204575"
-        app:dgis_cameraTargetLng="55.25939"
-        app:dgis_cameraZoom="9" />
+        android:layout_height="match_parent" />
 
 </FrameLayout>

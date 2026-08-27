@@ -9,9 +9,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -21,19 +21,31 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ru.dgis.sdk.compose.map.MapComposable
-import ru.dgis.sdk.compose.map.MapComposableState
+import ru.dgis.sdk.compose.map.collectController
+import ru.dgis.sdk.demo.common.asFlow
 import ru.dgis.sdk.demo.compose.configurators.MapFpsConfigurator
-import ru.dgis.sdk.map.MapOptions
+import ru.dgis.sdk.demo.compose.demoMapCopyrightOptions
+import ru.dgis.sdk.demo.compose.demoMapRenderOptions
+import ru.dgis.sdk.demo.compose.previewMapViewModel
+import ru.dgis.sdk.map.MapControllerViewModel
 
 @Composable
-fun FpsScreen(mapState: MapComposableState) {
+fun FpsScreen(mapViewModel: MapControllerViewModel) {
+    val controller = mapViewModel.collectController()
+    val renderer = controller?.renderer
     var fpsCounter by remember { mutableIntStateOf(0) }
+    var maxFps by remember(renderer) { mutableStateOf(renderer?.maxFps) }
+    var powerSavingMaxFps by remember(renderer) { mutableStateOf(renderer?.powerSavingMaxFps) }
 
-    LaunchedEffect(mapState) {
-        mapState.fpsCounterCallback = { fpsCounter = it.value }
+    LaunchedEffect(renderer) {
+        renderer?.fpsChannel?.asFlow()?.collect { fpsCounter = it.value }
     }
 
-    MapComposable(state = mapState)
+    MapComposable(
+        viewModel = mapViewModel,
+        renderOptions = demoMapRenderOptions,
+        copyrightOptions = demoMapCopyrightOptions
+    )
 
     Box(
         modifier = Modifier
@@ -44,10 +56,16 @@ fun FpsScreen(mapState: MapComposableState) {
     ) {
         Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
             MapFpsConfigurator(
-                maxFpsValue = mapState.maxFps.collectAsState().value,
-                onMaxFpsChange = { mapState.setMaxFps(it) },
-                powerSavingMaxFpsValue = mapState.powerSavingMaxFps.collectAsState().value,
-                onPowerSavingMaxFpsChange = { mapState.setPowerSavingMaxFps(it) }
+                maxFpsValue = maxFps,
+                onMaxFpsChange = {
+                    maxFps = it
+                    renderer?.setMaxFps(it, powerSavingMaxFps)
+                },
+                powerSavingMaxFpsValue = powerSavingMaxFps,
+                onPowerSavingMaxFpsChange = {
+                    powerSavingMaxFps = it
+                    renderer?.setMaxFps(maxFps, it)
+                }
             )
             Text(
                 modifier = Modifier.fillMaxWidth(),
@@ -62,5 +80,5 @@ fun FpsScreen(mapState: MapComposableState) {
 @Preview(showBackground = true)
 @Composable
 fun FpsScreenPreview() {
-    FpsScreen(mapState = MapComposableState(MapOptions()))
+    FpsScreen(mapViewModel = previewMapViewModel())
 }

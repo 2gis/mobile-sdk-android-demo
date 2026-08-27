@@ -1,12 +1,23 @@
 package ru.dgis.sdk.demo
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
+import ru.dgis.sdk.coordinates.GeoPoint
 import ru.dgis.sdk.demo.common.addSettingsLayout
+import ru.dgis.sdk.demo.common.attachMapView
+import ru.dgis.sdk.demo.common.awaitMapControllerOrShowError
+import ru.dgis.sdk.demo.common.demoMapOwner
 import ru.dgis.sdk.demo.databinding.ActivityGesturesBinding
 import ru.dgis.sdk.demo.databinding.ActivityGesturesSettingsBinding
+import ru.dgis.sdk.map.CameraPosition
+import ru.dgis.sdk.map.GestureManager
+import ru.dgis.sdk.map.Tilt
 import ru.dgis.sdk.map.TransformGesture
+import ru.dgis.sdk.map.Zoom
 import kotlin.reflect.KProperty1
 import kotlin.reflect.full.functions
 import kotlin.reflect.full.instanceParameter
@@ -34,20 +45,31 @@ class GesturesActivity : AppCompatActivity() {
             layoutInflater
         )
     }
-    private val mapView by lazy { binding.mapView }
-    private val gestureManager by lazy { mapView.gestureManager }
+    private lateinit var gestureManager: GestureManager
     private val settingsBinding by lazy { prepareSettingsBinding() }
+    private val mapOwner by demoMapOwner(
+        CameraPosition(
+            point = GeoPoint(25.09608, 55.132429),
+            zoom = Zoom(13.5f),
+            tilt = Tilt(25f)
+        )
+    )
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        binding.addSettingsLayout {
+        val mapView = binding.mapContainer.attachMapView(mapOwner.mapViewModel)
+        binding.addSettingsLayout(mapView) {
             addView(settingsBinding.root)
         }
 
         /**
          * Using hack here to delay settings initialization until map is ready and gestureManager is not null for sure
          */
-        mapView.getMapAsync {
+        lifecycleScope.launch {
+            val controller = awaitMapControllerOrShowError(mapOwner.mapViewModel) ?: return@launch
+            gestureManager = checkNotNull(
+                controller.gestureRecognizer.gestureManager
+            )
             initSwitches()
             initRotationSettings()
             initTiltSettings()
@@ -61,7 +83,7 @@ class GesturesActivity : AppCompatActivity() {
     }
 
     private fun initSwitches() {
-        val gestureManager = this.gestureManager!!
+        val gestureManager = this.gestureManager
 
         mapOf(
             settingsBinding.scailingSwitch to TransformGesture.SCALING,
@@ -84,8 +106,9 @@ class GesturesActivity : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun initRotationSettings() {
-        val gestureManager = this.gestureManager!!
+        val gestureManager = this.gestureManager
         val rotationSettings = gestureManager.rotationSettings.recognizeSettings
         settingsBinding.rotationAnglediffinscalingdegEditText.setText(
             rotationSettings.rotationThresholdInScaling.angleDiffDeg.toString()
@@ -142,8 +165,9 @@ class GesturesActivity : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun initTiltSettings() {
-        val gestureManager = this.gestureManager!!
+        val gestureManager = this.gestureManager
         val tiltSettings = gestureManager.tiltSettings.recognizeSettings
         settingsBinding.tiltHorizontalswervedegEditText.setText(
             tiltSettings.horizontalSwerveDeg.toString()
@@ -186,8 +210,9 @@ class GesturesActivity : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun initScailingSettings() {
-        val gestureManager = this.gestureManager!!
+        val gestureManager = this.gestureManager
         val scalingSettings = gestureManager.scalingSettings.recognizeSettings
         settingsBinding.scailingScaleratiothresholdEditText.setText(
             scalingSettings.scaleRatioThreshold.toString()
@@ -215,17 +240,17 @@ class GesturesActivity : AppCompatActivity() {
     }
 
     private fun initMultiTouchShiftSettings() {
-        val gestureManager = this.gestureManager!!
-        val multitouchShiftSettings = gestureManager.multitouchShiftSettings.recognizeSettings
+        val gestureManager = this.gestureManager
+        val multitouchShiftSettings = gestureManager.multiTouchShiftSettings.recognizeSettings
         settingsBinding.multiTouchShiftThresholdmmEditText.setText(
-            multitouchShiftSettings.multitouchShiftThresholdMm.toString()
+            multitouchShiftSettings.multiTouchShiftThresholdMm.toString()
         )
 
         settingsBinding.multiTouchShiftThresholdmmEditText.addTextChangedListener { t ->
             t?.toString()?.toFloatOrNull()?.let { v ->
-                val cur = gestureManager.multitouchShiftSettings.recognizeSettings
-                gestureManager.multitouchShiftSettings.recognizeSettings = cur.copy(
-                    multitouchShiftThresholdMm = if (v < 0f) 0f else v
+                val cur = gestureManager.multiTouchShiftSettings.recognizeSettings
+                gestureManager.multiTouchShiftSettings.recognizeSettings = cur.copy(
+                    multiTouchShiftThresholdMm = if (v < 0f) 0f else v
                 )
             }
         }

@@ -21,12 +21,18 @@ import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
+import ru.dgis.sdk.coordinates.GeoPoint
 import ru.dgis.sdk.demo.common.asFlow
+import ru.dgis.sdk.demo.common.attachMapView
+import ru.dgis.sdk.demo.common.awaitMapControllerOrShowError
+import ru.dgis.sdk.demo.common.demoMapOwner
 import ru.dgis.sdk.demo.databinding.ActivityDownloadTerritoriesBinding
 import ru.dgis.sdk.demo.vm.DownloadTerritoriesViewModel
 import ru.dgis.sdk.demo.vm.Geometry
 import ru.dgis.sdk.map.CameraChangeReason
+import ru.dgis.sdk.map.CameraPosition
 import ru.dgis.sdk.map.Map
+import ru.dgis.sdk.map.Zoom
 import ru.dgis.sdk.map.statefulChanges
 import ru.dgis.sdk.update.Package
 import ru.dgis.sdk.update.PackageUpdateStatus
@@ -108,12 +114,17 @@ private class PackagesAdapter(
 class DownloadTerritoriesActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDownloadTerritoriesBinding
     private val viewModel: DownloadTerritoriesViewModel by viewModels()
+    private val mapOwner by demoMapOwner(
+        CameraPosition(GeoPoint(55.740444, 37.619524), Zoom(9f))
+    )
     private var geometryFilterJob: Job? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityDownloadTerritoriesBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        binding.mapContainer.attachMapView(mapOwner.mapViewModel)
 
         binding.territoriesRecycleView.adapter = PackagesAdapter(listOf(), lifecycleScope)
 
@@ -145,7 +156,8 @@ class DownloadTerritoriesActivity : AppCompatActivity() {
             }
         })
 
-        binding.mapView.getMapAsync { map ->
+        lifecycleScope.launch {
+            val map = awaitMapControllerOrShowError(mapOwner.mapViewModel)?.map ?: return@launch
             lifecycleScope.launch {
                 repeatOnLifecycle(Lifecycle.State.STARTED) {
                     viewModel.packages.collect { territories ->
@@ -173,8 +185,6 @@ class DownloadTerritoriesActivity : AppCompatActivity() {
                 }
             }
         }
-
-        setContentView(binding.root)
     }
 
     @OptIn(FlowPreview::class)

@@ -4,18 +4,22 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import java9.util.concurrent.CompletableFuture
-import ru.dgis.sdk.map.Map
+import ru.dgis.sdk.DGis
+import ru.dgis.sdk.demo.common.createDgisSources
+import ru.dgis.sdk.map.DefaultMapControllerViewModel
+import ru.dgis.sdk.map.MapControllerOptions
+import ru.dgis.sdk.map.MapControllerViewModel
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
 import ru.dgis.sdk.File as DGisFile
 
 class MapStyleViewModel : ViewModel() {
-    private val closeables = mutableListOf<AutoCloseable>()
     private var loadingFuture = CompletableFuture<Void>()
     private var stylePath = ""
+    private var controllerStylePath = ""
+    private var mapControllerViewModel: DefaultMapControllerViewModel? = null
     private val _styleFile = MutableLiveData<DGisFile>()
-    private var map: Map? = null
 
     var isStyleSelected: Boolean = false
         private set
@@ -42,17 +46,27 @@ class MapStyleViewModel : ViewModel() {
             }
     }
 
-    fun onMapReady(map: Map) {
-        this.map = map
-        closeables.add(map)
+    fun mapViewModel(styleFile: DGisFile): MapControllerViewModel {
+        if (mapControllerViewModel == null || controllerStylePath != stylePath) {
+            mapControllerViewModel?.close()
+            controllerStylePath = stylePath
+            val sdkContext = DGis.context()
+            mapControllerViewModel = DefaultMapControllerViewModel(
+                sdkContext,
+                MapControllerOptions(
+                    sources = createDgisSources(sdkContext),
+                    styleFile = styleFile
+                )
+            )
+        }
+        return checkNotNull(mapControllerViewModel)
     }
 
     override fun onCleared() {
         super.onCleared()
         loadingFuture.cancel(true)
 
-        closeables.forEach(AutoCloseable::close)
-        closeables.clear()
+        mapControllerViewModel?.close()
 
         if (stylePath.isNotEmpty()) {
             CompletableFuture.runAsync {

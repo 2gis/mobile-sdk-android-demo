@@ -7,8 +7,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import ru.dgis.sdk.DGis
 import ru.dgis.sdk.coordinates.GeoPoint
-import ru.dgis.sdk.coordinates.GeoRect
 import ru.dgis.sdk.demo.common.asFlow
+import ru.dgis.sdk.geometry.GeoRect
 import ru.dgis.sdk.update.Territory
 import ru.dgis.sdk.update.TerritoryManager
 

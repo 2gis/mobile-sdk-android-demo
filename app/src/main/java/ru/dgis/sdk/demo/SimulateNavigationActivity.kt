@@ -23,11 +23,16 @@ import ru.dgis.sdk.ScreenPoint
 import ru.dgis.sdk.coordinates.GeoPoint
 import ru.dgis.sdk.coordinates.Latitude
 import ru.dgis.sdk.coordinates.Longitude
+import ru.dgis.sdk.demo.common.attachMapView
+import ru.dgis.sdk.demo.common.awaitMapControllerOrShowError
+import ru.dgis.sdk.demo.common.collectTouchEvents
+import ru.dgis.sdk.demo.common.demoMapOwner
 import ru.dgis.sdk.demo.databinding.ActivitySimulateNavigationBinding
 import ru.dgis.sdk.demo.vm.MarkerUserData
 import ru.dgis.sdk.demo.vm.RouteSearchPointWithMarker
 import ru.dgis.sdk.demo.vm.SimulateNavigationViewModel
 import ru.dgis.sdk.geometry.GeoPointWithElevation
+import ru.dgis.sdk.map.CameraPosition
 import ru.dgis.sdk.map.DragBeginData
 import ru.dgis.sdk.map.LogicalPixel
 import ru.dgis.sdk.map.Map
@@ -36,6 +41,7 @@ import ru.dgis.sdk.map.MapObjectManager
 import ru.dgis.sdk.map.Marker
 import ru.dgis.sdk.map.MarkerOptions
 import ru.dgis.sdk.map.TouchEventsObserver
+import ru.dgis.sdk.map.Zoom
 import ru.dgis.sdk.map.imageFromResource
 import ru.dgis.sdk.routing.Route
 import ru.dgis.sdk.routing.RouteDistance
@@ -59,6 +65,9 @@ class SimulateNavigationActivity : AppCompatActivity(), TouchEventsObserver {
     // Initialization of essential components and variables.
     private val binding by lazy { ActivitySimulateNavigationBinding.inflate(layoutInflater) }
     private val vm by viewModels<SimulateNavigationViewModel>()
+    private val mapOwner by demoMapOwner(
+        CameraPosition(GeoPoint(25.197896, 55.254927), Zoom(12f))
+    )
     private val sdkContext by lazy { application.sdkContext }
 
     // Map and marker management.
@@ -89,16 +98,23 @@ class SimulateNavigationActivity : AppCompatActivity(), TouchEventsObserver {
         setContentView(binding.root)
         setupWindowInsets()
         setupSpeedSlider()
-        setupMapAndMarkers()
-
-        binding.mapView.setTouchEventsObserver(this)
-
+        binding.mapContainer.attachMapView(mapOwner.mapViewModel)
         lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                vm.routeFlow.collect { route ->
-                    movingJob?.cancel()
-                    route?.let {
-                        startRouteAnimation(it)
+            val controller = awaitMapControllerOrShowError(mapOwner.mapViewModel) ?: return@launch
+            binding.snapToMapLayout.bindToMap(controller)
+            setupMapAndMarkers(controller.map)
+            launch {
+                repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    controller.collectTouchEvents(this@SimulateNavigationActivity)
+                }
+            }
+            launch {
+                repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                    vm.routeFlow.collect { route ->
+                        movingJob?.cancel()
+                        route?.let {
+                            startRouteAnimation(it)
+                        }
                     }
                 }
             }
@@ -122,6 +138,13 @@ class SimulateNavigationActivity : AppCompatActivity(), TouchEventsObserver {
     // Event handling methods for marker dragging atr unrelated to the main simulation functionality.
     override fun onDragEnd() {
         vm.onDragEnd()
+    }
+
+    override fun onDestroy() {
+        movingJob?.cancel()
+        if (::mapObjectManager.isInitialized) mapObjectManager.close()
+        if (::map.isInitialized) map.removeSource(vm.routeEditorSource)
+        super.onDestroy()
     }
 
     private fun setupWindowInsets() {
@@ -150,37 +173,35 @@ class SimulateNavigationActivity : AppCompatActivity(), TouchEventsObserver {
         }
     }
 
-    private fun setupMapAndMarkers() {
-        binding.mapView.getMapAsync { map ->
-            this.map = map
-            map.addSource(vm.routeEditorSource)
-            mapObjectManager = MapObjectManager(map)
+    private fun setupMapAndMarkers(map: Map) {
+        this.map = map
+        map.addSource(vm.routeEditorSource)
+        mapObjectManager = MapObjectManager(map)
 
-            val startMarker = Marker(
-                MarkerOptions(
-                    draggable = true,
-                    icon = imageFromResource(sdkContext, R.drawable.ic_start),
-                    position = GeoPointWithElevation(initialStartPoint.coordinates),
-                    userData = MarkerUserData.START
-                )
-            ).also {
-                mapObjectManager.addObject(it)
-            }
-
-            val finishMarker = Marker(
-                MarkerOptions(
-                    draggable = true,
-                    icon = imageFromResource(sdkContext, R.drawable.ic_finish),
-                    position = GeoPointWithElevation(initialFinishPoint.coordinates),
-                    userData = MarkerUserData.FINISH
-                )
-            ).also {
-                mapObjectManager.addObject(it)
-            }
-
-            vm.updateStartPoint(RouteSearchPointWithMarker(startMarker, initialStartPoint))
-            vm.updateFinishPoint(RouteSearchPointWithMarker(finishMarker, initialFinishPoint))
+        val startMarker = Marker(
+            MarkerOptions(
+                draggable = true,
+                icon = imageFromResource(sdkContext, R.drawable.ic_start),
+                position = GeoPointWithElevation(initialStartPoint.coordinates),
+                userData = MarkerUserData.START
+            )
+        ).also {
+            mapObjectManager.addObject(it)
         }
+
+        val finishMarker = Marker(
+            MarkerOptions(
+                draggable = true,
+                icon = imageFromResource(sdkContext, R.drawable.ic_finish),
+                position = GeoPointWithElevation(initialFinishPoint.coordinates),
+                userData = MarkerUserData.FINISH
+            )
+        ).also {
+            mapObjectManager.addObject(it)
+        }
+
+        vm.updateStartPoint(RouteSearchPointWithMarker(startMarker, initialStartPoint))
+        vm.updateFinishPoint(RouteSearchPointWithMarker(finishMarker, initialFinishPoint))
     }
 
     private fun startRouteAnimation(route: Route) {

@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
-        app:layout_constraintBottom_toTopOf="@id/mapView"
+        app:layout_constraintBottom_toTopOf="@id/mapContainer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -55,22 +55,15 @@
     </com.google.android.material.tabs.TabLayout>
 
 
-    <ru.dgis.sdk.map.MapView
-        android:id="@+id/mapView"
+    <FrameLayout
+        android:id="@+id/mapContainer"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:dgis_cameraTargetLat="55.740444"
-        app:dgis_cameraTargetLng="37.619524"
-        app:dgis_cameraZoom="12.0"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/routeTypeTabsLayout">
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fitsSystemWindows="true">
+        app:layout_constraintTop_toBottomOf="@id/routeTypeTabsLayout"
+        android:fitsSystemWindows="true">
 
             <FrameLayout
                 android:id="@+id/routeEditorView"
@@ -86,6 +79,7 @@
                     tools:visibility="visible" />
 
                 <ru.dgis.sdk.map.NavigationControl
+                    android:id="@+id/navigationControl"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end|center_vertical" />
@@ -102,14 +96,13 @@
                     tools:ignore="ContentDescription" />
             </FrameLayout>
 
-            <ru.dgis.sdk.navigation.NavigationView
-                android:id="@+id/navigationView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </FrameLayout>
+        <ru.dgis.sdk.navigation.NavigationView
+            android:id="@+id/navigationView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
 
-    </ru.dgis.sdk.map.MapView>
+    </FrameLayout>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/settingsDrawer"

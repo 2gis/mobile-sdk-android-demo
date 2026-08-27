@@ -2,10 +2,20 @@ package ru.dgis.sdk.demo
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
+import ru.dgis.sdk.coordinates.GeoPoint
 import ru.dgis.sdk.demo.common.addSettingsLayout
+import ru.dgis.sdk.demo.common.attachMapView
+import ru.dgis.sdk.demo.common.awaitMapControllerOrShowError
+import ru.dgis.sdk.demo.common.demoMapOwner
 import ru.dgis.sdk.demo.databinding.ActivityGesturesBinding
 import ru.dgis.sdk.demo.databinding.ActivityMutuallyExclusiveGesturesSettingsBinding
+import ru.dgis.sdk.map.CameraPosition
+import ru.dgis.sdk.map.GestureManager
+import ru.dgis.sdk.map.Tilt
 import ru.dgis.sdk.map.TransformGesture
+import ru.dgis.sdk.map.Zoom
 import java.util.EnumSet
 
 /**
@@ -17,28 +27,39 @@ class MutuallyExclusiveGesturesActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityGesturesBinding.inflate(layoutInflater) }
     private val settingsBinding by lazy { ActivityMutuallyExclusiveGesturesSettingsBinding.inflate(layoutInflater) }
-    private val mapView by lazy { binding.mapView }
-    private val gestureManager by lazy { mapView.gestureManager }
+    private lateinit var gestureManager: GestureManager
+    private val mapOwner by demoMapOwner(
+        CameraPosition(
+            point = GeoPoint(25.09608, 55.132429),
+            zoom = Zoom(13.5f),
+            tilt = Tilt(25f)
+        )
+    )
 
     private var checkedGestures = EnumSet.noneOf(TransformGesture::class.java)
     private var addedRules = mutableListOf<EnumSet<TransformGesture>>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        binding.addSettingsLayout {
+        val mapView = binding.mapContainer.attachMapView(mapOwner.mapViewModel)
+        binding.addSettingsLayout(mapView) {
             addView(settingsBinding.root)
         }
 
         /**
          * Using hack here to delay settings initialization until map is ready and gestureManager is not null for sure
          */
-        mapView.getMapAsync {
+        lifecycleScope.launch {
+            val controller = awaitMapControllerOrShowError(mapOwner.mapViewModel) ?: return@launch
+            gestureManager = checkNotNull(
+                controller.gestureRecognizer.gestureManager
+            )
             initSettings()
         }
     }
 
     private fun initSettings() {
-        val gestureManager = this.gestureManager!!
+        val gestureManager = this.gestureManager
         settingsBinding.apply {
             val checkboxes = listOf(
                 tiltCheckbox,

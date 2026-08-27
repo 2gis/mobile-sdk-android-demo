@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.progressindicator.CircularProgressIndicator
 import ru.dgis.sdk.File
 import ru.dgis.sdk.demo.vm.MapStyleViewModel
-import ru.dgis.sdk.map.MapOptions
 import ru.dgis.sdk.map.MapView
 
 internal const val MAP_STYLE_FILE = 4433
@@ -75,15 +74,18 @@ class MapStyleActivity : AppCompatActivity() {
     }
 
     private fun onStyleChanged(styleFile: File) {
-        val options = MapOptions().also {
-            it.styleFile = styleFile
-        }
-        val mapView = MapView(this, options).apply {
-            getMapAsync(viewModel::onMapReady)
+        val mapView = MapView(this).apply {
+            setMapControllerViewModel(viewModel.mapViewModel(styleFile))
         }
         rootContainer.apply {
             removeAllViews()
-            addView(mapView)
+            addView(
+                mapView,
+                ViewGroup.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.MATCH_PARENT
+                )
+            )
         }
     }
 }

@@ -6,11 +6,18 @@ import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import ru.dgis.sdk.coordinates.GeoPoint
 import ru.dgis.sdk.demo.common.addSettingsLayout
+import ru.dgis.sdk.demo.common.attachMapView
+import ru.dgis.sdk.demo.common.awaitMapControllerOrShowError
+import ru.dgis.sdk.demo.common.demoMapOwner
 import ru.dgis.sdk.demo.databinding.ActivityGeoJsonBinding
 import ru.dgis.sdk.demo.databinding.ActivityGeoJsonSettingsBinding
+import ru.dgis.sdk.map.CameraPosition
 import ru.dgis.sdk.map.GeometryMapObject
 import ru.dgis.sdk.map.GeometryMapObjectSourceBuilder
+import ru.dgis.sdk.map.Map
+import ru.dgis.sdk.map.Zoom
 import ru.dgis.sdk.map.parseGeoJson
 
 enum class Identifiers(val value: String) {
@@ -35,6 +42,10 @@ class GeoJsonActivity : AppCompatActivity() {
 
     private val sdkContext by lazy { application.sdkContext }
     private val geometrySource by lazy { GeometryMapObjectSourceBuilder(sdkContext).createSource() }
+    private var map: Map? = null
+    private val mapOwner by demoMapOwner(
+        CameraPosition(GeoPoint(25.204575, 55.25939), Zoom(9f))
+    )
 
     private val polygonGeoJson = suspendLazy {
         readAndSaveGeoJson(
@@ -55,15 +66,25 @@ class GeoJsonActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        binding.addSettingsLayout {
+        val mapView = binding.mapContainer.attachMapView(mapOwner.mapViewModel)
+        binding.addSettingsLayout(mapView) {
             addView(settingsBinding.root)
         }
 
-        binding.mapView.getMapAsync {
-            it.addSource(geometrySource)
+        lifecycleScope.launch {
+            val readyMap = awaitMapControllerOrShowError(mapOwner.mapViewModel)?.map ?: return@launch
+            map = readyMap.also { it.addSource(geometrySource) }
         }
 
         initSettings()
+    }
+
+    override fun onDestroy() {
+        map?.let {
+            it.removeSource(geometrySource)
+            geometrySource.close()
+        }
+        super.onDestroy()
     }
 
     private fun addGeoJsonToSource(identifier: Identifiers?) {

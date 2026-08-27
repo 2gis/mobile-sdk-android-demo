@@ -12,10 +12,10 @@ import ru.dgis.sdk.androidauto.AndroidAutoMapSession
 import ru.dgis.sdk.androidauto.CopyrightMargins
 import ru.dgis.sdk.androidauto.CopyrightPosition
 import ru.dgis.sdk.map.Map
-import ru.dgis.sdk.map.MapOptions
+import ru.dgis.sdk.map.MapControllerOptions
 import ru.dgis.sdk.map.RenderedObjectInfo
 
-class MapSession(mapOptions: MapOptions) : AndroidAutoMapSession(mapOptions) {
+class MapSession(options: MapControllerOptions) : AndroidAutoMapSession(options) {
     private val mainScreen = MainScreen(carContext)
     private var map: Map? = null
     private var customRenderer = CustomRenderer()

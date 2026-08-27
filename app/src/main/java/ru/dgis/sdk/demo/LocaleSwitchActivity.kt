@@ -9,11 +9,12 @@ import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 import ru.dgis.sdk.Context
 import ru.dgis.sdk.coordinates.GeoPoint
+import ru.dgis.sdk.demo.common.attachMapView
+import ru.dgis.sdk.demo.common.demoMapOwner
 import ru.dgis.sdk.map.BearingSource
 import ru.dgis.sdk.map.CameraPosition
 import ru.dgis.sdk.map.DgisSource
-import ru.dgis.sdk.map.Map
-import ru.dgis.sdk.map.MapOptions
+import ru.dgis.sdk.map.MapControllerOptions
 import ru.dgis.sdk.map.MapView
 import ru.dgis.sdk.map.MyLocationControllerSettings
 import ru.dgis.sdk.map.MyLocationMapObjectSource
@@ -28,18 +29,21 @@ import ru.dgis.sdk.platform.LocaleManager
  */
 class LocaleSwitchActivity : AppCompatActivity() {
     private val sdkContext: Context by lazy { application.sdkContext }
+    private val mapOwner by demoMapOwner { createMapControllerOptions() }
     private lateinit var mapView: MapView
     private lateinit var mapContainer: LinearLayout
-    private var map: Map? = null
-    private lateinit var mapSource: MyLocationMapObjectSource
+    private var ignoreInitialSelection = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_locale_switch)
 
+        if (savedInstanceState == null) {
+            LocaleManager.instance(sdkContext).overrideLocales(emptyList())
+        }
         mapContainer = findViewById(R.id.map_container)
+        mapView = mapContainer.attachMapView(mapOwner.mapViewModel)
         initSpinner(findViewById(R.id.spinnerLocale), R.array.locales_list, this::onLocaleItemSelected)
-        recreateMap()
     }
 
     /**
@@ -49,6 +53,10 @@ class LocaleSwitchActivity : AppCompatActivity() {
      * @param item The selected locale as a string.
      */
     private fun onLocaleItemSelected(item: String) {
+        if (ignoreInitialSelection) {
+            ignoreInitialSelection = false
+            return
+        }
         if (item == "System") {
             LocaleManager.instance(sdkContext).overrideLocales(emptyList())
         } else {
@@ -63,30 +71,23 @@ class LocaleSwitchActivity : AppCompatActivity() {
      * is removed, and a new one is initialized with the updated options.
      */
     private fun recreateMap() {
-        map?.let { lifecycle.removeObserver(mapView) }
         mapContainer.removeAllViews()
-
-        val mapOptions = MapOptions().apply {
-            position = CameraPosition(
-                GeoPoint(40.37741938, 49.87862621),
-                Zoom(9.0f)
-            )
-            sources = listOf(DgisSource.createDgisSource(sdkContext))
-        }
-
-        mapView = MapView(this, mapOptions).also {
-            it.getMapAsync { map ->
-                this.map = map
-                mapSource = MyLocationMapObjectSource(
-                    sdkContext,
-                    MyLocationControllerSettings(BearingSource.MAGNETIC)
-                )
-                map.addSource(mapSource)
-            }
-            mapContainer.addView(it)
-            lifecycle.addObserver(it)
-        }
+        mapView = mapContainer.attachMapView(mapOwner.replace(createMapControllerOptions()))
     }
+
+    private fun createMapControllerOptions() = MapControllerOptions(
+        position = CameraPosition(
+            GeoPoint(40.37741938, 49.87862621),
+            Zoom(9f)
+        ),
+        sources = listOf(
+            DgisSource.createDgisSource(sdkContext),
+            MyLocationMapObjectSource(
+                sdkContext,
+                MyLocationControllerSettings(BearingSource.MAGNETIC)
+            )
+        )
+    )
 
     /**
      * Initializes a dropdown spinner with a list of items and a callback for selection changes.

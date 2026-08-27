@@ -11,7 +11,6 @@ import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -25,11 +24,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import ru.dgis.sdk.compose.map.MapComposable
-import ru.dgis.sdk.compose.map.MapComposableState
+import ru.dgis.sdk.compose.map.collectController
 import ru.dgis.sdk.demo.R
 import ru.dgis.sdk.demo.compose.RGBAImage
+import ru.dgis.sdk.demo.compose.demoMapCopyrightOptions
+import ru.dgis.sdk.demo.compose.demoMapRenderOptions
+import ru.dgis.sdk.demo.compose.previewMapViewModel
 import ru.dgis.sdk.map.ImageData
-import ru.dgis.sdk.map.MapOptions
+import ru.dgis.sdk.map.MapControllerViewModel
+import ru.dgis.sdk.map.Alignment as MapAlignment
 
 @Composable
 private fun SnapshotDialog(imageData: ImageData, onDismiss: () -> Unit) {
@@ -67,10 +70,15 @@ private fun SnapshotButton(enabled: Boolean, onClick: () -> Unit) {
 }
 
 @Composable
-fun SnapshotScreen(mapState: MapComposableState) {
+fun SnapshotScreen(mapViewModel: MapControllerViewModel) {
+    val controller = mapViewModel.collectController()
     var snapshot by remember { mutableStateOf<ImageData?>(null) }
 
-    MapComposable(state = mapState)
+    MapComposable(
+        viewModel = mapViewModel,
+        renderOptions = demoMapRenderOptions,
+        copyrightOptions = demoMapCopyrightOptions
+    )
 
     Box(
         contentAlignment = Alignment.BottomCenter,
@@ -78,10 +86,10 @@ fun SnapshotScreen(mapState: MapComposableState) {
             .fillMaxSize()
     ) {
         SnapshotButton(
-            enabled = mapState.map.collectAsState().value != null,
+            enabled = controller != null,
             onClick = {
-                mapState.takeSnapshot()?.let { it ->
-                    it.onComplete(
+                controller?.renderer?.takeSnapshot(MapAlignment.BOTTOM_RIGHT)?.let { future ->
+                    future.onComplete(
                         resultCallback = { snapshot = it },
                         errorCallback = {}
                     )
@@ -100,5 +108,5 @@ fun SnapshotScreen(mapState: MapComposableState) {
 @Preview(showBackground = true)
 @Composable
 fun ScreenshotScreenPreview() {
-    SnapshotScreen(mapState = MapComposableState(MapOptions()))
+    SnapshotScreen(mapViewModel = previewMapViewModel())
 }

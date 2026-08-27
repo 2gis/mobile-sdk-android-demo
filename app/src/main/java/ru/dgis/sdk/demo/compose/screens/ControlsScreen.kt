@@ -3,26 +3,25 @@ package ru.dgis.sdk.demo.compose.screens
 import android.util.Log
 import android.view.Gravity
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import ru.dgis.sdk.compose.map.MapComposable
-import ru.dgis.sdk.compose.map.MapComposableState
+import ru.dgis.sdk.compose.map.collectMap
 import ru.dgis.sdk.demo.compose.MapControls
+import ru.dgis.sdk.demo.compose.demoMapCopyrightOptions
+import ru.dgis.sdk.demo.compose.demoMapRenderOptions
+import ru.dgis.sdk.map.MapControllerViewModel
 
 @Composable
-fun ControlsScreen(mapState: MapComposableState) {
-    val map by mapState.map.collectAsState()
+fun ControlsScreen(mapViewModel: MapControllerViewModel) {
+    val map = mapViewModel.collectMap()
 
-    LaunchedEffect(mapState) {
-        // Display copyright at the bottom left corner to avoid conflict with the MyLocation control.
-        mapState.setCopyrightGravity(Gravity.BOTTOM or Gravity.START)
-
-        // Just check custom uri opener.
-        mapState.setCopyrightUriOpener { Log.d("ControlsScreen", it) }
-    }
-
-    MapComposable(state = mapState)
+    MapComposable(
+        viewModel = mapViewModel,
+        renderOptions = demoMapRenderOptions,
+        copyrightOptions = demoMapCopyrightOptions.copy(
+            gravity = Gravity.BOTTOM or Gravity.START,
+            uriOpener = { Log.d("ControlsScreen", it) }
+        )
+    )
 
     map?.let {
         MapControls(map = it)

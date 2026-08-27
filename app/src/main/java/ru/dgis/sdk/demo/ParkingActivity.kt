@@ -2,9 +2,19 @@ package ru.dgis.sdk.demo
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
+import ru.dgis.sdk.coordinates.Bearing
+import ru.dgis.sdk.coordinates.GeoPoint
+import ru.dgis.sdk.demo.common.attachMapView
+import ru.dgis.sdk.demo.common.awaitMapControllerOrShowError
+import ru.dgis.sdk.demo.common.demoMapOwner
 import ru.dgis.sdk.demo.databinding.ActivityParkingBinding
 import ru.dgis.sdk.map.AttributeValue
+import ru.dgis.sdk.map.CameraPosition
 import ru.dgis.sdk.map.Map
+import ru.dgis.sdk.map.Tilt
+import ru.dgis.sdk.map.Zoom
 
 private const val PARKING_ATTRIBUTE = "parkingOn"
 
@@ -21,13 +31,24 @@ class ParkingActivity : AppCompatActivity() {
             layoutInflater
         )
     }
+    private val mapOwner by demoMapOwner(
+        CameraPosition(
+            point = GeoPoint(25.106908, 55.147874),
+            zoom = Zoom(16.4f),
+            tilt = Tilt(40f),
+            bearing = Bearing(310.0)
+        )
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        val mapView = binding.mapContainer.attachMapView(mapOwner.mapViewModel)
 
-        binding.mapView.getMapAsync { map ->
-            enableToggleParkings(map)
+        lifecycleScope.launch {
+            val controller = awaitMapControllerOrShowError(mapOwner.mapViewModel) ?: return@launch
+            binding.zoomControl.bindToMap(controller, mapView)
+            enableToggleParkings(controller.map)
         }
     }
 

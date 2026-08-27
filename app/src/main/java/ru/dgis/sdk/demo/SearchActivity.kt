@@ -3,14 +3,20 @@ package ru.dgis.sdk.demo
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
 import ru.dgis.sdk.DGis
 import ru.dgis.sdk.coordinates.Bearing
 import ru.dgis.sdk.coordinates.GeoPoint
-import ru.dgis.sdk.coordinates.GeoRect
+import ru.dgis.sdk.demo.common.attachMapView
+import ru.dgis.sdk.demo.common.awaitMapControllerOrShowError
+import ru.dgis.sdk.demo.common.demoMapOwner
 import ru.dgis.sdk.demo.databinding.ActivitySearchBinding
 import ru.dgis.sdk.directory.DirectoryObject
 import ru.dgis.sdk.directory.SearchViewCallback
+import ru.dgis.sdk.geometry.GeoRect
 import ru.dgis.sdk.map.CameraPosition
+import ru.dgis.sdk.map.Map
 import ru.dgis.sdk.map.MapObjectManager
 import ru.dgis.sdk.map.Marker
 import ru.dgis.sdk.map.MarkerOptions
@@ -35,22 +41,29 @@ class SearchActivity : AppCompatActivity() {
     private val binding by lazy { ActivitySearchBinding.inflate(layoutInflater) }
     private val locationService by lazy { application.locationService }
     private var mapObjectManager: MapObjectManager? = null
+    private var map: Map? = null
+    private val mapOwner by demoMapOwner(
+        CameraPosition(
+            point = GeoPoint(25.200194699171405, 55.27539446018636),
+            zoom = Zoom(16.856537f),
+            tilt = Tilt(50f),
+            bearing = Bearing(19.00000166708803)
+        )
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        binding.mapContainer.attachMapView(mapOwner.mapViewModel)
 
         // Setting locale for English in test purposes, so search results will be in english.
         LocaleManager.instance(DGis.context()).overrideLocales(listOf(Locale("en", "EN")))
 
-        binding.mapView.getMapAsync { map ->
-            mapObjectManager = MapObjectManager(map)
-            map.camera.position = CameraPosition(
-                point = GeoPoint(latitude = 25.200194699171405, longitude = 55.27539446018636),
-                zoom = Zoom(16.856537f),
-                tilt = Tilt(50.0f),
-                bearing = Bearing(19.00000166708803)
-            )
+        lifecycleScope.launch {
+            val readyMap = awaitMapControllerOrShowError(mapOwner.mapViewModel)?.map ?: return@launch
+            map = readyMap.also {
+                mapObjectManager = MapObjectManager(it)
+            }
         }
 
         // Configure search engine behind search control. In this case we only set restrictions (to search in Dubai only)
@@ -75,7 +88,7 @@ class SearchActivity : AppCompatActivity() {
                     mapObjectManager?.removeAll()
                     mapObjectManager?.addObject(marker)
 
-                    binding.mapView.getMapAsync {
+                    map?.let {
                         val position = calcPosition(it.camera, listOf(marker), screenArea = Padding(20, 0, 10, 0))
                         it.camera.move(position)
                     }
@@ -98,7 +111,7 @@ class SearchActivity : AppCompatActivity() {
                 mapObjectManager?.removeAll()
                 mapObjectManager?.addObjects(markers)
 
-                binding.mapView.getMapAsync {
+                map?.let {
                     val position = calcPosition(it.camera, markers)
                     it.camera.move(position)
                 }
@@ -112,5 +125,11 @@ class SearchActivity : AppCompatActivity() {
                 mapObjectManager?.removeAll()
             }
         })
+    }
+
+    override fun onDestroy() {
+        mapObjectManager?.removeAll()
+        mapObjectManager?.close()
+        super.onDestroy()
     }
 }
