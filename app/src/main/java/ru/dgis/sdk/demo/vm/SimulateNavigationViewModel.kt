@@ -142,6 +142,13 @@ class SimulateNavigationViewModel : ViewModel() {
         dragRoutePoint = null
     }
 
+    override fun onCleared() {
+        closeables.forEach(AutoCloseable::close)
+        closeables.clear()
+        routeEditorSource.close()
+        routeEditor.close()
+    }
+
     private fun setDragRoutePoint(point: Marker?) {
         dragRoutePoint = point as Marker
     }

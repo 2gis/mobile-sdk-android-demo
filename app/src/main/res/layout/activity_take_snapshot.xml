@@ -7,13 +7,10 @@
     android:layout_height="match_parent"
     tools:context=".TakeSnapshotActivity">
 
-    <ru.dgis.sdk.map.MapView
-        android:id="@+id/mapView"
+    <FrameLayout
+        android:id="@+id/mapContainer"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:dgis_cameraTargetLat="25.19473094728837"
-        app:dgis_cameraTargetLng="55.274968072772026"
-        app:dgis_cameraZoom="15.94"
         app:layout_constraintBottom_toTopOf="@id/snapshotView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,10 +18,11 @@
         app:layout_constraintVertical_weight="1">
 
         <ru.dgis.sdk.map.ZoomControl
+            android:id="@+id/zoomControl"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center|end" />
-    </ru.dgis.sdk.map.MapView>
+    </FrameLayout>
 
     <ImageView
         android:id="@+id/snapshotView"
@@ -35,7 +33,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/mapView"
+        app:layout_constraintTop_toBottomOf="@id/mapContainer"
         app:layout_constraintVertical_weight="1" />
 
     <com.google.android.material.button.MaterialButton

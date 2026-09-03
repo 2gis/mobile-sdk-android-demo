@@ -26,8 +26,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import ru.dgis.sdk.compose.map.MapComposable
-import ru.dgis.sdk.compose.map.MapComposableState
-import ru.dgis.sdk.map.MapOptions
+import ru.dgis.sdk.compose.map.collectController
+import ru.dgis.sdk.demo.common.asFlow
+import ru.dgis.sdk.demo.compose.demoMapCopyrightOptions
+import ru.dgis.sdk.demo.compose.demoMapRenderOptions
+import ru.dgis.sdk.demo.compose.previewMapViewModel
+import ru.dgis.sdk.map.MapControllerViewModel
 import ru.dgis.sdk.map.RenderedObjectInfo
 
 @Composable
@@ -53,14 +57,16 @@ private fun ObjectCard(mapObject: RenderedObjectInfo?, onClose: () -> Unit) {
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun ObjectsScreen(mapState: MapComposableState) {
+fun ObjectsScreen(mapViewModel: MapControllerViewModel) {
+    val controller = mapViewModel.collectController()
     var selectedObject by remember { mutableStateOf<RenderedObjectInfo?>(null) }
     val coroutineScope = rememberCoroutineScope()
     val bottomSheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
 
-    LaunchedEffect(mapState) {
-        mapState.objectTappedCallback = {
-            selectedObject = it
+    LaunchedEffect(controller) {
+        controller?.renderedObjectObserver?.objectTapped?.asFlow()?.collect { objects ->
+            val objectInfo = objects.firstOrNull() ?: return@collect
+            selectedObject = objectInfo
             coroutineScope.launch {
                 bottomSheetState.show()
             }
@@ -77,12 +83,16 @@ fun ObjectsScreen(mapState: MapComposableState) {
             }
         }
     ) {
-        MapComposable(state = mapState)
+        MapComposable(
+            viewModel = mapViewModel,
+            renderOptions = demoMapRenderOptions,
+            copyrightOptions = demoMapCopyrightOptions
+        )
     }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun ObjectsScreenPreview() {
-    ObjectsScreen(mapState = MapComposableState(MapOptions()))
+    ObjectsScreen(mapViewModel = previewMapViewModel())
 }

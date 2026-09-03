@@ -6,17 +6,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ru.dgis.sdk.map.MapView
-        android:id="@+id/mapView"
+    <FrameLayout
+        android:id="@+id/mapContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:dgis_cameraTargetLat="55.740444"
-        app:dgis_cameraTargetLng="37.619524"
-        app:dgis_cameraZoom="9.0" >
+        android:layout_height="match_parent">
         <View
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
-    </ru.dgis.sdk.map.MapView>
+    </FrameLayout>
 
     <FrameLayout
         android:id="@+id/bottom_sheet"

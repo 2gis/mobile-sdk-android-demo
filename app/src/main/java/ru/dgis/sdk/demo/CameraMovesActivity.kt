@@ -3,17 +3,18 @@ package ru.dgis.sdk.demo
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.cancel
+import androidx.lifecycle.repeatOnLifecycle
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import ru.dgis.sdk.Duration
 import ru.dgis.sdk.await
 import ru.dgis.sdk.coordinates.Bearing
 import ru.dgis.sdk.coordinates.GeoPoint
+import ru.dgis.sdk.demo.common.attachMapView
+import ru.dgis.sdk.demo.common.awaitMapControllerOrShowError
+import ru.dgis.sdk.demo.common.demoMapOwner
 import ru.dgis.sdk.demo.databinding.ActivityCameraMovesBinding
 import ru.dgis.sdk.map.CameraAnimatedMoveResult
 import ru.dgis.sdk.map.CameraAnimationType
@@ -32,53 +33,49 @@ import ru.dgis.sdk.seconds
  */
 class CameraMovesActivity : AppCompatActivity() {
     private val binding by lazy { ActivityCameraMovesBinding.inflate(layoutInflater) }
-    private val mapView by lazy { binding.mapView }
     private val cameraPoints = LoopedPoints(predefinedPoints)
-    private lateinit var map: Map
+    private val mapOwner by demoMapOwner(
+        CameraPosition(
+            point = GeoPoint(25.204575, 55.25939),
+            zoom = Zoom(9f)
+        )
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-    }
-
-    override fun onResume() {
-        super.onResume()
-        mapView.getMapAsync {
-            this.map = it
-            lifecycleScope.launch {
-                startMoves(this)
+        binding.mapContainer.attachMapView(mapOwner.mapViewModel)
+        lifecycleScope.launch {
+            val map = awaitMapControllerOrShowError(mapOwner.mapViewModel)?.map ?: return@launch
+            repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                startMoves(map)
             }
         }
     }
 
-    private suspend fun startMoves(scope: CoroutineScope) {
+    private suspend fun startMoves(map: Map) {
         Toast.makeText(this@CameraMovesActivity, "Launching camera moves...", Toast.LENGTH_SHORT).show()
         delay(1000)
         cameraPoints.forEach { point ->
-            scope.launch(Dispatchers.Main) {
-                when (move(point)) {
-                    CameraAnimatedMoveResult.CANCELLED_BY_APPLICATION -> {}
-                    CameraAnimatedMoveResult.FINISHED -> {}
-                    CameraAnimatedMoveResult.CANCELLED_BY_EVENT -> {
-                        Toast.makeText(
-                            this@CameraMovesActivity,
-                            "Move have been interrupted :(",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        scope.cancel()
-                    }
+            when (move(map, point)) {
+                CameraAnimatedMoveResult.CANCELLED_BY_APPLICATION -> {}
+                CameraAnimatedMoveResult.FINISHED -> {}
+                CameraAnimatedMoveResult.CANCELLED_BY_EVENT -> {
+                    Toast.makeText(
+                        this@CameraMovesActivity,
+                        "Move have been interrupted :(",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    return
                 }
-            }.join()
+            }
         }
     }
 
-    private suspend fun move(point: MovePoint): CameraAnimatedMoveResult {
-        return lifecycleScope.async {
-            map
-                .camera
-                .move(point.position, point.duration, point.animationType)
-                .await()
-        }.await()
+    private suspend fun move(map: Map, point: MovePoint): CameraAnimatedMoveResult {
+        return map.camera
+            .move(point.position, point.duration, point.animationType)
+            .await()
     }
 }
 

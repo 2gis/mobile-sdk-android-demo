@@ -1,17 +1,27 @@
 package ru.dgis.sdk.demo
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doAfterTextChanged
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
 import ru.dgis.sdk.Duration
+import ru.dgis.sdk.coordinates.GeoPoint
 import ru.dgis.sdk.demo.common.addSettingsLayout
+import ru.dgis.sdk.demo.common.attachMapView
+import ru.dgis.sdk.demo.common.awaitMapControllerOrShowError
+import ru.dgis.sdk.demo.common.demoMapOwner
 import ru.dgis.sdk.demo.databinding.ActivityMapFpsBinding
 import ru.dgis.sdk.demo.databinding.ActivityMapFpsSettingsBinding
 import ru.dgis.sdk.hours
 import ru.dgis.sdk.map.CameraMoveController
 import ru.dgis.sdk.map.CameraPosition
 import ru.dgis.sdk.map.Fps
+import ru.dgis.sdk.map.MapRenderer
+import ru.dgis.sdk.map.Tilt
+import ru.dgis.sdk.map.Zoom
 import kotlin.math.sin
 
 /**
@@ -28,19 +38,29 @@ class MapFpsActivity : AppCompatActivity() {
             layoutInflater
         )
     }
-    private val mapView by lazy { binding.mapView }
+    private lateinit var renderer: MapRenderer
     private val closeables = mutableListOf<AutoCloseable>()
+    private val mapOwner by demoMapOwner(
+        CameraPosition(
+            point = GeoPoint(25.09608, 55.132429),
+            zoom = Zoom(13.5f),
+            tilt = Tilt(25f)
+        )
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        binding.addSettingsLayout {
-            addView(prepareSettingsListView())
-        }
+        val mapView = binding.mapContainer.attachMapView(mapOwner.mapViewModel)
 
-        mapView.getMapAsync {
+        lifecycleScope.launch {
+            val controller = awaitMapControllerOrShowError(mapOwner.mapViewModel) ?: return@launch
+            renderer = controller.renderer
+            binding.addSettingsLayout(mapView) {
+                addView(prepareSettingsListView())
+            }
             closeables.add(
-                binding.mapView.fpsChannel.connect {
+                renderer.fpsChannel.connect {
                     binding.fpsControl.text = it.toString()
                 }
             )
@@ -55,32 +75,38 @@ class MapFpsActivity : AppCompatActivity() {
         super.onDestroy()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun prepareSettingsListView(): View {
         return ActivityMapFpsSettingsBinding.inflate(layoutInflater).apply {
-            maxFpsSetter.setText(mapView.maxFps?.value?.toString() ?: "")
+            maxFpsSetter.setText(renderer.maxFps?.value?.toString().orEmpty())
             maxFpsSetter.doAfterTextChanged {
-                if (it.toString() == "") {
-                    mapView.maxFps = null
+                val input = it.toString()
+                val maxFps = if (input.isEmpty()) {
+                    null
+                } else {
+                    input.toIntOrNull()?.let(::Fps) ?: return@doAfterTextChanged
                 }
-                try {
-                    mapView.maxFps = Fps(it.toString().toInt())
-                } catch (_: NumberFormatException) {
+                if (::renderer.isInitialized) {
+                    renderer.setMaxFps(maxFps, renderer.powerSavingMaxFps)
                 }
             }
 
-            powerSaveFpsSetter.setText(mapView.maxFps?.value?.toString() ?: "")
+            powerSaveFpsSetter.setText(renderer.powerSavingMaxFps?.value?.toString().orEmpty())
             powerSaveFpsSetter.doAfterTextChanged {
-                if (it.toString() == "") {
-                    mapView.powerSavingMaxFps = null
+                val input = it.toString()
+                val powerSavingMaxFps = if (input.isEmpty()) {
+                    null
+                } else {
+                    input.toIntOrNull()?.let(::Fps) ?: return@doAfterTextChanged
                 }
-                try {
-                    mapView.powerSavingMaxFps = Fps(it.toString().toInt())
-                } catch (_: NumberFormatException) {
+                if (::renderer.isInitialized) {
+                    renderer.setMaxFps(renderer.maxFps, powerSavingMaxFps)
                 }
             }
 
             startButton.setOnClickListener {
-                mapView.getMapAsync { map ->
+                lifecycleScope.launch {
+                    val map = awaitMapControllerOrShowError(mapOwner.mapViewModel)?.map ?: return@launch
                     map.camera.use { camera ->
                         camera.move(FpsMoveController(camera.position))
                     }

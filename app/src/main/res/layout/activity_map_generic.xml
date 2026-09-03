@@ -9,8 +9,8 @@
     tools:context=".GenericMapActivity"
     >
 
-    <ru.dgis.sdk.map.MapView
-        android:id="@+id/mapView"
+    <FrameLayout
+        android:id="@+id/mapContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
@@ -38,7 +38,7 @@
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </ru.dgis.sdk.map.MapView>
+    </FrameLayout>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"

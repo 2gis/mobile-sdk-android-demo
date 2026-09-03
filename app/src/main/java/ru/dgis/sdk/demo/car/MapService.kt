@@ -6,18 +6,18 @@ import androidx.car.app.validation.HostValidator
 import ru.dgis.sdk.DGis
 import ru.dgis.sdk.map.DgisSource.Companion.createDgisSource
 import ru.dgis.sdk.map.DgisSourceWorkingMode
-import ru.dgis.sdk.map.MapOptions
+import ru.dgis.sdk.map.MapControllerOptions
 import ru.dgis.sdk.map.MyLocationMapObjectSource
 
 class MapService : CarAppService() {
 
-    private fun createMapOptions(): MapOptions {
-        return MapOptions().apply {
+    private fun createMapControllerOptions(): MapControllerOptions {
+        return MapControllerOptions(
             sources = listOf(
                 createDgisSource(DGis.context(), DgisSourceWorkingMode.HYBRID_ONLINE_FIRST),
                 MyLocationMapObjectSource(DGis.context())
             )
-        }
+        )
     }
 
     override fun createHostValidator(): HostValidator {
@@ -33,6 +33,6 @@ class MapService : CarAppService() {
     // only when certain activity/fragment/etc opened, and it is not created in Application's onCreate,
     // ru.dgis.sdk.Context should be created here in onCreateSession or somewhere earlier.
     override fun onCreateSession(): Session {
-        return MapSession(createMapOptions())
+        return MapSession(createMapControllerOptions())
     }
 }

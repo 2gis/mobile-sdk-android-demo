@@ -19,8 +19,8 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import ru.dgis.sdk.compose.map.MapComposableState
-import ru.dgis.sdk.map.MapOptions
+import ru.dgis.sdk.demo.compose.previewMapViewModel
+import ru.dgis.sdk.map.MapControllerViewModel
 
 @Composable
 private fun HomeButton(text: String, onClick: () -> Unit) {
@@ -69,17 +69,17 @@ private fun HomeScreen(navController: NavController) {
 }
 
 @Composable
-fun HomeScreen(mapState: MapComposableState) {
+fun HomeScreen(mapViewModel: MapControllerViewModel) {
     val navController = rememberNavController()
     NavHost(navController, startDestination = "home") {
         composable("home") { HomeScreen(navController) }
-        composable("theme") { ThemeScreen(mapState = mapState) }
-        composable("copyright") { CopyrightScreen(mapState = mapState) }
-        composable("fps") { FpsScreen(mapState = mapState) }
-        composable("objects") { ObjectsScreen(mapState = mapState) }
-        composable("snapshot") { SnapshotScreen(mapState = mapState) }
-        composable("controls") { ControlsScreen(mapState = mapState) }
-        composable("markers") { MarkersScreen(mapState = mapState) }
+        composable("theme") { ThemeScreen(mapViewModel = mapViewModel) }
+        composable("copyright") { CopyrightScreen(mapViewModel = mapViewModel) }
+        composable("fps") { FpsScreen(mapViewModel = mapViewModel) }
+        composable("objects") { ObjectsScreen(mapViewModel = mapViewModel) }
+        composable("snapshot") { SnapshotScreen(mapViewModel = mapViewModel) }
+        composable("controls") { ControlsScreen(mapViewModel = mapViewModel) }
+        composable("markers") { MarkersScreen(mapViewModel = mapViewModel) }
     }
 }
 
@@ -87,6 +87,6 @@ fun HomeScreen(mapState: MapComposableState) {
 @Composable
 fun HomeScreenPreview() {
     HomeScreen(
-        mapState = MapComposableState(MapOptions())
+        mapViewModel = previewMapViewModel()
     )
 }

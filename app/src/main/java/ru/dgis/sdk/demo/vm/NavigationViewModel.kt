@@ -19,6 +19,7 @@ import ru.dgis.sdk.map.MyLocationControllerSettings
 import ru.dgis.sdk.map.MyLocationMapObjectSource
 import ru.dgis.sdk.map.RouteEditorSource
 import ru.dgis.sdk.map.RouteMapObject
+import ru.dgis.sdk.map.Source
 import ru.dgis.sdk.map.imageFromResource
 import ru.dgis.sdk.navigation.NavigationManager
 import ru.dgis.sdk.navigation.RouteBuildOptions
@@ -85,6 +86,7 @@ class NavigationViewModel(
     var messageCallback: ((String) -> Unit)? = null
 
     private val closeables = mutableListOf<AutoCloseable>()
+    private val mapSources = mutableListOf<Source>()
 
     private val points = MutableList<RouteSearchPoint?>(2) { null }
 
@@ -128,13 +130,15 @@ class NavigationViewModel(
     private val routeEditorSource = RouteEditorSource(sdkContext, routeEditor).also {
         it.setRoutesVisible(false)
         map.addSource(it)
+        mapSources.add(it)
         closeables.add(it)
     }
 
-    val navigationManager = NavigationManager(sdkContext)
+    val navigationManager = NavigationManager(sdkContext).also {
+        closeables.add(it)
+    }
 
     init {
-        closeables.add(map)
         initLocationSource()
     }
 
@@ -144,11 +148,15 @@ class NavigationViewModel(
             MyLocationControllerSettings(BearingSource.SATELLITE)
         ).also {
             map.addSource(it)
+            mapSources.add(it)
             closeables.add(it)
         }
     }
 
     override fun close() {
+        navigationManager.stop()
+        mapSources.forEach(map::removeSource)
+        mapSources.clear()
         closeables.forEach(AutoCloseable::close)
         closeables.clear()
     }

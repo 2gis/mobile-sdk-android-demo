@@ -2,15 +2,23 @@ package ru.dgis.sdk.demo
 
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import kotlinx.coroutines.launch
 import ru.dgis.sdk.Context
+import ru.dgis.sdk.demo.common.attachMapView
+import ru.dgis.sdk.demo.common.awaitMapControllerOrShowError
+import ru.dgis.sdk.demo.common.demoMapOwner
 import ru.dgis.sdk.demo.common.updateMapCopyrightPosition
 import ru.dgis.sdk.map.BearingSource
 import ru.dgis.sdk.map.CameraChangeReason
 import ru.dgis.sdk.map.GestureManager
 import ru.dgis.sdk.map.Map
+import ru.dgis.sdk.map.MapController
+import ru.dgis.sdk.map.MapCopyrightOptions
 import ru.dgis.sdk.map.MapView
 import ru.dgis.sdk.map.MyLocationControllerSettings
 import ru.dgis.sdk.map.MyLocationMapObjectSource
@@ -22,6 +30,7 @@ class GenericMapActivity : AppCompatActivity() {
     lateinit var mapSource: MyLocationMapObjectSource
 
     private val closeables = mutableListOf<AutoCloseable?>()
+    private val mapOwner by demoMapOwner()
 
     private var map: Map? = null
 
@@ -36,9 +45,13 @@ class GenericMapActivity : AppCompatActivity() {
 
         root = findViewById(R.id.content)
         settingsDrawerInnerLayout = findViewById(R.id.settingsDrawerInnerLayout)
-        mapView = findViewById<MapView>(R.id.mapView).also {
-            it.getMapAsync(this::onMapReady)
-            it.showApiVersionInCopyrightView = true
+        mapView = findViewById<ViewGroup>(R.id.mapContainer).attachMapView(
+            mapOwner.mapViewModel,
+            copyrightOptions = MapCopyrightOptions(showApiVersion = true)
+        )
+        lifecycleScope.launch {
+            val controller = awaitMapControllerOrShowError(mapOwner.mapViewModel) ?: return@launch
+            onMapReady(controller)
         }
 
         BottomSheetBehavior.from(findViewById(R.id.settingsDrawerInnerLayout)).apply {
@@ -53,15 +66,22 @@ class GenericMapActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         closeables.forEach { it?.close() }
+        if (::mapSource.isInitialized) {
+            map?.removeSource(mapSource)
+            mapSource.close()
+        }
+        super.onDestroy()
     }
 
-    private fun onMapReady(map: Map) {
+    private fun onMapReady(controller: MapController) {
+        val map = controller.map
         this.map = map
-        closeables.add(map)
 
-        val gestureManager = checkNotNull(mapView.gestureManager)
+        findViewById<ru.dgis.sdk.map.ZoomControl>(R.id.zoomControl).bindToMap(controller, mapView)
+        findViewById<ru.dgis.sdk.map.MyLocationControl>(R.id.locationControl).bindToMap(controller, mapView)
+
+        val gestureManager = checkNotNull(controller.gestureRecognizer.gestureManager)
         subscribeGestureSwitches(gestureManager)
 
         mapSource = MyLocationMapObjectSource(

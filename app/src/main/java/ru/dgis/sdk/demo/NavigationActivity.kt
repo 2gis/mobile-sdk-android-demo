@@ -1,5 +1,6 @@
 package ru.dgis.sdk.demo
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
@@ -23,16 +24,27 @@ import ru.dgis.sdk.Context
 import ru.dgis.sdk.ScreenDistance
 import ru.dgis.sdk.ScreenPoint
 import ru.dgis.sdk.await
+import ru.dgis.sdk.coordinates.GeoPoint
+import ru.dgis.sdk.demo.common.attachMapView
+import ru.dgis.sdk.demo.common.awaitMapControllerOrShowError
+import ru.dgis.sdk.demo.common.bindMapControls
+import ru.dgis.sdk.demo.common.collectTouchEvents
+import ru.dgis.sdk.demo.common.demoMapOwner
 import ru.dgis.sdk.demo.common.updateMapCopyrightPosition
 import ru.dgis.sdk.demo.databinding.ActivityNavigationBinding
 import ru.dgis.sdk.demo.vm.NavigationViewModel
 import ru.dgis.sdk.geometry.point
 import ru.dgis.sdk.map.CameraChangeReason
+import ru.dgis.sdk.map.CameraPosition
+import ru.dgis.sdk.map.CopyrightMargins
 import ru.dgis.sdk.map.DgisMapObject
 import ru.dgis.sdk.map.GraphicsPreset
 import ru.dgis.sdk.map.Map
+import ru.dgis.sdk.map.MapController
+import ru.dgis.sdk.map.MapCopyrightOptions
 import ru.dgis.sdk.map.MapView
 import ru.dgis.sdk.map.TouchEventsObserver
+import ru.dgis.sdk.map.Zoom
 import ru.dgis.sdk.map.statefulChanges
 import ru.dgis.sdk.navigation.DefaultNavigationControls
 import ru.dgis.sdk.navigation.NavigationView
@@ -43,7 +55,12 @@ class NavigationActivity : AppCompatActivity(), TouchEventsObserver {
     private val sdkContext: Context by lazy { application.sdkContext }
 
     private val closeables = mutableListOf<AutoCloseable?>()
+    private val mapOwner by demoMapOwner(
+        CameraPosition(GeoPoint(55.740444, 37.619524), Zoom(12f))
+    )
 
+    private var mapController: MapController? = null
+    private var navigationControls: DefaultNavigationControls? = null
     private var viewModel: NavigationViewModel? = null
 
     private lateinit var graphicPreset: RadioGroup
@@ -63,39 +80,49 @@ class NavigationActivity : AppCompatActivity(), TouchEventsObserver {
 
         graphicPreset = findViewById(R.id.graphicPreset)
         graphicPreset.check(R.id.normalPreset)
-        mapView = findViewById(R.id.mapView)
+        mapView = binding.mapContainer.attachMapView(
+            mapOwner.mapViewModel,
+            copyrightOptions = MapCopyrightOptions(
+                margins = CopyrightMargins(
+                    bottom = (48 * resources.displayMetrics.density).toInt()
+                )
+            )
+        )
         routeEditorView = findViewById(R.id.routeEditorView)
         navigationView = findViewById(R.id.navigationView)
         routeEditorSettingsView = findViewById(R.id.route_editing_group)
 
-        mapView.setCopyrightMargins(0, 0, 0, 48 * (resources.displayMetrics.density).toInt())
-
-        findViewById<MapView>(R.id.mapView).apply {
-            lifecycle.addObserver(binding.mapView)
-            setTouchEventsObserver(this@NavigationActivity)
-            getMapAsync {
-                initViewModel(it)
-                closeables.add(
-                    it.camera
-                        .statefulChanges(CameraChangeReason.PADDING) { it.camera.padding }
-                        .connect { _ ->
-                            updateMapCopyrightPosition(
-                                binding.content,
-                                binding.settingsDrawerInnerLayout
-                            )
-                        }
-                )
-                when (it.graphicsPresetHintChannel.value) {
-                    GraphicsPreset.LITE -> graphicPreset.check(R.id.litePreset)
-                    GraphicsPreset.NORMAL -> graphicPreset.check(R.id.normalPreset)
-                    GraphicsPreset.IMMERSIVE -> graphicPreset.check(R.id.immersivePreset)
-                    else -> {}
+        lifecycleScope.launch {
+            val controller = awaitMapControllerOrShowError(mapOwner.mapViewModel) ?: return@launch
+            mapController = controller
+            map = controller.map
+            binding.mapContainer.bindMapControls(controller, mapView)
+            initViewModel(controller)
+            launch {
+                repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    controller.collectTouchEvents(this@NavigationActivity)
                 }
+            }
+            closeables.add(
+                map.camera
+                    .statefulChanges(CameraChangeReason.PADDING) { map.camera.padding }
+                    .connect { _ ->
+                        mapView.updateMapCopyrightPosition(
+                            binding.content,
+                            binding.settingsDrawerInnerLayout
+                        )
+                    }
+            )
+            when (map.graphicsPresetHintChannel.value) {
+                GraphicsPreset.LITE -> graphicPreset.check(R.id.litePreset)
+                GraphicsPreset.NORMAL -> graphicPreset.check(R.id.normalPreset)
+                GraphicsPreset.IMMERSIVE -> graphicPreset.check(R.id.immersivePreset)
+                else -> {}
             }
         }
 
         graphicPreset.setOnCheckedChangeListener { _, checkedId ->
-            mapView.getMapAsync { map ->
+            if (::map.isInitialized) {
                 when (checkedId) {
                     R.id.litePreset -> map.graphicsPreset = GraphicsPreset.LITE
                     R.id.normalPreset -> map.graphicsPreset = GraphicsPreset.NORMAL
@@ -144,6 +171,15 @@ class NavigationActivity : AppCompatActivity(), TouchEventsObserver {
         )
     }
 
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+
+        val controller = mapController ?: return
+        navigationView.post {
+            navigationControls?.bindMapControls(controller, mapView)
+        }
+    }
+
     private fun initRouteTypeTabs() {
         binding.routeTypeTabsLayout.addOnTabSelectedListener(object :
                 TabLayout.OnTabSelectedListener {
@@ -172,8 +208,9 @@ class NavigationActivity : AppCompatActivity(), TouchEventsObserver {
             })
     }
 
-    private fun initViewModel(map: Map) {
+    private fun initViewModel(controller: MapController) {
         val activity = this
+        val map = controller.map
         this.map = map
         viewModel = NavigationViewModel(sdkContext, map, lifecycleScope).also { viewModel ->
             closeables.add(viewModel)
@@ -183,6 +220,7 @@ class NavigationActivity : AppCompatActivity(), TouchEventsObserver {
             lifecycleScope.launch {
                 repeatOnLifecycle(Lifecycle.State.STARTED) {
                     viewModel.state.collect {
+                        navigationControls = null
                         navigationView.removeAllViews()
                         when (it) {
                             NavigationViewModel.State.ROUTE_EDITING -> {
@@ -195,15 +233,13 @@ class NavigationActivity : AppCompatActivity(), TouchEventsObserver {
                                 routeEditorView.visibility = View.INVISIBLE
                                 routeEditorSettingsView.visibility = View.GONE
                                 navigationView.navigationManager = viewModel.navigationManager
-                                navigationView.addView(
-                                    DefaultNavigationControls(navigationView.context).apply {
-                                        isFreeRoamDefault =
-                                            viewModel.navigationType != State.NAVIGATION
-                                        onFinishClicked = {
-                                            viewModel.stopNavigation()
-                                        }
-                                    }
-                                )
+                                val controls = DefaultNavigationControls(navigationView.context).apply {
+                                    isFreeRoamDefault = viewModel.navigationType != State.NAVIGATION
+                                    onFinishClicked = viewModel::stopNavigation
+                                }
+                                navigationControls = controls
+                                navigationView.addView(controls)
+                                controls.bindMapControls(controller, mapView)
                             }
                         }
                     }
@@ -224,7 +260,7 @@ class NavigationActivity : AppCompatActivity(), TouchEventsObserver {
             x = point.x
             y = point.y
             layoutParams = ViewGroup.LayoutParams(1, 1)
-            binding.mapView.addView(this)
+            mapView.addView(this)
         }
 
         PopupMenu(this, anchorView, Gravity.CENTER).apply {
@@ -239,11 +275,11 @@ class NavigationActivity : AppCompatActivity(), TouchEventsObserver {
                 if (action != null) {
                     viewModel?.onMenuAction(routeSearchPoint, action)
                 }
-                binding.mapView.removeView(anchorView)
+                mapView.removeView(anchorView)
                 true
             }
             setOnDismissListener {
-                binding.mapView.removeView(anchorView)
+                mapView.removeView(anchorView)
             }
         }.show()
     }
@@ -279,9 +315,10 @@ class NavigationActivity : AppCompatActivity(), TouchEventsObserver {
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         closeables.forEach {
             it?.close()
         }
+        closeables.clear()
+        super.onDestroy()
     }
 }

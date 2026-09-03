@@ -2,8 +2,8 @@ package ru.dgis.sdk.demo.compose.configurators
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
-import ru.dgis.sdk.compose.map.CopyrightMargins
 import ru.dgis.sdk.demo.compose.CaptionSlider
+import ru.dgis.sdk.map.CopyrightMargins
 
 @Composable
 fun MapCopyrightMarginsConfigurator(

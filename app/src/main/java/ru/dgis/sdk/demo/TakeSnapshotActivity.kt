@@ -6,15 +6,25 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import ru.dgis.sdk.coordinates.GeoRect
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
+import ru.dgis.sdk.coordinates.GeoPoint
 import ru.dgis.sdk.coordinates.Latitude
 import ru.dgis.sdk.coordinates.Longitude
+import ru.dgis.sdk.demo.common.attachMapView
+import ru.dgis.sdk.demo.common.awaitMapControllerOrShowError
+import ru.dgis.sdk.demo.common.demoMapOwner
 import ru.dgis.sdk.demo.databinding.ActivityTakeSnapshotBinding
 import ru.dgis.sdk.geometry.GeoPointWithElevation
+import ru.dgis.sdk.geometry.GeoRect
+import ru.dgis.sdk.map.Alignment
+import ru.dgis.sdk.map.CameraPosition
 import ru.dgis.sdk.map.Image
+import ru.dgis.sdk.map.MapController
 import ru.dgis.sdk.map.MapObjectManager
 import ru.dgis.sdk.map.Marker
 import ru.dgis.sdk.map.MarkerOptions
+import ru.dgis.sdk.map.Zoom
 import ru.dgis.sdk.map.imageFromResource
 import ru.dgis.sdk.map.toBitmap
 import kotlin.random.Random
@@ -27,10 +37,24 @@ import kotlin.random.Random
 class TakeSnapshotActivity : AppCompatActivity() {
     private val binding by lazy { ActivityTakeSnapshotBinding.inflate(layoutInflater) }
     private lateinit var mapObjectManager: MapObjectManager
+    private lateinit var controller: MapController
+    private val mapOwner by demoMapOwner(
+        CameraPosition(
+            point = GeoPoint(25.19473094728837, 55.274968072772026),
+            zoom = Zoom(15.94f)
+        )
+    )
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(binding.root)
+        val mapView = binding.mapContainer.attachMapView(mapOwner.mapViewModel)
+        lifecycleScope.launch {
+            controller = awaitMapControllerOrShowError(mapOwner.mapViewModel) ?: return@launch
+            binding.zoomControl.bindToMap(controller, mapView)
+            mapObjectManager = MapObjectManager(controller.map)
+        }
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -41,16 +65,28 @@ class TakeSnapshotActivity : AppCompatActivity() {
         }
     }
 
+    override fun onDestroy() {
+        if (::mapObjectManager.isInitialized) {
+            mapObjectManager.removeAll()
+            mapObjectManager.close()
+        }
+        super.onDestroy()
+    }
+
     /**
      * Initiates the snapshot process of the current map view. This method first synchronizes the
      * state of the map, updates marker positions, and then captures a bitmap image of the map,
      * which is subsequently displayed in the ImageView within this activity.
      */
     private fun createSnapshot() {
-        binding.mapView.getMapAsync { map ->
-            if (!::mapObjectManager.isInitialized) {
-                mapObjectManager = MapObjectManager(map)
+        lifecycleScope.launch {
+            if (!::controller.isInitialized) {
+                controller = awaitMapControllerOrShowError(mapOwner.mapViewModel) ?: return@launch
             }
+            if (!::mapObjectManager.isInitialized) {
+                mapObjectManager = MapObjectManager(controller.map)
+            }
+            val map = controller.map
             mapObjectManager.apply {
                 removeAll()
                 addObjects(
@@ -65,7 +101,7 @@ class TakeSnapshotActivity : AppCompatActivity() {
              * This is main method MapView for taking snapshot. It return future with ImageData, which is suitable for
              * ImageView
              */
-            binding.mapView.takeSnapshot().onComplete(
+            controller.renderer.takeSnapshot(Alignment.BOTTOM_RIGHT).onComplete(
                 { imgData ->
                     binding.snapshotView.setImageBitmap(imgData.toBitmap())
                 },
