@@ -32,6 +32,8 @@ activity = "1.8.0"
 
 navigation = "2.8.5"
 
+okhttp = "4.12.0"
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
@@ -62,6 +64,9 @@ retrofuture = { module = "net.sourceforge.streamsupport:android-retrofuture", ve
 
 dgis-sdk = { module = "ru.dgis.sdk:sdk-full", version.ref = "dgis-sdk" }
 dgis-compose = { module = "ru.dgis.sdk:compose-map", version.ref = "dgis-compose" }
+dgis-compose-navigation = { module = "ru.dgis.sdk:compose-navigation", version.ref = "dgis-compose" }
+
+okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
 
 huawei-base = { module = "com.huawei.hms:base", version.ref = "huawei-base" }
 huawei-location = { module = "com.huawei.hms:location", version.ref = "huawei-location" }
