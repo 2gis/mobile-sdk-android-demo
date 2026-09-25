@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="example_tabs_navi">Navigation</string>
+    <string name="example_tabs_map">Map</string>
+    <string name="example_tabs_directory">Directory</string>
+    <string name="example_filter">Filter</string>
+    <string name="compose_catalog_keep_map">One map for all examples</string>
+    <string name="compose_catalog_keep_map_description">One map for all examples: the camera, the theme and the objects carry over from example to example, and the examples open almost instantly as the map is already loaded. When off, every example opens on a new map, which loads each time.</string>
+    <string name="compose_catalog_open">Open</string>
+    <string name="compose_catalog_about_example">About %1$s</string>
+    <string name="compose_catalog_about_labels">About the labels</string>
+    <string name="compose_catalog_labels_title">Labels of examples</string>
+    <string name="compose_catalog_labels_description">The icon at the right of an example shows its label. The chips above the list filter the examples by label.</string>
+    <string name="compose_example_minimap_summary">A minimap over the main map</string>
+    <string name="compose_example_minimap_description">Shows a minimap in the corner of the map with the minimap component of the SDK. The minimap follows the camera of the main map and uses its own style with the inverted theme, so it stays readable over the main map.</string>
+    <string name="compose_example_theme_summary">Switching the map theme</string>
+    <string name="compose_example_theme_description">Switches the appearance of the map: a fixed day or night theme, or a theme that follows the system one. The change applies to the running map without recreating it.</string>
+    <string name="compose_example_render_mode_summary">SurfaceView or TextureView, pixel density</string>
+    <string name="compose_example_render_mode_description">Switches how the map view renders: SurfaceView for performance or TextureView for taking part in view animations. Changing the mode recreates the view and shows a blank frame. The density and PPI sliders override the values the map takes from the device.</string>
+    <string name="compose_example_copyright_summary">Position and margins of the copyright</string>
+    <string name="compose_example_copyright_description">Moves the copyright overlay of the map: its corner, its margins and whether it shows the version of the SDK.</string>
+    <string name="compose_example_fps_summary">Frame rate limits and the FPS counter</string>
+    <string name="compose_example_fps_description">Limits the frame rate of the map, separately for the normal and the power saving mode, and shows the current frame rate reported by the renderer.</string>
+    <string name="compose_example_snapshot_summary">An image of the map</string>
+    <string name="compose_example_snapshot_description">Takes a snapshot of the current map image and shows it in a dialog.</string>
+    <string name="compose_example_controls_summary">Zoom, compass, my location, traffic, floors</string>
+    <string name="compose_example_controls_description">Places the map controls of the SDK over the map: zoom, compass, my location, traffic and the floor switcher. The copyright moves to the bottom left corner to leave room for the my location button.</string>
+    <string name="compose_example_markers_summary">A marker and its options</string>
+    <string name="compose_example_markers_description">Adds a marker at the center of the map and lets you change its options on the fly: icon size, text, text placement and others.</string>
+    <string name="compose_example_search_item_summary">A search result item for a tapped object</string>
+    <string name="compose_example_search_item_description">Tap an object on the map: the example looks it up in the directory and shows it with the search result item component of the SDK.</string>
+    <string name="compose_example_objects_summary">A card of a tapped object</string>
+    <string name="compose_example_objects_description">Tap an object on the map: the example shows what the map knows about it in a bottom sheet.</string>
+    <string name="compose_example_navigation_demo_summary">Route by long taps, then the SDK navigation UI</string>
+    <string name="compose_example_navigation_demo_description">Long tap sets the start and the finish, tap adds a stop between them. The dialog sets up the navigation: free roam, simulation, route type and navigator thresholds. Then navigation runs with the default navigation UI of the SDK, with a minimap. Route and sound options are in the settings of the dashboard.</string>
+    <string name="compose_example_route_editor_summary">Choosing a route with the route editor</string>
+    <string name="compose_example_route_editor_description">Set the start and the finish by long taps and choose a route in the route editor of the SDK: transport modes, alternatives and public transport schedules. The route options come from the navigation settings of the SDK.</string>
+    <string name="compose_example_shared_route_summary">Saving a route and opening it by its ID</string>
+    <string name="compose_example_shared_route_description">Set the start and the finish by long taps and save the route with the routing API: it returns the ID of the saved route. Then open a route by its ID and show it on the map.</string>
+</resources>
