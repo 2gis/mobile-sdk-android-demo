@@ -18,10 +18,10 @@ import org.json.JSONArray
 import org.json.JSONObject
 import ru.dgis.sdk.Context
 import ru.dgis.sdk.ScreenPoint
-import ru.dgis.sdk.demo.R
 import ru.dgis.sdk.await
 import ru.dgis.sdk.coordinates.GeoPoint
 import ru.dgis.sdk.coordinates.withElevation
+import ru.dgis.sdk.demo.R
 import ru.dgis.sdk.geometry.ComplexGeometry
 import ru.dgis.sdk.geometry.PointGeometry
 import ru.dgis.sdk.map.Image
@@ -51,7 +51,7 @@ open class SharedRouteScreenViewModel(
     private val sdkContext: Context,
     private val okHttpClient: OkHttpClient,
     private val apiKey: String,
-    private val appId: String,
+    private val appId: String
 ) : ViewModel(), TouchEventsObserver {
 
     private val ROUTING_URL: String =
@@ -74,7 +74,6 @@ open class SharedRouteScreenViewModel(
 
     private val _requestId = MutableStateFlow("")
     val requestId: StateFlow<String> = _requestId.asStateFlow()
-
 
     private val _sharedRouteState =
         MutableStateFlow<SharedRouteFetchState>(SharedRouteFetchState.Idle)
@@ -125,7 +124,6 @@ open class SharedRouteScreenViewModel(
         _saveRouteState.value = SaveRouteState.Idle
     }
 
-
     private fun saveRoute(start: GeoPoint, finish: GeoPoint) {
         _saveRouteState.value = SaveRouteState.Loading
         viewModelScope.launch {
@@ -151,17 +149,21 @@ open class SharedRouteScreenViewModel(
     private fun sendSaveRouteRequest(start: GeoPoint, finish: GeoPoint): String? {
         val jsonBody = JSONObject().apply {
             val pointsArray = JSONArray()
-            pointsArray.put(JSONObject().apply {
-                put("lon", start.longitude.value)
-                put("lat", start.latitude.value)
-                put("type", "stop")
-                put("start", true)
-            })
-            pointsArray.put(JSONObject().apply {
-                put("lon", finish.longitude.value)
-                put("lat", finish.latitude.value)
-                put("type", "stop")
-            })
+            pointsArray.put(
+                JSONObject().apply {
+                    put("lon", start.longitude.value)
+                    put("lat", start.latitude.value)
+                    put("type", "stop")
+                    put("start", true)
+                }
+            )
+            pointsArray.put(
+                JSONObject().apply {
+                    put("lon", finish.longitude.value)
+                    put("lat", finish.latitude.value)
+                    put("type", "stop")
+                }
+            )
             put("points", pointsArray)
             put("save_route", true)
         }.toString()
@@ -184,7 +186,6 @@ open class SharedRouteScreenViewModel(
             it.header("X-Request-Id")
         }
     }
-
 
     fun updateRequestId(id: String) {
         _requestId.value = id
@@ -211,7 +212,7 @@ open class SharedRouteScreenViewModel(
                             val routeMapObject = RouteMapObject(
                                 route,
                                 index == 0,
-                                RouteIndex(index.toLong()),
+                                RouteIndex(index.toLong())
                             )
                             source.addObject(routeMapObject)
                         }
@@ -236,7 +237,6 @@ open class SharedRouteScreenViewModel(
         sharedRouteSource?.clear()
         _sharedRouteState.value = SharedRouteFetchState.Idle
     }
-
 
     private fun fitRoutesToScreen(routes: List<TrafficRoute>) {
         val camera = map?.camera ?: return
@@ -268,19 +268,19 @@ open class SharedRouteScreenViewModel(
             MarkerOptions(
                 position = point.withElevation(),
                 icon = image,
-                iconWidth = LogicalPixel(30.0f),
-            ),
+                iconWidth = LogicalPixel(30.0f)
+            )
         )
 
     private fun setStartMarker(point: GeoPoint) {
         objectManager?.addObject(
-            createMarker(point, imageFromResource(sdkContext, R.drawable.ic_start)),
+            createMarker(point, imageFromResource(sdkContext, R.drawable.ic_start))
         )
     }
 
     private fun setFinishMarker(point: GeoPoint) {
         objectManager?.addObject(
-            createMarker(point, imageFromResource(sdkContext, R.drawable.ic_finish)),
+            createMarker(point, imageFromResource(sdkContext, R.drawable.ic_finish))
         )
     }
 
@@ -293,7 +293,7 @@ open class SharedRouteScreenViewModel(
 
 data class PointsState(
     val start: GeoPoint? = null,
-    val finish: GeoPoint? = null,
+    val finish: GeoPoint? = null
 )
 
 sealed interface SaveRouteState {

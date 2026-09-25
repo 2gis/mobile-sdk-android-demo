@@ -9,7 +9,7 @@ val ControlsExample = ComposeExample(
     title = "Map Controls",
     summary = R.string.compose_example_controls_summary,
     description = R.string.compose_example_controls_description,
-    topic = ComposeExampleTopic.Map,
+    topic = ComposeExampleTopic.Map
 ) {
     ControlsScreen(mapViewModel, mapOptions)
 }

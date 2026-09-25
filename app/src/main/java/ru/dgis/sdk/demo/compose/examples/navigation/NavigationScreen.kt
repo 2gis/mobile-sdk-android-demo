@@ -16,17 +16,17 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import ru.dgis.sdk.demo.compose.ComposeExampleMapOptions
-import ru.dgis.sdk.demo.compose.ReadyMapControllerViewModel
-import ru.dgis.sdk.demo.compose.extra.collectTouchEvents
-import ru.dgis.sdk.demo.compose.examples.navigation.settings.ComposeNavigationSettingsViewModel
-import ru.dgis.sdk.demo.compose.examples.navigation.settings.NavigationSettingsComposable
 import ru.dgis.sdk.compose.map.MapComposable
 import ru.dgis.sdk.compose.map.controls.indoor.DefaultIndoorViewModel
 import ru.dgis.sdk.compose.map.controls.indoor.IndoorComposable
 import ru.dgis.sdk.compose.navigation.controls.dashboard.NavigationDashboardComposableDefaults
 import ru.dgis.sdk.compose.navigation.controls.defaultcontrols.navigation.NavigationControlsComposable
 import ru.dgis.sdk.compose.navigation.settings.SectionVisibilityConfig
+import ru.dgis.sdk.demo.compose.ComposeExampleMapOptions
+import ru.dgis.sdk.demo.compose.ReadyMapControllerViewModel
+import ru.dgis.sdk.demo.compose.examples.navigation.settings.ComposeNavigationSettingsViewModel
+import ru.dgis.sdk.demo.compose.examples.navigation.settings.NavigationSettingsComposable
+import ru.dgis.sdk.demo.compose.extra.collectTouchEvents
 import ru.dgis.sdk.navigation.CustomDashboardButton
 
 /**
@@ -41,7 +41,7 @@ fun NavigationScreen(
     mapViewModel: ReadyMapControllerViewModel,
     viewModel: NavigationScreenViewModel,
     settingsViewModel: ComposeNavigationSettingsViewModel,
-    mapOptions: ComposeExampleMapOptions,
+    mapOptions: ComposeExampleMapOptions
 ) {
     val mapController = mapViewModel.mapController
     val navigationControlsState by viewModel.navigationControlsState.collectAsState()
@@ -57,7 +57,7 @@ fun NavigationScreen(
         MapComposable(
             viewModel = mapViewModel,
             renderOptions = mapOptions.renderOptions,
-            copyrightOptions = mapOptions.copyrightOptions,
+            copyrightOptions = mapOptions.copyrightOptions
         )
 
         if (navigationScreenState != NavigationScreenState.Navigation) {
@@ -70,7 +70,7 @@ fun NavigationScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(5.dp),
-                contentAlignment = Alignment.CenterStart,
+                contentAlignment = Alignment.CenterStart
             ) {
                 IndoorComposable(viewModel = indoorViewModel)
             }
@@ -82,9 +82,9 @@ fun NavigationScreen(
                 // A custom dashboard button: the app sets its own icon and action.
                 addRoadEventButton = CustomDashboardButton(
                     icon = NavigationDashboardComposableDefaults.icons.addRouteEvent,
-                    onClick = {},
+                    onClick = {}
                 ),
-                primarySettingsSection = navigationSettings.navigationType.settingsSection(),
+                primarySettingsSection = navigationSettings.navigationType.settingsSection()
             )
         }
 
@@ -95,11 +95,11 @@ fun NavigationScreen(
                     .statusBarsPadding()
                     .padding(16.dp),
                 shape = MaterialTheme.shapes.medium,
-                tonalElevation = 4.dp,
+                tonalElevation = 4.dp
             ) {
                 Text(
                     text = hint,
-                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
                 )
             }
         }
@@ -108,7 +108,7 @@ fun NavigationScreen(
             NavigationSettingsComposable(
                 settingsViewModel = settingsViewModel,
                 onOk = { viewModel.startNavigation(settingsViewModel.state.value) },
-                onCancel = viewModel::cancelRoute,
+                onCancel = viewModel::cancelRoute
             )
         }
     }

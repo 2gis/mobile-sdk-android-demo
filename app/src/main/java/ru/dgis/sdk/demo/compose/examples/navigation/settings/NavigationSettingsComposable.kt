@@ -42,9 +42,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import ru.dgis.sdk.compose.navigation.R
 import ru.dgis.sdk.demo.compose.components.EnumToggle
 import ru.dgis.sdk.demo.compose.examples.navigation.NavigationType
-import ru.dgis.sdk.compose.navigation.R
 
 private const val itemHeight = 32
 private const val titleTextSize = 16
@@ -55,7 +55,7 @@ private enum class NavigationSettingsScreen {
     Root,
     AlternativeRoute,
     FreeRoam,
-    FinishDetector,
+    FinishDetector
 }
 
 /**
@@ -75,7 +75,7 @@ private enum class NavigationSettingsScreen {
 fun NavigationSettingsComposable(
     settingsViewModel: ComposeNavigationSettingsViewModel,
     onOk: () -> Unit,
-    onCancel: () -> Unit,
+    onCancel: () -> Unit
 ) {
     val composeSettings by settingsViewModel.state.collectAsStateWithLifecycle()
 
@@ -103,14 +103,14 @@ fun NavigationSettingsComposable(
         Card {
             Column(
                 modifier = Modifier.padding(16.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 SettingsHeader(
                     screen = screen,
                     onBack = navigateBack,
                     onClose = {
                         onCancel()
-                    },
+                    }
                 )
 
                 when (screen) {
@@ -135,7 +135,7 @@ fun NavigationSettingsComposable(
                             onOpenFreeRoamSettings = { navigateTo(NavigationSettingsScreen.FreeRoam) },
                             onOpenFinishDetectorSettings = { navigateTo(NavigationSettingsScreen.FinishDetector) },
                             onOk = onOk,
-                            onCancel = onCancel,
+                            onCancel = onCancel
                         )
                     }
 
@@ -147,7 +147,7 @@ fun NavigationSettingsComposable(
                             onSetMinLengthGainM = settingsViewModel::setAlternativeMinLengthGainM,
                             onClearMinLengthGainM = settingsViewModel::clearAlternativeMinLengthGainM,
                             onSetTimeoutSec = settingsViewModel::setAlternativeSearchTimeoutSec,
-                            onClearTimeoutSec = settingsViewModel::clearAlternativeSearchTimeoutSec,
+                            onClearTimeoutSec = settingsViewModel::clearAlternativeSearchTimeoutSec
                         )
                     }
 
@@ -159,7 +159,7 @@ fun NavigationSettingsComposable(
                             onSetCacheRadiusOnRouteM = settingsViewModel::setFreeRoamCacheRadiusOnRouteM,
                             onClearCacheRadiusOnRouteM = settingsViewModel::clearFreeRoamCacheRadiusOnRouteM,
                             onSetCacheRadiusM = settingsViewModel::setFreeRoamCacheRadiusM,
-                            onClearCacheRadiusM = settingsViewModel::clearFreeRoamCacheRadiusM,
+                            onClearCacheRadiusM = settingsViewModel::clearFreeRoamCacheRadiusM
                         )
                     }
 
@@ -175,7 +175,7 @@ fun NavigationSettingsComposable(
                             onSetVehicleSoftLimitM = settingsViewModel::setFinishDetectorVehicleSoftLimitM,
                             onClearVehicleSoftLimitM = settingsViewModel::clearFinishDetectorVehicleSoftLimitM,
                             onSetVehicleHardLimitM = settingsViewModel::setFinishDetectorVehicleHardLimitM,
-                            onClearVehicleHardLimitM = settingsViewModel::clearFinishDetectorVehicleHardLimitM,
+                            onClearVehicleHardLimitM = settingsViewModel::clearFinishDetectorVehicleHardLimitM
                         )
                     }
                 }
@@ -188,11 +188,11 @@ fun NavigationSettingsComposable(
 private fun SettingsHeader(
     screen: NavigationSettingsScreen,
     onBack: () -> Unit,
-    onClose: () -> Unit,
+    onClose: () -> Unit
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically,
+        verticalAlignment = Alignment.CenterVertically
     ) {
         if (screen != NavigationSettingsScreen.Root) {
             TextButton(onClick = onBack) {
@@ -217,13 +217,13 @@ private fun SettingsHeader(
             fontSize = titleTextSize.sp,
             overflow = TextOverflow.Ellipsis,
             textAlign = if (screen == NavigationSettingsScreen.Root) TextAlign.Center else TextAlign.Left,
-            fontWeight = FontWeight.Bold,
+            fontWeight = FontWeight.Bold
         )
 
         IconButton(onClick = onClose) {
             Icon(
                 imageVector = Icons.Default.Close,
-                contentDescription = "Close",
+                contentDescription = "Close"
             )
         }
     }
@@ -242,109 +242,109 @@ private fun NavigationSettingsRoot(
     onOpenFreeRoamSettings: () -> Unit,
     onOpenFinishDetectorSettings: () -> Unit,
     onOk: () -> Unit,
-    onCancel: () -> Unit,
+    onCancel: () -> Unit
 ) {
     SubtitleItem(
         text = "General",
-        titleSize = titleTextSize.sp,
+        titleSize = titleTextSize.sp
     )
 
     SwitchItem(
         text = "Freeroam",
         checked = settings.isFreeRoamEnabled,
-        onChecked = onSetFreeRoamEnabled,
+        onChecked = onSetFreeRoamEnabled
     )
 
     SubmenuItem(
         mainText = "Freeroam settings",
         subText = if (settings.isFreeRoamEnabled) "Enabled" else "Disabled",
-        onClick = onOpenFreeRoamSettings,
+        onClick = onOpenFreeRoamSettings
     )
 
     HorizontalDivider()
 
     SubtitleItem(
         text = "Simulation",
-        titleSize = titleTextSize.sp,
+        titleSize = titleTextSize.sp
     )
 
     SwitchItem(
         text = "Use simulation",
         checked = settings.useSimulation,
         enabled = !settings.isFreeRoamEnabled,
-        onChecked = onSetUseSimulation,
+        onChecked = onSetUseSimulation
     )
 
     SimulationSpeedItem(
         speedKph = settings.simulationSpeedKph,
-        onSpeedChanged = onChangeSimulationSpeed,
+        onSpeedChanged = onChangeSimulationSpeed
     )
 
     SpeedLimitItem(
         speedKph = settings.allowableSpeedExcessKph,
-        onSpeedChanged = onChangeAllowableSpeedExcess,
+        onSpeedChanged = onChangeAllowableSpeedExcess
     )
 
     HorizontalDivider()
 
     SubtitleItem(
         text = "Route",
-        titleSize = titleTextSize.sp,
+        titleSize = titleTextSize.sp
     )
 
     SubmenuItem(
         mainText = "Alternative route settings",
         subText = "Thresholds & timeout",
-        onClick = onOpenAlternativeRouteSettings,
+        onClick = onOpenAlternativeRouteSettings
     )
 
     HorizontalDivider()
 
     SubtitleItem(
         text = "Finish detector",
-        titleSize = titleTextSize.sp,
+        titleSize = titleTextSize.sp
     )
 
     SubmenuItem(
         mainText = "Finish detector settings",
         subText = "Soft/hard limits & straight line distance",
-        onClick = onOpenFinishDetectorSettings,
+        onClick = onOpenFinishDetectorSettings
     )
 
     SubtitleItem(
         text = "Route type",
-        titleSize = titleTextSize.sp,
+        titleSize = titleTextSize.sp
     )
 
     EnumToggleItem(
         value = NavigationType.entries
             .getOrNull(settings.navigationTypeOrdinal)
             ?: NavigationType.Car,
-        onSelected = { onSetNavigationTypeOrdinal(it.ordinal) },
+        onSelected = { onSetNavigationTypeOrdinal(it.ordinal) }
     )
 
     SubtitleItem(
         text = "Follow controller type",
-        titleSize = titleTextSize.sp,
+        titleSize = titleTextSize.sp
     )
 
     EnumToggleItem(
         value = FollowControllerType.entries
             .getOrNull(settings.followControllerTypeOrdinal)
             ?: FollowControllerType.Default,
-        onSelected = { onSetFollowControllerTypeOrdinal(it.ordinal) },
+        onSelected = { onSetFollowControllerTypeOrdinal(it.ordinal) }
     )
 
     ConfirmItem(
         onOk = onOk,
-        onCancel = onCancel,
+        onCancel = onCancel
     )
 }
 
 @Composable
 private fun SimulationSpeedItem(
     speedKph: Float,
-    onSpeedChanged: (Float) -> Unit,
+    onSpeedChanged: (Float) -> Unit
 ) {
     Row(
         modifier = Modifier.height(itemHeight.dp),
@@ -354,17 +354,17 @@ private fun SimulationSpeedItem(
         TwoLineText(
             modifier = Modifier.weight(1f),
             mainText = "Simulation speed",
-            subText = "%.0f km/h".format(speedKph),
+            subText = "%.0f km/h".format(speedKph)
         )
 
         Button(
-            onClick = { onSpeedChanged(-5f) },
+            onClick = { onSpeedChanged(-5f) }
         ) {
             Text(text = "-")
         }
 
         Button(
-            onClick = { onSpeedChanged(+5f) },
+            onClick = { onSpeedChanged(+5f) }
         ) {
             Text(text = "+")
         }
@@ -375,7 +375,7 @@ private fun SimulationSpeedItem(
 private fun SubtitleItem(
     text: String,
     titleSize: TextUnit,
-    align: TextAlign = TextAlign.Left,
+    align: TextAlign = TextAlign.Left
 ) {
     Text(
         modifier = Modifier.fillMaxWidth(),
@@ -383,7 +383,7 @@ private fun SubtitleItem(
         fontSize = titleSize,
         overflow = TextOverflow.Ellipsis,
         textAlign = align,
-        fontWeight = FontWeight.Bold,
+        fontWeight = FontWeight.Bold
     )
 }
 
@@ -392,24 +392,24 @@ private fun SwitchItem(
     text: String,
     checked: Boolean,
     enabled: Boolean = true,
-    onChecked: (Boolean) -> Unit,
+    onChecked: (Boolean) -> Unit
 ) {
     Row(
-        verticalAlignment = Alignment.CenterVertically,
+        verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
             modifier = Modifier.weight(1f),
             text = text,
             fontSize = 16.sp,
             overflow = TextOverflow.Ellipsis,
-            color = if (enabled) Color.Unspecified else Color.Gray,
+            color = if (enabled) Color.Unspecified else Color.Gray
         )
 
         Switch(
             modifier = Modifier.height(itemHeight.dp),
             checked = checked,
             enabled = enabled,
-            onCheckedChange = onChecked,
+            onCheckedChange = onChecked
         )
     }
 }
@@ -417,7 +417,7 @@ private fun SwitchItem(
 @Composable
 private fun SpeedLimitItem(
     speedKph: Float,
-    onSpeedChanged: (Float) -> Unit,
+    onSpeedChanged: (Float) -> Unit
 ) {
     Row(
         modifier = Modifier.height(itemHeight.dp),
@@ -427,17 +427,17 @@ private fun SpeedLimitItem(
         TwoLineText(
             modifier = Modifier.weight(1f),
             mainText = "Permissible speeding",
-            subText = "%.0f km/h".format(speedKph),
+            subText = "%.0f km/h".format(speedKph)
         )
 
         Button(
-            onClick = { onSpeedChanged(-1f) },
+            onClick = { onSpeedChanged(-1f) }
         ) {
             Text(text = "-")
         }
 
         Button(
-            onClick = { onSpeedChanged(+1f) },
+            onClick = { onSpeedChanged(+1f) }
         ) {
             Text(text = "+")
         }
@@ -448,24 +448,24 @@ private fun SpeedLimitItem(
 private fun SubmenuItem(
     mainText: String,
     subText: String? = null,
-    onClick: () -> Unit,
+    onClick: () -> Unit
 ) {
     Row(
         modifier = Modifier
             .height(itemHeight.dp)
             .clickable(onClick = onClick),
-        verticalAlignment = Alignment.CenterVertically,
+        verticalAlignment = Alignment.CenterVertically
     ) {
         TwoLineText(
             modifier = Modifier.weight(1f),
             mainText = mainText,
-            subText = subText,
+            subText = subText
         )
 
         Icon(
             modifier = Modifier.rotate(-90f),
             imageVector = ImageVector.vectorResource(R.drawable.dgis_navi_ic_collapse),
-            contentDescription = null,
+            contentDescription = null
         )
     }
 }
@@ -474,15 +474,15 @@ private fun SubmenuItem(
 private fun TwoLineText(
     modifier: Modifier,
     mainText: String,
-    subText: String? = null,
+    subText: String? = null
 ) {
     Column(
-        modifier = modifier,
+        modifier = modifier
     ) {
         Text(
             text = mainText,
             fontSize = itemTextSize.sp,
-            overflow = TextOverflow.Ellipsis,
+            overflow = TextOverflow.Ellipsis
         )
 
         subText?.let {
@@ -490,7 +490,7 @@ private fun TwoLineText(
                 text = it,
                 color = Color.Gray,
                 fontSize = subitemTextSize.sp,
-                overflow = TextOverflow.Ellipsis,
+                overflow = TextOverflow.Ellipsis
             )
         }
     }
@@ -499,7 +499,7 @@ private fun TwoLineText(
 @Composable
 private inline fun <reified T : Enum<T>> EnumToggleItem(
     value: T,
-    crossinline onSelected: (T) -> Unit,
+    crossinline onSelected: (T) -> Unit
 ) {
     val buttonMinHeight = 40.dp
     val gap = 8.dp
@@ -509,7 +509,7 @@ private inline fun <reified T : Enum<T>> EnumToggleItem(
             .fillMaxWidth()
             .padding(vertical = 4.dp),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(gap),
+        horizontalArrangement = Arrangement.spacedBy(gap)
     ) {
         enumValues<T>().forEach { option ->
             EnumToggle(
@@ -518,7 +518,7 @@ private inline fun <reified T : Enum<T>> EnumToggleItem(
                 modifier = Modifier
                     .weight(1f)
                     .sizeIn(minHeight = buttonMinHeight),
-                onSelected = onSelected,
+                onSelected = onSelected
             )
         }
     }
@@ -527,15 +527,15 @@ private inline fun <reified T : Enum<T>> EnumToggleItem(
 @Composable
 private fun ConfirmItem(
     onOk: () -> Unit,
-    onCancel: () -> Unit,
+    onCancel: () -> Unit
 ) {
     Row(
         modifier = Modifier.padding(top = itemHeight.dp),
-        horizontalArrangement = Arrangement.spacedBy(16.dp),
+        horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         Box(
             modifier = Modifier.weight(1f),
-            contentAlignment = Alignment.TopEnd,
+            contentAlignment = Alignment.TopEnd
         ) {
             Button(onClick = onCancel) {
                 Text(text = "Cancel")
@@ -544,7 +544,7 @@ private fun ConfirmItem(
 
         Box(
             modifier = Modifier.weight(1f),
-            contentAlignment = Alignment.TopStart,
+            contentAlignment = Alignment.TopStart
         ) {
             Button(onClick = onOk) {
                 Text(text = "GO!")
@@ -572,7 +572,7 @@ private fun NavigationSettingsPreview() =
             freeRoamCacheRadiusM = 0,
             finishDetectorSoftLimitM = 0,
             finishDetectorHardLimitM = 0,
-            finishDetectorStraightLineLimitM = 0,
+            finishDetectorStraightLineLimitM = 0
         ),
         onSetFreeRoamEnabled = {},
         onSetUseSimulation = {},
@@ -584,5 +584,5 @@ private fun NavigationSettingsPreview() =
         onOpenFreeRoamSettings = {},
         onOpenFinishDetectorSettings = {},
         onOk = {},
-        onCancel = {},
+        onCancel = {}
     )

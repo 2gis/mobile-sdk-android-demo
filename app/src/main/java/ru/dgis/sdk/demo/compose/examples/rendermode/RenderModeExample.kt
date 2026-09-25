@@ -9,7 +9,7 @@ val RenderModeExample = ComposeExample(
     title = "Render Mode",
     summary = R.string.compose_example_render_mode_summary,
     description = R.string.compose_example_render_mode_description,
-    topic = ComposeExampleTopic.Map,
+    topic = ComposeExampleTopic.Map
 ) {
     RenderModeScreen(mapViewModel, mapOptions)
 }

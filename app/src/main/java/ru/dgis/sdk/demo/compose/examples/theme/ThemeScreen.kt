@@ -11,9 +11,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import ru.dgis.sdk.compose.map.MapComposable
 import ru.dgis.sdk.demo.compose.ComposeExampleMapOptions
 import ru.dgis.sdk.demo.compose.ReadyMapControllerViewModel
-import ru.dgis.sdk.compose.map.MapComposable
 
 @Composable
 fun ThemeScreen(mapViewModel: ReadyMapControllerViewModel, mapOptions: ComposeExampleMapOptions) {
@@ -24,7 +24,7 @@ fun ThemeScreen(mapViewModel: ReadyMapControllerViewModel, mapOptions: ComposeEx
     MapComposable(
         viewModel = mapViewModel,
         renderOptions = mapOptions.renderOptions,
-        copyrightOptions = mapOptions.copyrightOptions,
+        copyrightOptions = mapOptions.copyrightOptions
     )
 
     Box(

@@ -12,7 +12,7 @@ val NavigationExample = ComposeExample(
     title = "Navigation",
     summary = R.string.compose_example_navigation_demo_summary,
     description = R.string.compose_example_navigation_demo_description,
-    topic = ComposeExampleTopic.Navigation,
+    topic = ComposeExampleTopic.Navigation
 ) {
     val appContext = LocalContext.current.applicationContext
     NavigationScreen(
@@ -21,12 +21,12 @@ val NavigationExample = ComposeExample(
             NavigationScreenViewModel(
                 sdkContext = sdkContext,
                 appContext = appContext,
-                minimapOptions = mapOptions.minimapControllerOptions(sdkContext),
+                minimapOptions = mapOptions.minimapControllerOptions(sdkContext)
             )
         },
         settingsViewModel = viewModel(viewModelStoreOwner) {
             ComposeNavigationSettingsViewModel()
         },
-        mapOptions = mapOptions,
+        mapOptions = mapOptions
     )
 }

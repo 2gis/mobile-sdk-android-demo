@@ -9,7 +9,7 @@ val ObjectsExample = ComposeExample(
     title = "Objects",
     summary = R.string.compose_example_objects_summary,
     description = R.string.compose_example_objects_description,
-    topic = ComposeExampleTopic.Map,
+    topic = ComposeExampleTopic.Map
 ) {
     ObjectsScreen(mapViewModel, mapOptions)
 }

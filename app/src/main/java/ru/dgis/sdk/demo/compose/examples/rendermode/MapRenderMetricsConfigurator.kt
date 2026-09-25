@@ -22,7 +22,7 @@ private fun NullableFloatSlider(
     minValue: Float,
     maxValue: Float,
     onValueChange: (Float?) -> Unit,
-    format: (Float) -> String = { String.format(Locale.US, "%.1f", it) },
+    format: (Float) -> String = { String.format(Locale.US, "%.1f", it) }
 ) {
     // Keeps the last value picked by the user, whatever the nullable value is.
     var sliderValue by remember { mutableFloatStateOf(value ?: minValue) }
@@ -40,7 +40,7 @@ private fun NullableFloatSlider(
                 checked = value != null,
                 onCheckedChange = { checked ->
                     onValueChange(if (checked) sliderValue else null)
-                },
+                }
             )
             Text(text = "$caption: ${value?.let(format) ?: "null"}")
         }
@@ -53,7 +53,7 @@ private fun NullableFloatSlider(
                 }
             },
             valueRange = minValue..maxValue,
-            enabled = value != null,
+            enabled = value != null
         )
     }
 }
@@ -63,7 +63,7 @@ fun MapRenderMetricsConfigurator(
     devicePpi: DevicePpi?,
     onDevicePpiChange: (DevicePpi?) -> Unit,
     deviceDensity: DeviceDensity?,
-    onDeviceDensityChange: (DeviceDensity?) -> Unit,
+    onDeviceDensityChange: (DeviceDensity?) -> Unit
 ) {
     Column {
         NullableFloatSlider(
@@ -72,14 +72,14 @@ fun MapRenderMetricsConfigurator(
             minValue = 50f,
             maxValue = 1000f,
             onValueChange = { onDevicePpiChange(it?.let(::DevicePpi)) },
-            format = { String.format(Locale.US, "%.0f", it) },
+            format = { String.format(Locale.US, "%.0f", it) }
         )
         NullableFloatSlider(
             caption = "Density",
             value = deviceDensity?.value,
             minValue = 0.2f,
             maxValue = 10.0f,
-            onValueChange = { onDeviceDensityChange(it?.let(::DeviceDensity)) },
+            onValueChange = { onDeviceDensityChange(it?.let(::DeviceDensity)) }
         )
     }
 }

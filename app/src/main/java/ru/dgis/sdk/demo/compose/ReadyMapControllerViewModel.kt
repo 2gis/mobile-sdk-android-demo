@@ -14,7 +14,7 @@ import ru.dgis.sdk.map.MapControllerViewModel
  * Does not own the controller — it is closed by whoever created it.
  */
 class ReadyMapControllerViewModel(
-    val mapController: MapController,
+    val mapController: MapController
 ) : MapControllerViewModel {
 
     override val state: StateFlow<MapControllerState> =

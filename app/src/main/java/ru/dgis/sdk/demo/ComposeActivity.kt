@@ -27,7 +27,7 @@ class ComposeActivity : ComponentActivity() {
                     Box(modifier = Modifier.statusBarsPadding()) {
                         HomeScreen(
                             screens = composeExampleCatalog,
-                            viewModel = viewModel { composeHomeScreenViewModel(application.sdkContext) },
+                            viewModel = viewModel { composeHomeScreenViewModel(application.sdkContext) }
                         )
                     }
                 }

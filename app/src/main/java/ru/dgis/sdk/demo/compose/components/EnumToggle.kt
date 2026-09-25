@@ -33,16 +33,16 @@ inline fun <reified T : Enum<T>> EnumToggle(
         } else {
             ButtonDefaults.buttonColors(
                 containerColor = MaterialTheme.colorScheme.secondaryContainer,
-                contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
+                contentColor = MaterialTheme.colorScheme.onSecondaryContainer
             )
         },
-        shape = RoundedCornerShape(8.dp),
+        shape = RoundedCornerShape(8.dp)
     ) {
         Text(
             text = value.displayName,
             maxLines = 2,
             overflow = TextOverflow.Ellipsis,
-            textAlign = TextAlign.Center,
+            textAlign = TextAlign.Center
         )
     }
 }

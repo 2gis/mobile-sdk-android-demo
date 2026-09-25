@@ -11,7 +11,7 @@ val RouteEditorExample = ComposeExample(
     title = "Route Editor",
     summary = R.string.compose_example_route_editor_summary,
     description = R.string.compose_example_route_editor_description,
-    topic = ComposeExampleTopic.Navigation,
+    topic = ComposeExampleTopic.Navigation
 ) {
     val appContext = LocalContext.current.applicationContext
     RouteEditorScreen(
@@ -19,6 +19,6 @@ val RouteEditorExample = ComposeExample(
         viewModel = viewModel(viewModelStoreOwner) {
             RouteEditorScreenViewModel(sdkContext, appContext)
         },
-        mapOptions = mapOptions,
+        mapOptions = mapOptions
     )
 }

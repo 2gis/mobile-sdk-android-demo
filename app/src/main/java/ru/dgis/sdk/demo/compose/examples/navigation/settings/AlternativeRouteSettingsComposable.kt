@@ -29,7 +29,7 @@ fun AlternativeRouteSettingsComposable(
     onSetMinLengthGainM: (Int) -> Unit,
     onClearMinLengthGainM: () -> Unit,
     onSetTimeoutSec: (Int) -> Unit,
-    onClearTimeoutSec: () -> Unit,
+    onClearTimeoutSec: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -39,12 +39,12 @@ fun AlternativeRouteSettingsComposable(
     ) {
         Text(
             text = "Alternative route",
-            style = MaterialTheme.typography.titleMedium,
+            style = MaterialTheme.typography.titleMedium
         )
         Text(
             text = "Thresholds that control when an alternative route is considered worth showing.",
             style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
         )
 
         IntTextField(
@@ -53,7 +53,7 @@ fun AlternativeRouteSettingsComposable(
             onValueChanged = { v -> onSetMinTimeGainSec(v.coerceAtLeast(0)) },
             onClearClicked = onClearMinTimeGainSec,
             unit = "s",
-            supportingText = "0 — disable threshold",
+            supportingText = "0 — disable threshold"
         )
         IntTextField(
             label = "Minimum length gain",
@@ -61,7 +61,7 @@ fun AlternativeRouteSettingsComposable(
             onValueChanged = { v -> onSetMinLengthGainM(v.coerceAtLeast(0)) },
             onClearClicked = onClearMinLengthGainM,
             unit = "m",
-            supportingText = "0 — disable threshold",
+            supportingText = "0 — disable threshold"
         )
         IntTextField(
             label = "Search timeout",
@@ -69,7 +69,7 @@ fun AlternativeRouteSettingsComposable(
             onValueChanged = { v -> onSetTimeoutSec(v.coerceAtLeast(5)) },
             onClearClicked = onClearTimeoutSec,
             unit = "s",
-            supportingText = "Minimum 5 seconds",
+            supportingText = "Minimum 5 seconds"
         )
     }
 }
@@ -90,12 +90,12 @@ private fun AlternativeRouteSettingsPreview() =
             alternativeSearchTimeoutSec = 0,
             freeRoamCacheDistanceOnRouteM = 0,
             freeRoamCacheRadiusOnRouteM = 0,
-            freeRoamCacheRadiusM = 0,
+            freeRoamCacheRadiusM = 0
         ),
         onSetMinTimeGainSec = {},
         onClearMinTimeGainSec = {},
         onSetMinLengthGainM = {},
         onClearMinLengthGainM = {},
         onSetTimeoutSec = {},
-        onClearTimeoutSec = {},
+        onClearTimeoutSec = {}
     )

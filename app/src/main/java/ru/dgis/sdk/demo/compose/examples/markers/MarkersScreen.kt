@@ -8,11 +8,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import ru.dgis.sdk.Context
+import ru.dgis.sdk.compose.map.MapComposable
+import ru.dgis.sdk.coordinates.GeoPoint
 import ru.dgis.sdk.demo.R
 import ru.dgis.sdk.demo.compose.ComposeExampleMapOptions
 import ru.dgis.sdk.demo.compose.ReadyMapControllerViewModel
-import ru.dgis.sdk.compose.map.MapComposable
-import ru.dgis.sdk.coordinates.GeoPoint
 import ru.dgis.sdk.geometry.GeoPointWithElevation
 import ru.dgis.sdk.map.Map
 import ru.dgis.sdk.map.MapObjectManager
@@ -64,20 +64,20 @@ private fun Marker(map: Map, sdkContext: Context, modifier: Modifier = Modifier)
 fun MarkersScreen(
     mapViewModel: ReadyMapControllerViewModel,
     sdkContext: Context,
-    mapOptions: ComposeExampleMapOptions,
+    mapOptions: ComposeExampleMapOptions
 ) {
     val mapController = mapViewModel.mapController
     Box(modifier = Modifier.fillMaxSize()) {
         MapComposable(
             viewModel = mapViewModel,
             renderOptions = mapOptions.renderOptions,
-            copyrightOptions = mapOptions.copyrightOptions,
+            copyrightOptions = mapOptions.copyrightOptions
         )
 
         Marker(
             map = mapController.map,
             sdkContext = sdkContext,
-            modifier = Modifier.align(Alignment.BottomCenter),
+            modifier = Modifier.align(Alignment.BottomCenter)
         )
     }
 }

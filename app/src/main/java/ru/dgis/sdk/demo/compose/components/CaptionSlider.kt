@@ -23,7 +23,7 @@ fun CaptionSlider(
     minValue: Int,
     maxValue: Int,
     steps: Int,
-    onValueChange: (Int) -> Unit,
+    onValueChange: (Int) -> Unit
 ) {
     Column {
         Text(text = "$caption: $value")

@@ -25,7 +25,7 @@ private fun RenderModeDisplay.toMapRenderMode(): MapRenderMode {
 @Composable
 fun MapRenderModeConfigurator(
     renderMode: MapRenderMode,
-    onRenderModeChange: (MapRenderMode) -> Unit,
+    onRenderModeChange: (MapRenderMode) -> Unit
 ) {
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp)
@@ -41,7 +41,7 @@ fun MapRenderModeConfigurator(
                     isSelected = renderMode == option.toMapRenderMode(),
                     onSelected = {
                         onRenderModeChange(it.toMapRenderMode())
-                    },
+                    }
                 )
             }
         }

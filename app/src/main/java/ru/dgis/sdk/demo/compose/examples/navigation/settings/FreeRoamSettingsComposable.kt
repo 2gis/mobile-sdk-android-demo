@@ -29,7 +29,7 @@ fun FreeRoamSettingsComposable(
     onSetCacheRadiusOnRouteM: (Int) -> Unit,
     onClearCacheRadiusOnRouteM: () -> Unit,
     onSetCacheRadiusM: (Int) -> Unit,
-    onClearCacheRadiusM: () -> Unit,
+    onClearCacheRadiusM: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -39,12 +39,12 @@ fun FreeRoamSettingsComposable(
     ) {
         Text(
             text = "Freeroam",
-            style = MaterialTheme.typography.titleMedium,
+            style = MaterialTheme.typography.titleMedium
         )
         Text(
             text = "Cache settings that affect offline tile prefetching",
             style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
         )
 
         IntTextField(
@@ -52,14 +52,14 @@ fun FreeRoamSettingsComposable(
             value = settings.freeRoamCacheDistanceOnRouteM,
             onValueChanged = { onSetCacheDistanceOnRouteM(it.coerceAtLeast(0)) },
             onClearClicked = onClearCacheDistanceOnRouteM,
-            unit = "m",
+            unit = "m"
         )
         IntTextField(
             label = "Cache radius on route",
             value = settings.freeRoamCacheRadiusOnRouteM,
             onValueChanged = { onSetCacheRadiusOnRouteM(it.coerceAtLeast(0)) },
             onClearClicked = onClearCacheRadiusOnRouteM,
-            unit = "m",
+            unit = "m"
         )
         IntTextField(
             label = "Cache radius",
@@ -67,7 +67,7 @@ fun FreeRoamSettingsComposable(
             onValueChanged = { onSetCacheRadiusM(it.coerceAtLeast(0)) },
             onClearClicked = onClearCacheRadiusM,
             unit = "m",
-            supportingText = "Used when you move without a route",
+            supportingText = "Used when you move without a route"
         )
     }
 }
@@ -88,12 +88,12 @@ private fun FreeRoamSettingsPreview() =
             alternativeSearchTimeoutSec = 0,
             freeRoamCacheDistanceOnRouteM = 0,
             freeRoamCacheRadiusOnRouteM = 0,
-            freeRoamCacheRadiusM = 0,
+            freeRoamCacheRadiusM = 0
         ),
         onSetCacheDistanceOnRouteM = {},
         onClearCacheDistanceOnRouteM = {},
         onSetCacheRadiusOnRouteM = {},
         onClearCacheRadiusOnRouteM = {},
         onSetCacheRadiusM = {},
-        onClearCacheRadiusM = {},
+        onClearCacheRadiusM = {}
     )

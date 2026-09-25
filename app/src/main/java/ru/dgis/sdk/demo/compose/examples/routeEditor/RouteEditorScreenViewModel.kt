@@ -17,7 +17,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.dgis.sdk.Context
 import ru.dgis.sdk.ScreenPoint
-import ru.dgis.sdk.demo.R
 import ru.dgis.sdk.await
 import ru.dgis.sdk.compose.navigation.settings.NavigationSettingsRepository
 import ru.dgis.sdk.compose.routeeditor.BriefRouteDurationProvider
@@ -27,6 +26,7 @@ import ru.dgis.sdk.compose.routeeditor.RouteUiPoint
 import ru.dgis.sdk.compose.routeeditor.TransportMode
 import ru.dgis.sdk.coordinates.GeoPoint
 import ru.dgis.sdk.coordinates.withElevation
+import ru.dgis.sdk.demo.R
 import ru.dgis.sdk.directory.SearchManager
 import ru.dgis.sdk.geometry.ComplexGeometry
 import ru.dgis.sdk.geometry.PointGeometry
@@ -54,7 +54,7 @@ import android.content.Context as AndroidContext
 
 class RouteEditorScreenViewModel(
     private val sdkContext: Context,
-    appContext: AndroidContext,
+    appContext: AndroidContext
 ) : ViewModel(),
     TouchEventsObserver {
     companion object {
@@ -86,10 +86,11 @@ class RouteEditorScreenViewModel(
             onStartNavigation = { trafficRoute, routeBuildOptions ->
                 Log.i(
                     "RouteEditorScreen",
-                    "Chosen route: $trafficRoute, build options: RouteBuildOptions(${routeBuildOptions.finishPoint}, ${routeBuildOptions.routeSearchOptions})",
+                    "Chosen route: $trafficRoute, build options: " +
+                        "RouteBuildOptions(${routeBuildOptions.finishPoint}, ${routeBuildOptions.routeSearchOptions})"
                 )
             },
-            onChangeRoute = ::clearPoints,
+            onChangeRoute = ::clearPoints
         )
 
         routePointTitleProvider = DirectoryRoutePointTitleProvider(searchManager)
@@ -123,7 +124,7 @@ class RouteEditorScreenViewModel(
         }.stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000),
-            initialValue = emptyList(),
+            initialValue = emptyList()
         )
 
     private val paddingFlow =
@@ -245,27 +246,27 @@ class RouteEditorScreenViewModel(
     private fun createMarker(
         point: GeoPoint,
         image: Image,
-        text: String? = null,
+        text: String? = null
     ): Marker =
         Marker(
             MarkerOptions(
                 position = point.withElevation(),
                 icon = image,
                 iconWidth = LogicalPixel(30.0f),
-                text = text,
-            ),
+                text = text
+            )
         )
 
     private fun addIntermediateMarker(
         point: GeoPoint,
-        id: Int,
+        id: Int
     ) {
         objectManager?.addObject(
             createMarker(
                 point = point,
                 image = imageFromResource(sdkContext, R.drawable.ic_pin),
-                text = id.toString(),
-            ),
+                text = id.toString()
+            )
         )
     }
 
@@ -273,8 +274,8 @@ class RouteEditorScreenViewModel(
         objectManager?.addObject(
             createMarker(
                 point = point,
-                image = imageFromResource(sdkContext, R.drawable.ic_start),
-            ),
+                image = imageFromResource(sdkContext, R.drawable.ic_start)
+            )
         )
     }
 
@@ -282,8 +283,8 @@ class RouteEditorScreenViewModel(
         objectManager?.addObject(
             createMarker(
                 point = point,
-                image = imageFromResource(sdkContext, R.drawable.ic_finish),
-            ),
+                image = imageFromResource(sdkContext, R.drawable.ic_finish)
+            )
         )
     }
 
@@ -301,12 +302,12 @@ class RouteEditorScreenViewModel(
                 val startUiPoint =
                     RouteUiPoint(
                         startPoint!!,
-                        routePointTitleProvider.providePointTitle(startPoint!!),
+                        routePointTitleProvider.providePointTitle(startPoint!!)
                     )
                 val finishUiPoint =
                     RouteUiPoint(
                         finishPoint!!,
-                        routePointTitleProvider.providePointTitle(finishPoint!!),
+                        routePointTitleProvider.providePointTitle(finishPoint!!)
                     )
                 val intermediateUiPoints =
                     intermediatePoints.map {
@@ -314,15 +315,15 @@ class RouteEditorScreenViewModel(
                             it,
                             routePointTitleProvider.provideIntermediatePointTitle(
                                 it,
-                                intermediatePoints.indexOf(it),
-                            ),
+                                intermediatePoints.indexOf(it)
+                            )
                         )
                     }
 
                 roureEditorComposableVM.setPoints(
                     startUiPoint,
                     finishUiPoint,
-                    intermediateUiPoints,
+                    intermediateUiPoints
                 )
 
                 updatePointsState()
@@ -351,7 +352,7 @@ private suspend fun ScreenPoint.toRouteSearchPoint(map: Map): RouteSearchPoint? 
             return RouteSearchPoint(
                 coordinates = objInfo.closestMapPoint.point,
                 objectId = (objInfo.item.item as DgisMapObject).id,
-                levelId = objInfo.item.levelId,
+                levelId = objInfo.item.levelId
             )
         } else {
             val geoPoint = map.camera.projection.screenToMap(this) ?: return@let null

@@ -10,13 +10,13 @@ val MinimapExample = ComposeExample(
     title = "Minimap",
     summary = R.string.compose_example_minimap_summary,
     description = R.string.compose_example_minimap_description,
-    topic = ComposeExampleTopic.Map,
+    topic = ComposeExampleTopic.Map
 ) {
     MinimapScreen(
         mapViewModel = mapViewModel,
         viewModel = viewModel(viewModelStoreOwner) {
             MinimapScreenViewModel(sdkContext, mapOptions.minimapControllerOptions(sdkContext))
         },
-        mapOptions = mapOptions,
+        mapOptions = mapOptions
     )
 }

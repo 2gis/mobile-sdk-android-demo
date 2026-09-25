@@ -19,18 +19,18 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
+import ru.dgis.sdk.compose.map.MapComposable
+import ru.dgis.sdk.compose.routeeditor.RouteEditorComposable
 import ru.dgis.sdk.demo.compose.ComposeExampleMapOptions
 import ru.dgis.sdk.demo.compose.ReadyMapControllerViewModel
 import ru.dgis.sdk.demo.compose.extra.collectTouchEvents
-import ru.dgis.sdk.compose.map.MapComposable
-import ru.dgis.sdk.compose.routeeditor.RouteEditorComposable
 import ru.dgis.sdk.map.Padding
 
 @Composable
 fun RouteEditorScreen(
     mapViewModel: ReadyMapControllerViewModel,
     viewModel: RouteEditorScreenViewModel,
-    mapOptions: ComposeExampleMapOptions,
+    mapOptions: ComposeExampleMapOptions
 ) {
     val mapController = mapViewModel.mapController
     val context = LocalContext.current
@@ -73,51 +73,51 @@ fun RouteEditorScreen(
         MapComposable(
             viewModel = mapViewModel,
             renderOptions = mapOptions.renderOptions,
-            copyrightOptions = mapOptions.copyrightOptions,
+            copyrightOptions = mapOptions.copyrightOptions
         )
 
         if (arePointsSet) {
             RouteEditorComposable(
                 modifier =
-                    Modifier
-                        .padding(top = 4.dp)
-                        .onSizeChanged { size ->
-                            val adjustedWidth = size.width + startPaddingPx
+                Modifier
+                    .padding(top = 4.dp)
+                    .onSizeChanged { size ->
+                        val adjustedWidth = size.width + startPaddingPx
 
-                            val cameraPadding =
-                                if (isLandscape) {
-                                    Padding(
-                                        left = adjustedWidth,
-                                        right = RouteEditorScreenViewModel.DEFAULT_PADDING_HORIZONTAL,
-                                        top = RouteEditorScreenViewModel.DEFAULT_PADDING_TOP,
-                                        bottom = RouteEditorScreenViewModel.DEFAULT_PADDING_BOTTOM,
-                                    )
-                                } else {
-                                    Padding(
-                                        left = RouteEditorScreenViewModel.DEFAULT_PADDING_HORIZONTAL,
-                                        right = RouteEditorScreenViewModel.DEFAULT_PADDING_HORIZONTAL,
-                                        top = RouteEditorScreenViewModel.DEFAULT_PADDING_TOP,
-                                        bottom =
-                                            size.height.coerceAtMost(
-                                                maxBottomPaddingPx,
-                                            ) + RouteEditorScreenViewModel.DEFAULT_PADDING_BOTTOM,
-                                    )
-                                }
-
-                            viewModel.updateCameraPadding(cameraPadding)
-                        }
-                        .then(
-                            if (LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                                Modifier
-                                    .align(Alignment.BottomStart)
-                                    .padding(start = RouteEditorScreenViewModel.DEFAULT_PADDING_HORIZONTAL.dp)
+                        val cameraPadding =
+                            if (isLandscape) {
+                                Padding(
+                                    left = adjustedWidth,
+                                    right = RouteEditorScreenViewModel.DEFAULT_PADDING_HORIZONTAL,
+                                    top = RouteEditorScreenViewModel.DEFAULT_PADDING_TOP,
+                                    bottom = RouteEditorScreenViewModel.DEFAULT_PADDING_BOTTOM
+                                )
                             } else {
-                                Modifier.align(Alignment.BottomCenter)
-                            },
-                        ),
+                                Padding(
+                                    left = RouteEditorScreenViewModel.DEFAULT_PADDING_HORIZONTAL,
+                                    right = RouteEditorScreenViewModel.DEFAULT_PADDING_HORIZONTAL,
+                                    top = RouteEditorScreenViewModel.DEFAULT_PADDING_TOP,
+                                    bottom =
+                                    size.height.coerceAtMost(
+                                        maxBottomPaddingPx
+                                    ) + RouteEditorScreenViewModel.DEFAULT_PADDING_BOTTOM
+                                )
+                            }
+
+                        viewModel.updateCameraPadding(cameraPadding)
+                    }
+                    .then(
+                        if (LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                            Modifier
+                                .align(Alignment.BottomStart)
+                                .padding(start = RouteEditorScreenViewModel.DEFAULT_PADDING_HORIZONTAL.dp)
+                        } else {
+                            Modifier.align(Alignment.BottomCenter)
+                        }
+                    ),
                 viewModel = routeEditorVM,
                 settingsRepository = viewModel.settingsRepository,
-                onCloseClick = viewModel::clearPoints,
+                onCloseClick = viewModel::clearPoints
             )
         }
     }

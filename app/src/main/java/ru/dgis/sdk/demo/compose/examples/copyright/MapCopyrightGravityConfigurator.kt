@@ -38,7 +38,7 @@ fun MapCopyrightGravityConfigurator(
                 isSelected = gravity == option.toMapCopyrightGravity(),
                 onSelected = {
                     onGravityChange(it.toMapCopyrightGravity())
-                },
+                }
             )
         }
     }

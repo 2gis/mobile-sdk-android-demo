@@ -17,7 +17,7 @@ internal class StyleZoomPulseController(
     private val delayMs: Long = 300L,
     private val minZoom: Float = 16.5f,
     private val maxZoom: Float = 19.5f,
-    private val step: Float = 0.35f,
+    private val step: Float = 0.35f
 ) {
     private var job: Job? = null
 

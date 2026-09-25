@@ -9,7 +9,7 @@ val SearchItemExample = ComposeExample(
     title = "Search Item",
     summary = R.string.compose_example_search_item_summary,
     description = R.string.compose_example_search_item_description,
-    topic = ComposeExampleTopic.Map,
+    topic = ComposeExampleTopic.Map
 ) {
     SearchItemScreen(mapViewModel, sdkContext, mapOptions)
 }

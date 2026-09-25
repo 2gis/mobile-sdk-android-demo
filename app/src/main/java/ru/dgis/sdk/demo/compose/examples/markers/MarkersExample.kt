@@ -9,7 +9,7 @@ val MarkersExample = ComposeExample(
     title = "Markers",
     summary = R.string.compose_example_markers_summary,
     description = R.string.compose_example_markers_description,
-    topic = ComposeExampleTopic.Map,
+    topic = ComposeExampleTopic.Map
 ) {
     MarkersScreen(mapViewModel, sdkContext, mapOptions)
 }

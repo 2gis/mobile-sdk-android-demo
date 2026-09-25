@@ -8,7 +8,7 @@ import ru.dgis.sdk.map.CopyrightMargins
 @Composable
 fun MapCopyrightMarginsConfigurator(
     margins: CopyrightMargins,
-    onMarginsChange: ((CopyrightMargins) -> Unit)? = null,
+    onMarginsChange: ((CopyrightMargins) -> Unit)? = null
 ) {
     Column {
         CaptionSlider("Left", margins.left) { newLeft ->

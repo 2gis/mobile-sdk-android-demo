@@ -22,10 +22,10 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import ru.dgis.sdk.compose.map.MapComposable
 import ru.dgis.sdk.demo.R
 import ru.dgis.sdk.demo.compose.ComposeExampleMapOptions
 import ru.dgis.sdk.demo.compose.ReadyMapControllerViewModel
-import ru.dgis.sdk.compose.map.MapComposable
 import ru.dgis.sdk.map.ImageData
 
 @Composable
@@ -70,7 +70,7 @@ fun SnapshotScreen(mapViewModel: ReadyMapControllerViewModel, mapOptions: Compos
     MapComposable(
         viewModel = mapViewModel,
         renderOptions = mapOptions.renderOptions,
-        copyrightOptions = mapOptions.copyrightOptions,
+        copyrightOptions = mapOptions.copyrightOptions
     )
 
     Box(

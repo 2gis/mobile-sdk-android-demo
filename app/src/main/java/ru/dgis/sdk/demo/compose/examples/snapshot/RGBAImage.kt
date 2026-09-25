@@ -16,6 +16,6 @@ fun RGBAImage(byteArray: ByteArray, width: Int, height: Int) {
 
     Image(
         bitmap = imageBitmap,
-        contentDescription = "RGBA_8888 Image",
+        contentDescription = "RGBA_8888 Image"
     )
 }
