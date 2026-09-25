@@ -17,7 +17,7 @@ enum class MapStateResolveRule {
     Unique,
 
     /** Reuses a single map controller instance across multiple screens */
-    Shared,
+    Shared
 }
 
 /**
@@ -33,7 +33,7 @@ open class HomeScreenViewModel(
     val sdkContext: Context,
     val mapOptions: ComposeExampleMapOptions,
     private val controllerOptions: () -> MapControllerOptions,
-    private val controllerFactory: () -> MapControllerFactory = { MapControllerFactory.Default },
+    private val controllerFactory: () -> MapControllerFactory = { MapControllerFactory.Default }
 ) : ViewModel() {
 
     private var _mapViewModel: DefaultMapControllerViewModel? = null
@@ -42,7 +42,7 @@ open class HomeScreenViewModel(
         get() = _mapViewModel ?: DefaultMapControllerViewModel(
             sdkContext,
             controllerOptions(),
-            controllerFactory(),
+            controllerFactory()
         ).also { _mapViewModel = it }
 
     private val _resolveRule = MutableStateFlow(MapStateResolveRule.Unique)

@@ -36,7 +36,7 @@ fun FinishDetectorSettingsComposable(
     onSetVehicleSoftLimitM: (Int) -> Unit,
     onClearVehicleSoftLimitM: () -> Unit,
     onSetVehicleHardLimitM: (Int) -> Unit,
-    onClearVehicleHardLimitM: () -> Unit,
+    onClearVehicleHardLimitM: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -46,12 +46,12 @@ fun FinishDetectorSettingsComposable(
     ) {
         Text(
             text = "Finish detector",
-            style = MaterialTheme.typography.titleMedium,
+            style = MaterialTheme.typography.titleMedium
         )
         Text(
             text = "Distance thresholds that control when the navigation engine treats the route as finished.",
             style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
         )
 
         IntTextField(
@@ -60,7 +60,7 @@ fun FinishDetectorSettingsComposable(
             onValueChanged = { v -> onSetSoftLimitM(v.coerceAtLeast(0)) },
             onClearClicked = onClearSoftLimitM,
             unit = "m",
-            supportingText = "0 — use SDK default",
+            supportingText = "0 — use SDK default"
         )
         IntTextField(
             label = "Hard limit",
@@ -68,7 +68,7 @@ fun FinishDetectorSettingsComposable(
             onValueChanged = { v -> onSetHardLimitM(v.coerceAtLeast(0)) },
             onClearClicked = onClearHardLimitM,
             unit = "m",
-            supportingText = "0 — use SDK default",
+            supportingText = "0 — use SDK default"
         )
         IntTextField(
             label = "Straight line distance to finish",
@@ -76,7 +76,7 @@ fun FinishDetectorSettingsComposable(
             onValueChanged = { v -> onSetStraightLineLimitM(v.coerceAtLeast(0)) },
             onClearClicked = onClearStraightLineLimitM,
             unit = "m",
-            supportingText = "0 — use SDK default",
+            supportingText = "0 — use SDK default"
         )
         IntTextField(
             label = "Vehicle soft limit",
@@ -84,7 +84,7 @@ fun FinishDetectorSettingsComposable(
             onValueChanged = { v -> onSetVehicleSoftLimitM(v.coerceAtLeast(0)) },
             onClearClicked = onClearVehicleSoftLimitM,
             unit = "m",
-            supportingText = "0 — use SDK default. Used for car/truck navigation types",
+            supportingText = "0 — use SDK default. Used for car/truck navigation types"
         )
         IntTextField(
             label = "Vehicle hard limit",
@@ -92,7 +92,7 @@ fun FinishDetectorSettingsComposable(
             onValueChanged = { v -> onSetVehicleHardLimitM(v.coerceAtLeast(0)) },
             onClearClicked = onClearVehicleHardLimitM,
             unit = "m",
-            supportingText = "0 — use SDK default. Used for car/truck navigation types",
+            supportingText = "0 — use SDK default. Used for car/truck navigation types"
         )
     }
 }
@@ -118,7 +118,7 @@ private fun FinishDetectorSettingsPreview() =
             finishDetectorHardLimitM = 0,
             finishDetectorStraightLineLimitM = 0,
             finishDetectorVehicleSoftLimitM = 0,
-            finishDetectorVehicleHardLimitM = 0,
+            finishDetectorVehicleHardLimitM = 0
         ),
         onSetSoftLimitM = {},
         onClearSoftLimitM = {},
@@ -129,5 +129,5 @@ private fun FinishDetectorSettingsPreview() =
         onSetVehicleSoftLimitM = {},
         onClearVehicleSoftLimitM = {},
         onSetVehicleHardLimitM = {},
-        onClearVehicleHardLimitM = {},
+        onClearVehicleHardLimitM = {}
     )

@@ -14,14 +14,14 @@ import ru.dgis.sdk.map.Map
 internal class FollowControllerSwitcher(scope: CoroutineScope) {
     private val topDownBehaviour = CameraBehaviour(
         position = null,
-        tilt = FollowTilt.OFF,
+        tilt = FollowTilt.OFF
     )
 
     private val customFollowController = PlatformStyleZoomFollowController()
 
     private val zoomPulse = StyleZoomPulseController(
         scope = scope,
-        setZoom = customFollowController::setStyleZoom,
+        setZoom = customFollowController::setStyleZoom
     )
 
     fun apply(map: Map, type: FollowControllerType) {

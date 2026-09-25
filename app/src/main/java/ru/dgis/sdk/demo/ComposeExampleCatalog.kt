@@ -43,7 +43,7 @@ val composeExampleCatalog: List<CatalogEntry> = listOf(
     SearchItemExample,
     NavigationExample,
     RouteEditorExample,
-    SharedRouteExample,
+    SharedRouteExample
 ).map { CatalogEntry(it) }
 
 /** The model of the catalog: the map of the examples and how they show it. */
@@ -57,21 +57,21 @@ fun composeHomeScreenViewModel(sdkContext: Context) = HomeScreenViewModel(
                 position = composeCameraPosition,
                 styleFile = File.fromAsset(context, "minimap-styles.2gis"),
                 // The theme opposite to the main map's, so the minimap stays visible on top.
-                mapAppearance = MapAppearance.defaultAppearanceInverted(),
+                mapAppearance = MapAppearance.defaultAppearanceInverted()
             )
-        },
+        }
     ),
     controllerOptions = {
         MapControllerOptions(
             position = composeCameraPosition,
             sources = createDgisSources(sdkContext) + RoadEventSource(sdkContext),
-            mapAppearance = MapAppearance.defaultAppearance(),
+            mapAppearance = MapAppearance.defaultAppearance()
         )
-    },
+    }
 )
 
 private val composeCameraPosition = CameraPosition(
     point = GeoPoint(latitude = 55.760898, longitude = 37.620242),
     bearing = Bearing(20.0),
-    zoom = Zoom(17f),
+    zoom = Zoom(17f)
 )

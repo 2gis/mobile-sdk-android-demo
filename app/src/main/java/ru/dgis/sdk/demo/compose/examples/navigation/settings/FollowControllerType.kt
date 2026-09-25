@@ -8,5 +8,5 @@ package ru.dgis.sdk.demo.compose.examples.navigation.settings
  */
 internal enum class FollowControllerType {
     Default,
-    Custom,
+    Custom
 }

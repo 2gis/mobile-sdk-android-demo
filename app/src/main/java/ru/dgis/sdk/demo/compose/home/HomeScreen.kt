@@ -63,10 +63,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.launch
 import ru.dgis.sdk.demo.R
-import ru.dgis.sdk.demo.compose.ComposeExampleTopic
+import ru.dgis.sdk.demo.compose.CatalogEntry
 import ru.dgis.sdk.demo.compose.ComposeExampleEnvironment
 import ru.dgis.sdk.demo.compose.ComposeExampleLabel
-import ru.dgis.sdk.demo.compose.CatalogEntry
+import ru.dgis.sdk.demo.compose.ComposeExampleTopic
 import ru.dgis.sdk.demo.compose.ReadyMapControllerViewModel
 import ru.dgis.sdk.map.MapAppearance
 import ru.dgis.sdk.map.MapControllerState
@@ -75,7 +75,7 @@ import ru.dgis.sdk.map.MapControllerState
 fun HomeScreen(
     screens: List<CatalogEntry>,
     viewModel: HomeScreenViewModel,
-    colors: HomeScreenColors = HomeScreenDefaults.colors(),
+    colors: HomeScreenColors = HomeScreenDefaults.colors()
 ) {
     val navController = rememberNavController()
     val resolveRule by viewModel.resolveRule.collectAsState()
@@ -87,7 +87,7 @@ fun HomeScreen(
         // SurfaceView takes no part in alpha animations and the cover is translucent,
         // so the whole transition looks like a black flash. The map needs no transitions.
         enterTransition = { EnterTransition.None },
-        exitTransition = { ExitTransition.None },
+        exitTransition = { ExitTransition.None }
     ) {
         composable("home") {
             HomeScreen(
@@ -102,7 +102,7 @@ fun HomeScreen(
                         if (it) MapStateResolveRule.Shared else MapStateResolveRule.Unique
                     )
                 },
-                colors = colors,
+                colors = colors
             )
         }
         screens.forEach { screen ->
@@ -119,7 +119,7 @@ fun HomeScreen(
                                 mapViewModel = ReadyMapControllerViewModel(state.controller),
                                 viewModelStoreOwner = owner,
                                 sdkContext = viewModel.sdkContext,
-                                mapOptions = viewModel.mapOptions,
+                                mapOptions = viewModel.mapOptions
                             )
                         }
                         screen.example.content(scope)
@@ -150,7 +150,7 @@ private fun MapPlaceholder(appearance: MapAppearance?) {
 private fun MapCreationError(cause: Exception) {
     Box(
         modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center,
+        contentAlignment = Alignment.Center
     ) {
         Text(text = "Map creation failed: ${cause.message ?: cause}")
     }
@@ -162,13 +162,13 @@ private fun HomeScreen(
     onItemClick: (String) -> Unit,
     keepMapState: Boolean,
     onKeepMapStateChanged: (Boolean) -> Unit,
-    colors: HomeScreenColors,
+    colors: HomeScreenColors
 ) {
     val orderedTabs = remember(screens) {
         listOf(
             ComposeExampleTopic.Navigation,
             ComposeExampleTopic.Map,
-            ComposeExampleTopic.Directory,
+            ComposeExampleTopic.Directory
         ).filter { topic ->
             // Skip empty tabs.
             screens.any { it.example.topic == topic }
@@ -189,12 +189,12 @@ private fun HomeScreen(
     Column(
         modifier = Modifier
             .background(color = colors.backgroundColor)
-            .padding(horizontal = 8.dp),
+            .padding(horizontal = 8.dp)
     ) {
         FilterTextField(
             text = filterText,
             onTextChange = { filterText = it },
-            colors = colors,
+            colors = colors
         )
 
         if (showLabels) {
@@ -209,28 +209,28 @@ private fun HomeScreen(
                     }
                 },
                 onInfoClick = { showLabelsInfo = true },
-                colors = colors,
+                colors = colors
             )
         }
 
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             // The info follows the label it explains; the switch stays at the right edge.
             Row(
                 modifier = Modifier.weight(1f),
-                verticalAlignment = Alignment.CenterVertically,
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
                     modifier = Modifier.weight(1f, fill = false),
                     text = stringResource(R.string.compose_catalog_keep_map),
-                    color = colors.textColor,
+                    color = colors.textColor
                 )
                 InfoButton(
                     contentDescription = stringResource(R.string.compose_catalog_keep_map),
                     onClick = { showKeepMapInfo = true },
-                    colors = colors,
+                    colors = colors
                 )
             }
 
@@ -241,7 +241,7 @@ private fun HomeScreen(
                     uncheckedTrackColor = colors.switchUncheckedBackgroundColor,
                     uncheckedThumbColor = colors.switchUncheckedThumbColor,
                     checkedTrackColor = colors.switchCheckedBackgroundColor,
-                    checkedThumbColor = colors.switchCheckedThumbColor,
+                    checkedThumbColor = colors.switchCheckedThumbColor
                 )
             )
         }
@@ -249,7 +249,7 @@ private fun HomeScreen(
         Tabs(
             tabs = orderedTabs,
             pagerState = pagerState,
-            colors = colors,
+            colors = colors
         )
 
         HorizontalPager(state = pagerState) { tabIndex ->
@@ -260,7 +260,7 @@ private fun HomeScreen(
                 filter = filterText,
                 onItemClick = onItemClick,
                 onInfoClick = { infoScreen = it },
-                colors = colors,
+                colors = colors
             )
         }
 
@@ -272,7 +272,7 @@ private fun HomeScreen(
                     infoScreen = null
                     onItemClick(screen.example.id)
                 },
-                onDismiss = { infoScreen = null },
+                onDismiss = { infoScreen = null }
             )
         }
 
@@ -283,11 +283,11 @@ private fun HomeScreen(
         if (showKeepMapInfo) {
             InfoSheet(
                 title = stringResource(R.string.compose_catalog_keep_map),
-                onDismiss = { showKeepMapInfo = false },
+                onDismiss = { showKeepMapInfo = false }
             ) {
                 Text(
                     text = stringResource(R.string.compose_catalog_keep_map_description),
-                    style = MaterialTheme.typography.bodyMedium,
+                    style = MaterialTheme.typography.bodyMedium
                 )
             }
         }
@@ -298,7 +298,7 @@ private fun HomeScreen(
 private fun FilterTextField(
     text: String,
     onTextChange: (String) -> Unit,
-    colors: HomeScreenColors,
+    colors: HomeScreenColors
 ) {
     OutlinedTextField(
         modifier = Modifier
@@ -312,7 +312,7 @@ private fun FilterTextField(
             focusedBorderColor = colors.tabIndicatorColor,
             focusedLabelColor = colors.tabIndicatorColor,
             focusedTextColor = colors.textColor,
-            cursorColor = colors.tabIndicatorColor,
+            cursorColor = colors.tabIndicatorColor
         )
     )
 }
@@ -323,24 +323,24 @@ private fun LabelFilter(
     selected: Set<ComposeExampleLabel>,
     onToggle: (ComposeExampleLabel) -> Unit,
     onInfoClick: () -> Unit,
-    colors: HomeScreenColors,
+    colors: HomeScreenColors
 ) {
     Row(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
-        verticalAlignment = Alignment.CenterVertically,
+        verticalAlignment = Alignment.CenterVertically
     ) {
         labels.forEach { label ->
             FilterChip(
                 selected = label in selected,
                 onClick = { onToggle(label) },
                 label = { Text(text = label.name) },
-                leadingIcon = { Icon(imageVector = label.icon, contentDescription = null) },
+                leadingIcon = { Icon(imageVector = label.icon, contentDescription = null) }
             )
         }
         InfoButton(
             contentDescription = stringResource(R.string.compose_catalog_about_labels),
             onClick = onInfoClick,
-            colors = colors,
+            colors = colors
         )
     }
 }
@@ -351,7 +351,7 @@ private fun LabelsInfoSheet(labels: List<ComposeExampleLabel>, onDismiss: () -> 
     InfoSheet(title = stringResource(R.string.compose_catalog_labels_title), onDismiss = onDismiss) {
         Text(
             text = stringResource(R.string.compose_catalog_labels_description),
-            style = MaterialTheme.typography.bodyMedium,
+            style = MaterialTheme.typography.bodyMedium
         )
         labels.forEach { label ->
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
@@ -361,17 +361,17 @@ private fun LabelsInfoSheet(labels: List<ComposeExampleLabel>, onDismiss: () -> 
                     modifier = Modifier
                         .padding(top = 2.dp)
                         .size(20.dp),
-                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant
                 )
                 Column {
                     Text(
                         text = label.name,
-                        style = MaterialTheme.typography.titleSmall,
+                        style = MaterialTheme.typography.titleSmall
                     )
                     Text(
                         text = stringResource(label.description),
                         style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
             }
@@ -383,7 +383,7 @@ private fun LabelsInfoSheet(labels: List<ComposeExampleLabel>, onDismiss: () -> 
 private fun Tabs(
     tabs: List<ComposeExampleTopic>,
     pagerState: PagerState,
-    colors: HomeScreenColors,
+    colors: HomeScreenColors
 ) {
     val scope = rememberCoroutineScope()
 
@@ -405,12 +405,12 @@ private fun Tabs(
                 text = {
                     Text(
                         text = tabTitle(topic),
-                        color = colors.tabTextColor,
+                        color = colors.tabTextColor
                     )
                 },
                 selected = pagerState.currentPage == index,
                 onClick = { scope.launch { pagerState.animateScrollToPage(index) } },
-                selectedContentColor = colors.tabIndicatorColor,
+                selectedContentColor = colors.tabIndicatorColor
             )
         }
     }
@@ -424,7 +424,7 @@ private fun TabContent(
     filter: String,
     onItemClick: (String) -> Unit,
     onInfoClick: (CatalogEntry) -> Unit,
-    colors: HomeScreenColors,
+    colors: HomeScreenColors
 ) {
     Column(
         modifier = Modifier
@@ -443,34 +443,34 @@ private fun Item(
     showLabel: Boolean,
     onItemClick: (String) -> Unit,
     onInfoClick: (CatalogEntry) -> Unit,
-    colors: HomeScreenColors,
+    colors: HomeScreenColors
 ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .clickable { onItemClick(screen.example.id) }
             .padding(start = 16.dp, top = 8.dp, bottom = 8.dp),
-        verticalAlignment = Alignment.CenterVertically,
+        verticalAlignment = Alignment.CenterVertically
     ) {
         Column(modifier = Modifier.weight(1f)) {
             Text(
                 text = screen.example.title,
                 fontWeight = FontWeight.Bold,
                 fontSize = 20.sp,
-                color = colors.textColor,
+                color = colors.textColor
             )
             Text(
                 text = stringResource(screen.example.summary),
                 fontSize = 14.sp,
                 color = colors.textColor.copy(alpha = 0.6f),
                 maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
+                overflow = TextOverflow.Ellipsis
             )
         }
         InfoButton(
             contentDescription = stringResource(R.string.compose_catalog_about_example, screen.example.title),
             onClick = { onInfoClick(screen) },
-            colors = colors,
+            colors = colors
         )
         val label = screen.label
         if (showLabel && label != null) {
@@ -479,7 +479,7 @@ private fun Item(
                 imageVector = label.icon,
                 contentDescription = label.name,
                 modifier = Modifier.size(18.dp),
-                tint = colors.textColor.copy(alpha = 0.4f),
+                tint = colors.textColor.copy(alpha = 0.4f)
             )
         }
         Spacer(modifier = Modifier.width(16.dp))
@@ -492,35 +492,35 @@ private fun ExampleInfoSheet(
     screen: CatalogEntry,
     showLabel: Boolean,
     onOpen: () -> Unit,
-    onDismiss: () -> Unit,
+    onDismiss: () -> Unit
 ) {
     InfoSheet(title = screen.example.title, onDismiss = onDismiss) {
         val label = screen.label
         if (showLabel && label != null) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(6.dp),
+                horizontalArrangement = Arrangement.spacedBy(6.dp)
             ) {
                 Icon(
                     imageVector = label.icon,
                     contentDescription = null,
                     modifier = Modifier.size(16.dp),
-                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant
                 )
                 Text(
                     text = label.name,
                     style = MaterialTheme.typography.labelLarge,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
         }
         Text(
             text = stringResource(screen.example.description),
-            style = MaterialTheme.typography.bodyMedium,
+            style = MaterialTheme.typography.bodyMedium
         )
         Button(
             onClick = onOpen,
-            modifier = Modifier.align(Alignment.End),
+            modifier = Modifier.align(Alignment.End)
         ) {
             Text(stringResource(R.string.compose_catalog_open))
         }
@@ -533,18 +533,18 @@ private fun ExampleInfoSheet(
 private fun InfoSheet(
     title: String,
     onDismiss: () -> Unit,
-    content: @Composable ColumnScope.() -> Unit,
+    content: @Composable ColumnScope.() -> Unit
 ) {
     ModalBottomSheet(onDismissRequest = onDismiss) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = 24.dp, end = 24.dp, bottom = 24.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             Text(
                 text = title,
-                style = MaterialTheme.typography.titleLarge,
+                style = MaterialTheme.typography.titleLarge
             )
             content()
         }
@@ -556,20 +556,20 @@ private fun InfoSheet(
 private fun InfoButton(
     contentDescription: String,
     onClick: () -> Unit,
-    colors: HomeScreenColors,
+    colors: HomeScreenColors
 ) {
     IconButton(onClick = onClick) {
         Box(
             modifier = Modifier
                 .size(24.dp)
                 .background(color = colors.textColor.copy(alpha = 0.06f), shape = CircleShape),
-            contentAlignment = Alignment.Center,
+            contentAlignment = Alignment.Center
         ) {
             Icon(
                 imageVector = Icons.Default.Info,
                 contentDescription = contentDescription,
                 modifier = Modifier.size(16.dp),
-                tint = colors.textColor.copy(alpha = 0.6f),
+                tint = colors.textColor.copy(alpha = 0.6f)
             )
         }
     }
@@ -587,7 +587,7 @@ private fun filterScreens(
     screens: List<CatalogEntry>,
     topic: ComposeExampleTopic,
     labels: Set<ComposeExampleLabel>?,
-    filter: String,
+    filter: String
 ): List<CatalogEntry> {
     val normalizedFilter = filter.lowercase()
     return screens
@@ -616,5 +616,5 @@ private fun HomeScreenColored(colors: HomeScreenColors) =
         onItemClick = {},
         keepMapState = false,
         onKeepMapStateChanged = {},
-        colors = colors,
+        colors = colors
     )

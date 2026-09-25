@@ -19,10 +19,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import ru.dgis.sdk.demo.compose.extra.asFlow
+import ru.dgis.sdk.compose.map.MapComposable
 import ru.dgis.sdk.demo.compose.ComposeExampleMapOptions
 import ru.dgis.sdk.demo.compose.ReadyMapControllerViewModel
-import ru.dgis.sdk.compose.map.MapComposable
+import ru.dgis.sdk.demo.compose.extra.asFlow
 
 @Composable
 fun FpsScreen(mapViewModel: ReadyMapControllerViewModel, mapOptions: ComposeExampleMapOptions) {
@@ -40,7 +40,7 @@ fun FpsScreen(mapViewModel: ReadyMapControllerViewModel, mapOptions: ComposeExam
     MapComposable(
         viewModel = mapViewModel,
         renderOptions = mapOptions.renderOptions,
-        copyrightOptions = mapOptions.copyrightOptions,
+        copyrightOptions = mapOptions.copyrightOptions
     )
 
     Box(
@@ -67,7 +67,7 @@ fun FpsScreen(mapViewModel: ReadyMapControllerViewModel, mapOptions: ComposeExam
                 modifier = Modifier.fillMaxWidth(),
                 text = "FPS: $fpsCounter",
                 textAlign = TextAlign.Center,
-                fontSize = 20.sp,
+                fontSize = 20.sp
             )
         }
     }

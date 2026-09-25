@@ -11,7 +11,7 @@ import ru.dgis.sdk.map.MapTheme
 private enum class Appearance(override val displayName: String) : Displayable {
     AUTO("Auto"),
     LIGHT("Light"),
-    DARK("Dark"),
+    DARK("Dark")
 }
 
 private fun Appearance.toMapAppearance(): MapAppearance {
@@ -34,7 +34,7 @@ fun MapAppearanceConfigurator(
                 isSelected = option.toMapAppearance() == mapAppearance,
                 onSelected = {
                     onMapAppearanceChange(it.toMapAppearance())
-                },
+                }
             )
         }
     }

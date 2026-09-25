@@ -9,7 +9,7 @@ val SnapshotExample = ComposeExample(
     title = "Snapshot",
     summary = R.string.compose_example_snapshot_summary,
     description = R.string.compose_example_snapshot_description,
-    topic = ComposeExampleTopic.Map,
+    topic = ComposeExampleTopic.Map
 ) {
     SnapshotScreen(mapViewModel, mapOptions)
 }

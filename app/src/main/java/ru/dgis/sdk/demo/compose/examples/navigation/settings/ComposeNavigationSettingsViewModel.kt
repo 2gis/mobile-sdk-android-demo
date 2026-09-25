@@ -25,7 +25,7 @@ data class ComposeNavigationSettingsState(
     val finishDetectorHardLimitM: Int = 0,
     val finishDetectorStraightLineLimitM: Int = 0,
     val finishDetectorVehicleSoftLimitM: Int = 0,
-    val finishDetectorVehicleHardLimitM: Int = 0,
+    val finishDetectorVehicleHardLimitM: Int = 0
 ) {
     /** The route type selected by [navigationTypeOrdinal]. */
     val navigationType: NavigationType
@@ -43,7 +43,7 @@ class ComposeNavigationSettingsViewModel : ViewModel() {
         if (enabled && _state.value.useSimulation) {
             _state.value = _state.value.copy(
                 isFreeRoamEnabled = true,
-                useSimulation = false,
+                useSimulation = false
             )
         } else {
             _state.value = _state.value.copy(isFreeRoamEnabled = enabled)

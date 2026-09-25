@@ -15,7 +15,7 @@ data class HomeScreenColors(
     val switchCheckedBackgroundColor: Color,
     val switchUncheckedBackgroundColor: Color,
     val switchCheckedThumbColor: Color,
-    val switchUncheckedThumbColor: Color,
+    val switchUncheckedThumbColor: Color
 )
 
 object HomeScreenDefaults {
@@ -28,7 +28,7 @@ object HomeScreenDefaults {
         switchCheckedBackgroundColor = Color(0xFF1DB93C),
         switchUncheckedBackgroundColor = Color(0x0F000000),
         switchCheckedThumbColor = Color.White,
-        switchUncheckedThumbColor = Color(0xFF3C3C3C),
+        switchUncheckedThumbColor = Color(0xFF3C3C3C)
     )
 
     val darkColors = HomeScreenColors(
@@ -40,7 +40,7 @@ object HomeScreenDefaults {
         switchCheckedBackgroundColor = Color(0xFF1BA136),
         switchUncheckedBackgroundColor = Color(0x0fffffff),
         switchCheckedThumbColor = Color.White,
-        switchUncheckedThumbColor = Color(0xFFB8B8B8),
+        switchUncheckedThumbColor = Color(0xFFB8B8B8)
     )
 
     @Composable

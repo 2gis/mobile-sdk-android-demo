@@ -29,4 +29,3 @@ internal class PlatformStyleZoomFollowController : EmptyFollowController() {
 
     override fun styleZoom(): StyleZoom? = styleZoomValue
 }
-

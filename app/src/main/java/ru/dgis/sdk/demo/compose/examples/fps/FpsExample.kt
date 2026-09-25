@@ -9,7 +9,7 @@ val FpsExample = ComposeExample(
     title = "Fps",
     summary = R.string.compose_example_fps_summary,
     description = R.string.compose_example_fps_description,
-    topic = ComposeExampleTopic.Map,
+    topic = ComposeExampleTopic.Map
 ) {
     FpsScreen(mapViewModel, mapOptions)
 }

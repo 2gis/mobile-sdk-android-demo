@@ -5,14 +5,13 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.ModalBottomSheetLayout
-import androidx.compose.material.ModalBottomSheetValue
-import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -51,38 +50,35 @@ private fun ObjectCard(mapObject: RenderedObjectInfo?, onClose: () -> Unit) {
     }
 }
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ObjectsScreen(mapViewModel: ReadyMapControllerViewModel, mapOptions: ComposeExampleMapOptions) {
     val controller = mapViewModel.mapController
     var selectedObject by remember { mutableStateOf<RenderedObjectInfo?>(null) }
     val coroutineScope = rememberCoroutineScope()
-    val bottomSheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
+    val bottomSheetState = rememberModalBottomSheetState()
 
     LaunchedEffect(controller) {
         controller.renderedObjectObserver.objectTapped.asFlow().collect { objects ->
-            val objectInfo = objects.firstOrNull() ?: return@collect
-            selectedObject = objectInfo
-            coroutineScope.launch {
-                bottomSheetState.show()
-            }
+            selectedObject = objects.firstOrNull() ?: return@collect
         }
     }
 
-    ModalBottomSheetLayout(
-        sheetState = bottomSheetState,
-        sheetContent = {
-            ObjectCard(selectedObject) {
-                coroutineScope.launch {
-                    bottomSheetState.hide()
-                }
+    MapComposable(
+        viewModel = mapViewModel,
+        renderOptions = mapOptions.renderOptions,
+        copyrightOptions = mapOptions.copyrightOptions
+    )
+
+    selectedObject?.let { mapObject ->
+        ModalBottomSheet(
+            onDismissRequest = { selectedObject = null },
+            sheetState = bottomSheetState
+        ) {
+            ObjectCard(mapObject) {
+                coroutineScope.launch { bottomSheetState.hide() }
+                    .invokeOnCompletion { selectedObject = null }
             }
         }
-    ) {
-        MapComposable(
-            viewModel = mapViewModel,
-            renderOptions = mapOptions.renderOptions,
-            copyrightOptions = mapOptions.copyrightOptions
-        )
     }
 }

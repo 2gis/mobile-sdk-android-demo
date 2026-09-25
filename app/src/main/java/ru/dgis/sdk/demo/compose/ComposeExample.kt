@@ -27,14 +27,14 @@ data class ComposeExample(
     @StringRes val summary: Int,
     @StringRes val description: Int,
     val topic: ComposeExampleTopic,
-    val content: @Composable ComposeExampleEnvironment.() -> Unit,
+    val content: @Composable ComposeExampleEnvironment.() -> Unit
 )
 
 /** What an example is about; the catalog has a tab per topic. */
 enum class ComposeExampleTopic {
     Map,
     Navigation,
-    Directory,
+    Directory
 }
 
 /**
@@ -48,7 +48,7 @@ enum class ComposeExampleTopic {
 data class ComposeExampleMapOptions(
     val renderOptions: MapRenderOptions,
     val copyrightOptions: MapCopyrightOptions,
-    val minimapControllerOptions: (Context) -> MapControllerOptions,
+    val minimapControllerOptions: (Context) -> MapControllerOptions
 )
 
 /**
@@ -63,7 +63,7 @@ class ComposeExampleEnvironment(
     val mapViewModel: ReadyMapControllerViewModel,
     val viewModelStoreOwner: ViewModelStoreOwner,
     val sdkContext: Context,
-    val mapOptions: ComposeExampleMapOptions,
+    val mapOptions: ComposeExampleMapOptions
 )
 
 /**
@@ -77,13 +77,13 @@ class ComposeExampleEnvironment(
 data class ComposeExampleLabel(
     val name: String,
     val icon: ImageVector,
-    @StringRes val description: Int,
+    @StringRes val description: Int
 )
 
 /** A line of the catalog: an example with a label of the app, or without one. */
 data class CatalogEntry(
     val example: ComposeExample,
-    val label: ComposeExampleLabel? = null,
+    val label: ComposeExampleLabel? = null
 )
 
 /** Puts [label] on the examples. */

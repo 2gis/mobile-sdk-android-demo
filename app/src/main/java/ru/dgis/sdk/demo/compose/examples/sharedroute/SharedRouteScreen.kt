@@ -54,17 +54,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import ru.dgis.sdk.compose.map.MapComposable
+import ru.dgis.sdk.coordinates.GeoPoint
 import ru.dgis.sdk.demo.compose.ComposeExampleMapOptions
 import ru.dgis.sdk.demo.compose.ReadyMapControllerViewModel
 import ru.dgis.sdk.demo.compose.extra.collectTouchEvents
-import ru.dgis.sdk.compose.map.MapComposable
-import ru.dgis.sdk.coordinates.GeoPoint
 
 @Composable
 fun SharedRouteScreen(
     mapViewModel: ReadyMapControllerViewModel,
     viewModel: SharedRouteScreenViewModel,
-    mapOptions: ComposeExampleMapOptions,
+    mapOptions: ComposeExampleMapOptions
 ) {
     val mapController = mapViewModel.mapController
 
@@ -102,14 +102,14 @@ fun SharedRouteScreen(
             MapComposable(
                 viewModel = mapViewModel,
                 renderOptions = mapOptions.renderOptions,
-                copyrightOptions = mapOptions.copyrightOptions,
+                copyrightOptions = mapOptions.copyrightOptions
             )
 
             SharedRouteTopPanel(
                 requestId = requestId,
                 onRequestIdChange = viewModel::updateRequestId,
                 isFetching = sharedRouteState is SharedRouteFetchState.Loading ||
-                        saveRouteState is SaveRouteState.Loading,
+                    saveRouteState is SaveRouteState.Loading,
                 onFetch = { viewModel.fetchSharedRoute(requestId) },
                 sharedRouteState = sharedRouteState,
                 saveRouteState = saveRouteState,
@@ -120,7 +120,7 @@ fun SharedRouteScreen(
                     .align(Alignment.TopCenter)
                     .padding(top = 32.dp, start = 16.dp, end = 16.dp)
                     .widthIn(max = 560.dp)
-                    .fillMaxWidth(),
+                    .fillMaxWidth()
             )
 
             SharedRouteBottomPanel(
@@ -132,7 +132,7 @@ fun SharedRouteScreen(
                     .align(Alignment.BottomCenter)
                     .padding(16.dp)
                     .widthIn(max = 560.dp)
-                    .fillMaxWidth(),
+                    .fillMaxWidth()
             )
         }
     }
@@ -149,43 +149,43 @@ private fun SharedRouteTopPanel(
     onClearRoute: () -> Unit,
     expanded: Boolean,
     onToggleExpanded: () -> Unit,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     Card(
         modifier = modifier,
         shape = RoundedCornerShape(20.dp),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.96f),
+            containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.96f)
         ),
-        elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
     ) {
         Column(
             modifier = Modifier.padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 Icon(
                     imageVector = Icons.Filled.Place,
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.size(22.dp),
+                    modifier = Modifier.size(22.dp)
                 )
                 Text(
                     text = "Shared Route",
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.SemiBold,
-                    modifier = Modifier.weight(1f),
+                    modifier = Modifier.weight(1f)
                 )
                 TextButton(
                     onClick = onToggleExpanded,
-                    contentPadding = PaddingValues(horizontal = 8.dp, vertical = 0.dp),
+                    contentPadding = PaddingValues(horizontal = 8.dp, vertical = 0.dp)
                 ) {
                     Icon(
                         imageVector = if (expanded) Icons.Filled.KeyboardArrowUp else Icons.Filled.KeyboardArrowDown,
-                        contentDescription = if (expanded) "Collapse" else "Expand",
+                        contentDescription = if (expanded) "Collapse" else "Expand"
                     )
                 }
             }
@@ -193,12 +193,12 @@ private fun SharedRouteTopPanel(
             AnimatedVisibility(
                 visible = expanded,
                 enter = fadeIn() + expandVertically(),
-                exit = fadeOut() + shrinkVertically(),
+                exit = fadeOut() + shrinkVertically()
             ) {
                 Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
                         OutlinedTextField(
                             value = requestId,
@@ -206,23 +206,23 @@ private fun SharedRouteTopPanel(
                             label = { Text("Request ID") },
                             modifier = Modifier.weight(1f),
                             singleLine = true,
-                            shape = RoundedCornerShape(14.dp),
+                            shape = RoundedCornerShape(14.dp)
                         )
 
                         FilledTonalIconButton(
                             onClick = onFetch,
                             enabled = !isFetching && requestId.isNotBlank(),
-                            modifier = Modifier.size(48.dp),
+                            modifier = Modifier.size(48.dp)
                         ) {
                             if (isFetching) {
                                 CircularProgressIndicator(
                                     modifier = Modifier.size(24.dp),
-                                    strokeWidth = 2.dp,
+                                    strokeWidth = 2.dp
                                 )
                             } else {
                                 Icon(
                                     imageVector = Icons.Filled.Search,
-                                    contentDescription = "Fetch shared route",
+                                    contentDescription = "Fetch shared route"
                                 )
                             }
                         }
@@ -231,7 +231,7 @@ private fun SharedRouteTopPanel(
                     AnimatedVisibility(
                         visible = sharedRouteState is SharedRouteFetchState.Error,
                         enter = fadeIn() + expandVertically(),
-                        exit = fadeOut() + shrinkVertically(),
+                        exit = fadeOut() + shrinkVertically()
                     ) {
                         if (sharedRouteState is SharedRouteFetchState.Error) {
                             ErrorChip(text = "Fetch: ${sharedRouteState.message}")
@@ -241,7 +241,7 @@ private fun SharedRouteTopPanel(
                     AnimatedVisibility(
                         visible = saveRouteState is SaveRouteState.Error,
                         enter = fadeIn() + expandVertically(),
-                        exit = fadeOut() + shrinkVertically(),
+                        exit = fadeOut() + shrinkVertically()
                     ) {
                         if (saveRouteState is SaveRouteState.Error) {
                             ErrorChip(text = "Save: ${saveRouteState.message}")
@@ -251,13 +251,13 @@ private fun SharedRouteTopPanel(
                     AnimatedVisibility(
                         visible = sharedRouteState is SharedRouteFetchState.Success,
                         enter = fadeIn() + expandVertically(),
-                        exit = fadeOut() + shrinkVertically(),
+                        exit = fadeOut() + shrinkVertically()
                     ) {
                         if (sharedRouteState is SharedRouteFetchState.Success) {
                             Row(
                                 verticalAlignment = Alignment.CenterVertically,
                                 horizontalArrangement = Arrangement.spacedBy(8.dp),
-                                modifier = Modifier.fillMaxWidth(),
+                                modifier = Modifier.fillMaxWidth()
                             ) {
                                 AssistChip(
                                     onClick = {},
@@ -269,23 +269,23 @@ private fun SharedRouteTopPanel(
                                         Icon(
                                             imageVector = Icons.Filled.Place,
                                             contentDescription = null,
-                                            modifier = Modifier.size(16.dp),
+                                            modifier = Modifier.size(16.dp)
                                         )
                                     },
                                     colors = AssistChipDefaults.assistChipColors(
                                         disabledContainerColor = MaterialTheme.colorScheme.primaryContainer,
-                                        disabledLabelColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                                    ),
+                                        disabledLabelColor = MaterialTheme.colorScheme.onPrimaryContainer
+                                    )
                                 )
                                 Spacer(Modifier.weight(1f))
                                 TextButton(
                                     onClick = onClearRoute,
-                                    shape = RoundedCornerShape(12.dp),
+                                    shape = RoundedCornerShape(12.dp)
                                 ) {
                                     Icon(
                                         imageVector = Icons.Filled.Close,
                                         contentDescription = null,
-                                        modifier = Modifier.size(18.dp),
+                                        modifier = Modifier.size(18.dp)
                                     )
                                     Spacer(Modifier.size(6.dp))
                                     Text("Clear route")
@@ -305,7 +305,7 @@ private fun SharedRouteBottomPanel(
     onClearPoints: () -> Unit,
     expanded: Boolean,
     onToggleExpanded: () -> Unit,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     val start = pointsState.start
     val finish = pointsState.finish
@@ -315,31 +315,31 @@ private fun SharedRouteBottomPanel(
         modifier = modifier,
         shape = RoundedCornerShape(20.dp),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.96f),
+            containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.96f)
         ),
-        elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
     ) {
         Column(
             modifier = Modifier.padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(10.dp),
+            verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 Text(
                     text = "Route points",
                     style = MaterialTheme.typography.titleSmall,
                     fontWeight = FontWeight.SemiBold,
-                    modifier = Modifier.weight(1f),
+                    modifier = Modifier.weight(1f)
                 )
                 TextButton(
                     onClick = onToggleExpanded,
-                    contentPadding = PaddingValues(horizontal = 8.dp, vertical = 0.dp),
+                    contentPadding = PaddingValues(horizontal = 8.dp, vertical = 0.dp)
                 ) {
                     Icon(
                         imageVector = if (expanded) Icons.Filled.KeyboardArrowUp else Icons.Filled.KeyboardArrowDown,
-                        contentDescription = if (expanded) "Collapse" else "Expand",
+                        contentDescription = if (expanded) "Collapse" else "Expand"
                     )
                 }
             }
@@ -347,41 +347,41 @@ private fun SharedRouteBottomPanel(
             AnimatedVisibility(
                 visible = expanded,
                 enter = fadeIn() + expandVertically(),
-                exit = fadeOut() + shrinkVertically(),
+                exit = fadeOut() + shrinkVertically()
             ) {
                 Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
                     PointRow(
                         icon = Icons.Filled.Place,
                         iconTint = Color(0xFF1BA136),
                         label = "Start",
-                        point = start,
+                        point = start
                     )
 
                     HorizontalDivider(
-                        color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f),
+                        color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)
                     )
 
                     PointRow(
                         icon = Icons.Filled.Place,
                         iconTint = MaterialTheme.colorScheme.error,
                         label = "Finish",
-                        point = finish,
+                        point = finish
                     )
 
                     AnimatedVisibility(
                         visible = hasAnyPoint,
                         enter = fadeIn() + expandVertically(),
-                        exit = fadeOut() + shrinkVertically(),
+                        exit = fadeOut() + shrinkVertically()
                     ) {
                         TextButton(
                             onClick = onClearPoints,
                             modifier = Modifier.fillMaxWidth(),
-                            shape = RoundedCornerShape(12.dp),
+                            shape = RoundedCornerShape(12.dp)
                         ) {
                             Icon(
                                 imageVector = Icons.Filled.Close,
                                 contentDescription = null,
-                                modifier = Modifier.size(18.dp),
+                                modifier = Modifier.size(18.dp)
                             )
                             Spacer(Modifier.size(6.dp))
                             Text("Clear points")
@@ -398,24 +398,24 @@ private fun PointRow(
     icon: ImageVector,
     iconTint: Color,
     label: String,
-    point: GeoPoint?,
+    point: GeoPoint?
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(10.dp),
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth()
     ) {
         Icon(
             imageVector = icon,
             contentDescription = null,
             tint = iconTint,
-            modifier = Modifier.size(20.dp),
+            modifier = Modifier.size(20.dp)
         )
         Column(modifier = Modifier.weight(1f)) {
             Text(
                 text = label,
                 style = MaterialTheme.typography.labelMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
             )
             Text(
                 text = point?.let {
@@ -423,7 +423,7 @@ private fun PointRow(
                 } ?: "—",
                 style = MaterialTheme.typography.bodyMedium,
                 maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
+                overflow = TextOverflow.Ellipsis
             )
         }
     }
@@ -434,25 +434,25 @@ private fun ErrorChip(text: String) {
     Surface(
         color = MaterialTheme.colorScheme.errorContainer,
         shape = RoundedCornerShape(10.dp),
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth()
     ) {
         Row(
             modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             Icon(
                 imageVector = Icons.Filled.Info,
                 contentDescription = null,
                 tint = MaterialTheme.colorScheme.onErrorContainer,
-                modifier = Modifier.size(16.dp),
+                modifier = Modifier.size(16.dp)
             )
             Text(
                 text = text,
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onErrorContainer,
                 maxLines = 3,
-                overflow = TextOverflow.Ellipsis,
+                overflow = TextOverflow.Ellipsis
             )
         }
     }

@@ -22,7 +22,7 @@ fun IntTextField(
     onValueChanged: (Int) -> Unit,
     onClearClicked: () -> Unit,
     unit: String? = null,
-    supportingText: String? = null,
+    supportingText: String? = null
 ) {
     val textValue = if (value == 0) "" else value.toString()
 
@@ -48,11 +48,10 @@ fun IntTextField(
             }
         },
         colors = TextFieldDefaults.colors(
-            unfocusedIndicatorColor = MaterialTheme.colorScheme.outlineVariant,
-        ),
+            unfocusedIndicatorColor = MaterialTheme.colorScheme.outlineVariant
+        )
     )
 }
-
 
 @Composable
 @Preview(showBackground = true)
@@ -63,10 +62,11 @@ private fun IntTextFieldShortLabelWithClearPreview() =
 @Preview(showBackground = true)
 private fun IntTextFieldLongLabelWithClearPreview() =
     IntTextField(
-        label = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        label = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, " +
+            "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
         value = 100,
         onValueChanged = {},
         onClearClicked = {},
         unit = "m",
-        supportingText = "Helper text",
+        supportingText = "Helper text"
     )

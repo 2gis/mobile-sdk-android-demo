@@ -9,7 +9,7 @@ val ThemeExample = ComposeExample(
     title = "Theme",
     summary = R.string.compose_example_theme_summary,
     description = R.string.compose_example_theme_description,
-    topic = ComposeExampleTopic.Map,
+    topic = ComposeExampleTopic.Map
 ) {
     ThemeScreen(mapViewModel, mapOptions)
 }

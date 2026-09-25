@@ -12,22 +12,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import ru.dgis.sdk.Context
-import ru.dgis.sdk.demo.compose.ComposeExampleMapOptions
-import ru.dgis.sdk.demo.compose.ReadyMapControllerViewModel
 import ru.dgis.sdk.compose.map.MapComposable
 import ru.dgis.sdk.compose.map.minimap.DefaultMinimapControllerViewModel
 import ru.dgis.sdk.compose.map.minimap.MinimapComposable
+import ru.dgis.sdk.demo.compose.ComposeExampleMapOptions
+import ru.dgis.sdk.demo.compose.ReadyMapControllerViewModel
 import ru.dgis.sdk.map.MapControllerOptions
 import ru.dgis.sdk.map.Opacity
 
 /** Owns the minimap for the lifetime of the screen; survives configuration changes. */
 class MinimapScreenViewModel(
     sdkContext: Context,
-    minimapControllerOptions: MapControllerOptions,
+    minimapControllerOptions: MapControllerOptions
 ) : ViewModel() {
     val minimap = DefaultMinimapControllerViewModel(
         sdkContext,
-        minimapControllerOptions,
+        minimapControllerOptions
     )
 
     override fun onCleared() = minimap.close()
@@ -37,7 +37,7 @@ class MinimapScreenViewModel(
 fun MinimapScreen(
     mapViewModel: ReadyMapControllerViewModel,
     viewModel: MinimapScreenViewModel,
-    mapOptions: ComposeExampleMapOptions,
+    mapOptions: ComposeExampleMapOptions
 ) {
     val minimapViewModel = viewModel.minimap
 
@@ -45,7 +45,7 @@ fun MinimapScreen(
         MapComposable(
             viewModel = mapViewModel,
             renderOptions = mapOptions.renderOptions,
-            copyrightOptions = mapOptions.copyrightOptions,
+            copyrightOptions = mapOptions.copyrightOptions
         )
 
         Box(
@@ -57,7 +57,7 @@ fun MinimapScreen(
             MinimapComposable(
                 viewModel = minimapViewModel,
                 size = 200.dp,
-                opacity = Opacity(1f),
+                opacity = Opacity(1f)
             )
         }
     }

@@ -7,9 +7,11 @@ import ru.dgis.sdk.Context
 import ru.dgis.sdk.DgisObjectId
 import ru.dgis.sdk.LevelId
 import ru.dgis.sdk.ScreenPoint
-import ru.dgis.sdk.demo.R
+import ru.dgis.sdk.compose.navigation.settings.Keys
+import ru.dgis.sdk.compose.navigation.settings.NavigationSettingsRepository
 import ru.dgis.sdk.coordinates.GeoPoint
 import ru.dgis.sdk.coordinates.withElevation
+import ru.dgis.sdk.demo.R
 import ru.dgis.sdk.map.DgisMapObject
 import ru.dgis.sdk.map.Image
 import ru.dgis.sdk.map.LogicalPixel
@@ -20,20 +22,18 @@ import ru.dgis.sdk.map.MarkerOptions
 import ru.dgis.sdk.map.imageFromResource
 import ru.dgis.sdk.navigation.NavigationManager
 import ru.dgis.sdk.navigation.RouteBuildOptions
+import ru.dgis.sdk.routing.BicycleRouteSearchOptions
 import ru.dgis.sdk.routing.CarRouteSearchOptions
 import ru.dgis.sdk.routing.PedestrianRouteSearchOptions
 import ru.dgis.sdk.routing.RouteSearchOptions
 import ru.dgis.sdk.routing.RouteSearchPoint
 import ru.dgis.sdk.routing.TrafficRoute
 import ru.dgis.sdk.routing.TrafficRouter
-import ru.dgis.sdk.routing.BicycleRouteSearchOptions
-import ru.dgis.sdk.compose.navigation.settings.Keys
-import ru.dgis.sdk.compose.navigation.settings.NavigationSettingsRepository
 
 enum class NavigationType {
     Car,
     Pedestrian,
-    Bicycle,
+    Bicycle
 }
 
 enum class NavigationScreenState {
@@ -41,7 +41,7 @@ enum class NavigationScreenState {
     SelectingRoutePoints,
     SearchingRoute,
     SetupRoute,
-    Navigation,
+    Navigation
 }
 
 /**
@@ -58,7 +58,7 @@ class NavigationScreenModel(
     private val map: Map,
     private val navigationManager: NavigationManager,
     private val trafficRouter: TrafficRouter,
-    private val settingsRepository: NavigationSettingsRepository,
+    private val settingsRepository: NavigationSettingsRepository
 ) {
     private val objectManager by lazy { MapObjectManager(map) }
 
@@ -87,7 +87,7 @@ class NavigationScreenModel(
         point: GeoPoint,
         image: Image,
         text: String? = null,
-        levelId: LevelId? = null,
+        levelId: LevelId? = null
     ): Marker {
         return Marker(
             MarkerOptions(
@@ -95,7 +95,7 @@ class NavigationScreenModel(
                 icon = image,
                 iconWidth = LogicalPixel(30.0f),
                 text = text,
-                levelId = levelId,
+                levelId = levelId
             )
         )
     }
@@ -105,7 +105,7 @@ class NavigationScreenModel(
             createMarker(
                 point = point,
                 image = imageFromResource(sdkContext, R.drawable.ic_pin),
-                text = id.toString(),
+                text = id.toString()
             )
         )
     }
@@ -115,7 +115,7 @@ class NavigationScreenModel(
             createMarker(
                 point = point,
                 image = imageFromResource(sdkContext, R.drawable.ic_start),
-                levelId = startLevelId,
+                levelId = startLevelId
             )
         )
     }
@@ -125,7 +125,7 @@ class NavigationScreenModel(
             createMarker(
                 point = point,
                 image = imageFromResource(sdkContext, R.drawable.ic_finish),
-                levelId = finishLevelId,
+                levelId = finishLevelId
             )
         )
     }
@@ -209,7 +209,7 @@ class NavigationScreenModel(
     fun navigate(
         navigationType: NavigationType,
         isFreeRoamEnabled: Boolean,
-        useSimulation: Boolean,
+        useSimulation: Boolean
     ) {
         if (_state.value != NavigationScreenState.SetupRoute) {
             return
@@ -239,9 +239,9 @@ class NavigationScreenModel(
                             avoidUnpavedRoads = settingsRepository[Keys.CAR_AVOID_UNPAVED_ROADS],
                             avoidFerries = settingsRepository[Keys.CAR_AVOID_FERRIES],
                             avoidLockedRoads = settingsRepository[Keys.CAR_AVOID_LOCKED_ROADS],
-                            routeSearchType = settingsRepository[Keys.CAR_ROUTE_SEARCH_TYPE],
+                            routeSearchType = settingsRepository[Keys.CAR_ROUTE_SEARCH_TYPE]
                         )
-                    ),
+                    )
                 )
             }
 
@@ -249,12 +249,12 @@ class NavigationScreenModel(
                 val startSearchPoint = RouteSearchPoint(
                     coordinates = startPoint,
                     objectId = startObjectId,
-                    levelId = startLevelId,
+                    levelId = startLevelId
                 )
                 val routeFinishPoint = RouteSearchPoint(
                     coordinates = finishPoint,
                     levelId = finishLevelId,
-                    objectId = finishObjectId,
+                    objectId = finishObjectId
                 )
 
                 searchRoute(
@@ -267,9 +267,9 @@ class NavigationScreenModel(
                             avoidStairways = settingsRepository[Keys.PEDESTRIAN_AVOID_STAIRWAYS],
                             avoidUnderpassesAndOverpasses = settingsRepository[Keys.PEDESTRIAN_AVOID_UNDERPASSES],
                             useIndoor = settingsRepository[Keys.PEDESTRIAN_USE_INDOOR],
-                            avoidUnpavedRoads = settingsRepository[Keys.PEDESTRIAN_AVOID_UNPAVED_ROADS],
+                            avoidUnpavedRoads = settingsRepository[Keys.PEDESTRIAN_AVOID_UNPAVED_ROADS]
                         )
-                    ),
+                    )
                 )
             }
 
@@ -284,9 +284,9 @@ class NavigationScreenModel(
                             avoidCarRoads = settingsRepository[Keys.BICYCLE_AVOID_CAR_ROADS],
                             avoidStairways = settingsRepository[Keys.BICYCLE_AVOID_STAIRWAYS],
                             avoidUnderpassesAndOverpasses = settingsRepository[Keys.BICYCLE_AVOID_UNDERPASSES],
-                            avoidUnpavedRoads = settingsRepository[Keys.BICYCLE_AVOID_UNPAVED_ROADS],
+                            avoidUnpavedRoads = settingsRepository[Keys.BICYCLE_AVOID_UNPAVED_ROADS]
                         )
-                    ),
+                    )
                 )
             }
         }
@@ -297,7 +297,7 @@ class NavigationScreenModel(
         startPoint: RouteSearchPoint,
         intermediatePoints: List<RouteSearchPoint>,
         finishPoint: RouteSearchPoint,
-        routeSearchOptions: RouteSearchOptions,
+        routeSearchOptions: RouteSearchOptions
     ) {
         assert(findRouteAutoCloseable == null)
 
@@ -314,7 +314,7 @@ class NavigationScreenModel(
                 val route = it.firstOrNull() ?: return@onResult
                 foundRouteBuildOptions = RouteBuildOptions(
                     finishPoint = finishPoint,
-                    routeSearchOptions = routeSearchOptions,
+                    routeSearchOptions = routeSearchOptions
                 )
                 foundRoute = route
 

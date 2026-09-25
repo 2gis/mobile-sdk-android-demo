@@ -57,7 +57,7 @@ fun MarkerConfigurator(markerViewModel: MarkerViewModel, modifier: Modifier = Mo
                 onValueChange = { markerViewModel.setText(it) },
                 modifier = Modifier.fillMaxWidth(),
                 maxLines = 2,
-                singleLine = false,
+                singleLine = false
             )
 
             Row(

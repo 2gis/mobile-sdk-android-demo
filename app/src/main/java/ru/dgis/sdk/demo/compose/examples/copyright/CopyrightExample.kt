@@ -9,7 +9,7 @@ val CopyrightExample = ComposeExample(
     title = "Copyright",
     summary = R.string.compose_example_copyright_summary,
     description = R.string.compose_example_copyright_description,
-    topic = ComposeExampleTopic.Map,
+    topic = ComposeExampleTopic.Map
 ) {
     CopyrightScreen(mapViewModel, mapOptions)
 }

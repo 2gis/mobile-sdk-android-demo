@@ -17,19 +17,19 @@ import ru.dgis.sdk.routing.RouteSearchPoint
  *   if objectId is 0 or if the directory search fails/returns no result
  */
 class DirectoryRoutePointTitleProvider(
-    private val searchManager: SearchManager,
+    private val searchManager: SearchManager
 ) {
     suspend fun providePointTitle(point: RouteSearchPoint): String =
         fetchTitleOrFallback(point, point.toCoordinateTitle())
 
     suspend fun provideIntermediatePointTitle(
         point: RouteSearchPoint,
-        index: Int,
+        index: Int
     ): String = fetchTitleOrFallback(point, "Waypoint ${index + 1}")
 
     private suspend fun fetchTitleOrFallback(
         point: RouteSearchPoint,
-        fallback: String,
+        fallback: String
     ): String {
         if (point.objectId.objectId == 0L) {
             return fallback
@@ -47,5 +47,5 @@ class DirectoryRoutePointTitleProvider(
 
 private fun RouteSearchPoint.toCoordinateTitle(): String =
     "${coordinates.latitude.value.toString().take(8)}, ${
-        coordinates.longitude.value.toString().take(8)
+    coordinates.longitude.value.toString().take(8)
     }"

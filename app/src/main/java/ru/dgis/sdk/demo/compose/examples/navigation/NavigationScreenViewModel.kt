@@ -9,13 +9,13 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import ru.dgis.sdk.Context
 import ru.dgis.sdk.ScreenPoint
+import ru.dgis.sdk.compose.navigation.controls.defaultcontrols.navigation.DefaultNavigationControlsState
+import ru.dgis.sdk.compose.navigation.controls.defaultcontrols.navigation.NavigationControlsState
+import ru.dgis.sdk.compose.navigation.settings.NavigationSettingsRepository
 import ru.dgis.sdk.demo.compose.examples.navigation.settings.ComposeNavigationSettingsState
 import ru.dgis.sdk.demo.compose.examples.navigation.settings.FollowControllerSwitcher
 import ru.dgis.sdk.demo.compose.examples.navigation.settings.FollowControllerType
 import ru.dgis.sdk.demo.compose.examples.navigation.settings.applySettings
-import ru.dgis.sdk.compose.navigation.controls.defaultcontrols.navigation.DefaultNavigationControlsState
-import ru.dgis.sdk.compose.navigation.controls.defaultcontrols.navigation.NavigationControlsState
-import ru.dgis.sdk.compose.navigation.settings.NavigationSettingsRepository
 import ru.dgis.sdk.map.Map
 import ru.dgis.sdk.map.MapControllerOptions
 import ru.dgis.sdk.map.MyLocationMapObjectSource
@@ -39,7 +39,7 @@ open class NavigationScreenViewModel(
     appContext: AndroidContext,
     private val minimapOptions: MapControllerOptions,
     private val trafficRouter: TrafficRouter = TrafficRouter(sdkContext),
-    protected val navigationManager: NavigationManager = NavigationManager(sdkContext, trafficRouter),
+    protected val navigationManager: NavigationManager = NavigationManager(sdkContext, trafficRouter)
 ) : ViewModel(), TouchEventsObserver {
     private val settingsRepository = NavigationSettingsRepository.default(appContext)
     private val locationSource = MyLocationMapObjectSource(sdkContext)
@@ -78,7 +78,7 @@ open class NavigationScreenViewModel(
             map = map,
             navigationManager = navigationManager,
             trafficRouter = trafficRouter,
-            settingsRepository = settingsRepository,
+            settingsRepository = settingsRepository
         )
         screenModel = model
         screenStateJob = viewModelScope.launch {
@@ -89,7 +89,7 @@ open class NavigationScreenViewModel(
             map = map,
             navigationManager = navigationManager,
             minimapOptions = minimapOptions,
-            settingsRepository = settingsRepository,
+            settingsRepository = settingsRepository
         ).apply {
             dashboardViewModel.setFinishHandler { model.clear() }
             finishRouteViewModel.setFinishHandler { model.clear() }
@@ -117,13 +117,13 @@ open class NavigationScreenViewModel(
             followControllerSwitcher.apply(
                 map = it,
                 type = FollowControllerType.entries.getOrNull(settings.followControllerTypeOrdinal)
-                    ?: FollowControllerType.Default,
+                    ?: FollowControllerType.Default
             )
         }
         screenModel?.navigate(
             navigationType = settings.navigationType,
             isFreeRoamEnabled = settings.isFreeRoamEnabled,
-            useSimulation = settings.useSimulation,
+            useSimulation = settings.useSimulation
         )
     }
 

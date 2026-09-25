@@ -12,7 +12,7 @@ val SharedRouteExample = ComposeExample(
     title = "Shared Route",
     summary = R.string.compose_example_shared_route_summary,
     description = R.string.compose_example_shared_route_description,
-    topic = ComposeExampleTopic.Navigation,
+    topic = ComposeExampleTopic.Navigation
 ) {
     val appContext = LocalContext.current.applicationContext
     SharedRouteScreen(
@@ -22,9 +22,9 @@ val SharedRouteExample = ComposeExample(
                 sdkContext = sdkContext,
                 okHttpClient = OkHttpClient(),
                 apiKey = readApiKeyFromAsset(appContext),
-                appId = appContext.packageName,
+                appId = appContext.packageName
             )
         },
-        mapOptions = mapOptions,
+        mapOptions = mapOptions
     )
 }

@@ -14,13 +14,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import ru.dgis.sdk.Context
-import ru.dgis.sdk.demo.compose.ReadyMapControllerViewModel
-import ru.dgis.sdk.demo.compose.extra.asFlow
-import ru.dgis.sdk.demo.compose.ComposeExampleMapOptions
 import ru.dgis.sdk.compose.map.MapComposable
 import ru.dgis.sdk.compose.search.defaultcontrols.DefaultSearchResultItemState
 import ru.dgis.sdk.compose.search.defaultcontrols.SearchResultItemComposable
 import ru.dgis.sdk.compose.search.defaultcontrols.SearchResultItemComposableDefaults
+import ru.dgis.sdk.demo.compose.ComposeExampleMapOptions
+import ru.dgis.sdk.demo.compose.ReadyMapControllerViewModel
+import ru.dgis.sdk.demo.compose.extra.asFlow
 import ru.dgis.sdk.directory.DirectoryObject
 import ru.dgis.sdk.directory.SearchManager
 import ru.dgis.sdk.map.DgisMapObject
@@ -29,7 +29,7 @@ import ru.dgis.sdk.map.DgisMapObject
 fun SearchItemScreen(
     mapViewModel: ReadyMapControllerViewModel,
     sdkContext: Context,
-    mapOptions: ComposeExampleMapOptions,
+    mapOptions: ComposeExampleMapOptions
 ) {
     val mapController = mapViewModel.mapController
     val searchManager by remember {
@@ -50,7 +50,7 @@ fun SearchItemScreen(
                             },
                             errorCallback = {
                                 directoryObject = null
-                            },
+                            }
                         )
                 }
 
@@ -64,7 +64,7 @@ fun SearchItemScreen(
     MapComposable(
         viewModel = mapViewModel,
         renderOptions = mapOptions.renderOptions,
-        copyrightOptions = mapOptions.copyrightOptions,
+        copyrightOptions = mapOptions.copyrightOptions
     )
 
     directoryObject?.let {
@@ -75,7 +75,7 @@ fun SearchItemScreen(
                 modifier = Modifier
                     .background(
                         color = SearchResultItemComposableDefaults.colors().backgroundColor,
-                        shape = RoundedCornerShape(4.dp),
+                        shape = RoundedCornerShape(4.dp)
                     )
                     .padding(8.dp)
             ) {

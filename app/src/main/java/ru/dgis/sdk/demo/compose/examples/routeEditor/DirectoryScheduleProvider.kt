@@ -26,13 +26,13 @@ import ru.dgis.sdk.geometry.Geometry
  * @param searchManager The [SearchManager] instance used for searching routes and loading schedules.
  */
 class DirectoryScheduleProvider(
-    private val searchManager: SearchManager,
+    private val searchManager: SearchManager
 ) : PublicTransportScheduleProvider {
 
     override suspend fun loadSchedule(
         routeName: String,
         areasOfInterest: List<Geometry>,
-        currentMillisUTC: Long,
+        currentMillisUTC: Long
     ): RouteSchedule? {
         try {
             val matchingObjectId = findRouteInAreas(routeName, areasOfInterest)?.id ?: return null
@@ -62,7 +62,7 @@ class DirectoryScheduleProvider(
      */
     private suspend fun findRouteInAreas(
         routeName: String,
-        areasOfInterest: List<Geometry>,
+        areasOfInterest: List<Geometry>
     ): DirectoryObject? {
         if (areasOfInterest.isEmpty()) return null
 
@@ -155,7 +155,7 @@ private fun extractScheduleFromInfo(
                 if (preciseDepartures.isNotEmpty()) {
                     return RouteSchedule(
                         schedule = preciseDepartures.first(),
-                        nextDepartures = preciseDepartures,
+                        nextDepartures = preciseDepartures
                     )
                 }
             }
@@ -172,9 +172,9 @@ private fun PublicTransportSchedule.toTransportSchedule(): TransportSchedule {
         preciseSchedule = {
             TransportSchedule.Precise(
                 hours = it.preciseTime.hours.toInt(),
-                minutes = it.preciseTime.minutes.toInt(),
+                minutes = it.preciseTime.minutes.toInt()
             )
-        },
+        }
     )
 }
 
