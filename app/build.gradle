@@ -170,6 +170,8 @@ dependencies {
 
     implementation libs.dgis.sdk
     implementation libs.dgis.compose
+    implementation libs.dgis.compose.navigation
+    implementation libs.okhttp
 
     implementation libs.huawei.base
     implementation libs.huawei.location
